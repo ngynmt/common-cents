@@ -24,8 +24,10 @@ A civic tech web app that transforms your federal tax contribution into a person
 ## Dev Commands
 
 ```bash
-npm run dev    # Start dev server on localhost:3000
-npx next build # Production build + type check
+npm run dev        # Start dev server on localhost:3000
+npx next build     # Production build + type check
+npm test           # Run tests once
+npm run test:watch # Run tests in watch mode
 ```
 
 ## Environment Variables
