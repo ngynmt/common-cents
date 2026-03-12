@@ -12,6 +12,7 @@ export interface BillDiff {
   billNumber: string;
   shortTitle: string;
   enacted?: string; // date if bill was signed into law
+  expired?: boolean; // true if bill's Congress has ended
   changes: FieldChange[];
 }
 
@@ -115,13 +116,24 @@ export function computeLikelihood(
 }
 
 /**
- * Determine which Congress number a bill belongs to based on its congress.gov URL.
+ * Get the current Congress number based on the current date.
+ * A new Congress starts January 3 of each odd-numbered year.
  */
-function extractCongress(congressUrl: string): number {
-  const match = congressUrl.match(/(\d+)(?:th|st|nd|rd)-congress/);
-  if (match) return parseInt(match[1], 10);
-  // Default to current congress
-  return 119;
+export function getCurrentCongress(): number {
+  const now = new Date();
+  const year = now.getFullYear();
+  // Congress number = ((year - 1789) / 2) + 1, adjusted for Jan 3 start
+  const month = now.getMonth(); // 0-indexed
+  const day = now.getDate();
+  const effectiveYear = (month === 0 && day < 3) ? year - 1 : year;
+  return Math.floor((effectiveYear - 1789) / 2) + 1;
+}
+
+/**
+ * Check if a bill's Congress has ended (bill is expired/dead).
+ */
+export function isExpiredCongress(billCongress: number): boolean {
+  return billCongress < getCurrentCongress();
 }
 
 /**
@@ -130,7 +142,17 @@ function extractCongress(congressUrl: string): number {
  */
 export async function refreshBill(bill: PendingBill): Promise<BillDiff> {
   const { type, number } = parseBillNumber(bill.billNumber);
-  const congress = extractCongress(bill.congressUrl);
+  const congress = bill.congress;
+
+  // Check if this bill's Congress has ended
+  if (isExpiredCongress(congress)) {
+    return {
+      billNumber: bill.billNumber,
+      shortTitle: bill.shortTitle,
+      expired: true,
+      changes: [],
+    };
+  }
 
   const [detail, cosponsorCount] = await Promise.all([
     fetchBillDetail(congress, type, number),

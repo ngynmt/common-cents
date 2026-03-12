@@ -40,6 +40,13 @@ function parseArgs(): { dryRun: boolean; bill?: string } {
 function printDiff(diff: BillDiff): void {
   console.log(`  ${diff.billNumber} — ${diff.shortTitle}`);
 
+  if (diff.expired) {
+    console.log(
+      `    ⚠ Bill is from a prior Congress and has expired — remove from pending-bills`
+    );
+    return;
+  }
+
   if (diff.enacted) {
     console.log(
       `    ⚠ Bill was signed into law on ${diff.enacted} — consider removing from pending-bills`
@@ -66,7 +73,7 @@ function applyDiffs(diffs: BillDiff[]): number {
   let updatedCount = 0;
 
   for (const diff of diffs) {
-    if (diff.enacted || diff.changes.length === 0) continue;
+    if (diff.expired || diff.enacted || diff.changes.length === 0) continue;
 
     for (const change of diff.changes) {
       const updated = replaceField(source, diff.billNumber, change);
@@ -172,8 +179,11 @@ async function main() {
   }
 
   const changedCount = diffs.filter(
-    (d) => d.enacted || d.changes.length > 0
+    (d) => d.expired || d.enacted || d.changes.length > 0
   ).length;
+
+  const expired = diffs.filter((d) => d.expired);
+  const enacted = diffs.filter((d) => d.enacted);
 
   if (dryRun) {
     console.log(
@@ -182,15 +192,19 @@ async function main() {
   } else if (changedCount > 0) {
     const written = applyDiffs(diffs);
     console.log(`Updated ${written} of ${diffs.length} bills in pending-bills.ts.`);
-
-    const enacted = diffs.filter((d) => d.enacted);
-    if (enacted.length > 0) {
-      console.log(
-        `\n⚠ ${enacted.length} bill(s) were enacted — review and remove from pending-bills manually.`
-      );
-    }
   } else {
     console.log("All bills are up to date.");
+  }
+
+  if (expired.length > 0) {
+    console.log(
+      `\n⚠ ${expired.length} bill(s) expired with a prior Congress — remove from pending-bills and find 119th Congress replacements.`
+    );
+  }
+  if (enacted.length > 0) {
+    console.log(
+      `\n⚠ ${enacted.length} bill(s) were enacted — review and remove from pending-bills manually.`
+    );
   }
 }
 
