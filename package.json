@@ -11,7 +11,8 @@
     "test:watch": "vitest",
     "bills:discover": "npx tsx scripts/discover-bills.ts",
     "bills:draft": "npx tsx scripts/draft-bill.ts",
-    "tax:update": "npx tsx scripts/update-tax-brackets.ts"
+    "tax:update": "npx tsx scripts/update-tax-brackets.ts",
+    "bills:refresh": "npx tsx scripts/refresh-bill-status.ts"
   },
   "dependencies": {
     "@upstash/redis": "^1.36.4",
