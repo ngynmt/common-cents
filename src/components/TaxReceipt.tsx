@@ -280,7 +280,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
           Spending data:{" "}
           <a href="https://www.whitehouse.gov/omb/budget/historical-tables/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-400 underline">OMB Historical Tables</a>
           {" · "}Tax brackets:{" "}
-          <a href="https://www.irs.gov/newsroom/irs-provides-tax-inflation-adjustments-for-tax-year-2025" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-400 underline">IRS Rev. Proc. 2024-40</a>
+          <a href="https://www.irs.gov/taxtopics/tc751" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-400 underline">IRS</a>
           {" · "}Bills:{" "}
           <a href="https://www.congress.gov/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-400 underline">Congress.gov</a>
           {" · "}Cost estimates:{" "}

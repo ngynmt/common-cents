@@ -1,0 +1,114 @@
+name: Tax Bracket Updater
+
+on:
+  workflow_dispatch:
+    inputs:
+      year:
+        description: "Tax year to generate (e.g., 2026)"
+        required: true
+      ss_wage_base:
+        description: "Social Security wage base — leave blank to auto-fetch from IRS, or enter manually (e.g., 184500)"
+        required: false
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  update-brackets:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Fetch and generate tax brackets
+        id: generate
+        run: |
+          year="${{ github.event.inputs.year }}"
+          ss_wage_base="${{ github.event.inputs.ss_wage_base }}"
+
+          args="--year $year"
+          if [ -n "$ss_wage_base" ]; then
+            args="$args --ss-wage-base $ss_wage_base"
+          fi
+
+          echo "## Tax Bracket Update — $year" > .tax-update-summary.md
+          echo "" >> .tax-update-summary.md
+
+          # Run the script and capture output + exit code
+          set +e
+          output=$(npx tsx scripts/update-tax-brackets.ts $args --validate 2>&1)
+          exit_code=$?
+          set -e
+
+          echo "$output" | tee -a .tax-update-summary.md
+
+          # Check if SS wage base was the only failure
+          if [ $exit_code -ne 0 ] && echo "$output" | grep -q "Social Security wage base not found"; then
+            echo "ss_missing=true" >> "$GITHUB_OUTPUT"
+          elif [ $exit_code -ne 0 ]; then
+            echo "Script failed:"
+            echo "$output"
+            exit 1
+          fi
+
+          echo "year=$year" >> "$GITHUB_OUTPUT"
+
+      - name: Open issue for missing SS wage base
+        if: steps.generate.outputs.ss_missing == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          year="${{ github.event.inputs.year }}"
+          repo="${{ github.repository }}"
+
+          gh issue create --repo "$repo" \
+            --title "Tax bracket updater: need SS wage base for ${year}" \
+            --body "$(cat <<EOF
+          The tax bracket updater ran for **${year}** but could not auto-fetch the Social Security wage base from the IRS.
+
+          ## Action needed
+
+          1. Find the ${year} SS wage base at [SSA](https://www.ssa.gov/oact/cola/cbb.html) or [IRS Topic 751](https://www.irs.gov/taxtopics/tc751)
+          2. Re-run the workflow with the wage base filled in: **Actions → Tax Bracket Updater → Run workflow**
+             - Year: \`${year}\`
+             - SS wage base: *(enter the value from step 1)*
+
+          [Re-run Tax Bracket Updater →](https://github.com/${repo}/actions/workflows/tax-bracket-updater.yml)
+          EOF
+          )" \
+            --label "maintenance"
+
+          echo "::notice::SS wage base not available for ${year}. Created an issue with instructions to re-run."
+
+      - name: Create pull request
+        if: steps.generate.outputs.ss_missing != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          year="${{ steps.generate.outputs.year }}"
+          branch="tax-brackets/${year}"
+          git checkout -b "$branch"
+
+          git add .tax-update-summary.md
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: generate ${year} tax bracket data for review"
+          git push -u origin "$branch"
+
+          body=$(cat .tax-update-summary.md)
+
+          gh pr create \
+            --title "Tax brackets: add ${year} data" \
+            --body "$body" \
+            --draft \
+            --base main \
+            --head "$branch"

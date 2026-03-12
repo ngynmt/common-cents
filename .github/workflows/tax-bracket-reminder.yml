@@ -1,0 +1,56 @@
+name: Tax Bracket Reminder
+
+on:
+  schedule:
+    # November 1st at 14:00 UTC — IRS typically publishes Rev. Proc. in Oct/Nov
+    - cron: "0 14 1 11 *"
+
+permissions:
+  issues: write
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Calculate next tax year
+        id: year
+        run: |
+          # The IRS publishes brackets in fall for the *next* calendar year
+          next_year=$(($(date +%Y) + 1))
+          echo "next_year=$next_year" >> "$GITHUB_OUTPUT"
+
+      - name: Create reminder issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          next_year="${{ steps.year.outputs.next_year }}"
+          repo="${{ github.repository }}"
+
+          # Don't create duplicate issues
+          existing=$(gh issue list --repo "$repo" --search "Tax brackets ${next_year}" --state open --json number --jq 'length')
+          if [ "$existing" -gt 0 ]; then
+            echo "Reminder issue for ${next_year} already exists, skipping."
+            exit 0
+          fi
+
+          gh issue create --repo "$repo" \
+            --title "Update tax brackets for ${next_year}" \
+            --body "$(cat <<EOF
+The IRS has likely published the inflation-adjusted tax brackets for **${next_year}** (via Revenue Procedure, typically released in October/November).
+
+## Action needed
+
+1. Confirm brackets are published: check [Tax Foundation](https://taxfoundation.org/data/all/federal/${next_year}-tax-brackets/) or [IRS Newsroom](https://www.irs.gov/newsroom)
+2. Find the ${next_year} Social Security wage base from [SSA](https://www.ssa.gov/oact/cola/cbb.html)
+3. Run the updater workflow: **Actions → Tax Bracket Updater → Run workflow**
+   - Enter year: \`${next_year}\`
+   - Enter SS wage base from step 2
+4. Review the generated PR and apply the config to \`src/lib/tax.ts\`
+
+## Quick link
+
+[Run Tax Bracket Updater →](https://github.com/${repo}/actions/workflows/tax-bracket-updater.yml)
+EOF
+)" \
+            --label "maintenance"
