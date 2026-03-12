@@ -6,21 +6,56 @@ import { motion, AnimatePresence } from "framer-motion";
 import TaxForm from "@/components/TaxForm";
 import TaxReceipt from "@/components/TaxReceipt";
 import { estimateFederalTax, type FilingStatus, type TaxEstimate } from "@/lib/tax";
-import { getRepresentatives, sampleVotes, type Representative, type VoteRecord } from "@/data/representatives";
+import { type Representative, type VoteRecord } from "@/data/representatives";
+
+async function fetchVotes(reps: Representative[]): Promise<VoteRecord[]> {
+  const houseReps = reps.filter((r) => r.chamber === "house");
+  const senateReps = reps.filter((r) => r.chamber === "senate");
+
+  const bioguideIds = houseReps.map((r) => r.id);
+  const lisIds = senateReps.map((r) => r.lisId).filter(Boolean) as string[];
+
+  // Build a map from lisId -> bioguideId for re-mapping senate vote records
+  const lisToId = new Map<string, string>();
+  for (const rep of senateReps) {
+    if (rep.lisId) lisToId.set(rep.lisId, rep.id);
+  }
+
+  if (bioguideIds.length === 0 && lisIds.length === 0) return [];
+
+  try {
+    const params = new URLSearchParams();
+    if (bioguideIds.length > 0) params.set("bioguideIds", bioguideIds.join(","));
+    if (lisIds.length > 0) params.set("lisIds", lisIds.join(","));
+
+    const res = await fetch(`/api/votes?${params.toString()}`);
+    const data = await res.json();
+
+    if (!data.votes || !Array.isArray(data.votes)) return [];
+
+    // Re-map senate vote representativeIds from "lis:S270" back to bioguide IDs
+    return data.votes.map((v: VoteRecord) => {
+      if (v.representativeId.startsWith("lis:")) {
+        const lisId = v.representativeId.slice(4);
+        return { ...v, representativeId: lisToId.get(lisId) || v.representativeId };
+      }
+      return v;
+    });
+  } catch {
+    return [];
+  }
+}
 
 async function fetchRepresentatives(zipCode: string): Promise<Representative[] | null> {
-  if (!zipCode || zipCode.length < 5) return getRepresentatives(zipCode);
+  if (!zipCode || zipCode.length < 5) return null;
 
   try {
     const res = await fetch(`/api/representatives?zip=${encodeURIComponent(zipCode)}`);
     const data = await res.json();
-    if (data.fallback || !data.representatives) {
-      // API key not set or API error — use sample data
-      return getRepresentatives(zipCode);
-    }
+    if (data.fallback || !data.representatives) return null;
     return data.representatives;
   } catch {
-    return getRepresentatives(zipCode);
+    return null;
   }
 }
 
@@ -42,8 +77,8 @@ function HomeContent() {
     const reps = await fetchRepresentatives(zipCode);
     setRepresentatives(reps);
     if (reps) {
-      const repIds = reps.map((r) => r.id);
-      setVotes(sampleVotes.filter((v) => repIds.includes(v.representativeId)));
+      const liveVotes = await fetchVotes(reps);
+      setVotes(liveVotes);
     } else {
       setVotes([]);
     }

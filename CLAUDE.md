@@ -10,7 +10,7 @@ A civic tech web app that transforms your federal tax contribution into a person
 - **Charts:** Recharts v3
 - **State:** React hooks + URL search params (no external state library)
 - **Engagement counters:** Upstash Redis (in-memory Map fallback for dev)
-- **APIs:** Geocodio (ZIP → reps), Congress.gov (bills/votes — planned)
+- **APIs:** Geocodio (ZIP → reps), House Clerk + Senate XML (roll call votes)
 - **Hosting:** Vercel
 
 ## Key Decisions
@@ -32,7 +32,7 @@ npm run test:watch # Run tests in watch mode
 
 ## Environment Variables
 
-See `.env.example` for all keys. The app works without any env vars (falls back to in-memory counters and sample rep data).
+See `.env.example` for all keys. The app works without env vars (in-memory counters, no rep data shown). Set `GEOCODIO_API_KEY` for live representative lookup and vote records.
 
 ---
 

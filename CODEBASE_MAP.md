@@ -41,7 +41,8 @@ page.tsx
 |---|---|
 | `src/data/budget.ts` | FY2024 spending categories (14 categories, subcategories, agencies, legislation). `TOTAL_FEDERAL_SPENDING = 6750B` |
 | `src/data/pending-bills.ts` | 8 curated active bills with CBO cost estimates, champions, passage likelihood |
-| `src/data/representatives.ts` | Sample rep data for 3 ZIP prefixes (100/770/900), sample vote records, `generateContactScript()` helper |
+| `src/data/representatives.ts` | `Representative` and `VoteRecord` type definitions, `generateContactScript()` helper |
+| `src/data/tracked-votes.ts` | 8 tracked bills with House/Senate roll call numbers, category mappings, and vote effect descriptions |
 
 ## Libraries
 
@@ -56,7 +57,8 @@ page.tsx
 
 | File | Method | Purpose |
 |---|---|---|
-| `src/app/api/representatives/route.ts` | GET | ZIP → Geocodio API → senators + house rep(s). Cached 24h. Falls back to sample data. |
+| `src/app/api/representatives/route.ts` | GET | ZIP → Geocodio API → senators + house rep(s) with bioguide + LIS IDs. Cached 24h. Falls back to sample data. |
+| `src/app/api/votes/route.ts` | GET | Fetches House/Senate roll call XML for tracked bills, returns vote records for requested legislators. Cached 24h. |
 | `src/app/api/engagement/route.ts` | GET | Returns support/oppose/contacted counts for specified bill IDs |
 | `src/app/api/engagement/route.ts` | POST | Increments a counter (support, oppose, or contacted) for a bill |
 

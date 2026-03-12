@@ -3,33 +3,33 @@
 ## System Overview
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                        Browser (Client)                         │
-│                                                                 │
-│  ┌──────────┐  ┌───────────┐  ┌────────────┐  ┌─────────────┐  │
-│  │ TaxForm  │→ │ Tax Calc  │→ │ Spending   │→ │ TaxReceipt  │  │
-│  │ (input)  │  │ (lib/tax) │  │ Allocation │  │ (output)    │  │
-│  └──────────┘  └───────────┘  │(lib/spend) │  └─────────────┘  │
-│                               └────────────┘         │          │
-│                                                      ▼          │
-│                                              ┌──────────────┐   │
-│                                              │ SpendingChart│   │
-│                                              │ ReceiptLine  │   │
-│                                              │ BillsPanel   │   │
-│                                              │ RepsModal    │   │
-│                                              └──────────────┘   │
-└──────────────────────┬──────────────────────────────┬───────────┘
-                       │ fetch                        │ fetch
-                       ▼                              ▼
-              ┌─────────────────┐           ┌──────────────────┐
-              │/api/engagement  │           │/api/representatives│
-              │                 │           │                    │
-              │ GET: read counts│           │ ZIP → Geocodio API │
-              │ POST: increment │           │ Returns senators + │
-              │                 │           │ house rep(s)       │
-              └────────┬────────┘           └────────────────────┘
-                       │
-                       ▼
+┌───────────────────────────────────────────────────────────────────┐
+│                        Browser (Client)                           │
+│                                                                   │
+│  ┌──────────┐  ┌───────────┐  ┌────────────┐  ┌─────────────┐     │
+│  │ TaxForm  │→ │ Tax Calc  │→ │ Spending   │→ │ TaxReceipt  │     │
+│  │ (input)  │  │ (lib/tax) │  │ Allocation │  │ (output)    │     │
+│  └──────────┘  └───────────┘  │(lib/spend) │  └─────────────┘     │
+│                               └────────────┘         │            │
+│                                                      ▼            │
+│                                              ┌──────────────┐     │
+│                                              │ SpendingChart│     │
+│                                              │ ReceiptLine  │     │
+│                                              │ BillsPanel   │     │
+│                                              │ RepsModal    │     │
+│                                              └──────────────┘     │
+└──────────────────────┬──────────────┬─────────────────┬───────────┘
+                       │ fetch        │ fetch           │ fetch
+                       ▼              ▼                 ▼
+              ┌───────────────┐ ┌─────────────┐ ┌────────────────────┐
+              │/api/engagement│ │ /api/votes  │ │/api/representatives│
+              │               │ │             │ │                    │
+              │GET: read cnts │ │ House XML + │ │ ZIP → Geocodio API │
+              │POST: incr     │ │ Senate XML  │ │ Returns senators + │
+              │               │ │ → VoteRecs  │ │ house rep(s)       │
+              └──────┬────────┘ └─────────────┘ └────────────────────┘
+                     │
+                     ▼
               ┌─────────────────┐
               │  Upstash Redis  │
               │  (or in-memory  │
@@ -71,7 +71,7 @@ Geocodio resolves the ZIP to congressional district(s) and returns the exact leg
 
 The API route exists to keep the Geocodio key server-side. Responses are cached for 24 hours (`revalidate: 86400`).
 
-**Fallback:** If no API key is configured, the client falls back to sample data from `data/representatives.ts` (covers ZIP prefixes 100, 770, 900).
+**Fallback:** If no API key is configured or the lookup fails, representatives are `null` and the reps section is not shown.
 
 ### 4. Engagement Counters (server-side API route + Redis)
 
@@ -84,7 +84,22 @@ Counters are atomic (Redis INCR) and use pipelined reads for efficiency. The `us
 
 **Fallback:** When `UPSTASH_REDIS_REST_URL` is not set, an in-memory `Map` stores counters (resets on server restart).
 
-### 5. Bill Data (static, curated)
+### 5. Vote Records (server-side API route)
+
+```
+Rep bioguide IDs + senator LIS IDs → /api/votes
+  → Fetches House XML (clerk.house.gov) + Senate XML (senate.gov)
+  → Parses individual votes for requested legislators
+  → Returns VoteRecord[] with yes/no/abstain/not_voting
+```
+
+The app tracks 8 landmark bills defined in `data/tracked-votes.ts`. For each bill, the API fetches roll call XML from the official House Clerk and Senate websites, matching by bioguide ID (house) or LIS member ID (senate).
+
+Responses are cached 24h (`revalidate: 86400`). An in-memory cache also prevents re-parsing the same XML within a serverless function lifetime.
+
+**Fallback:** If XML fetches fail, vote data is simply empty (no sample votes shown for live reps).
+
+### 6. Bill Data (static, curated)
 
 `data/pending-bills.ts` contains 8 curated active bills with:
 - CBO-sourced spending impacts
@@ -93,8 +108,6 @@ Counters are atomic (Redis INCR) and use pipelined reads for efficiency. The `us
 - Category mappings
 
 `data/budget.ts` contains enacted legislation linked to each spending category.
-
-Both are manually curated for MVP. Congress.gov API integration is planned.
 
 ## URL Persistence
 

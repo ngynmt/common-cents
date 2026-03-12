@@ -23,6 +23,7 @@ interface GeocodioLegislator {
   };
   references: {
     bioguide_id: string;
+    lis_id?: string;
   };
 }
 
@@ -80,6 +81,7 @@ function transformLegislator(
     website: leg.contact.url || "",
     contactFormUrl: leg.contact.contact_form || (leg.contact.url ? `${leg.contact.url.replace(/\/$/, "")}/contact` : ""),
     nextElection: estimateNextElection(leg.type, leg.references.bioguide_id, [district]),
+    lisId: leg.references.lis_id || undefined,
   };
 }
 
