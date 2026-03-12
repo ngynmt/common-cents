@@ -12,6 +12,7 @@ interface ReceiptLineProps {
   isExpanded: boolean;
   onToggle: () => void;
   isActive: boolean;
+  previousAmount?: number; // for year-over-year comparison
 }
 
 function StatusBadge({ status }: { status: Legislation["status"] }) {
@@ -44,6 +45,7 @@ export default function ReceiptLine({
   isExpanded,
   onToggle,
   isActive,
+  previousAmount,
 }: ReceiptLineProps) {
   const subcategories = calculateSubcategorySpending(item.amount, item.category);
 
@@ -80,9 +82,15 @@ export default function ReceiptLine({
           <div className="text-sm font-semibold text-white">
             {formatCurrency(item.amount)}
           </div>
-          <div className="text-xs text-gray-400">
-            {formatPercent(item.percentage / 100)}
-          </div>
+          {previousAmount !== undefined && Math.abs(item.amount - previousAmount) >= 1 ? (
+            <div className={`text-[10px] font-medium ${item.amount > previousAmount ? "text-red-400" : "text-green-400"}`}>
+              {item.amount > previousAmount ? "+" : ""}{formatCurrency(item.amount - previousAmount)}
+            </div>
+          ) : (
+            <div className="text-xs text-gray-400">
+              {formatPercent(item.percentage / 100)}
+            </div>
+          )}
         </div>
 
         {/* Expand arrow */}

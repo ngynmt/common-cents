@@ -1,8 +1,9 @@
 /**
- * Federal budget spending data (FY 2024 estimates)
+ * Federal budget spending data (FY 2024 & FY 2025)
  *
- * Source: OMB Historical Tables, CBO projections
- * Total federal spending: ~$6.75 trillion
+ * Source: OMB Historical Tables, CBO Budget & Economic Outlook
+ * FY 2024 total: ~$6.75 trillion
+ * FY 2025 total: ~$7.00 trillion (CBO Jan 2025 projection)
  *
  * Each category includes subcategories with agency/program-level detail.
  * Amounts are in billions of dollars.
@@ -35,9 +36,75 @@ export interface Legislation {
   impact: string; // how it affects this spending category
 }
 
-export const TOTAL_FEDERAL_SPENDING = 6750; // billions
+import type { TaxYear } from "@/lib/tax";
 
-export const budgetData: BudgetCategory[] = [
+export const TOTAL_FEDERAL_SPENDING: Record<TaxYear, number> = {
+  2024: 6750,
+  2025: 7000,
+};
+
+/**
+ * FY2025 category amounts (billions). CBO January 2025 projections.
+ * Key changes from FY2024:
+ * - Interest: +$60B (higher rates, larger debt)
+ * - Social Security: +$79B (2.5% COLA increase)
+ * - Healthcare: +$79B (Medicare/Medicaid growth)
+ * - Veterans: +$15B (PACT Act ramp-up)
+ * - Defense: +$9B (NDAA FY2025 at $895B)
+ */
+const FY2025_AMOUNTS: Record<string, number> = {
+  "social-security": 1540,
+  "healthcare": 1810,
+  "defense": 895,
+  "interest": 952,
+  "income-security": 660,
+  "veterans": 190,
+  "education": 265,
+  "infrastructure": 175,
+  "immigration": 68,
+  "science": 75,
+  "international": 65,
+  "justice": 82,
+  "agriculture": 42,
+  "government": 181,
+};
+
+/**
+ * FY2025 subcategory amounts. Scaled proportionally from FY2024 base,
+ * with notable adjustments for known policy changes.
+ */
+const FY2025_SUBCATEGORY_OVERRIDES: Record<string, Record<string, number>> = {
+  "social-security": {
+    "Old-Age & Survivors Insurance (OASI)": 1297,
+    "Disability Insurance (SSDI)": 156,
+    "Supplemental Security Income (SSI)": 66,
+    "Administration & Operations": 21,
+  },
+  "healthcare": {
+    "Medicare": 916,
+    "Medicaid": 645,
+    "ACA Marketplace Subsidies": 115,
+    "Veterans Health Administration": 112,
+    "CHIP (Children's Health Insurance)": 15,
+    "Other Health Programs": 7,
+  },
+  "interest": {
+    "Interest on Treasury Securities": 898,
+    "Other Interest": 54,
+  },
+  "defense": {
+    "Military Personnel": 178,
+    "Operations & Maintenance": 300,
+    "Procurement": 170,
+    "Research & Development": 114,
+    "Military Construction & Housing": 18,
+    "Nuclear Weapons Programs": 33,
+    "Other Defense": 82,
+  },
+};
+
+/** FY2024 budget data (base). */
+const budgetData2024: BudgetCategory[] = [
   {
     id: "social-security",
     name: "Social Security",
@@ -859,3 +926,36 @@ export const budgetData: BudgetCategory[] = [
     ],
   },
 ];
+
+/**
+ * Generate FY2025 budget data by adjusting FY2024 amounts.
+ * Subcategory amounts are scaled proportionally unless overridden.
+ */
+function generateFY2025Data(): BudgetCategory[] {
+  return budgetData2024.map((category) => {
+    const newAmount = FY2025_AMOUNTS[category.id] ?? category.amount;
+    const ratio = newAmount / category.amount;
+    const subOverrides = FY2025_SUBCATEGORY_OVERRIDES[category.id];
+
+    return {
+      ...category,
+      amount: newAmount,
+      subcategories: category.subcategories.map((sub) => ({
+        ...sub,
+        amount: subOverrides?.[sub.name] ?? Math.round(sub.amount * ratio),
+      })),
+    };
+  });
+}
+
+const budgetData2025 = generateFY2025Data();
+
+/**
+ * Get budget data for a specific fiscal year.
+ */
+export function getBudgetData(year: TaxYear = 2025): BudgetCategory[] {
+  return year === 2024 ? budgetData2024 : budgetData2025;
+}
+
+/** @deprecated Use getBudgetData(year) instead */
+export const budgetData = budgetData2024;

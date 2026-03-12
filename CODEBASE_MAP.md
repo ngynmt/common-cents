@@ -39,7 +39,7 @@ page.tsx
 
 | File | Purpose |
 |---|---|
-| `src/data/budget.ts` | FY2024 spending categories (14 categories, subcategories, agencies, legislation). `TOTAL_FEDERAL_SPENDING = 6750B` |
+| `src/data/budget.ts` | FY2024 & FY2025 spending categories (14 categories, subcategories, agencies, legislation). `getBudgetData(year)`, `TOTAL_FEDERAL_SPENDING[year]` |
 | `src/data/pending-bills.ts` | 8 curated active bills with CBO cost estimates, champions, passage likelihood |
 | `src/data/representatives.ts` | `Representative` and `VoteRecord` type definitions, `generateContactScript()` helper |
 | `src/data/tracked-votes.ts` | 8 tracked bills with House/Senate roll call numbers, category mappings, and vote effect descriptions |
@@ -48,8 +48,8 @@ page.tsx
 
 | File | Purpose |
 |---|---|
-| `src/lib/tax.ts` | Federal tax estimation (2024 brackets, standard deduction, FICA). Exports `estimateFederalTax()`, `formatCurrency()`, `formatPercent()` |
-| `src/lib/spending.ts` | Maps total tax to spending categories proportionally. Exports `calculatePersonalSpending()`, `calculateSubcategorySpending()` |
+| `src/lib/tax.ts` | Federal tax estimation (2024 & 2025 brackets, standard deduction, FICA). Exports `estimateFederalTax(income, status, year?)`, `formatCurrency()`, `formatPercent()` |
+| `src/lib/spending.ts` | Maps total tax to spending categories proportionally. Exports `calculatePersonalSpending(tax, year?)`, `calculateSubcategorySpending()` |
 | `src/lib/redis.ts` | Upstash Redis client with in-memory Map fallback. Exports `incrementCounter()`, `getCounter()`, `getCounters()` |
 | `src/lib/useEngagement.ts` | Client hook for bill engagement counters. Fetches from and posts to `/api/engagement` |
 

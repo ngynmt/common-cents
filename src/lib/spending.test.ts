@@ -1,6 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { calculatePersonalSpending, calculateSubcategorySpending } from "./spending";
-import { budgetData } from "@/data/budget";
+import { getBudgetData } from "@/data/budget";
+
+const budgetData = getBudgetData(2025);
 
 describe("calculatePersonalSpending", () => {
   it("returns all budget categories", () => {

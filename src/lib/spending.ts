@@ -5,7 +5,8 @@
  * to estimate how much of the user's taxes go to each category.
  */
 
-import { budgetData, TOTAL_FEDERAL_SPENDING, type BudgetCategory, type BudgetSubcategory } from "@/data/budget";
+import { getBudgetData, TOTAL_FEDERAL_SPENDING, type BudgetCategory, type BudgetSubcategory } from "@/data/budget";
+import type { TaxYear } from "@/lib/tax";
 
 export interface PersonalSpendingCategory {
   category: BudgetCategory;
@@ -22,10 +23,16 @@ export interface PersonalSpendingSubcategory {
 /**
  * Calculate how the user's total federal tax is distributed across spending categories.
  */
-export function calculatePersonalSpending(totalFederalTax: number): PersonalSpendingCategory[] {
-  return budgetData
+export function calculatePersonalSpending(
+  totalFederalTax: number,
+  taxYear: TaxYear = 2025,
+): PersonalSpendingCategory[] {
+  const data = getBudgetData(taxYear);
+  const totalSpending = TOTAL_FEDERAL_SPENDING[taxYear];
+
+  return data
     .map((category) => {
-      const proportion = category.amount / TOTAL_FEDERAL_SPENDING;
+      const proportion = category.amount / totalSpending;
       return {
         category,
         amount: totalFederalTax * proportion,

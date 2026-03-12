@@ -49,11 +49,11 @@ User input (income, filing status)
   → Maps total tax to 14 budget categories by federal spending proportions
 ```
 
-Tax brackets, standard deductions, and FICA rates are from IRS 2024 data, hardcoded in `lib/tax.ts`. No network request needed.
+Tax brackets, standard deductions, and FICA rates are from IRS data (2024 and 2025), stored in `lib/tax.ts`. The `estimateFederalTax()` function accepts a `TaxYear` parameter (defaults to 2025). No network request needed.
 
 ### 2. Spending Allocation (client-side, no API)
 
-Budget category proportions come from `data/budget.ts` (FY2024 OMB data). The user's total federal tax is distributed across categories proportionally:
+Budget category proportions come from `data/budget.ts` (FY2024 and FY2025 OMB/CBO data). The `getBudgetData(year)` function returns category data for the requested year. The user's total federal tax is distributed across categories proportionally:
 
 ```
 User's $15,000 tax × (Defense 13.2% of federal budget) = $1,980 toward defense

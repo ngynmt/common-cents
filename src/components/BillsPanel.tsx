@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { pendingBills, getBillImpactForCategory, type PendingBill } from "@/data/pending-bills";
-import { TOTAL_FEDERAL_SPENDING } from "@/data/budget";
+import { TOTAL_FEDERAL_SPENDING, getBudgetData } from "@/data/budget";
 import { formatCurrency } from "@/lib/tax";
 import type { Representative } from "@/data/representatives";
 import { useEngagement } from "@/lib/useEngagement";
@@ -192,33 +192,20 @@ export default function BillsPanel({
     return colors[bill.impactedCategories[0]] || "#6366f1";
   };
 
+  const budgetCategories = useMemo(() => getBudgetData(2025), []);
+  const totalSpending = TOTAL_FEDERAL_SPENDING[2025];
+
   const getUserImpact = (bill: PendingBill) => {
-    return (bill.totalAnnualImpact / TOTAL_FEDERAL_SPENDING) * totalFederalTax;
+    return (bill.totalAnnualImpact / totalSpending) * totalFederalTax;
   };
 
   const getCurrentAmount = (bill: PendingBill) => {
     const catId = bill.impactedCategories[0];
     const impact = getBillImpactForCategory(bill, catId);
     if (!impact) return 0;
-    // Rough estimate: get the category's share of user's total tax
-    const categoryAmounts: Record<string, number> = {
-      defense: 886,
-      healthcare: 1731,
-      "social-security": 1461,
-      "income-security": 671,
-      infrastructure: 165,
-      immigration: 62,
-      education: 274,
-      science: 72,
-      veterans: 175,
-      interest: 892,
-      international: 73,
-      justice: 78,
-      agriculture: 46,
-      government: 164,
-    };
-    const catAmount = categoryAmounts[catId] || 100;
-    return (catAmount / TOTAL_FEDERAL_SPENDING) * totalFederalTax;
+    const cat = budgetCategories.find((c) => c.id === catId);
+    const catAmount = cat?.amount || 100;
+    return (catAmount / totalSpending) * totalFederalTax;
   };
 
   return (
