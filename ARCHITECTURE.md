@@ -119,6 +119,45 @@ The app stores state in URL search params for shareability:
 
 On mount, `page.tsx` checks for these params and auto-generates the receipt if present. This means receipts survive refresh and can be shared as links.
 
+## Data Maintenance
+
+Several data sources in this app require periodic manual updates. They are listed below in order of how quickly they go stale.
+
+### Ongoing — as Congress acts
+
+| Data | File(s) | Trigger | What to update |
+|------|---------|---------|----------------|
+| Pending bills | `src/data/pending-bills.ts` | Bills pass, die, or new ones are introduced | `status`, `lastActionDate`, `passageLikelihood`, `cosponsors`; add/remove bills as the legislative landscape shifts |
+| Tracked roll call votes | `src/data/tracked-votes.ts` | When you want to track votes on a newly enacted bill | Add the roll call number and bill metadata |
+| Vote context descriptions | `src/components/RepresentativeCard.tsx` → `VOTE_CONTEXT` | When new tracked votes are added | Add a `yesEffect` / `noEffect` entry for each new bill title |
+| Per-category legislation | `src/data/budget.ts` → `legislation` arrays | When a major new law is enacted that affects a spending category | Update the relevant category's `legislation` array |
+
+### Annual — every tax season (Oct–Jan)
+
+| Data | File(s) | Trigger | What to update |
+|------|---------|---------|----------------|
+| Tax brackets & standard deduction | `src/lib/tax.ts` → `TAX_YEAR_CONFIG` | IRS publishes Rev. Proc. each fall (usually Oct/Nov) for the next tax year | Add a new entry to `TAX_YEAR_CONFIG`, update the `TaxYear` union type, and add to `SUPPORTED_TAX_YEARS` |
+| FICA Social Security wage base | `src/lib/tax.ts` → `socialSecurityWageBase` | SSA announces the new wage base each Oct | Update the value in the new year's config |
+| Federal budget category amounts | `src/data/budget.ts` → `FY20XX_AMOUNTS` | CBO releases updated projections (usually Jan/Feb) | Add new fiscal year amounts and subcategory overrides; update `TOTAL_FEDERAL_SPENDING` |
+
+### Rarely
+
+| Data | File(s) | Trigger | What to update |
+|------|---------|---------|----------------|
+| Senate class-to-state map | `src/data/senate-classes.ts` | Never — classes are permanent per seat | Nothing unless a new state is admitted |
+| FICA tax rates | `src/lib/tax.ts` → `SOCIAL_SECURITY_RATE`, `MEDICARE_RATE` | Congressional action (last changed in 1990) | Update the constants |
+| Budget category definitions | `src/data/budget.ts` → category `id`, `name`, `color` | Only if you want to restructure how spending is categorized | Update the category objects and any references in `pending-bills.ts` |
+
+### Automation status
+
+| Data | Status | Details |
+|------|--------|---------|
+| Tracked roll call votes | **Automated** | `scripts/discover-bills.ts` + `scripts/draft-bill.ts` discover new enacted bills via Congress.gov API and generate draft `TrackedVote` entries. See `docs/bill-tracker-cli-spec.md`. |
+| Pending bill statuses | **Spec'd** | `scripts/refresh-bill-status.ts` (planned) — refreshes `status`, `lastActionDate`, `cosponsors` in `pending-bills.ts` via Congress.gov API. See `docs/bill-status-refresher-spec.md`. |
+| Tax brackets | **Spec'd** | `scripts/update-tax-brackets.ts` (planned) — fetches new-year bracket data and generates a config entry. See `docs/tax-bracket-updater-spec.md`. |
+| Budget data | **Spec'd** | `scripts/update-budget-data.ts` (planned) — parses CBO historical tables and generates fiscal year amounts. See `docs/budget-data-updater-spec.md`. |
+| Live vote records | **Live** | Already fetched at runtime from House Clerk / Senate XML — no script needed. |
+
 ## Key Architectural Constraints
 
 - **No database** beyond Redis counters — all substantive data is client-side or from external APIs

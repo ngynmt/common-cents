@@ -38,6 +38,9 @@ yarn-error.log*
 .claude/
 SCRATCHPAD.md
 
+# bill tracker temp artifacts
+.bill-tracker-summary.md
+
 # vercel
 .vercel
 

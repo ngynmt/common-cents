@@ -5,7 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import TaxForm from "@/components/TaxForm";
 import TaxReceipt from "@/components/TaxReceipt";
-import { estimateFederalTax, type FilingStatus, type TaxEstimate } from "@/lib/tax";
+import { estimateFederalTax, SUPPORTED_TAX_YEARS, type FilingStatus, type TaxEstimate } from "@/lib/tax";
 import { type Representative, type VoteRecord } from "@/data/representatives";
 
 const FETCH_TIMEOUT_MS = 8000;
@@ -163,7 +163,7 @@ function HomeContent() {
             </button>
           </div>
           <span className="text-xs text-gray-500">
-            FY 2025 Estimates
+            FY {SUPPORTED_TAX_YEARS[SUPPORTED_TAX_YEARS.length - 1]} Estimates
           </span>
         </div>
       </header>

@@ -1,0 +1,73 @@
+name: Bill Tracker
+
+on:
+  schedule:
+    # Every Monday at 9am UTC
+    - cron: "0 9 * * 1"
+  workflow_dispatch:
+    inputs:
+      congress:
+        description: "Congress number (default: 119)"
+        required: false
+        default: "119"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  discover-and-draft:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Run bill tracker
+        env:
+          CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY }}
+        run: |
+          congress="${{ github.event.inputs.congress || '119' }}"
+          npx tsx scripts/auto-track-bills.ts --congress "$congress"
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet src/data/tracked-votes.ts; then
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create pull request
+        if: steps.changes.outputs.has_changes == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          branch="bill-tracker/$(date +%Y-%m-%d)"
+          git checkout -b "$branch"
+          git add src/data/tracked-votes.ts
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "draft: add new tracked bill entries"
+          git push -u origin "$branch"
+
+          body=""
+          if [ -f .bill-tracker-summary.md ]; then
+            body=$(cat .bill-tracker-summary.md)
+          else
+            body="New tracked bill entries discovered by the bill tracker workflow."
+          fi
+
+          gh pr create \
+            --title "Draft: new tracked bill entries" \
+            --body "$body" \
+            --draft \
+            --base main \
+            --head "$branch"
