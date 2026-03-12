@@ -1,5 +1,7 @@
 # Semi-Automated Bill Tracking CLI
 
+**Status:** ✅ Complete
+
 ## Problem
 
 `src/data/tracked-votes.ts` is manually curated. When Congress passes a significant bill, someone has to look up the roll call numbers, map it to a spending category, and write effect descriptions. This is infrequent (~5-10 bills/year) but tedious.
@@ -16,7 +18,7 @@ A CLI script that discovers new roll call votes and generates a draft entry for 
 - **House Clerk XML** (`clerk.house.gov/evs/{year}/roll{number}.xml`) — vote totals and individual votes
 - **Senate XML** (`senate.gov/.../vote_{congress}_{session}_{number}.xml`) — vote totals and individual votes
 
-## Proposed CLI
+## CLI
 
 ```bash
 # Discover recent final passage votes

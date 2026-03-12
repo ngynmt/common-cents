@@ -125,7 +125,7 @@ Targeted string replacement per field, preserving manual content (`summary`, `sh
 
 ## What stays manual
 
-- **Adding new pending bills** — editorial decision (see [bill-suggestion-pipeline-spec](./bill-suggestion-pipeline-spec.md) for automation)
+- **Adding new pending bills** — editorial decision (see [bill-suggestion-pipeline-spec](../todo/bill-suggestion-pipeline-spec.md) for automation)
 - **`summary`** — requires human judgment
 - **`shortTitle`** — the API title is often too long or formal
 - **`spendingImpacts`** — CBO score interpretation is manual
@@ -137,4 +137,4 @@ Targeted string replacement per field, preserving manual content (`summary`, `sh
 - Automatic commits or PRs (could be added as a GitHub Action wrapper later)
 - CBO score fetching (CBO doesn't have a public API)
 - Sponsor/champion updates (rarely changes)
-- Adding new bills to the pending list (see [bill-suggestion-pipeline-spec](./bill-suggestion-pipeline-spec.md))
+- Adding new bills to the pending list (see [bill-suggestion-pipeline-spec](../todo/bill-suggestion-pipeline-spec.md))
