@@ -127,6 +127,7 @@ export async function fetchBillCommittees(
 
 /**
  * Fetch cosponsor count for a bill.
+ * Uses limit=1 to minimize payload — the count is in pagination.count.
  */
 export async function fetchBillCosponsors(
   congress: number,
@@ -134,14 +135,18 @@ export async function fetchBillCosponsors(
   billNumber: number
 ): Promise<number> {
   const type = billType.toLowerCase();
-  const data = await fetchJson<CongressApiResponse<unknown[]>>(
+  const data = await fetchJson<Record<string, unknown>>(
     `${BASE_URL}/bill/${congress}/${type}/${billNumber}/cosponsors?limit=1`
   );
-  // The API returns a count field at the top level
-  const count = (data as Record<string, unknown>).count;
-  if (typeof count === "number") return count;
-  // Fallback: count the array
-  const cosponsors = (data as Record<string, unknown>).cosponsors;
+  const pagination = data.pagination as
+    | { count?: number }
+    | undefined;
+  if (pagination?.count !== undefined) return pagination.count;
+  // Fallback: fetch full list and count
+  const full = await fetchJson<Record<string, unknown>>(
+    `${BASE_URL}/bill/${congress}/${type}/${billNumber}/cosponsors?limit=250`
+  );
+  const cosponsors = full.cosponsors;
   return Array.isArray(cosponsors) ? cosponsors.length : 0;
 }
 

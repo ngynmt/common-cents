@@ -62,7 +62,7 @@ export const pendingBills: PendingBill[] = [
       state: "VT",
       title: "Senator",
     },
-    cosponsors: 1,
+    cosponsors: 10,
     bipartisan: false,
     impactedCategories: ["social-security"],
     spendingImpacts: [
@@ -96,7 +96,7 @@ export const pendingBills: PendingBill[] = [
       state: "NJ",
       title: "Ranking Member, Energy & Commerce Committee",
     },
-    cosponsors: 1,
+    cosponsors: 49,
     bipartisan: false,
     impactedCategories: ["healthcare"],
     spendingImpacts: [
@@ -130,7 +130,7 @@ export const pendingBills: PendingBill[] = [
       state: "VT",
       title: "Senator",
     },
-    cosponsors: 1,
+    cosponsors: 11,
     bipartisan: false,
     impactedCategories: ["education"],
     spendingImpacts: [
@@ -164,7 +164,7 @@ export const pendingBills: PendingBill[] = [
       state: "TX",
       title: "Representative",
     },
-    cosponsors: 1,
+    cosponsors: 46,
     bipartisan: false,
     impactedCategories: ["immigration"],
     spendingImpacts: [
@@ -232,7 +232,7 @@ export const pendingBills: PendingBill[] = [
       state: "IL",
       title: "Representative",
     },
-    cosponsors: 1,
+    cosponsors: 36,
     bipartisan: false,
     impactedCategories: ["social-security"],
     spendingImpacts: [
