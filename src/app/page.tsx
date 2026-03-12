@@ -8,6 +8,22 @@ import TaxReceipt from "@/components/TaxReceipt";
 import { estimateFederalTax, type FilingStatus, type TaxEstimate } from "@/lib/tax";
 import { getRepresentatives, sampleVotes, type Representative, type VoteRecord } from "@/data/representatives";
 
+async function fetchRepresentatives(zipCode: string): Promise<Representative[] | null> {
+  if (!zipCode || zipCode.length < 5) return getRepresentatives(zipCode);
+
+  try {
+    const res = await fetch(`/api/representatives?zip=${encodeURIComponent(zipCode)}`);
+    const data = await res.json();
+    if (data.fallback || !data.representatives) {
+      // API key not set or API error — use sample data
+      return getRepresentatives(zipCode);
+    }
+    return data.representatives;
+  } catch {
+    return getRepresentatives(zipCode);
+  }
+}
+
 const VALID_FILING_STATUSES: FilingStatus[] = ["single", "married", "head_of_household"];
 
 function HomeContent() {
@@ -19,11 +35,11 @@ function HomeContent() {
   const [votes, setVotes] = useState<VoteRecord[]>([]);
   const [initialized, setInitialized] = useState(false);
 
-  const processInputs = useCallback((income: number, filingStatus: FilingStatus, zipCode: string) => {
+  const processInputs = useCallback(async (income: number, filingStatus: FilingStatus, zipCode: string) => {
     const estimate = estimateFederalTax(income, filingStatus);
     setTaxEstimate(estimate);
 
-    const reps = getRepresentatives(zipCode);
+    const reps = await fetchRepresentatives(zipCode);
     setRepresentatives(reps);
     if (reps) {
       const repIds = reps.map((r) => r.id);
