@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Representative, VoteRecord } from "@/data/representatives";
 import RepresentativeCard from "./RepresentativeCard";
@@ -17,6 +18,14 @@ export default function RepresentativesModal({
   representatives,
   votes,
 }: RepresentativesModalProps) {
+  // Lock body scroll when modal is open to prevent backdrop gap on mobile
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+      return () => { document.body.style.overflow = ""; };
+    }
+  }, [isOpen]);
+
   const getRepVotes = (repId: string) =>
     votes.filter((v) => v.representativeId === repId);
 

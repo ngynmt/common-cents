@@ -15,6 +15,9 @@
 export type FilingStatus = "single" | "married" | "head_of_household";
 export type TaxYear = 2024 | 2025;
 
+/** All supported tax years, ordered oldest → newest. */
+export const SUPPORTED_TAX_YEARS: TaxYear[] = [2024, 2025];
+
 interface TaxBracket {
   min: number;
   max: number;

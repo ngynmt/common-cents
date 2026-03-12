@@ -8,6 +8,14 @@ import TaxReceipt from "@/components/TaxReceipt";
 import { estimateFederalTax, type FilingStatus, type TaxEstimate } from "@/lib/tax";
 import { type Representative, type VoteRecord } from "@/data/representatives";
 
+const FETCH_TIMEOUT_MS = 8000;
+
+function fetchWithTimeout(url: string, timeoutMs = FETCH_TIMEOUT_MS): Promise<Response> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  return fetch(url, { signal: controller.signal }).finally(() => clearTimeout(timer));
+}
+
 async function fetchVotes(reps: Representative[]): Promise<VoteRecord[]> {
   const houseReps = reps.filter((r) => r.chamber === "house");
   const senateReps = reps.filter((r) => r.chamber === "senate");
@@ -28,20 +36,29 @@ async function fetchVotes(reps: Representative[]): Promise<VoteRecord[]> {
     if (bioguideIds.length > 0) params.set("bioguideIds", bioguideIds.join(","));
     if (lisIds.length > 0) params.set("lisIds", lisIds.join(","));
 
-    const res = await fetch(`/api/votes?${params.toString()}`);
+    const res = await fetchWithTimeout(`/api/votes?${params.toString()}`);
     const data = await res.json();
 
     if (!data.votes || !Array.isArray(data.votes)) return [];
 
     // Re-map senate vote representativeIds from "lis:S270" back to bioguide IDs
-    return data.votes.map((v: VoteRecord) => {
-      if (v.representativeId.startsWith("lis:")) {
-        const lisId = v.representativeId.slice(4);
-        return { ...v, representativeId: lisToId.get(lisId) || v.representativeId };
-      }
-      return v;
-    });
-  } catch {
+    // Drop votes that can't be mapped — they'd never match a rep card anyway
+    return data.votes
+      .map((v: VoteRecord) => {
+        if (v.representativeId.startsWith("lis:")) {
+          const lisId = v.representativeId.slice(4);
+          const mapped = lisToId.get(lisId);
+          if (!mapped) {
+            console.warn(`[votes] Could not map lis_id "${lisId}" to a bioguide ID — skipping vote`);
+            return null;
+          }
+          return { ...v, representativeId: mapped };
+        }
+        return v;
+      })
+      .filter((v: VoteRecord | null): v is VoteRecord => v !== null);
+  } catch (err) {
+    console.error("[votes] Failed to fetch vote records:", err);
     return [];
   }
 }
@@ -50,11 +67,12 @@ async function fetchRepresentatives(zipCode: string): Promise<Representative[] |
   if (!zipCode || zipCode.length < 5) return null;
 
   try {
-    const res = await fetch(`/api/representatives?zip=${encodeURIComponent(zipCode)}`);
+    const res = await fetchWithTimeout(`/api/representatives?zip=${encodeURIComponent(zipCode)}`);
     const data = await res.json();
     if (data.fallback || !data.representatives) return null;
     return data.representatives;
-  } catch {
+  } catch (err) {
+    console.error("[reps] Failed to fetch representatives:", err);
     return null;
   }
 }

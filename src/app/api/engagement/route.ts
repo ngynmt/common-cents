@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { incrementCounter, getCounters, keys } from "@/lib/redis";
+import { incrementCounter, getCounters, keys, checkRateLimit } from "@/lib/redis";
 import { pendingBills } from "@/data/pending-bills";
 
 const validBillIds = new Set(pendingBills.map((b) => b.id));
@@ -48,6 +48,18 @@ export async function GET(request: NextRequest) {
  * Body: { billId: string, action: "support" | "oppose" | "contacted" }
  */
 export async function POST(request: NextRequest) {
+  // Rate limit by IP
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
+    || request.headers.get("x-real-ip")
+    || "unknown";
+  const { allowed, retryAfterSeconds } = await checkRateLimit(ip);
+  if (!allowed) {
+    return NextResponse.json(
+      { error: "Too many requests" },
+      { status: 429, headers: { "Retry-After": String(retryAfterSeconds ?? 60) } },
+    );
+  }
+
   const body = await request.json();
   const { billId, action } = body;
 

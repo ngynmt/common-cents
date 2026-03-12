@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { TaxEstimate, TaxYear } from "@/lib/tax";
-import { estimateFederalTax, formatCurrency, formatPercent } from "@/lib/tax";
+import { estimateFederalTax, formatCurrency, formatPercent, SUPPORTED_TAX_YEARS } from "@/lib/tax";
 import { calculatePersonalSpending } from "@/lib/spending";
 import SpendingChart from "./SpendingChart";
 import ReceiptLine from "./ReceiptLine";
@@ -51,7 +51,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
 
   const isComparing = comparison !== null;
   const currentYear = taxEstimate.taxYear;
-  const priorYear: TaxYear = currentYear === 2025 ? 2024 : 2024;
+  const priorYear = SUPPORTED_TAX_YEARS.filter((y) => y < currentYear).at(-1) ?? null;
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-8">
@@ -93,24 +93,26 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
         </p>
       </motion.div>
 
-      {/* Year comparison toggle */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="flex items-center justify-center"
-      >
-        <button
-          onClick={() => setCompareYear(isComparing ? null : priorYear)}
-          className={`text-xs px-4 py-2 rounded-full border transition-colors cursor-pointer ${
-            isComparing
-              ? "bg-indigo-500/20 border-indigo-500/30 text-indigo-400"
-              : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:border-white/20"
-          }`}
+      {/* Year comparison toggle — only show if a prior year exists */}
+      {priorYear && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="flex items-center justify-center"
         >
-          {isComparing ? `Comparing with FY ${priorYear} ✕` : `Compare with FY ${priorYear}`}
-        </button>
-      </motion.div>
+          <button
+            onClick={() => setCompareYear(isComparing ? null : priorYear)}
+            className={`text-xs px-4 py-2 rounded-full border transition-colors cursor-pointer ${
+              isComparing
+                ? "bg-indigo-500/20 border-indigo-500/30 text-indigo-400"
+                : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:border-white/20"
+            }`}
+          >
+            {isComparing ? `Comparing with FY ${priorYear} ✕` : `Compare with FY ${priorYear}`}
+          </button>
+        </motion.div>
+      )}
 
       {/* Comparison summary cards */}
       <AnimatePresence>

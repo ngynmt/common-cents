@@ -88,4 +88,47 @@ export const keys = {
   billSupport: (billId: string) => `bill:${billId}:support`,
   billOppose: (billId: string) => `bill:${billId}:oppose`,
   billContacted: (billId: string) => `bill:${billId}:contacted`,
+  rateLimit: (ip: string) => `ratelimit:engagement:${ip}`,
 };
+
+/**
+ * Simple sliding-window rate limiter.
+ * Returns { allowed: true } if under the limit, or { allowed: false, retryAfterSeconds }.
+ * Window: 60 seconds, max requests: 10 per IP.
+ */
+const RATE_LIMIT_WINDOW = 60; // seconds
+const RATE_LIMIT_MAX = 10;
+
+// In-memory fallback
+const memoryRateLimit: Record<string, { count: number; resetAt: number }> = {};
+
+export async function checkRateLimit(ip: string): Promise<{ allowed: boolean; retryAfterSeconds?: number }> {
+  const client = getRedis();
+  const key = keys.rateLimit(ip);
+
+  if (client) {
+    const current = await client.incr(key);
+    if (current === 1) {
+      await client.expire(key, RATE_LIMIT_WINDOW);
+    }
+    if (current > RATE_LIMIT_MAX) {
+      const ttl = await client.ttl(key);
+      return { allowed: false, retryAfterSeconds: ttl > 0 ? ttl : RATE_LIMIT_WINDOW };
+    }
+    return { allowed: true };
+  }
+
+  // In-memory fallback
+  const now = Date.now();
+  const entry = memoryRateLimit[key];
+  if (!entry || now > entry.resetAt) {
+    memoryRateLimit[key] = { count: 1, resetAt: now + RATE_LIMIT_WINDOW * 1000 };
+    return { allowed: true };
+  }
+  entry.count++;
+  if (entry.count > RATE_LIMIT_MAX) {
+    const retryAfterSeconds = Math.ceil((entry.resetAt - now) / 1000);
+    return { allowed: false, retryAfterSeconds };
+  }
+  return { allowed: true };
+}
