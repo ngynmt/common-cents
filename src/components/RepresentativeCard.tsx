@@ -87,7 +87,7 @@ function PartyBadge({ party }: { party: Representative["party"] }) {
 }
 
 export default function RepresentativeCard({ rep, votes, compact }: RepresentativeCardProps) {
-  const chamberLabel = rep.chamber === "senate" ? "Senator" : `Rep. (${rep.state}-${rep.district})`;
+  const chamberLabel = rep.chamber === "senate" ? "Senator" : rep.district ? `Rep. (${rep.state}-${rep.district})` : `Rep. (${rep.state})`;
   const currentYear = new Date().getFullYear();
   const isUpThisYear = rep.nextElection === currentYear;
   const isUpNextYear = rep.nextElection === currentYear + 1;

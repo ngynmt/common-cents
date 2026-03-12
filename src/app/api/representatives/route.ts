@@ -202,65 +202,20 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ fallback: true, representatives: null });
     }
 
-    // Step 3: Identify senators vs house members from list data
-    const senators: CongressMemberSummary[] = [];
-    const houseMembers: CongressMemberSummary[] = [];
-
-    for (const m of members) {
-      const latestTerm = getLatestTerm(m.terms);
-      if (latestTerm?.chamber === "Senate") {
-        senators.push(m);
-      } else {
-        houseMembers.push(m);
-      }
-    }
-
-    // Step 4: Fetch full details only for senators (always ≤2)
-    // For house members, we can't determine district from ZIP alone,
-    // so we return them with basic info from the list endpoint
-    const senatorDetails = await Promise.all(
-      senators.map((s) => getMemberDetail(s.bioguideId)),
+    // Step 3: Fetch full details for all members
+    const details = await Promise.all(
+      members.map((m) => getMemberDetail(m.bioguideId)),
     );
 
-    const representatives: Representative[] = [];
-
-    // Add senators with full details
-    for (const detail of senatorDetails) {
-      if (detail && detail.currentMember) {
-        representatives.push(transformMemberDetail(detail));
-      }
-    }
-
-    // Add house members with basic info from list
-    for (const m of houseMembers) {
-      const latestTerm = getLatestTerm(m.terms);
-      // Convert "Last, First M." to "First M. Last"
-      const nameParts = m.name.split(", ");
-      const displayName = nameParts.length === 2
-        ? `${nameParts[1]} ${nameParts[0]}`
-        : m.name;
-
-      representatives.push({
-        id: m.bioguideId.toLowerCase(),
-        name: displayName,
-        chamber: "house",
-        party: parseParty(m.partyName),
-        state,
-        photoUrl: m.depiction?.imageUrl || "",
-        // These fields require the detail endpoint — left empty for house members
-        phone: "",
-        office: "",
-        website: "",
-        contactFormUrl: "",
-        nextElection: estimateNextElection("house", m.terms),
+    const representatives: Representative[] = details
+      .filter((d): d is CongressMemberDetail => d !== null && d.currentMember)
+      .map(transformMemberDetail)
+      // Sort: senators first, then house by district number
+      .sort((a, b) => {
+        if (a.chamber !== b.chamber) return a.chamber === "senate" ? -1 : 1;
+        if (a.district && b.district) return Number(a.district) - Number(b.district);
+        return a.name.localeCompare(b.name);
       });
-    }
-
-    // Sort: senators first, then house by name
-    representatives.sort((a, b) => {
-      if (a.chamber !== b.chamber) return a.chamber === "senate" ? -1 : 1;
-      return a.name.localeCompare(b.name);
-    });
 
     return NextResponse.json({
       fallback: false,
