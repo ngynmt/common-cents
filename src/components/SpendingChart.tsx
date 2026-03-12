@@ -73,10 +73,11 @@ export default function SpendingChart({
                 strokeWidth={activeId === entry.id ? 2 : 0}
                 opacity={activeId && entry.id !== activeId ? 0.3 : 1}
                 className="cursor-pointer transition-opacity duration-200"
-                onMouseEnter={() => {
-                  if (!activeCategoryId) setHoveredId(entry.id);
+                onMouseEnter={() => setHoveredId(entry.id)}
+                onClick={() => {
+                  setHoveredId(entry.id);
+                  onCategoryClick(entry.id);
                 }}
-                onClick={() => onCategoryClick(entry.id)}
               />
             ))}
           </Pie>

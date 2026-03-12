@@ -74,7 +74,7 @@ export default function RepresentativesModal({
               {/* Footer */}
               <div className="px-5 py-3 border-t border-white/10 shrink-0">
                 <p className="text-[10px] text-gray-600 text-center">
-                  Representative data is sample data for MVP. Live data via Google Civic Information API coming soon.
+                  Representative data provided by Geocodio and Congress.gov. Contact info may occasionally be outdated.
                 </p>
               </div>
             </div>
