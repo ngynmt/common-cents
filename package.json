@@ -13,7 +13,8 @@
     "bills:discover": "npx tsx scripts/discover-bills.ts",
     "bills:draft": "npx tsx scripts/draft-bill.ts",
     "tax:update": "npx tsx scripts/update-tax-brackets.ts",
-    "bills:refresh": "npx tsx scripts/refresh-bill-status.ts"
+    "bills:refresh": "npx tsx scripts/refresh-bill-status.ts",
+    "bills:suggest": "npx tsx scripts/suggest-bills.ts"
   },
   "dependencies": {
     "@upstash/redis": "^1.36.4",

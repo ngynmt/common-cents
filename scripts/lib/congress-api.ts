@@ -45,11 +45,29 @@ export interface BillDetail {
   committees?: { url: string };
   actions: { url: string };
   latestAction: { actionDate: string; text: string };
+  sponsors?: Array<{
+    bioguideId: string;
+    firstName: string;
+    lastName: string;
+    party: string;
+    state: string;
+    district?: number;
+    fullName?: string;
+  }>;
 }
 
 export interface CommitteeInfo {
   name: string;
   chamber: string;
+}
+
+export interface Sponsor {
+  bioguideId: string;
+  firstName: string;
+  lastName: string;
+  party: string; // "D", "R", "I"
+  state: string;
+  district?: number;
 }
 
 async function fetchJson<T>(url: string): Promise<T> {
@@ -248,4 +266,70 @@ export async function fetchSenateVoteTotals(
   } catch {
     return null;
   }
+}
+
+/**
+ * Paginated bill listing sorted by most recently updated.
+ * Yields pages of BillSummary[]. Stops when bills are older than `since`.
+ */
+export async function* fetchRecentBills(
+  congress: number,
+  opts: { since?: string; limit?: number } = {}
+): AsyncGenerator<BillSummary[]> {
+  const limit = opts.limit ?? (getApiKey() === "DEMO_KEY" ? 20 : 250);
+  const sinceDate = opts.since ?? "";
+  let offset = 0;
+
+  if (getApiKey() === "DEMO_KEY") {
+    console.warn(
+      "⚠ Using DEMO_KEY — reduced page size (20). Set CONGRESS_API_KEY for full coverage."
+    );
+  }
+
+  while (true) {
+    const data = await fetchJson<CongressApiResponse<BillSummary[]>>(
+      `${BASE_URL}/bill/${congress}?sort=updateDate+desc&limit=${limit}&offset=${offset}`
+    );
+    const bills = data.bills ?? [];
+
+    if (bills.length === 0) break;
+
+    if (sinceDate) {
+      const filtered = bills.filter(
+        (b) => b.latestAction.actionDate >= sinceDate
+      );
+      if (filtered.length > 0) yield filtered;
+      // Stop if the last bill on this page is older than our cutoff
+      if (filtered.length < bills.length) break;
+    } else {
+      yield bills;
+    }
+
+    offset += limit;
+  }
+}
+
+/**
+ * Fetch the full cosponsor list with party info for bipartisan detection.
+ */
+export async function fetchBillSponsors(
+  congress: number,
+  billType: string,
+  billNumber: number
+): Promise<Sponsor[]> {
+  const type = billType.toLowerCase();
+  const data = await fetchJson<Record<string, unknown>>(
+    `${BASE_URL}/bill/${congress}/${type}/${billNumber}/cosponsors?limit=250`
+  );
+  const cosponsors = data.cosponsors;
+  if (!Array.isArray(cosponsors)) return [];
+
+  return cosponsors.map((c: Record<string, unknown>) => ({
+    bioguideId: (c.bioguideId as string) ?? "",
+    firstName: (c.firstName as string) ?? "",
+    lastName: (c.lastName as string) ?? "",
+    party: (c.party as string) ?? "",
+    state: (c.state as string) ?? "",
+    district: c.district as number | undefined,
+  }));
 }

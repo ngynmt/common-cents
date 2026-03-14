@@ -101,11 +101,13 @@ Responses are cached 24h (`revalidate: 86400`). An in-memory cache also prevents
 
 ### 6. Bill Data (static, curated)
 
-`data/pending-bills.ts` contains 8 curated active bills with:
+`data/pending-bills.ts` contains curated active bills with:
 - CBO-sourced spending impacts
 - Champion info
 - Passage likelihood estimates
 - Category mappings
+
+New bill candidates are surfaced by the **bill suggestion pipeline** (`scripts/suggest-bills.ts`), which scans Congress.gov for high-signal bills (≥50 House / ≥15 Senate cosponsors, or committee progress), maps them to budget categories via `category-suggester.ts`, and generates skeleton `PendingBill` entries with `NEEDS EDIT` placeholders. A weekly GitHub Actions workflow opens draft PRs for human review.
 
 `data/budget.ts` contains enacted legislation linked to each spending category.
 
@@ -152,10 +154,11 @@ Several data sources in this app require periodic manual updates. They are liste
 
 | Data | Status | Details |
 |------|--------|---------|
-| Tracked roll call votes | **Automated** | `scripts/discover-bills.ts` + `scripts/draft-bill.ts` discover new enacted bills via Congress.gov API and generate draft `TrackedVote` entries. See `docs/bill-tracker-cli-spec.md`. |
-| Pending bill statuses | **Spec'd** | `scripts/refresh-bill-status.ts` (planned) — refreshes `status`, `lastActionDate`, `cosponsors` in `pending-bills.ts` via Congress.gov API. See `docs/bill-status-refresher-spec.md`. |
-| Tax brackets | **Spec'd** | `scripts/update-tax-brackets.ts` (planned) — fetches new-year bracket data and generates a config entry. See `docs/tax-bracket-updater-spec.md`. |
-| Budget data | **Spec'd** | `scripts/update-budget-data.ts` (planned) — parses CBO historical tables and generates fiscal year amounts. See `docs/budget-data-updater-spec.md`. |
+| Tracked roll call votes | **Automated** | `scripts/discover-bills.ts` + `scripts/draft-bill.ts` discover new enacted bills via Congress.gov API and generate draft `TrackedVote` entries. See `docs/implemented/bill-tracker-cli-spec.md`. |
+| Pending bill discovery | **Automated** | `scripts/suggest-bills.ts` scans Congress.gov for high-signal pending bills (cosponsor thresholds + committee progress), filters by budget category, deduplicates, and generates skeleton entries. Weekly GitHub Actions workflow (`.github/workflows/bill-suggester.yml`) opens draft PRs. See `docs/implemented/bill-suggestion-pipeline-spec.md`. |
+| Pending bill statuses | **Automated** | `scripts/refresh-bill-status.ts` refreshes `status`, `lastActionDate`, `cosponsors` in `pending-bills.ts` via Congress.gov API. See `docs/implemented/bill-status-refresher-spec.md`. |
+| Tax brackets | **Automated** | `scripts/update-tax-brackets.ts` fetches new-year bracket data and generates a config entry. See `docs/implemented/tax-bracket-updater-spec.md`. |
+| Budget data | **Spec'd** | `scripts/update-budget-data.ts` (planned) — parses CBO historical tables and generates fiscal year amounts. See `docs/todo/budget-data-updater-spec.md`. |
 | Live vote records | **Live** | Already fetched at runtime from House Clerk / Senate XML — no script needed. |
 
 ## Key Architectural Constraints

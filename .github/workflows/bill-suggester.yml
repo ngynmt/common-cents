@@ -1,0 +1,80 @@
+name: Bill Suggestions
+
+on:
+  schedule:
+    # Every Monday at 9am UTC
+    - cron: "0 9 * * 1"
+  workflow_dispatch:
+    inputs:
+      congress:
+        description: "Congress number"
+        required: false
+        default: "119"
+      min_cosponsors:
+        description: "Minimum cosponsor count to suggest"
+        required: false
+        default: "50"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  suggest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Run bill suggester
+        env:
+          CONGRESS_API_KEY: ${{ secrets.CONGRESS_API_KEY }}
+        run: |
+          congress="${{ github.event.inputs.congress || '119' }}"
+          min="${{ github.event.inputs.min_cosponsors || '50' }}"
+          npx tsx scripts/suggest-bills.ts \
+            --congress "$congress" \
+            --min-cosponsors "$min"
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet src/data/pending-bills.ts; then
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create draft PR
+        if: steps.changes.outputs.has_changes == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          branch="bill-suggestions/$(date +%Y-%m-%d)"
+          git checkout -b "$branch"
+          git add src/data/pending-bills.ts
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "draft: suggested pending bills for review"
+          git push -u origin "$branch"
+
+          body=""
+          if [ -f .bill-suggestions-summary.md ]; then
+            body=$(cat .bill-suggestions-summary.md)
+          else
+            body="New pending bill suggestions. Fill in NEEDS EDIT fields before merging."
+          fi
+
+          gh pr create \
+            --title "Draft: new pending bill suggestions" \
+            --body "$body" \
+            --draft \
+            --base main \
+            --head "$branch"
