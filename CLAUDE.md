@@ -76,3 +76,65 @@ Always show:
 8. Prefer small, focused changes rather than large rewrites.
 
 9. If requirements are unclear, ask questions before implementing.
+
+---
+
+# Codebase Patterns
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── api/           # API routes: representatives, votes, engagement, campaign-finance, bills
+│   ├── layout.tsx     # Root layout
+│   └── page.tsx       # Home page — main client component, orchestrates all data fetching
+├── components/        # Client components (all "use client") with Framer Motion animations
+├── data/              # Static data: budget.ts, pending-bills.ts, tracked-votes.ts, international.json
+├── hooks/             # Custom hooks: useInternationalComparison
+└── lib/               # Utilities: tax.ts, spending.ts, redis.ts, useEngagement.ts
+```
+
+## API Routes
+
+All routes in `src/app/api/*/route.ts` follow the same shape:
+
+- Import `NextRequest` / `NextResponse` from `"next/server"`
+- Validate query params at the top, return 400 on invalid input
+- External API failures return `{ fallback: true }` (graceful degradation)
+- Rate limiting via `checkRateLimit(ip)` → 429 with `Retry-After` header
+- Cache with `{ next: { revalidate: 86400 } }` (24h ISR) or in-memory Maps
+
+## Data Fetching (Client)
+
+All client fetching lives in `src/app/page.tsx`:
+
+- `fetchWithTimeout(url, timeoutMs)` — wrapper with configurable timeout (default 8s)
+- Returns `null` or `[]` on failure — never throws to the UI
+- Log errors with bracket prefixes: `[votes]`, `[reps]`, `[finance]`
+- Secondary data (finance, votes) fetches non-blocking after primary receipt renders
+
+## Key Utilities
+
+| Utility | Location | Purpose |
+|---------|----------|---------|
+| `estimateFederalTax()` | `lib/tax.ts` | Client-side tax calculation |
+| `calculatePersonalSpending()` | `lib/spending.ts` | Distributes tax across budget categories |
+| `formatCurrency()` / `formatPercent()` | `lib/tax.ts` | Intl.NumberFormat wrappers |
+| `useEngagement()` | `lib/useEngagement.ts` | Fetch/record bill engagement with optimistic updates |
+| `useInternationalComparison()` | `hooks/useInternationalComparison.ts` | Compare spending across countries |
+| `incrementCounter()` / `getCounters()` | `lib/redis.ts` | Redis with in-memory Map fallback |
+
+## Types & Naming
+
+- Discriminated unions over enums: `FilingStatus = "single" | "married" | "head_of_household"`
+- PascalCase components, camelCase functions, SCREAMING_SNAKE constants
+- Props interfaces defined at top of component files
+- Path alias: `@/*` → `./src/*`
+
+## Testing
+
+- **Unit tests:** co-located as `*.test.ts` (e.g., `lib/tax.test.ts`)
+- **Integration tests:** `api/*/*.integration.test.ts` — mock `fetch` with `vi.stubGlobal()`, dynamic-import route after mocking
+- **E2E tests:** `e2e/` directory with Playwright
+- **Runner:** Vitest (node environment, not jsdom)
