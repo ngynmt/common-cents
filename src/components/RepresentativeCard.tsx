@@ -2,11 +2,14 @@
 
 import { motion } from "framer-motion";
 import type { Representative, VoteRecord } from "@/data/representatives";
+import type { CampaignFinanceSummary } from "@/data/campaign-finance";
+import FinanceChart from "./FinanceCard";
 
 interface RepresentativeCardProps {
   rep: Representative;
   votes: VoteRecord[];
   compact?: boolean;
+  finance?: CampaignFinanceSummary | null;
 }
 
 /**
@@ -86,7 +89,7 @@ function PartyBadge({ party }: { party: Representative["party"] }) {
   );
 }
 
-export default function RepresentativeCard({ rep, votes, compact }: RepresentativeCardProps) {
+export default function RepresentativeCard({ rep, votes, compact, finance }: RepresentativeCardProps) {
   const chamberLabel = rep.chamber === "senate" ? "Senator" : rep.district ? `Rep. (${rep.state}-${rep.district})` : `Rep. (${rep.state})`;
   const currentYear = new Date().getFullYear();
   const isUpThisYear = rep.nextElection === currentYear;
@@ -125,6 +128,13 @@ export default function RepresentativeCard({ rep, votes, compact }: Representati
           )}
         </div>
       </div>
+
+      {/* Campaign finance */}
+      {finance && (finance.totalRaised > 0 || finance.topEmployers.length > 0) && (
+        <div className="pt-1 border-t border-white/5">
+          <FinanceChart finance={finance} />
+        </div>
+      )}
 
       {/* Votes on relevant legislation */}
       {votes.length > 0 && (

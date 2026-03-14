@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Representative, VoteRecord } from "@/data/representatives";
+import type { CampaignFinanceSummary } from "@/data/campaign-finance";
 import RepresentativeCard from "./RepresentativeCard";
 
 interface RepresentativesModalProps {
@@ -10,6 +11,7 @@ interface RepresentativesModalProps {
   onClose: () => void;
   representatives: Representative[];
   votes: VoteRecord[];
+  financeData?: Record<string, CampaignFinanceSummary | null>;
 }
 
 export default function RepresentativesModal({
@@ -17,6 +19,7 @@ export default function RepresentativesModal({
   onClose,
   representatives,
   votes,
+  financeData,
 }: RepresentativesModalProps) {
   // Lock body scroll when modal is open to prevent backdrop gap on mobile
   useEffect(() => {
@@ -76,6 +79,7 @@ export default function RepresentativesModal({
                     key={rep.id}
                     rep={rep}
                     votes={getRepVotes(rep.id)}
+                    finance={financeData?.[rep.id]}
                   />
                 ))}
               </div>
@@ -83,7 +87,7 @@ export default function RepresentativesModal({
               {/* Footer */}
               <div className="px-5 py-3 border-t border-white/10 shrink-0">
                 <p className="text-[10px] text-gray-600 text-center">
-                  Representative data provided by Geocodio and Congress.gov. Contact info may occasionally be outdated.
+                  Representative data provided by Geocodio and Congress.gov. Campaign finance data from FEC.gov. Contact info may occasionally be outdated.
                 </p>
               </div>
             </div>

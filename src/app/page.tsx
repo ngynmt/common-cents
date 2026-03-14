@@ -7,6 +7,7 @@ import TaxForm from "@/components/TaxForm";
 import TaxReceipt from "@/components/TaxReceipt";
 import { estimateFederalTax, SUPPORTED_TAX_YEARS, type FilingStatus, type TaxEstimate } from "@/lib/tax";
 import { type Representative, type VoteRecord } from "@/data/representatives";
+import type { CampaignFinanceSummary } from "@/data/campaign-finance";
 
 const FETCH_TIMEOUT_MS = 8000;
 
@@ -86,6 +87,7 @@ function HomeContent() {
   const [taxEstimate, setTaxEstimate] = useState<TaxEstimate | null>(null);
   const [representatives, setRepresentatives] = useState<Representative[] | null>(null);
   const [votes, setVotes] = useState<VoteRecord[]>([]);
+  const [financeData, setFinanceData] = useState<Record<string, CampaignFinanceSummary | null>>({});
   const [initialized, setInitialized] = useState(false);
 
   const processInputs = useCallback(async (income: number, filingStatus: FilingStatus, zipCode: string) => {
@@ -97,8 +99,19 @@ function HomeContent() {
     if (reps) {
       const liveVotes = await fetchVotes(reps);
       setVotes(liveVotes);
+
+      // Fetch campaign finance data (non-blocking, longer timeout since FEC API is slow)
+      const ids = reps.map((r) => r.id).join(",");
+      const repNames = reps.map((r) => encodeURIComponent(r.name)).join(",");
+      const repStates = reps.map((r) => r.state).join(",");
+      const repChambers = reps.map((r) => r.chamber).join(",");
+      fetchWithTimeout(`/api/campaign-finance?bioguideIds=${ids}&names=${repNames}&states=${repStates}&chambers=${repChambers}`, 20000)
+        .then((res) => res.json())
+        .then((json) => { if (json.data) setFinanceData(json.data); })
+        .catch((err) => console.error("[finance] Failed to fetch campaign finance:", err));
     } else {
       setVotes([]);
+      setFinanceData({});
     }
   }, []);
 
@@ -139,6 +152,7 @@ function HomeContent() {
     setTaxEstimate(null);
     setRepresentatives(null);
     setVotes([]);
+    setFinanceData({});
     router.replace("/", { scroll: false });
   };
 
@@ -221,6 +235,7 @@ function HomeContent() {
                 representatives={representatives}
                 votes={votes}
                 onBack={handleBack}
+                financeData={financeData}
               />
             </motion.div>
           )}

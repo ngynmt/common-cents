@@ -11,15 +11,17 @@ import BillsPanel from "./BillsPanel";
 import RepresentativesModal from "./RepresentativesModal";
 
 import type { Representative, VoteRecord } from "@/data/representatives";
+import type { CampaignFinanceSummary } from "@/data/campaign-finance";
 
 interface TaxReceiptProps {
   taxEstimate: TaxEstimate;
   representatives: Representative[] | null;
   votes: VoteRecord[];
   onBack: () => void;
+  financeData?: Record<string, CampaignFinanceSummary | null>;
 }
 
-export default function TaxReceipt({ taxEstimate, representatives, votes, onBack }: TaxReceiptProps) {
+export default function TaxReceipt({ taxEstimate, representatives, votes, onBack, financeData }: TaxReceiptProps) {
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
   const [showRepsModal, setShowRepsModal] = useState(false);
@@ -295,6 +297,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
           onClose={() => setShowRepsModal(false)}
           representatives={representatives}
           votes={votes}
+          financeData={financeData}
         />
       )}
     </div>

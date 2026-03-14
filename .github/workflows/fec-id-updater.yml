@@ -1,0 +1,91 @@
+name: FEC ID Updater
+
+on:
+  schedule:
+    # Run monthly on the 1st at 9am UTC — catches special elections, resignations
+    - cron: "0 9 1 * *"
+  workflow_dispatch: # Allow manual runs
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-fec-ids:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install pyyaml
+
+      - name: Run audit
+        id: audit
+        run: |
+          output=$(npx tsx scripts/update-fec-ids.ts --audit 2>&1)
+          echo "$output"
+
+          # Extract counts
+          wrong=$(echo "$output" | grep -oP '^\s+\K\d+(?= incorrect)' || echo "0")
+          missing=$(echo "$output" | grep -oP '^\s+\K\d+(?= missing)' || echo "0")
+          total_changes=$((wrong + missing))
+
+          echo "changes=$total_changes" >> "$GITHUB_OUTPUT"
+          echo "wrong=$wrong" >> "$GITHUB_OUTPUT"
+          echo "missing=$missing" >> "$GITHUB_OUTPUT"
+
+      - name: Update mapping file
+        if: steps.audit.outputs.changes != '0'
+        run: npx tsx scripts/update-fec-ids.ts
+
+      - name: Create pull request
+        if: steps.audit.outputs.changes != '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          wrong="${{ steps.audit.outputs.wrong }}"
+          missing="${{ steps.audit.outputs.missing }}"
+          branch="chore/update-fec-ids-$(date +%Y-%m)"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add src/data/fec-candidate-ids.ts
+          git commit -m "chore: update FEC candidate ID mappings
+
+          ${wrong} incorrect, ${missing} missing — refreshed from congress-legislators dataset."
+          git push -u origin "$branch"
+
+          gh pr create \
+            --title "Update FEC candidate ID mappings" \
+            --body "$(cat <<'EOF'
+          ## Summary
+          - **Wrong IDs fixed:** ${{ steps.audit.outputs.wrong }}
+          - **Missing IDs added:** ${{ steps.audit.outputs.missing }}
+
+          Auto-generated from [unitedstates/congress-legislators](https://github.com/unitedstates/congress-legislators) via `scripts/update-fec-ids.ts`.
+
+          Changes reflect new members (special elections, appointments) or corrections in the upstream dataset.
+
+          ## Verify
+          - [ ] `npx next build` passes
+          - [ ] Spot-check a few reps' finance data in dev
+          EOF
+          )" \
+            --base main \
+            --head "$branch"
+
+      - name: No changes needed
+        if: steps.audit.outputs.changes == '0'
+        run: echo "FEC ID mappings are up to date — no changes needed."
