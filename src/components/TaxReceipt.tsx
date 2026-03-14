@@ -13,6 +13,7 @@ import RepresentativesModal from "./RepresentativesModal";
 
 import type { Representative, VoteRecord } from "@/data/representatives";
 import type { CampaignFinanceSummary } from "@/data/campaign-finance";
+import { trackCategoryToggled, trackRepsModalOpened } from "@/lib/analytics";
 
 interface TaxReceiptProps {
   taxEstimate: TaxEstimate;
@@ -48,9 +49,11 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
     if (expandedCategory === categoryId) {
       setExpandedCategory(null);
       setActiveCategoryId(null);
+      trackCategoryToggled(categoryId, false);
     } else {
       setExpandedCategory(categoryId);
       setActiveCategoryId(categoryId);
+      trackCategoryToggled(categoryId, true);
     }
   };
 
@@ -235,7 +238,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
           {representatives && representatives.length > 0 && (
             <div className="px-4 py-3 border-t border-white/5">
               <button
-                onClick={() => setShowRepsModal(true)}
+                onClick={() => { trackRepsModalOpened(); setShowRepsModal(true); }}
                 className="w-full py-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-sm text-indigo-400 hover:bg-indigo-500/20 transition-colors font-medium cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 See How Your Reps Voted

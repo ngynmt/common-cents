@@ -10,6 +10,7 @@ import {
   type InternationalComparison as ComparisonData,
 } from "@/hooks/useInternationalComparison";
 import { formatCurrency, formatPercent, type FilingStatus } from "@/lib/tax";
+import { trackInternationalCompared } from "@/lib/analytics";
 import type { PersonalSpendingCategory } from "@/lib/spending";
 
 /** Short display labels for country codes. */
@@ -81,7 +82,10 @@ export default function InternationalComparison({
   const handleCountrySelect = (code: string | null) => {
     setSelectedCountry(code);
     onCountryChange?.(code);
-    if (code) setExpanded(true);
+    if (code) {
+      setExpanded(true);
+      trackInternationalCompared(code);
+    }
   };
 
   const handleToggle = () => {

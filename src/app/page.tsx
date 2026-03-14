@@ -8,6 +8,7 @@ import TaxReceipt from "@/components/TaxReceipt";
 import { estimateFederalTax, SUPPORTED_TAX_YEARS, type FilingStatus, type TaxEstimate } from "@/lib/tax";
 import { type Representative, type VoteRecord } from "@/data/representatives";
 import type { CampaignFinanceSummary } from "@/data/campaign-finance";
+import { trackPageView, trackReceiptGenerated, trackRepLookedUp } from "@/lib/analytics";
 
 const FETCH_TIMEOUT_MS = 8000;
 
@@ -97,7 +98,8 @@ function HomeContent() {
 
     const reps = await fetchRepresentatives(zipCode);
     setRepresentatives(reps);
-    if (reps) {
+    if (reps && reps.length > 0) {
+      trackRepLookedUp(reps[0].state);
       const liveVotes = await fetchVotes(reps);
       setVotes(liveVotes);
 
@@ -131,6 +133,7 @@ function HomeContent() {
     ) {
       processInputs(Number(incomeParam), filingParam, zipParam);
     }
+    trackPageView("/", !!incomeParam);
     setInitialized(true);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   /* eslint-enable react-hooks/set-state-in-effect */
@@ -140,6 +143,7 @@ function HomeContent() {
     filingStatus: FilingStatus;
     zipCode: string;
   }) => {
+    trackReceiptGenerated(data.filingStatus, !!data.zipCode);
     processInputs(data.income, data.filingStatus, data.zipCode);
 
     // Save to URL params (replaces current URL without navigation)

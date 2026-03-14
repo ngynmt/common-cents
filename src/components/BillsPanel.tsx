@@ -7,6 +7,7 @@ import { TOTAL_FEDERAL_SPENDING, getBudgetData } from "@/data/budget";
 import { formatCurrency } from "@/lib/tax";
 import type { Representative } from "@/data/representatives";
 import { useEngagement } from "@/lib/useEngagement";
+import { trackBillViewed, trackBillVoted, trackRepContactClicked } from "@/lib/analytics";
 
 type SortMode = "impact" | "date" | "likelihood";
 
@@ -292,7 +293,11 @@ export default function BillsPanel({
               >
                 {/* Bill row — always visible */}
                 <button
-                  onClick={() => setExpandedBill(isExpanded ? null : bill.id)}
+                  onClick={() => {
+                    const willExpand = !isExpanded;
+                    setExpandedBill(willExpand ? bill.id : null);
+                    if (willExpand) trackBillViewed(bill.id);
+                  }}
                   aria-expanded={isExpanded}
                   aria-label={`${bill.shortTitle}: ${isIncrease ? "+" : ""}${formatCurrency(userImpact)} per year`}
                   className="w-full p-3 text-left hover:bg-white/[0.03] transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-inset"
@@ -436,6 +441,7 @@ export default function BillsPanel({
                                       setStance((s) => ({ ...s, [bill.id]: newStance }));
                                       if (newStance === "support" && !userVoted[bill.id]) {
                                         recordAction(bill.id, "support");
+                                        trackBillVoted(bill.id, "support");
                                         setUserVoted((v) => ({ ...v, [bill.id]: true }));
                                       }
                                     }}
@@ -453,6 +459,7 @@ export default function BillsPanel({
                                       setStance((s) => ({ ...s, [bill.id]: newStance }));
                                       if (newStance === "oppose" && !userVoted[bill.id]) {
                                         recordAction(bill.id, "oppose");
+                                        trackBillVoted(bill.id, "oppose");
                                         setUserVoted((v) => ({ ...v, [bill.id]: true }));
                                       }
                                     }}
@@ -575,7 +582,7 @@ export default function BillsPanel({
                                                     <div className="flex items-center gap-2">
                                                       <a
                                                         href={`tel:${rep.phone}`}
-                                                        onClick={() => recordAction(bill.id, "contacted")}
+                                                        onClick={() => { recordAction(bill.id, "contacted"); trackRepContactClicked(bill.id, "call", rep.chamber); }}
                                                         className="text-xs px-3 py-1.5 rounded-lg bg-indigo-500 text-white hover:bg-indigo-600 transition-colors font-medium"
                                                       >
                                                         Call: {rep.phone}
@@ -584,7 +591,7 @@ export default function BillsPanel({
                                                         href={rep.contactFormUrl}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        onClick={() => recordAction(bill.id, "contacted")}
+                                                        onClick={() => { recordAction(bill.id, "contacted"); trackRepContactClicked(bill.id, "email", rep.chamber); }}
                                                         className="text-xs px-3 py-1.5 rounded-lg bg-white/10 text-white hover:bg-white/15 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                                       >
                                                         Email<span className="sr-only-inline"> (opens in new tab)</span>
