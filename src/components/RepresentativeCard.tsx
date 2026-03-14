@@ -122,7 +122,7 @@ export default function RepresentativeCard({ rep, votes, compact, finance }: Rep
               Re-election: {rep.nextElection}
             </span>
           ) : (
-            <span className="text-[10px] text-gray-600">
+            <span className="text-[10px] text-gray-500">
               Re-election: {rep.nextElection}
             </span>
           )}
@@ -158,7 +158,7 @@ export default function RepresentativeCard({ rep, votes, compact, finance }: Rep
                   <VoteBadge vote={vote.vote} />
                 </div>
                 {effectText && (
-                  <p className="text-[10px] text-gray-600 pl-0.5">
+                  <p className="text-[10px] text-gray-400 pl-0.5">
                     {effectText}
                   </p>
                 )}
@@ -181,17 +181,17 @@ export default function RepresentativeCard({ rep, votes, compact, finance }: Rep
             href={rep.contactFormUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs px-3 py-1.5 rounded-lg bg-white/5 text-gray-300 hover:bg-white/10 transition-colors"
+            className="text-xs px-3 py-1.5 rounded-lg bg-white/5 text-gray-300 hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
-            Email
+            Email<span className="sr-only-inline"> {rep.name} (opens in new tab)</span>
           </a>
           <a
             href={rep.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs px-3 py-1.5 rounded-lg bg-white/5 text-gray-300 hover:bg-white/10 transition-colors"
+            className="text-xs px-3 py-1.5 rounded-lg bg-white/5 text-gray-300 hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
-            Website
+            Website<span className="sr-only-inline"> for {rep.name} (opens in new tab)</span>
           </a>
         </div>
       )}

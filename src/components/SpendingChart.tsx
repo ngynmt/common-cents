@@ -36,6 +36,8 @@ export default function SpendingChart({
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6, delay: 0.2 }}
       className="w-full h-[400px] relative"
+      role="img"
+      aria-label={`Spending breakdown chart with ${chartData.length} categories. ${chartData.slice(0, 3).map((d) => `${d.name}: ${formatCurrency(d.value)}`).join(", ")}, and more. Click or hover on segments for details.`}
     >
       {/* Center label */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">

@@ -65,7 +65,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         onClick={onBack}
-        className="text-sm text-gray-400 hover:text-white transition-colors cursor-pointer"
+        className="text-sm text-gray-400 hover:text-white transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
       >
         ← Change inputs
       </motion.button>
@@ -92,7 +92,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
             Effective Rate: <span className="text-white font-medium">{formatPercent(taxEstimate.effectiveRate)}</span>
           </span>
         </div>
-        <p className="text-xs text-gray-500 max-w-lg mx-auto">
+        <p className="text-xs text-gray-400 max-w-lg mx-auto">
           This is an estimate based on standard deduction and FY {currentYear} tax brackets.
           Your actual taxes may differ based on deductions, credits, and other factors.
         </p>
@@ -108,7 +108,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
         >
           <button
             onClick={() => setCompareYear(isComparing ? null : priorYear)}
-            className={`text-xs px-4 py-2 rounded-full border transition-colors cursor-pointer ${
+            className={`text-xs px-4 py-2 rounded-full border transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
               isComparing
                 ? "bg-indigo-500/20 border-indigo-500/30 text-indigo-400"
                 : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:border-white/20"
@@ -236,7 +236,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
             <div className="px-4 py-3 border-t border-white/5">
               <button
                 onClick={() => setShowRepsModal(true)}
-                className="w-full py-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-sm text-indigo-400 hover:bg-indigo-500/20 transition-colors font-medium cursor-pointer"
+                className="w-full py-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-sm text-indigo-400 hover:bg-indigo-500/20 transition-colors font-medium cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 See How Your Reps Voted
               </button>
@@ -284,7 +284,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
           </p>
           <button
             onClick={onBack}
-            className="mt-2 text-sm text-indigo-400 hover:text-indigo-300 font-medium transition-colors cursor-pointer"
+            className="mt-2 text-sm text-indigo-400 hover:text-indigo-300 font-medium transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
           >
             ← Go back and add your ZIP code
           </button>
@@ -293,15 +293,15 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
 
       {/* Source attribution */}
       <div className="text-center pt-4">
-        <p className="text-[10px] text-gray-600">
+        <p className="text-[10px] text-gray-500">
           Spending data:{" "}
-          <a href="https://www.whitehouse.gov/omb/budget/historical-tables/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-400 underline">OMB Historical Tables</a>
+          <a href="https://www.whitehouse.gov/omb/budget/historical-tables/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">OMB Historical Tables<span className="sr-only-inline"> (opens in new tab)</span></a>
           {" · "}Tax brackets:{" "}
-          <a href="https://www.irs.gov/taxtopics/tc751" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-400 underline">IRS</a>
+          <a href="https://www.irs.gov/taxtopics/tc751" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">IRS<span className="sr-only-inline"> (opens in new tab)</span></a>
           {" · "}Bills:{" "}
-          <a href="https://www.congress.gov/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-400 underline">Congress.gov</a>
+          <a href="https://www.congress.gov/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">Congress.gov<span className="sr-only-inline"> (opens in new tab)</span></a>
           {" · "}Cost estimates:{" "}
-          <a href="https://www.cbo.gov/cost-estimates" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-400 underline">CBO</a>
+          <a href="https://www.cbo.gov/cost-estimates" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">CBO<span className="sr-only-inline"> (opens in new tab)</span></a>
         </p>
       </div>
 

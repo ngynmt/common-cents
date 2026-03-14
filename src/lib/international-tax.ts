@@ -503,7 +503,7 @@ function estimateFrenchTax(
   const taxPerPart = applyBrackets(perPart, FRA_BRACKETS);
   const incomeTax = Math.floor(taxPerPart * parts);
 
-  let marginal = getMarginalRate(perPart, FRA_BRACKETS);
+  const marginal = getMarginalRate(perPart, FRA_BRACKETS);
 
   return { incomeTax, socialContributions: social, marginalRate: marginal };
 }

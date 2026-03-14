@@ -59,7 +59,9 @@ export default function ReceiptLine({
       {/* Main line item */}
       <button
         onClick={onToggle}
-        className={`w-full px-4 py-3 flex items-center gap-3 transition-all hover:bg-white/5 cursor-pointer ${
+        aria-expanded={isExpanded}
+        aria-label={`${item.category.name}: ${formatCurrency(item.amount)}, ${formatPercent(item.percentage / 100)} of your taxes`}
+        className={`w-full px-4 py-3 flex items-center gap-3 transition-all hover:bg-white/5 cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-inset ${
           isActive ? "bg-white/5" : ""
         }`}
       >
@@ -98,6 +100,7 @@ export default function ReceiptLine({
           animate={{ rotate: isExpanded ? 180 : 0 }}
           transition={{ duration: 0.2 }}
           className="text-gray-400 shrink-0"
+          aria-hidden="true"
         >
           ▾
         </motion.span>
@@ -187,9 +190,9 @@ export default function ReceiptLine({
                           href={bill.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors"
+                          className="text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
                         >
-                          {bill.title}
+                          {bill.title}<span className="sr-only-inline"> (opens in new tab)</span>
                         </a>
                         <StatusBadge status={bill.status} />
                       </div>

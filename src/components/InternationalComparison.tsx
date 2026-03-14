@@ -104,7 +104,8 @@ export default function InternationalComparison({
       {/* Teaser / toggle */}
       <button
         onClick={handleToggle}
-        className="w-full text-left p-4 rounded-xl bg-white/[0.03] border border-white/10 hover:border-white/20 transition-colors cursor-pointer group"
+        aria-expanded={expanded}
+        className="w-full text-left p-4 rounded-xl bg-white/[0.03] border border-white/10 hover:border-white/20 transition-colors cursor-pointer group focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
       >
         <div className="flex items-center justify-between">
           <div>
@@ -117,6 +118,7 @@ export default function InternationalComparison({
           </div>
           <span
             className={`text-gray-500 transition-transform ${expanded ? "rotate-180" : ""}`}
+            aria-hidden="true"
           >
             ▾
           </span>
@@ -227,7 +229,7 @@ export default function InternationalComparison({
                         </div>
                       </div>
                     </div>
-                    <p className="text-center text-[10px] text-gray-600 mt-1.5">
+                    <p className="text-center text-[10px] text-gray-500 mt-1.5">
                       Estimated income tax + social contributions on{" "}
                       {formatCurrency(grossIncome)} income
                     </p>
@@ -254,7 +256,7 @@ export default function InternationalComparison({
                           ? "Your taxes across countries"
                           : "US spending vs all countries"}
                       </h4>
-                      <span className="text-[10px] text-gray-600">
+                      <span className="text-[10px] text-gray-500">
                         OECD {allComparisons[0].dataYear} data
                       </span>
                     </div>
@@ -264,7 +266,7 @@ export default function InternationalComparison({
                         <span className="w-2 h-2 rounded-full bg-white/40" />
                         US
                         {mode === "estimated-tax" && (
-                          <span className="text-gray-600 ml-0.5">
+                          <span className="text-gray-500 ml-0.5">
                             {formatCurrency(totalFederalTax)}
                           </span>
                         )}
@@ -284,7 +286,7 @@ export default function InternationalComparison({
                           {COUNTRY_SHORT_LABELS[c.country.code] ??
                             c.country.code}
                           {mode === "estimated-tax" && (
-                            <span className="text-gray-600 ml-0.5">
+                            <span className="text-gray-500 ml-0.5">
                               {formatCurrency(c.countryTotalAmount)}
                             </span>
                           )}
@@ -381,7 +383,7 @@ export default function InternationalComparison({
                         ? `Your taxes in ${comparison.country.name}`
                         : `If the US spent like ${comparison.country.name}`}
                     </h4>
-                    <span className="text-[10px] text-gray-600">
+                    <span className="text-[10px] text-gray-500">
                       OECD {comparison.dataYear} data
                     </span>
                   </div>
@@ -432,7 +434,7 @@ export default function InternationalComparison({
                         )}
                     </div>
                     {comparison.unmappedPct > 0 && (
-                      <p className="text-[10px] text-gray-600 mt-1">
+                      <p className="text-[10px] text-gray-500 mt-1">
                         {comparison.unmappedPct.toFixed(1)}% of US spending has
                         no direct equivalent in{" "}
                         {comparison.country.name}&apos;s budget classification
@@ -445,7 +447,7 @@ export default function InternationalComparison({
 
             {/* Source attribution */}
             {(comparison || (isAllMode && allComparisons.length > 0)) && (
-              <p className="text-center text-[10px] text-gray-600 mt-2">
+              <p className="text-center text-[10px] text-gray-500 mt-2">
                 {isAllMode ? (
                   mode === "estimated-tax" ? (
                     <>
@@ -473,14 +475,14 @@ export default function InternationalComparison({
                     </>
                   )
                 ) : null}
-                {" · "}
+                <span aria-hidden="true">{" · "}</span>
                 <a
                   href="https://stats.oecd.org/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-500 hover:text-gray-400 underline"
+                  className="text-gray-400 hover:text-gray-300 underline focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
                 >
-                  OECD COFOG
+                  OECD COFOG<span className="sr-only-inline"> (opens in new tab)</span>
                 </a>
               </p>
             )}
@@ -548,7 +550,7 @@ function ComparisonRow({
           </div>
           <span className="w-24 text-right text-[10px] text-gray-400 tabular-nums shrink-0 whitespace-nowrap">
             {formatCurrency(item.usAmount)}{" "}
-            <span className="text-gray-600">({item.usPct.toFixed(1)}%)</span>
+            <span className="text-gray-500">({item.usPct.toFixed(1)}%)</span>
           </span>
         </div>
 
@@ -564,13 +566,13 @@ function ComparisonRow({
             <>
               <div className="flex-1 h-3 bg-white/5 rounded-full overflow-hidden relative">
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-[9px] text-gray-600">
+                  <span className="text-[9px] text-gray-500">
                     No equivalent
                   </span>
                 </div>
               </div>
               <span
-                className="w-24 text-right text-[10px] text-gray-600 shrink-0 whitespace-nowrap"
+                className="w-24 text-right text-[10px] text-gray-500 shrink-0 whitespace-nowrap"
                 title={`${item.categoryName} doesn't have a direct equivalent in ${countryName}'s budget classification`}
               >
                 —
@@ -646,8 +648,7 @@ function AllCountriesRow({
           <span className="text-[9px] text-gray-500 w-7 shrink-0">US</span>
           <div className="flex-1 h-2 bg-white/5 rounded-full overflow-hidden">
             <motion.div
-              className="h-full rounded-full"
-              style={{ backgroundColor: color, opacity: 0.7 }}
+              className="h-full rounded-full bg-white/40"
               initial={{ width: 0 }}
               animate={{ width: `${usWidth}%` }}
               transition={{ duration: 0.5, ease: "easeOut" }}
@@ -655,7 +656,7 @@ function AllCountriesRow({
           </div>
           <span className="w-24 text-right text-[10px] text-gray-400 tabular-nums shrink-0 whitespace-nowrap">
             {formatCurrency(usAmount)}{" "}
-            <span className="text-gray-600">{usPct.toFixed(0)}%</span>
+            <span className="text-gray-500">{usPct.toFixed(0)}%</span>
           </span>
         </div>
 
@@ -676,7 +677,7 @@ function AllCountriesRow({
               {cd.isUnmapped ? (
                 <>
                   <div className="flex-1 h-2 bg-white/5 rounded-full" />
-                  <span className="w-24 text-right text-[10px] text-gray-600 shrink-0 whitespace-nowrap">
+                  <span className="w-24 text-right text-[10px] text-gray-500 shrink-0 whitespace-nowrap">
                     —
                   </span>
                 </>

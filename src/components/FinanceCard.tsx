@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell, LabelList } from "recharts";
 import type { CampaignFinanceSummary } from "@/data/campaign-finance";
 import { formatCurrency } from "@/lib/tax";
@@ -24,12 +24,11 @@ function truncate(s: string | null | undefined, max: number): string {
 }
 
 /** Observe an element's width so charts render correctly inside animated containers. */
-function useContainerWidth() {
-  const ref = useRef<HTMLDivElement>(null);
+function useContainerWidth(): [React.RefCallback<HTMLDivElement>, number] {
+  const [el, setEl] = useState<HTMLDivElement | null>(null);
   const [width, setWidth] = useState(0);
 
   useEffect(() => {
-    const el = ref.current;
     if (!el) return;
     const ro = new ResizeObserver((entries) => {
       const w = entries[0]?.contentRect.width ?? 0;
@@ -37,9 +36,9 @@ function useContainerWidth() {
     });
     ro.observe(el);
     return () => ro.disconnect();
-  }, []);
+  }, [el]);
 
-  return { ref, width };
+  return [setEl, width];
 }
 
 export default function FinanceChart({ finance }: FinanceChartProps) {
@@ -48,8 +47,8 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
   const confirmedNoOutsideSpending = outsideSpending !== null && outsideSpending.length === 0;
   const hasEmployers = finance.topEmployers.length > 0;
 
-  const outsideContainer = useContainerWidth();
-  const employerContainer = useContainerWidth();
+  const [outsideRef, outsideWidth] = useContainerWidth();
+  const [employerRef, employerWidth] = useContainerWidth();
 
   // Outside spending chart data — top 5, color-coded by support/oppose
   const outsideData = (outsideSpending ?? []).slice(0, 5).map((d) => ({
@@ -88,12 +87,12 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
           <div className="text-[10px] text-gray-500 font-medium uppercase tracking-wider">
             Outside spending (Super PACs){finance.outsideSpendingCycle && finance.outsideSpendingCycle !== finance.cycle ? ` · ${finance.outsideSpendingCycle} cycle` : ""}
           </div>
-          <div ref={outsideContainer.ref} className="w-full h-[150px]">
-            {outsideContainer.width > 0 && (
+          <div ref={outsideRef} className="w-full h-[150px]" role="img" aria-label={`Outside spending: ${outsideData.map((d) => `${d.fullName}: ${formatCompact(d.total)} ${d.support ? "supporting" : "opposing"}`).join(", ")}`}>
+            {outsideWidth > 0 && (
               <BarChart
                 data={outsideData}
                 layout="vertical"
-                width={outsideContainer.width}
+                width={outsideWidth}
                 height={CHART_HEIGHT}
                 margin={{ top: 0, right: 55, left: 0, bottom: 0 }}
               >
@@ -143,7 +142,7 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
               </BarChart>
             )}
           </div>
-          <div className="flex items-center gap-3 text-[10px] text-gray-600">
+          <div className="flex items-center gap-3 text-[10px] text-gray-500">
             <span className="flex items-center gap-1">
               <span className="inline-block w-2 h-2 rounded-full bg-green-500/70" /> Supporting
             </span>
@@ -160,12 +159,12 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
           <div className="text-[10px] text-gray-500 font-medium uppercase tracking-wider">
             Top donor employers
           </div>
-          <div ref={employerContainer.ref} className="w-full h-[150px]">
-            {employerContainer.width > 0 && (
+          <div ref={employerRef} className="w-full h-[150px]" role="img" aria-label={`Top donor employers: ${employerData.map((d) => `${d.fullName}: ${formatCompact(d.total)}`).join(", ")}`}>
+            {employerWidth > 0 && (
               <BarChart
                 data={employerData}
                 layout="vertical"
-                width={employerContainer.width}
+                width={employerWidth}
                 height={CHART_HEIGHT}
                 margin={{ top: 0, right: 55, left: 0, bottom: 0 }}
               >
@@ -213,8 +212,8 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
         </div>
       )}
 
-      <p className="text-[10px] text-gray-600">
-        Personal donations from employees, not corporate · Source: FEC.gov
+      <p className="text-[10px] text-gray-500">
+        Personal donations from employees, not corporate <span aria-hidden="true">·</span> Source: FEC.gov
       </p>
     </div>
   );

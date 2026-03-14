@@ -88,7 +88,7 @@ function HomeContent() {
   const [representatives, setRepresentatives] = useState<Representative[] | null>(null);
   const [votes, setVotes] = useState<VoteRecord[]>([]);
   const [financeData, setFinanceData] = useState<Record<string, CampaignFinanceSummary | null>>({});
-  const [compareCountry, setCompareCountry] = useState<string | null>(null);
+  const [compareCountry, setCompareCountry] = useState<string | null>(() => searchParams.get("compare"));
   const [initialized, setInitialized] = useState(false);
 
   const processInputs = useCallback(async (income: number, filingStatus: FilingStatus, zipCode: string) => {
@@ -117,13 +117,11 @@ function HomeContent() {
   }, []);
 
   // On mount, check URL params for saved state
+  /* eslint-disable react-hooks/set-state-in-effect -- intentional: restore state from URL on mount */
   useEffect(() => {
     const incomeParam = searchParams.get("income");
     const filingParam = searchParams.get("filing") as FilingStatus | null;
     const zipParam = searchParams.get("zip") || "";
-    const compareParam = searchParams.get("compare");
-    if (compareParam) setCompareCountry(compareParam);
-
     if (
       incomeParam &&
       !isNaN(Number(incomeParam)) &&
@@ -135,6 +133,7 @@ function HomeContent() {
     }
     setInitialized(true);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const handleFormSubmit = (data: {
     income: number;
@@ -178,6 +177,14 @@ function HomeContent() {
 
   return (
     <div className="min-h-screen bg-gray-950 text-white">
+      {/* Skip to main content link */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-indigo-600 focus:text-white focus:rounded-lg focus:outline-none"
+      >
+        Skip to main content
+      </a>
+
       {/* Header */}
       <header className="border-b border-white/5">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -191,14 +198,14 @@ function HomeContent() {
               </span>
             </button>
           </div>
-          <span className="text-xs text-gray-500">
+          <span className="text-xs text-gray-400">
             FY {SUPPORTED_TAX_YEARS[SUPPORTED_TAX_YEARS.length - 1]} Estimates
           </span>
         </div>
       </header>
 
       {/* Main content */}
-      <main className="max-w-6xl mx-auto px-4 py-12">
+      <main id="main-content" className="max-w-6xl mx-auto px-4 py-12" aria-live="polite">
         <AnimatePresence mode="wait">
           {!showReceipt && (
             <motion.div
@@ -227,11 +234,11 @@ function HomeContent() {
               <TaxForm onSubmit={handleFormSubmit} />
 
               {/* Trust indicators */}
-              <div className="flex items-center gap-6 text-xs text-gray-500">
+              <div className="flex items-center gap-6 text-xs text-gray-400">
                 <span>No data stored</span>
-                <span>•</span>
+                <span aria-hidden="true">•</span>
                 <span>Calculated in your browser</span>
-                <span>•</span>
+                <span aria-hidden="true">•</span>
                 <span>100% open source</span>
               </div>
             </motion.div>
@@ -261,7 +268,7 @@ function HomeContent() {
 
       {/* Footer */}
       <footer className="border-t border-white/5 mt-20">
-        <div className="max-w-6xl mx-auto px-4 py-6 text-center text-xs text-gray-500 space-y-3">
+        <div className="max-w-6xl mx-auto px-4 py-6 text-center text-xs text-gray-400 space-y-3">
           <p>
             Tax estimates are approximations based on standard deduction and IRS brackets.
             Spending data from OMB and CBO.
@@ -275,8 +282,9 @@ function HomeContent() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#FFDD00]/10 text-[#FFDD00] hover:bg-[#FFDD00]/20 transition-colors text-xs font-medium"
           >
-            <span>&#9749;</span>
+            <span aria-hidden="true">&#9749;</span>
             Buy me a coffee
+            <span className="sr-only-inline">(opens in new tab)</span>
           </a>
         </div>
       </footer>

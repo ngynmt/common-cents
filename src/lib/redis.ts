@@ -30,6 +30,13 @@ function getRedis(): Redis | null {
 // In-memory fallback for development
 const memoryCounters: Record<string, number> = {};
 
+/** @internal Clear in-memory counters (for testing only) */
+export function _resetMemoryCounters() {
+  for (const key of Object.keys(memoryCounters)) {
+    delete memoryCounters[key];
+  }
+}
+
 /**
  * Increment a counter and return the new value.
  */

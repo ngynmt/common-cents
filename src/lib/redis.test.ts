@@ -1,7 +1,10 @@
-import { describe, it, expect } from "vitest";
-import { incrementCounter, getCounter, getCounters, keys } from "./redis";
+import { describe, it, expect, beforeEach } from "vitest";
+import { incrementCounter, getCounter, getCounters, keys, _resetMemoryCounters } from "./redis";
 
 // These tests run against the in-memory fallback (no Redis env vars in test)
+beforeEach(() => {
+  _resetMemoryCounters();
+});
 
 describe("incrementCounter", () => {
   it("increments from zero", async () => {

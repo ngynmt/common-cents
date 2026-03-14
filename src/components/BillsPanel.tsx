@@ -32,7 +32,8 @@ function LikelihoodDot({ likelihood }: { likelihood: PendingBill["passageLikelih
   return (
     <span
       className={`inline-block w-2 h-2 rounded-full ${colors[likelihood]}`}
-      title={`${likelihood} likelihood of passing`}
+      role="img"
+      aria-label={`${likelihood} likelihood of passing`}
     />
   );
 }
@@ -65,9 +66,14 @@ function PartyTag({ party, name, state }: { party: string; name: string; state: 
     R: "text-red-400",
     I: "text-purple-400",
   };
+  const fullParty: Record<string, string> = {
+    D: "Democrat",
+    R: "Republican",
+    I: "Independent",
+  };
   return (
     <span className={`text-xs ${colors[party]}`}>
-      {name} ({party}-{state})
+      {name} (<abbr title={fullParty[party] ?? party} className="no-underline">{party}</abbr>-{state})
     </span>
   );
 }
@@ -150,7 +156,7 @@ export default function BillsPanel({
 
   // Filter and sort bills
   const filteredBills = useMemo(() => {
-    let bills = activeCategoryId
+    const bills = activeCategoryId
       ? pendingBills.filter((b) => b.impactedCategories.includes(activeCategoryId))
       : [...pendingBills];
 
@@ -218,7 +224,7 @@ export default function BillsPanel({
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <span className="relative flex h-2 w-2">
+          <span className="relative flex h-2 w-2" aria-hidden="true">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
           </span>
@@ -232,7 +238,7 @@ export default function BillsPanel({
 
       {/* Sort controls */}
       <div className="flex items-center gap-1 mb-3">
-        <span className="text-xs text-gray-500 mr-1">Sort by</span>
+        <span className="text-xs text-gray-400 mr-1">Sort by</span>
         {(
           [
             { key: "impact" as SortMode, label: "Impact" },
@@ -243,10 +249,10 @@ export default function BillsPanel({
           <button
             key={option.key}
             onClick={() => setSortMode(option.key)}
-            className={`text-xs px-2.5 py-1 rounded-full transition-all cursor-pointer ${
+            className={`text-xs px-2.5 py-1 rounded-full transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
               sortMode === option.key
                 ? "bg-white/10 text-white"
-                : "text-gray-500 hover:text-gray-300"
+                : "text-gray-400 hover:text-gray-300"
             }`}
           >
             {option.label}
@@ -287,7 +293,9 @@ export default function BillsPanel({
                 {/* Bill row — always visible */}
                 <button
                   onClick={() => setExpandedBill(isExpanded ? null : bill.id)}
-                  className="w-full p-3 text-left hover:bg-white/[0.03] transition-colors cursor-pointer"
+                  aria-expanded={isExpanded}
+                  aria-label={`${bill.shortTitle}: ${isIncrease ? "+" : ""}${formatCurrency(userImpact)} per year`}
+                  className="w-full p-3 text-left hover:bg-white/[0.03] transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-inset"
                 >
                   <div className="flex items-start gap-3">
                     {/* Impact indicator */}
@@ -320,7 +328,7 @@ export default function BillsPanel({
                         <span className="text-[10px] text-gray-500 font-mono">
                           {bill.billNumber}
                         </span>
-                        <span className="text-[10px] text-gray-600">·</span>
+                        <span className="text-[10px] text-gray-600" aria-hidden="true">·</span>
                         <PartyTag
                           party={bill.champion.party}
                           name={bill.champion.name}
@@ -328,7 +336,7 @@ export default function BillsPanel({
                         />
                         {bill.bipartisan && (
                           <>
-                            <span className="text-[10px] text-gray-600">·</span>
+                            <span className="text-[10px] text-gray-600" aria-hidden="true">·</span>
                             <span className="text-[10px] text-purple-400">Bipartisan</span>
                           </>
                         )}
@@ -340,6 +348,7 @@ export default function BillsPanel({
                       animate={{ rotate: isExpanded ? 180 : 0 }}
                       transition={{ duration: 0.2 }}
                       className="text-gray-500 shrink-0 mt-1"
+                      aria-hidden="true"
                     >
                       ▾
                     </motion.span>
@@ -390,17 +399,17 @@ export default function BillsPanel({
                             href={bill.congressUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-xs px-3 py-1.5 rounded-lg bg-white/5 text-indigo-400 hover:bg-white/10 transition-colors"
+                            className="text-xs px-3 py-1.5 rounded-lg bg-white/5 text-indigo-400 hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
                           >
-                            Full bill text
+                            Full bill text<span className="sr-only-inline"> (opens in new tab)</span>
                           </a>
                           <a
                             href={bill.cboScoreUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-xs px-3 py-1.5 rounded-lg bg-white/5 text-indigo-400 hover:bg-white/10 transition-colors"
+                            className="text-xs px-3 py-1.5 rounded-lg bg-white/5 text-indigo-400 hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
                           >
-                            CBO score
+                            CBO score<span className="sr-only-inline"> (opens in new tab)</span>
                           </a>
                         </div>
 
@@ -459,7 +468,7 @@ export default function BillsPanel({
 
                                 {/* Engagement bar — show after anyone has voted */}
                                 {totalVotes > 0 && (
-                                  <div className="space-y-1">
+                                  <div className="space-y-1" aria-live="polite">
                                     <div className="flex h-2 rounded-full overflow-hidden bg-white/5">
                                       <motion.div
                                         initial={{ width: 0 }}
@@ -576,9 +585,9 @@ export default function BillsPanel({
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         onClick={() => recordAction(bill.id, "contacted")}
-                                                        className="text-xs px-3 py-1.5 rounded-lg bg-white/10 text-white hover:bg-white/15 transition-colors font-medium"
+                                                        className="text-xs px-3 py-1.5 rounded-lg bg-white/10 text-white hover:bg-white/15 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                                       >
-                                                        Email
+                                                        Email<span className="sr-only-inline"> (opens in new tab)</span>
                                                       </a>
                                                     </div>
                                                   </div>

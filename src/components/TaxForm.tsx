@@ -63,10 +63,10 @@ export default function TaxForm({ onSubmit }: TaxFormProps) {
 
       {/* Filing Status */}
       <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-300">
+        <label id="filing-status-label" className="block text-sm font-medium text-gray-300">
           Filing Status
         </label>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-3 gap-2" role="radiogroup" aria-labelledby="filing-status-label">
           {[
             { value: "single" as FilingStatus, label: "Single" },
             { value: "married" as FilingStatus, label: "Married" },
@@ -75,8 +75,10 @@ export default function TaxForm({ onSubmit }: TaxFormProps) {
             <button
               key={option.value}
               type="button"
+              role="radio"
+              aria-checked={filingStatus === option.value}
               onClick={() => setFilingStatus(option.value)}
-              className={`px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
+              className={`px-3 py-2.5 rounded-xl text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
                 filingStatus === option.value
                   ? "bg-indigo-500 text-white shadow-lg shadow-indigo-500/25"
                   : "bg-white/5 text-gray-300 border border-white/10 hover:bg-white/10"
