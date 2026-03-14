@@ -1,35 +1,44 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { incrementCounter, getCounter, getCounters, keys, _resetMemoryCounters } from "./redis";
 
-// These tests run against the in-memory fallback (no Redis env vars in test)
+// These tests run against the in-memory fallback (no Redis env vars in test).
+// Use unique keys per test to avoid cross-test pollution from the shared module-level Map.
+let testId = 0;
 beforeEach(() => {
   _resetMemoryCounters();
+  testId++;
 });
+
+function key(name: string) {
+  return `test:${testId}:${name}`;
+}
 
 describe("incrementCounter", () => {
   it("increments from zero", async () => {
-    const result = await incrementCounter("test:inc:1");
+    const result = await incrementCounter(key("inc"));
     expect(result).toBe(1);
   });
 
   it("increments sequentially", async () => {
-    await incrementCounter("test:inc:seq");
-    await incrementCounter("test:inc:seq");
-    const result = await incrementCounter("test:inc:seq");
+    const k = key("seq");
+    await incrementCounter(k);
+    await incrementCounter(k);
+    const result = await incrementCounter(k);
     expect(result).toBe(3);
   });
 });
 
 describe("getCounter", () => {
   it("returns zero for unknown key", async () => {
-    const result = await getCounter("test:get:unknown");
+    const result = await getCounter(key("unknown"));
     expect(result).toBe(0);
   });
 
   it("returns current value after increments", async () => {
-    await incrementCounter("test:get:known");
-    await incrementCounter("test:get:known");
-    const result = await getCounter("test:get:known");
+    const k = key("known");
+    await incrementCounter(k);
+    await incrementCounter(k);
+    const result = await getCounter(k);
     expect(result).toBe(2);
   });
 });
@@ -41,19 +50,20 @@ describe("getCounters", () => {
   });
 
   it("returns zero for unknown keys", async () => {
-    const result = await getCounters(["test:batch:a", "test:batch:b"]);
-    expect(result).toEqual({
-      "test:batch:a": 0,
-      "test:batch:b": 0,
-    });
+    const a = key("a");
+    const b = key("b");
+    const result = await getCounters([a, b]);
+    expect(result).toEqual({ [a]: 0, [b]: 0 });
   });
 
   it("returns correct values for mixed keys", async () => {
-    await incrementCounter("test:batch:exists");
-    await incrementCounter("test:batch:exists");
-    const result = await getCounters(["test:batch:exists", "test:batch:missing"]);
-    expect(result["test:batch:exists"]).toBe(2);
-    expect(result["test:batch:missing"]).toBe(0);
+    const exists = key("exists");
+    const missing = key("missing");
+    await incrementCounter(exists);
+    await incrementCounter(exists);
+    const result = await getCounters([exists, missing]);
+    expect(result[exists]).toBe(2);
+    expect(result[missing]).toBe(0);
   });
 });
 
