@@ -1,12 +1,20 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { NextRequest } from "next/server";
 
+// Mock Redis so Upstash HTTP calls don't hit the global fetch mock
+vi.mock("@/lib/redis", () => ({
+  checkRateLimit: vi.fn().mockResolvedValue({ allowed: true }),
+}));
+
 // Mock fetch globally
 const mockFetch = vi.fn();
 vi.stubGlobal("fetch", mockFetch);
 
 // Must import after mocking fetch
 const { GET } = await import("./route");
+
+vi.spyOn(console, "error").mockImplementation(() => {});
+vi.spyOn(console, "log").mockImplementation(() => {});
 
 function geocodioResponse(districts: object[]) {
   return {
@@ -65,11 +73,8 @@ function makeDistrict(districtNumber: number, proportion: number, legislators: o
   };
 }
 
-const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
-
 beforeEach(() => {
   vi.clearAllMocks();
-  consoleSpy.mockClear();
 });
 
 describe("GET /api/representatives", () => {

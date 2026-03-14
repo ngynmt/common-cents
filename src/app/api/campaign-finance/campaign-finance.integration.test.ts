@@ -2,11 +2,19 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { NextRequest } from "next/server";
 import { FEC_CANDIDATE_IDS } from "@/data/fec-candidate-ids";
 
+// Mock Redis so Upstash HTTP calls don't hit the global fetch mock
+vi.mock("@/lib/redis", () => ({
+  checkRateLimit: vi.fn().mockResolvedValue({ allowed: true }),
+}));
+
 // Mock fetch globally
 const mockFetch = vi.fn();
 vi.stubGlobal("fetch", mockFetch);
 
 const { GET } = await import("./route");
+
+vi.spyOn(console, "error").mockImplementation(() => {});
+vi.spyOn(console, "log").mockImplementation(() => {});
 
 // Find a bioguide ID that has a known FEC mapping
 const knownBioguideId = Object.keys(FEC_CANDIDATE_IDS)[0];
@@ -76,11 +84,8 @@ function mockFecApis(overrides: { candidate?: object; totals?: object; employers
   });
 }
 
-const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
-
 beforeEach(() => {
   vi.clearAllMocks();
-  consoleSpy.mockClear();
 });
 
 describe("GET /api/campaign-finance", () => {
