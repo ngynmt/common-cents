@@ -1,7 +1,11 @@
-import { describe, it, expect, beforeEach } from "vitest";
-import { incrementCounter, getCounter, getCounters, keys, _resetMemoryCounters } from "./redis";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
-// These tests run against the in-memory fallback (no Redis env vars in test).
+// Ensure tests always use the in-memory fallback, even when Upstash env vars are set (e.g. CI).
+vi.stubEnv("UPSTASH_REDIS_REST_URL", "");
+vi.stubEnv("UPSTASH_REDIS_REST_TOKEN", "");
+
+const { incrementCounter, getCounter, getCounters, keys, _resetMemoryCounters } = await import("./redis");
+
 // Use unique keys per test to avoid cross-test pollution from the shared module-level Map.
 let testId = 0;
 beforeEach(() => {
