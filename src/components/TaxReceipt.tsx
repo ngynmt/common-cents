@@ -8,6 +8,7 @@ import { calculatePersonalSpending } from "@/lib/spending";
 import SpendingChart from "./SpendingChart";
 import ReceiptLine from "./ReceiptLine";
 import BillsPanel from "./BillsPanel";
+import InternationalComparison from "./InternationalComparison";
 import RepresentativesModal from "./RepresentativesModal";
 
 import type { Representative, VoteRecord } from "@/data/representatives";
@@ -19,9 +20,11 @@ interface TaxReceiptProps {
   votes: VoteRecord[];
   onBack: () => void;
   financeData?: Record<string, CampaignFinanceSummary | null>;
+  compareCountry?: string | null;
+  onCompareCountryChange?: (code: string | null) => void;
 }
 
-export default function TaxReceipt({ taxEstimate, representatives, votes, onBack, financeData }: TaxReceiptProps) {
+export default function TaxReceipt({ taxEstimate, representatives, votes, onBack, financeData, compareCountry, onCompareCountryChange }: TaxReceiptProps) {
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
   const [showRepsModal, setShowRepsModal] = useState(false);
@@ -253,6 +256,18 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
           }
           totalFederalTax={taxEstimate.totalFederalTax}
           representatives={representatives}
+        />
+      </div>
+
+      {/* International comparison */}
+      <div className="mt-6">
+        <InternationalComparison
+          spending={spending}
+          totalFederalTax={taxEstimate.totalFederalTax}
+          grossIncome={taxEstimate.grossIncome}
+          filingStatus={taxEstimate.filingStatus}
+          initialCountry={compareCountry}
+          onCountryChange={onCompareCountryChange}
         />
       </div>
 

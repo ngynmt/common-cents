@@ -1,0 +1,169 @@
+{
+  "lastUpdated": "2026-03-14",
+  "dataYear": 2023,
+  "source": "OECD COFOG via SDMX",
+  "countries": {
+    "GBR": {
+      "name": "United Kingdom",
+      "countryCode": "GBR",
+      "dataYear": 2023,
+      "totalExpenditurePctGDP": 0,
+      "ratios": {
+        "defense": 0.04797517245501543,
+        "international": 0,
+        "science": 0.015466881008202187,
+        "agriculture": 0.0156776178517976,
+        "infrastructure": 0.10846561241880587,
+        "education": 0.11516715415209385,
+        "healthcare": 0.18626557325218973,
+        "income-security": 0.1314840608388106,
+        "social-security": 0.19722609125821586,
+        "veterans": 0,
+        "justice": 0.045880780909970956,
+        "government": 0.08865418630568364,
+        "interest": 0.04773686954921426,
+        "immigration": 0
+      },
+      "unmappedCategories": [
+        "immigration",
+        "veterans",
+        "international"
+      ]
+    },
+    "DEU": {
+      "name": "Germany",
+      "countryCode": "DEU",
+      "dataYear": 2023,
+      "totalExpenditurePctGDP": 0,
+      "ratios": {
+        "defense": 0.022897623174664327,
+        "international": 0,
+        "science": 0.01201548664918491,
+        "agriculture": 0.018071378835241982,
+        "infrastructure": 0.11186387946488081,
+        "education": 0.1132505666750618,
+        "healthcare": 0.15559687304009426,
+        "income-security": 0.16246660444352287,
+        "social-security": 0.24369990666528427,
+        "veterans": 0,
+        "justice": 0.03325036914127112,
+        "government": 0.08247675274201588,
+        "interest": 0.04441055916877777,
+        "immigration": 0
+      },
+      "unmappedCategories": [
+        "immigration",
+        "veterans",
+        "international"
+      ]
+    },
+    "AUS": {
+      "name": "Australia",
+      "countryCode": "AUS",
+      "dataYear": 2023,
+      "totalExpenditurePctGDP": 0,
+      "ratios": {
+        "defense": 0.05799220000484477,
+        "international": 0,
+        "science": 0.022648122578805878,
+        "agriculture": 0.019633403954407488,
+        "infrastructure": 0.12671153620401482,
+        "education": 0.1636415132661411,
+        "healthcare": 0.18973031693769155,
+        "income-security": 0.10584887835473364,
+        "social-security": 0.15877331753210044,
+        "veterans": 0,
+        "justice": 0.049140342148855834,
+        "government": 0.06882223986196294,
+        "interest": 0.037058129156441584,
+        "immigration": 0
+      },
+      "unmappedCategories": [
+        "immigration",
+        "veterans",
+        "international"
+      ]
+    },
+    "JPN": {
+      "name": "Japan",
+      "countryCode": "JPN",
+      "dataYear": 2023,
+      "totalExpenditurePctGDP": 0,
+      "ratios": {
+        "defense": 0.028312053865404963,
+        "international": 0,
+        "science": 0.027812943728992828,
+        "agriculture": 0.018147506499309282,
+        "infrastructure": 0.1171443913492039,
+        "education": 0.08983982455421045,
+        "healthcare": 0.20123258867049268,
+        "income-security": 0.1596549990084738,
+        "social-security": 0.23948249851271064,
+        "veterans": 0,
+        "justice": 0.028898602407944795,
+        "government": 0.05815848441211687,
+        "interest": 0.03131610699113985,
+        "immigration": 0
+      },
+      "unmappedCategories": [
+        "immigration",
+        "veterans",
+        "international"
+      ]
+    },
+    "KOR": {
+      "name": "South Korea",
+      "countryCode": "KOR",
+      "dataYear": 2023,
+      "totalExpenditurePctGDP": 0,
+      "ratios": {
+        "defense": 0.07112359259666136,
+        "international": 0,
+        "science": 0.026986061770991714,
+        "agriculture": 0.020035175024962586,
+        "infrastructure": 0.14608944033202273,
+        "education": 0.1688304403327224,
+        "healthcare": 0.14787003456859923,
+        "income-security": 0.10463642794717663,
+        "social-security": 0.15695464192076494,
+        "veterans": 0,
+        "justice": 0.0346116321318872,
+        "government": 0.07986065969323726,
+        "interest": 0.043001893680973895,
+        "immigration": 0
+      },
+      "unmappedCategories": [
+        "immigration",
+        "veterans",
+        "international"
+      ]
+    },
+    "FRA": {
+      "name": "France",
+      "countryCode": "FRA",
+      "dataYear": 2023,
+      "totalExpenditurePctGDP": 0,
+      "ratios": {
+        "defense": 0.03184026105383347,
+        "international": 0,
+        "science": 0.018001700393544137,
+        "agriculture": 0.01657531893577212,
+        "infrastructure": 0.11607559659040362,
+        "education": 0.11383143110152426,
+        "healthcare": 0.1553300668424129,
+        "income-security": 0.16372634787543516,
+        "social-security": 0.24558952181315272,
+        "veterans": 0,
+        "justice": 0.03030491741718853,
+        "government": 0.07067114468487656,
+        "interest": 0.0380536932918566,
+        "immigration": 0
+      },
+      "unmappedCategories": [
+        "immigration",
+        "veterans",
+        "international"
+      ]
+    }
+  }
+}

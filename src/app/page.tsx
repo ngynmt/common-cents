@@ -88,6 +88,7 @@ function HomeContent() {
   const [representatives, setRepresentatives] = useState<Representative[] | null>(null);
   const [votes, setVotes] = useState<VoteRecord[]>([]);
   const [financeData, setFinanceData] = useState<Record<string, CampaignFinanceSummary | null>>({});
+  const [compareCountry, setCompareCountry] = useState<string | null>(null);
   const [initialized, setInitialized] = useState(false);
 
   const processInputs = useCallback(async (income: number, filingStatus: FilingStatus, zipCode: string) => {
@@ -120,6 +121,8 @@ function HomeContent() {
     const incomeParam = searchParams.get("income");
     const filingParam = searchParams.get("filing") as FilingStatus | null;
     const zipParam = searchParams.get("zip") || "";
+    const compareParam = searchParams.get("compare");
+    if (compareParam) setCompareCountry(compareParam);
 
     if (
       incomeParam &&
@@ -148,11 +151,23 @@ function HomeContent() {
     router.replace(`?${params.toString()}`, { scroll: false });
   };
 
+  const handleCompareCountryChange = (code: string | null) => {
+    setCompareCountry(code);
+    const params = new URLSearchParams(searchParams.toString());
+    if (code) {
+      params.set("compare", code);
+    } else {
+      params.delete("compare");
+    }
+    router.replace(`?${params.toString()}`, { scroll: false });
+  };
+
   const handleBack = () => {
     setTaxEstimate(null);
     setRepresentatives(null);
     setVotes([]);
     setFinanceData({});
+    setCompareCountry(null);
     router.replace("/", { scroll: false });
   };
 
@@ -236,6 +251,8 @@ function HomeContent() {
                 votes={votes}
                 onBack={handleBack}
                 financeData={financeData}
+                compareCountry={compareCountry}
+                onCompareCountryChange={handleCompareCountryChange}
               />
             </motion.div>
           )}

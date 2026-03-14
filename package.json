@@ -10,13 +10,17 @@
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "bills:discover": "npx tsx scripts/discover-bills.ts",
     "bills:draft": "npx tsx scripts/draft-bill.ts",
     "tax:update": "npx tsx scripts/update-tax-brackets.ts",
     "bills:refresh": "npx tsx scripts/refresh-bill-status.ts",
     "bills:suggest": "npx tsx scripts/suggest-bills.ts",
     "budget:update": "npx tsx scripts/update-budget-data.ts",
-    "budget:validate": "npx tsx scripts/update-budget-data.ts --validate"
+    "budget:validate": "npx tsx scripts/update-budget-data.ts --validate",
+    "intl:update": "npx tsx scripts/update-intl-data.ts",
+    "intl:validate": "npx tsx scripts/update-intl-data.ts --validate"
   },
   "dependencies": {
     "@upstash/redis": "^1.36.4",
@@ -27,6 +31,7 @@
     "recharts": "^3.8.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

@@ -1,0 +1,94 @@
+name: International Data Update
+
+on:
+  schedule:
+    # July 1st at 9am UTC — OECD typically publishes prior-year COFOG data mid-year
+    - cron: "0 9 1 7 *"
+  workflow_dispatch:
+    inputs:
+      year:
+        description: "COFOG data year to fetch"
+        required: false
+        default: ""
+      countries:
+        description: "Comma-separated country codes (e.g. GBR,DEU)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Fetch OECD COFOG data
+        run: |
+          args=""
+          year="${{ github.event.inputs.year }}"
+          countries="${{ github.event.inputs.countries }}"
+          if [ -n "$year" ]; then
+            args="$args --year $year"
+          fi
+          if [ -n "$countries" ]; then
+            args="$args --countries $countries"
+          fi
+          npx tsx scripts/update-intl-data.ts $args --summary
+
+      - name: Validate generated data
+        run: npx tsx scripts/update-intl-data.ts --validate
+
+      - name: Run tests
+        run: npx vitest run scripts/lib/intl-data.test.ts
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet src/data/international.json; then
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create draft PR
+        if: steps.changes.outputs.has_changes == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          branch="intl-data-update/$(date +%Y-%m-%d)"
+          git checkout -b "$branch"
+          git add src/data/international.json
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "data: update international spending ratios from OECD COFOG"
+          git push -u origin "$branch"
+
+          gh pr create \
+            --title "Update international spending data (OECD COFOG)" \
+            --body "$(cat <<'EOF'
+## Summary
+- Updated international spending ratios from OECD COFOG data
+- Data validated and tests passing
+- Review the ratio changes before merging
+
+## Checklist
+- [ ] Spot-check a few ratios against [OECD stats](https://stats.oecd.org/)
+- [ ] Verify no country has suspicious spikes vs prior data
+- [ ] Run `npm run dev` and check the comparison UI
+- [ ] Review tax brackets/rates in `src/lib/international-tax.ts` — these are **not** auto-updated and may need annual adjustment for each country's new tax year
+EOF
+          )" \
+            --draft \
+            --base main \
+            --head "$branch"
