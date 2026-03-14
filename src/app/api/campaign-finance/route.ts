@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import type { CampaignFinanceSummary, DonorEmployer, OutsideSpender } from "@/data/campaign-finance";
 import { FEC_CANDIDATE_IDS } from "@/data/fec-candidate-ids";
+import { logApi, trackedFetch } from "@/lib/api-logger";
+import { checkRateLimit } from "@/lib/redis";
+
+const MAX_IDS = 10;
+const VALID_CHAMBERS = new Set(["house", "senate"]);
 
 const FEC_BASE = "https://api.open.fec.gov/v1";
 const FEC_API_KEY = process.env.FEC_API_KEY || "DEMO_KEY";
@@ -69,17 +74,14 @@ function fecUrl(path: string, params: Record<string, string | number> = {}): str
 }
 
 async function fecFetch<T>(path: string, params: Record<string, string | number> = {}): Promise<T | null> {
-  try {
-    const res = await fetch(fecUrl(path, params), { next: { revalidate: 86400 } });
-    if (!res.ok) {
-      console.error(`[fec] ${path} returned ${res.status}`);
-      return null;
-    }
-    return await res.json();
-  } catch (err) {
-    console.error(`[fec] Failed to fetch ${path}:`, err);
-    return null;
-  }
+  const res = await trackedFetch(
+    fecUrl(path, params),
+    "/api/campaign-finance",
+    "fec",
+    { next: { revalidate: 86400 } },
+  );
+  if (!res) return null;
+  return await res.json();
 }
 
 function parseParty(party: string): "D" | "R" | "I" {
@@ -303,6 +305,18 @@ async function searchCandidateByName(
 }
 
 export async function GET(request: NextRequest) {
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
+    || request.headers.get("x-real-ip")
+    || "unknown";
+  const { allowed, retryAfterSeconds } = await checkRateLimit(ip, "campaign-finance", 15);
+  if (!allowed) {
+    logApi({ route: "/api/campaign-finance", event: "rate_limit_hit" });
+    return NextResponse.json(
+      { error: "Too many requests" },
+      { status: 429, headers: { "Retry-After": String(retryAfterSeconds ?? 60) } },
+    );
+  }
+
   const { searchParams } = request.nextUrl;
   const bioguideIds = searchParams.get("bioguideIds");
   const names = searchParams.get("names");
@@ -320,12 +334,17 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ data: { search: result } });
   }
 
-  const ids = bioguideIds!.split(",").map((id) => id.trim().toLowerCase());
-  const nameList = names ? names.split(",").map((n) => decodeURIComponent(n.trim())) : [];
+  const ids = bioguideIds!.split(",").map((id) => id.trim().toLowerCase()).slice(0, MAX_IDS);
+  const nameList = names ? names.split(",").map((n) => decodeURIComponent(n.trim())).slice(0, MAX_IDS) : [];
   const states = searchParams.get("states");
-  const stateList = states ? states.split(",").map((s) => s.trim()) : [];
+  const stateList = states ? states.split(",").map((s) => s.trim()).slice(0, MAX_IDS) : [];
   const chambers = searchParams.get("chambers");
-  const chamberList = chambers ? chambers.split(",").map((c) => c.trim() as "house" | "senate") : [];
+  const chamberList = chambers
+    ? chambers.split(",").map((c) => {
+        const trimmed = c.trim().toLowerCase();
+        return VALID_CHAMBERS.has(trimmed) ? trimmed as "house" | "senate" : undefined;
+      }).filter((c): c is "house" | "senate" => c !== undefined).slice(0, MAX_IDS)
+    : [];
   const results: Record<string, CampaignFinanceSummary | null> = {};
 
   await Promise.all(

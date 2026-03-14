@@ -95,7 +95,7 @@ export const keys = {
   billSupport: (billId: string) => `bill:${billId}:support`,
   billOppose: (billId: string) => `bill:${billId}:oppose`,
   billContacted: (billId: string) => `bill:${billId}:contacted`,
-  rateLimit: (ip: string) => `ratelimit:engagement:${ip}`,
+  rateLimit: (ip: string, route: string = "engagement") => `ratelimit:${route}:${ip}`,
 };
 
 /**
@@ -109,16 +109,20 @@ const RATE_LIMIT_MAX = 10;
 // In-memory fallback
 const memoryRateLimit: Record<string, { count: number; resetAt: number }> = {};
 
-export async function checkRateLimit(ip: string): Promise<{ allowed: boolean; retryAfterSeconds?: number }> {
+export async function checkRateLimit(
+  ip: string,
+  route: string = "engagement",
+  max: number = RATE_LIMIT_MAX,
+): Promise<{ allowed: boolean; retryAfterSeconds?: number }> {
   const client = getRedis();
-  const key = keys.rateLimit(ip);
+  const key = keys.rateLimit(ip, route);
 
   if (client) {
     const current = await client.incr(key);
     if (current === 1) {
       await client.expire(key, RATE_LIMIT_WINDOW);
     }
-    if (current > RATE_LIMIT_MAX) {
+    if (current > max) {
       const ttl = await client.ttl(key);
       return { allowed: false, retryAfterSeconds: ttl > 0 ? ttl : RATE_LIMIT_WINDOW };
     }
@@ -133,7 +137,7 @@ export async function checkRateLimit(ip: string): Promise<{ allowed: boolean; re
     return { allowed: true };
   }
   entry.count++;
-  if (entry.count > RATE_LIMIT_MAX) {
+  if (entry.count > max) {
     const retryAfterSeconds = Math.ceil((entry.resetAt - now) / 1000);
     return { allowed: false, retryAfterSeconds };
   }

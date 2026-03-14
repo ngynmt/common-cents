@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import type { Representative } from "@/data/representatives";
 import { getSenatorNextElection } from "@/data/senate-classes";
+import { logApi, trackedFetch } from "@/lib/api-logger";
+import { checkRateLimit } from "@/lib/redis";
+
+const ZIP_REGEX = /^\d{5}$/;
 
 const GEOCODIO_URL = "https://api.geocod.io/v1.7/geocode";
 const GEOCODIO_API_KEY = process.env.GEOCODIO_API_KEY || "DEMO";
@@ -101,9 +105,21 @@ function transformLegislator(
 }
 
 export async function GET(request: NextRequest) {
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
+    || request.headers.get("x-real-ip")
+    || "unknown";
+  const { allowed, retryAfterSeconds } = await checkRateLimit(ip, "representatives", 20);
+  if (!allowed) {
+    logApi({ route: "/api/representatives", event: "rate_limit_hit" });
+    return NextResponse.json(
+      { error: "Too many requests" },
+      { status: 429, headers: { "Retry-After": String(retryAfterSeconds ?? 60) } },
+    );
+  }
+
   const zip = request.nextUrl.searchParams.get("zip");
 
-  if (!zip || zip.length < 5) {
+  if (!zip || !ZIP_REGEX.test(zip)) {
     return NextResponse.json(
       { error: "A valid ZIP code is required" },
       { status: 400 },
@@ -116,10 +132,10 @@ export async function GET(request: NextRequest) {
 
   try {
     const url = `${GEOCODIO_URL}?q=${encodeURIComponent(zip)}&fields=cd&api_key=${GEOCODIO_API_KEY}`;
-    const res = await fetch(url, { next: { revalidate: 86400 } });
+    const res = await trackedFetch(url, "/api/representatives", "geocodio", { next: { revalidate: 86400 } });
 
-    if (!res.ok) {
-      console.error("Geocodio error:", res.status, await res.text().catch(() => ""));
+    if (!res) {
+      logApi({ route: "/api/representatives", event: "fallback_activated", dependency: "geocodio" });
       return NextResponse.json({ fallback: true, representatives: null });
     }
 
@@ -185,7 +201,12 @@ export async function GET(request: NextRequest) {
       representatives,
     });
   } catch (err) {
-    console.error("Failed to fetch representatives:", err);
+    logApi({
+      route: "/api/representatives",
+      event: "fallback_activated",
+      dependency: "geocodio",
+      error: err instanceof Error ? err.message : String(err),
+    });
     return NextResponse.json({ fallback: true, representatives: null });
   }
 }

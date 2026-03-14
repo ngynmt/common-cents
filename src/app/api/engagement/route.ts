@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { incrementCounter, getCounters, keys, checkRateLimit } from "@/lib/redis";
 import { pendingBills } from "@/data/pending-bills";
+import { logApi } from "@/lib/api-logger";
 
 const validBillIds = new Set(pendingBills.map((b) => b.id));
 
@@ -54,6 +55,7 @@ export async function POST(request: NextRequest) {
     || "unknown";
   const { allowed, retryAfterSeconds } = await checkRateLimit(ip);
   if (!allowed) {
+    logApi({ route: "/api/engagement", event: "rate_limit_hit" });
     return NextResponse.json(
       { error: "Too many requests" },
       { status: 429, headers: { "Retry-After": String(retryAfterSeconds ?? 60) } },

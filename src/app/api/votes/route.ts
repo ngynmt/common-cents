@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { trackedVotes } from "@/data/tracked-votes";
 import type { VoteRecord } from "@/data/representatives";
+import { logApi, trackedFetch } from "@/lib/api-logger";
+import { checkRateLimit } from "@/lib/redis";
+
+const MAX_IDS = 20;
 
 const HOUSE_XML_URL = "https://clerk.house.gov/evs";
 const SENATE_XML_URL = "https://www.senate.gov/legislative/LIS/roll_call_votes";
@@ -27,10 +31,9 @@ async function fetchHouseVotes(year: number, rollCall: number): Promise<Map<stri
   if (voteCache.has(cacheKey)) return voteCache.get(cacheKey)!;
 
   const url = `${HOUSE_XML_URL}/${year}/roll${rollCall}.xml`;
-  const res = await fetch(url, { next: { revalidate: 86400 } });
+  const res = await trackedFetch(url, "/api/votes", "house_clerk", { next: { revalidate: 86400 } });
 
-  if (!res.ok) {
-    console.error(`House vote fetch failed: ${url} → ${res.status}`);
+  if (!res) {
     return new Map();
   }
 
@@ -74,10 +77,9 @@ async function fetchSenateVotes(
 
   const paddedRoll = String(rollCall).padStart(5, "0");
   const url = `${SENATE_XML_URL}/vote${congress}${session}/vote_${congress}_${session}_${paddedRoll}.xml`;
-  const res = await fetch(url, { next: { revalidate: 86400 } });
+  const res = await trackedFetch(url, "/api/votes", "senate_xml", { next: { revalidate: 86400 } });
 
-  if (!res.ok) {
-    console.error(`Senate vote fetch failed: ${url} → ${res.status}`);
+  if (!res) {
     return new Map();
   }
 
@@ -126,17 +128,31 @@ function normalizeVote(voteText: string): string {
  * bioguideIds are used for House votes, lisIds for Senate votes.
  */
 export async function GET(request: NextRequest) {
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
+    || request.headers.get("x-real-ip")
+    || "unknown";
+  const { allowed, retryAfterSeconds } = await checkRateLimit(ip, "votes", 20);
+  if (!allowed) {
+    logApi({ route: "/api/votes", event: "rate_limit_hit" });
+    return NextResponse.json(
+      { error: "Too many requests" },
+      { status: 429, headers: { "Retry-After": String(retryAfterSeconds ?? 60) } },
+    );
+  }
+
   const bioguideIdsParam = request.nextUrl.searchParams.get("bioguideIds") || "";
   const lisIdsParam = request.nextUrl.searchParams.get("lisIds") || "";
 
   const bioguideIds = bioguideIdsParam
     .split(",")
     .map((id) => id.trim().toLowerCase())
-    .filter(Boolean);
+    .filter(Boolean)
+    .slice(0, MAX_IDS);
   const lisIds = lisIdsParam
     .split(",")
     .map((id) => id.trim())
-    .filter(Boolean);
+    .filter(Boolean)
+    .slice(0, MAX_IDS);
 
   if (bioguideIds.length === 0 && lisIds.length === 0) {
     return NextResponse.json({ votes: [] });
@@ -192,7 +208,11 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ votes: voteRecords });
   } catch (err) {
-    console.error("Failed to fetch votes:", err);
+    logApi({
+      route: "/api/votes",
+      event: "fallback_activated",
+      error: err instanceof Error ? err.message : String(err),
+    });
     return NextResponse.json({ votes: [] });
   }
 }
