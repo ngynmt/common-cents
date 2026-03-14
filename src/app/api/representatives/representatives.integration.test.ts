@@ -65,8 +65,11 @@ function makeDistrict(districtNumber: number, proportion: number, legislators: o
   };
 }
 
+const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+
 beforeEach(() => {
   vi.clearAllMocks();
+  consoleSpy.mockClear();
 });
 
 describe("GET /api/representatives", () => {

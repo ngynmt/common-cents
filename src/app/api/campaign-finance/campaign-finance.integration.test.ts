@@ -76,8 +76,11 @@ function mockFecApis(overrides: { candidate?: object; totals?: object; employers
   });
 }
 
+const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+
 beforeEach(() => {
   vi.clearAllMocks();
+  consoleSpy.mockClear();
 });
 
 describe("GET /api/campaign-finance", () => {

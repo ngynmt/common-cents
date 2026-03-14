@@ -9,8 +9,11 @@ vi.stubGlobal("fetch", mockFetch);
 // Must import after mocking fetch (and after each resetModules to clear voteCache)
 let GET: (req: NextRequest) => Promise<Response>;
 
+const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+
 beforeEach(async () => {
   vi.clearAllMocks();
+  consoleSpy.mockClear();
   // Reset the module to clear the in-memory voteCache between tests
   vi.resetModules();
   const mod = await import("./route");
