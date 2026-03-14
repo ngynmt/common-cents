@@ -14,7 +14,9 @@
     "bills:draft": "npx tsx scripts/draft-bill.ts",
     "tax:update": "npx tsx scripts/update-tax-brackets.ts",
     "bills:refresh": "npx tsx scripts/refresh-bill-status.ts",
-    "bills:suggest": "npx tsx scripts/suggest-bills.ts"
+    "bills:suggest": "npx tsx scripts/suggest-bills.ts",
+    "budget:update": "npx tsx scripts/update-budget-data.ts",
+    "budget:validate": "npx tsx scripts/update-budget-data.ts --validate"
   },
   "dependencies": {
     "@upstash/redis": "^1.36.4",
@@ -38,6 +40,7 @@
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^5",
-    "vitest": "^4.0.18"
+    "vitest": "^4.0.18",
+    "xlsx": "^0.18.5"
   }
 }

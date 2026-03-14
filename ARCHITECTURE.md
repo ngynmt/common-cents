@@ -158,7 +158,7 @@ Several data sources in this app require periodic manual updates. They are liste
 | Pending bill discovery | **Automated** | `scripts/suggest-bills.ts` scans Congress.gov for high-signal pending bills (cosponsor thresholds + committee progress), filters by budget category, deduplicates, and generates skeleton entries. Weekly GitHub Actions workflow (`.github/workflows/bill-suggester.yml`) opens draft PRs. See `docs/implemented/bill-suggestion-pipeline-spec.md`. |
 | Pending bill statuses | **Automated** | `scripts/refresh-bill-status.ts` refreshes `status`, `lastActionDate`, `cosponsors` in `pending-bills.ts` via Congress.gov API. See `docs/implemented/bill-status-refresher-spec.md`. |
 | Tax brackets | **Automated** | `scripts/update-tax-brackets.ts` fetches new-year bracket data and generates a config entry. See `docs/implemented/tax-bracket-updater-spec.md`. |
-| Budget data | **Spec'd** | `scripts/update-budget-data.ts` (planned) — parses CBO historical tables and generates fiscal year amounts. See `docs/todo/budget-data-updater-spec.md`. |
+| Budget data | **Automated** | `scripts/update-budget-data.ts` downloads OMB Historical Table 3.2, maps function codes to our 14 categories, validates, and generates fiscal year amounts. Run `npm run budget:update -- --year YYYY`. See `docs/implemented/budget-data-updater-spec.md`. |
 | Live vote records | **Live** | Already fetched at runtime from House Clerk / Senate XML — no script needed. |
 
 ## Key Architectural Constraints
