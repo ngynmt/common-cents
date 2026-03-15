@@ -243,7 +243,7 @@ function HomeContent() {
                 <span aria-hidden="true">•</span>
                 <span>Calculated in your browser</span>
                 <span aria-hidden="true">•</span>
-                <span>100% open source</span>
+                <a href="https://github.com/ngynmt/common-cents" target="_blank" rel="noopener noreferrer" className="underline decoration-gray-500 underline-offset-2 hover:decoration-gray-300 transition-colors">100% open source</a>
               </div>
             </motion.div>
           )}
@@ -280,16 +280,25 @@ function HomeContent() {
           <p>
             Common Cents is not affiliated with any government agency or political organization.
           </p>
-          <a
-            href="https://buymeacoffee.com/meeshers"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#FFDD00]/10 text-[#FFDD00] hover:bg-[#FFDD00]/20 transition-colors text-xs font-medium"
-          >
-            <span aria-hidden="true">&#9749;</span>
-            Buy me a coffee
-            <span className="sr-only-inline">(opens in new tab)</span>
-          </a>
+          <div className="flex items-center justify-center gap-3 flex-wrap">
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLScpU812Yifx_E9eu3MtKZzVxp6Kwar9Cbr7ucFR6CdXW6pPSw/viewform?usp=publish-editor"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/5 text-gray-300 hover:bg-white/10 transition-colors text-xs font-medium"
+            >
+              Share feedback
+            </a>
+            <a
+              href="https://buymeacoffee.com/meeshers"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#FFDD00]/10 text-[#FFDD00] hover:bg-[#FFDD00]/20 transition-colors text-xs font-medium"
+            >
+              <span aria-hidden="true">&#9749;</span>
+              Buy me a coffee
+            </a>
+          </div>
         </div>
       </footer>
     </div>

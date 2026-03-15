@@ -99,7 +99,7 @@ export default function ReceiptLine({
         <motion.span
           animate={{ rotate: isExpanded ? 180 : 0 }}
           transition={{ duration: 0.2 }}
-          className="text-gray-400 shrink-0"
+          className="text-gray-400 shrink-0 text-lg"
           aria-hidden="true"
         >
           ▾

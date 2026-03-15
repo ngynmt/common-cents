@@ -52,7 +52,6 @@ export default function InternationalComparison({
   initialCountry = null,
   onCountryChange,
 }: InternationalComparisonProps) {
-  const [expanded, setExpanded] = useState(!!initialCountry);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(
     initialCountry
   );
@@ -83,63 +82,20 @@ export default function InternationalComparison({
     setSelectedCountry(code);
     onCountryChange?.(code);
     if (code) {
-      setExpanded(true);
       trackInternationalCompared(code);
     }
-  };
-
-  const handleToggle = () => {
-    if (expanded) {
-      setSelectedCountry(null);
-      onCountryChange?.(null);
-    }
-    setExpanded(!expanded);
   };
 
   // Whether to show the mode toggle: single country with tax estimate, or all countries
   const showModeToggle = isAllMode || comparison?.country.hasTaxEstimate;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.6 }}
-    >
-      {/* Teaser / toggle */}
-      <button
-        onClick={handleToggle}
-        aria-expanded={expanded}
-        className="w-full text-left p-4 rounded-xl bg-white/[0.03] border border-white/10 hover:border-white/20 transition-colors cursor-pointer group focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
-      >
-        <div className="flex items-center justify-between">
-          <div>
-            <h3 className="text-sm font-semibold text-gray-300">
-              How does US spending compare?
-            </h3>
-            <p className="text-xs text-gray-500 mt-0.5">
-              See how your taxes would be spent in another country
-            </p>
-          </div>
-          <span
-            className={`text-gray-500 transition-transform ${expanded ? "rotate-180" : ""}`}
-            aria-hidden="true"
-          >
-            ▾
-          </span>
-        </div>
-      </button>
-
-      <AnimatePresence>
-        {expanded && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="overflow-hidden"
-          >
+    <div>
+      <h3 className="text-sm font-semibold text-white mb-3">
+        Your Tax Breakdown vs. Other Countries
+      </h3>
             {/* Country selector + mode toggle */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <div className="flex items-center gap-2">
                 <label
                   htmlFor="compare-country"
@@ -490,10 +446,7 @@ export default function InternationalComparison({
                 </a>
               </p>
             )}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
+    </div>
   );
 }
 

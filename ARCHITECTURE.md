@@ -15,26 +15,29 @@
 │                                              ┌──────────────┐     │
 │                                              │ SpendingChart│     │
 │                                              │ ReceiptLine  │     │
-│                                              │ BillsPanel   │     │
+│                                              │ SecondaryTabs│     │
+│                                              │  ├ BillsPanel│     │
+│                                              │  ├ RecentExp.│     │
+│                                              │  └ Intl Comp.│     │
 │                                              │ RepsModal    │     │
 │                                              └──────────────┘     │
-└──────────────────────┬──────────────┬─────────────────┬───────────┘
-                       │ fetch        │ fetch           │ fetch
-                       ▼              ▼                 ▼
-              ┌───────────────┐ ┌─────────────┐ ┌────────────────────┐
-              │/api/engagement│ │ /api/votes  │ │/api/representatives│
-              │               │ │             │ │                    │
-              │GET: read cnts │ │ House XML + │ │ ZIP → Geocodio API │
-              │POST: incr     │ │ Senate XML  │ │ Returns senators + │
-              │               │ │ → VoteRecs  │ │ house rep(s)       │
-              └──────┬────────┘ └─────────────┘ └────────────────────┘
-                     │
-                     ▼
-              ┌─────────────────┐
-              │  Upstash Redis  │
-              │  (or in-memory  │
-              │   Map fallback) │
-              └─────────────────┘
+└──────────┬──────────┬──────────┬──────────┬──────────┬────────────┘
+           │ fetch    │ fetch    │ fetch    │ fetch    │ fetch
+           ▼          ▼         ▼          ▼          ▼
+   ┌────────────┐ ┌────────┐ ┌──────────┐ ┌────────┐ ┌───────────────┐
+   │/api/engage │ │/api/   │ │/api/reps │ │/api/   │ │/api/bills     │
+   │ment       │ │votes   │ │          │ │contract│ │               │
+   │GET: counts │ │House + │ │ZIP →     │ │s       │ │Congress.gov   │
+   │POST: incr  │ │Senate  │ │Geocodio  │ │        │ │enacted bills  │
+   │            │ │XML     │ │API       │ │USA     │ │→ PendingBill  │
+   └─────┬──────┘ └────────┘ └──────────┘ │Spending│ └───────────────┘
+         │                                │.gov    │
+         ▼                                │→ Fed.  │
+   ┌─────────────────┐                    │Contract│
+   │  Upstash Redis  │                    └────────┘
+   │  (or in-memory  │
+   │   Map fallback) │
+   └─────────────────┘
 ```
 
 ## Data Flow
@@ -99,13 +102,68 @@ Responses are cached 24h (`revalidate: 86400`). An in-memory cache also prevents
 
 **Fallback:** If XML fetches fail, vote data is simply empty (no sample votes shown for live reps).
 
-### 6. Bill Data (static, curated)
+### 6. Recent Expenditures (server-side API routes)
+
+Two API routes feed the "Recent Spending" tab in `SecondaryTabs`:
+
+**Contracts** (`/api/contracts`):
+```
+GET /api/contracts?days=30&min_amount=100000000
+  → POST to USASpending.gov Award Search API (no auth)
+  → Maps awarding agency to budget category via agencyToCategory()
+  → Returns FederalContract[] with personal cost context
+```
+
+**Enacted Bills** (`/api/bills`):
+```
+GET /api/bills?status=enacted&days=90
+  → Congress.gov API (CONGRESS_API_KEY or DEMO_KEY)
+  → Filters for bills with "became public law" / "signed by president"
+  → Returns PendingBill[] with status: "enacted"
+```
+
+The `RecentExpenditures` component fetches both in parallel, interleaves by date, and shows personal cost using `calculatePersonalCost()` and `calculateBillPersonalCost()` from `lib/expenditures.ts`.
+
+**Fallback:** Both endpoints return empty arrays on failure. The UI shows "No recent expenditures found" if both are empty, or an error message if both fail.
+
+### 7. Follow the Money — Contractor Influence (server-side API route)
+
+```
+Contract card "Follow the Money" click
+  → GET /api/contractor-influence?contractor=LOCKHEED+MARTIN
+  → FEC API: Schedule A contributions filtered by employer
+  → Aggregates donations by candidate
+  → Resolves committee → candidate mapping
+  → Returns ContractorInfluence with top recipients
+```
+
+The `InfluenceChain` component appears on contract cards in the Recent Spending tab. It lazy-fetches influence data on expand and caches the result for the session. The `lib/influence.ts` utility normalizes contractor names (stripping legal suffixes like INC, CORP, LLC) for better FEC matching.
+
+**Fallback:** Returns `null` if no FEC data found. The UI shows "No campaign contribution data found."
+
+### 8. Follow the Money — Donor Contracts (server-side API route)
+
+```
+Rep card "Federal contracts received by top donors" click
+  → GET /api/contractor-contracts?names=LOCKHEED+MARTIN,BOEING
+  → USASpending.gov Award Search API (POST, no auth)
+  → Searches by recipient name for each employer
+  → Returns top 5 contracts per employer with category mapping
+```
+
+The `DonorContracts` section in `FinanceCard.tsx` lazy-loads when expanded, showing which federal contracts the rep's top donor employers received. Uses `Funding Agency` for accurate budget category mapping.
+
+**Fallback:** Returns empty contracts array per employer if USASpending query fails.
+
+### 9. Bill Data (static, curated)
 
 `data/pending-bills.ts` contains curated active bills with:
 - CBO-sourced spending impacts
 - Champion info
-- Passage likelihood estimates
+- Passage likelihood estimates (`high | medium | low | enacted`)
 - Category mappings
+- Status tracking (`passed_house | passed_senate | in_committee | introduced | floor_vote_scheduled | enacted`)
+- Optional `enactedDate` and `publicLawNumber` for enacted legislation
 
 New bill candidates are surfaced by the **bill suggestion pipeline** (`scripts/suggest-bills.ts`), which scans Congress.gov for high-signal bills (≥50 House / ≥15 Senate cosponsors, or committee progress), maps them to budget categories via `category-suggester.ts`, and generates skeleton `PendingBill` entries with `NEEDS EDIT` placeholders. A weekly GitHub Actions workflow opens draft PRs for human review.
 

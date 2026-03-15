@@ -7,8 +7,7 @@ import { estimateFederalTax, formatCurrency, formatPercent, SUPPORTED_TAX_YEARS 
 import { calculatePersonalSpending } from "@/lib/spending";
 import SpendingChart from "./SpendingChart";
 import ReceiptLine from "./ReceiptLine";
-import BillsPanel from "./BillsPanel";
-import InternationalComparison from "./InternationalComparison";
+import SecondaryTabs from "./SecondaryTabs";
 import RepresentativesModal from "./RepresentativesModal";
 
 import type { Representative, VoteRecord } from "@/data/representatives";
@@ -239,7 +238,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
             <div className="px-4 py-3 border-t border-white/5">
               <button
                 onClick={() => { trackRepsModalOpened(); setShowRepsModal(true); }}
-                className="w-full py-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-sm text-indigo-400 hover:bg-indigo-500/20 transition-colors font-medium cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full py-2.5 rounded-xl bg-indigo-500 text-white shadow-lg shadow-indigo-500/25 hover:bg-indigo-400 transition-colors font-medium cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 See How Your Reps Voted
               </button>
@@ -248,9 +247,9 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
         </motion.div>
       </div>
 
-      {/* Bills panel — prominent, below chart+receipt */}
+      {/* Secondary content tabs — Pending Bills, Recent Spending, Global Comparison */}
       <div className="mt-10">
-        <BillsPanel
+        <SecondaryTabs
           activeCategoryId={activeCategoryId}
           activeCategoryName={
             activeCategoryId
@@ -259,18 +258,11 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
           }
           totalFederalTax={taxEstimate.totalFederalTax}
           representatives={representatives}
-        />
-      </div>
-
-      {/* International comparison */}
-      <div className="mt-6">
-        <InternationalComparison
           spending={spending}
-          totalFederalTax={taxEstimate.totalFederalTax}
           grossIncome={taxEstimate.grossIncome}
           filingStatus={taxEstimate.filingStatus}
-          initialCountry={compareCountry}
-          onCountryChange={onCompareCountryChange}
+          compareCountry={compareCountry ?? null}
+          onCompareCountryChange={onCompareCountryChange ?? (() => {})}
         />
       </div>
 

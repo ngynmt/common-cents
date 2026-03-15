@@ -23,6 +23,16 @@ export interface SpendingImpact {
   description: string;
 }
 
+export type BillStatus =
+  | "passed_house"
+  | "passed_senate"
+  | "in_committee"
+  | "introduced"
+  | "floor_vote_scheduled"
+  | "enacted";
+
+export type PassageLikelihood = "high" | "medium" | "low" | "enacted";
+
 export interface PendingBill {
   id: string;
   congress: number; // e.g. 119 — used to detect expired bills when a Congress ends
@@ -30,8 +40,8 @@ export interface PendingBill {
   shortTitle: string;
   billNumber: string;
   summary: string;
-  status: "passed_house" | "passed_senate" | "in_committee" | "introduced" | "floor_vote_scheduled";
-  passageLikelihood: "high" | "medium" | "low";
+  status: BillStatus;
+  passageLikelihood: PassageLikelihood;
   champion: BillChampion;
   cosponsors: number;
   bipartisan: boolean;
@@ -42,6 +52,8 @@ export interface PendingBill {
   congressUrl: string;
   lastAction: string;
   lastActionDate: string;
+  enactedDate?: string; // ISO date when signed into law
+  publicLawNumber?: string; // e.g. "P.L. 118-63"
 }
 
 export const pendingBills: PendingBill[] = [

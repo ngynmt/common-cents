@@ -29,6 +29,7 @@ function LikelihoodDot({ likelihood }: { likelihood: PendingBill["passageLikelih
     high: "bg-green-400",
     medium: "bg-yellow-400",
     low: "bg-gray-400",
+    enacted: "bg-indigo-400",
   };
   return (
     <span
@@ -46,6 +47,7 @@ function StatusPill({ status }: { status: PendingBill["status"] }) {
     in_committee: "In Committee",
     introduced: "Introduced",
     floor_vote_scheduled: "Vote Scheduled",
+    enacted: "Enacted",
   };
   const styles: Record<string, string> = {
     passed_house: "bg-blue-500/20 text-blue-400",
@@ -53,6 +55,7 @@ function StatusPill({ status }: { status: PendingBill["status"] }) {
     in_committee: "bg-yellow-500/20 text-yellow-400",
     introduced: "bg-gray-500/20 text-gray-400",
     floor_vote_scheduled: "bg-orange-500/20 text-orange-400",
+    enacted: "bg-green-500/20 text-green-400",
   };
   return (
     <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${styles[status]}`}>
@@ -169,7 +172,7 @@ export default function BillsPanel({
         bills.sort((a, b) => new Date(b.lastActionDate).getTime() - new Date(a.lastActionDate).getTime());
         break;
       case "likelihood": {
-        const order = { high: 0, medium: 1, low: 2 };
+        const order: Record<string, number> = { enacted: -1, high: 0, medium: 1, low: 2 };
         bills.sort((a, b) => order[a.passageLikelihood] - order[b.passageLikelihood]);
         break;
       }
@@ -352,7 +355,7 @@ export default function BillsPanel({
                     <motion.span
                       animate={{ rotate: isExpanded ? 180 : 0 }}
                       transition={{ duration: 0.2 }}
-                      className="text-gray-500 shrink-0 mt-1"
+                      className="text-gray-500 shrink-0 mt-1 text-lg"
                       aria-hidden="true"
                     >
                       ▾

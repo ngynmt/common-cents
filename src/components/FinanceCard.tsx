@@ -2,8 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell, LabelList } from "recharts";
+import { motion, AnimatePresence } from "framer-motion";
 import type { CampaignFinanceSummary } from "@/data/campaign-finance";
 import { formatCurrency } from "@/lib/tax";
+import type { DonorContractsResult } from "@/app/api/contractor-contracts/route";
 
 interface FinanceChartProps {
   finance: CampaignFinanceSummary;
@@ -215,6 +217,176 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
       <p className="text-[10px] text-gray-500">
         Personal donations from employees, not corporate <span aria-hidden="true">·</span> Source: FEC.gov
       </p>
+
+      {/* Donor employer federal contracts */}
+      {hasEmployers && (
+        <DonorContracts
+          employers={finance.topEmployers.slice(0, 5)}
+          repName={finance.name}
+        />
+      )}
+    </div>
+  );
+}
+
+function DonorContracts({ employers, repName }: { employers: { employer: string; total: number; count: number }[]; repName: string }) {
+  const [expanded, setExpanded] = useState(false);
+  const [data, setData] = useState<DonorContractsResult[] | null | undefined>(undefined);
+  const [loading, setLoading] = useState(false);
+
+  const handleToggle = async () => {
+    if (expanded) {
+      setExpanded(false);
+      return;
+    }
+
+    setExpanded(true);
+    if (data !== undefined) return;
+
+    setLoading(true);
+    try {
+      const names = employers.map((e) => encodeURIComponent(e.employer)).join(",");
+      const res = await fetch(`/api/contractor-contracts?names=${names}`);
+      if (!res.ok) {
+        setData(null);
+        return;
+      }
+      const json = await res.json();
+      // Only keep employers that actually have contracts
+      const results: DonorContractsResult[] = (json.results ?? []).filter(
+        (r: DonorContractsResult) => r.contracts.length > 0,
+      );
+      setData(results.length > 0 ? results : null);
+    } catch {
+      setData(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="pt-1">
+      <button
+        onClick={handleToggle}
+        className="text-[10px] text-indigo-400 hover:text-indigo-300 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded flex items-center gap-1"
+      >
+        <motion.span
+          animate={{ rotate: expanded ? 90 : 0 }}
+          transition={{ duration: 0.15 }}
+          className="inline-block"
+          aria-hidden="true"
+        >
+          ▸
+        </motion.span>
+        Federal contracts received by top donors
+      </button>
+
+      <AnimatePresence>
+        {expanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="overflow-hidden"
+          >
+            <div className="mt-2 space-y-3">
+              {loading && (
+                <div className="space-y-2">
+                  <div className="h-12 bg-white/5 rounded-lg animate-pulse" />
+                  <div className="h-12 bg-white/5 rounded-lg animate-pulse" />
+                </div>
+              )}
+
+              {!loading && data === null && (
+                <p className="text-[10px] text-gray-500 py-2">
+                  No federal contracts found for these donor employers.
+                </p>
+              )}
+
+              {!loading && data && (() => {
+                const totalContractValue = data.reduce((sum, e) => sum + e.totalAmount, 0);
+                const totalDonated = employers
+                  .filter((e) => data.some((d) => d.employer.toUpperCase() === e.employer.toUpperCase()))
+                  .reduce((sum, e) => sum + e.total, 0);
+                const employersWithContracts = data.length;
+
+                return (
+                  <div className="p-2.5 rounded-lg bg-amber-500/5 border border-amber-500/10 space-y-1">
+                    <p className="text-[10px] text-gray-300">
+                      <span className="text-amber-400 font-medium">{employersWithContracts}</span> of{" "}
+                      {repName}&apos;s top donor employers also receive federal contracts.
+                      Their employees donated{" "}
+                      <span className="text-white font-medium">{formatCompact(totalDonated)}</span>{" "}
+                      to this representative while holding{" "}
+                      <span className="text-white font-medium">{formatCompact(totalContractValue)}</span>{" "}
+                      in government contracts.
+                    </p>
+                    <p className="text-[9px] text-gray-500">
+                      This does not imply wrongdoing — employee donations are personal, not corporate.
+                      But the connection is worth knowing about.
+                    </p>
+                  </div>
+                );
+              })()}
+
+              {!loading && data && data.map((employer) => (
+                <div key={employer.employer} className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-medium text-white">
+                      {employer.employer}
+                    </span>
+                    <span className="text-[10px] text-indigo-400 font-medium">
+                      {formatCompact(employer.totalAmount)} total
+                    </span>
+                  </div>
+                  {employer.contracts.map((c) => (
+                    <div
+                      key={c.awardId}
+                      className="pl-2 border-l-2 border-white/10 flex items-start justify-between gap-2"
+                    >
+                      <div className="min-w-0">
+                        <p className="text-[10px] text-gray-400 line-clamp-1">
+                          {c.description}
+                        </p>
+                        <div className="flex items-center gap-1.5 mt-0.5">
+                          <span className="text-[9px] text-gray-500">{c.agency}</span>
+                          <span className="px-1.5 py-0.5 rounded-full text-[9px] bg-indigo-500/20 text-indigo-400">
+                            {c.categoryLabel}
+                          </span>
+                        </div>
+                      </div>
+                      <a
+                        href={c.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[10px] text-white font-medium shrink-0 hover:text-indigo-400 transition-colors"
+                      >
+                        {formatCompact(c.amount)}
+                        <span className="sr-only"> — view on USASpending.gov (opens in new tab)</span>
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              ))}
+
+              {!loading && data && (
+                <p className="text-[9px] text-gray-600 pt-1 border-t border-white/5">
+                  Contract values are total award amounts, not annual spending <span aria-hidden="true">·</span>{" "}
+                  <a
+                    href="https://www.usaspending.gov"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-500 hover:text-gray-400 underline"
+                  >
+                    USASpending.gov<span className="sr-only"> (opens in new tab)</span>
+                  </a>
+                </p>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
