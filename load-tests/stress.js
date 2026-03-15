@@ -188,38 +188,57 @@ export default function () {
 }
 
 export function handleSummary(data) {
-  const rateLimitedCount = data.metrics.rate_limited
-    ? data.metrics.rate_limited.values.count
-    : 0;
-  const timeoutCount = data.metrics.timeouts
-    ? data.metrics.timeouts.values.count
-    : 0;
-  const totalReqs = data.metrics.http_reqs.values.count;
-  const failRate = data.metrics.http_req_failed.values.rate;
+  const m = data.metrics;
+
+  const rateLimitedCount = m.rate_limited ? m.rate_limited.values.count : 0;
+  const timeoutCount = m.timeouts ? m.timeouts.values.count : 0;
+  const totalReqs = m.http_reqs ? m.http_reqs.values.count : 0;
+  const errorCount = m.errors ? m.errors.values.passes : 0;
+
+  function p95(metric) {
+    if (!metric || !metric.values) return "N/A";
+    const val = metric.values["p(95)"];
+    return val != null ? val.toFixed(0) + "ms" : "N/A";
+  }
+
+  function med(metric) {
+    if (!metric || !metric.values) return "N/A";
+    const val = metric.values.med;
+    return val != null ? val.toFixed(0) + "ms" : "N/A";
+  }
+
+  function p99(metric) {
+    if (!metric || !metric.values) return "N/A";
+    const val = metric.values["p(99)"];
+    return val != null ? val.toFixed(0) + "ms" : "N/A";
+  }
+
+  const errorPct = totalReqs > 0 ? ((errorCount / totalReqs) * 100).toFixed(1) : "0.0";
+  const rateLimitPct = totalReqs > 0 ? ((rateLimitedCount / totalReqs) * 100).toFixed(1) : "0.0";
 
   const summary = `
 === STRESS TEST SUMMARY ===
 
 Total requests:     ${totalReqs}
-Failed requests:    ${(failRate * 100).toFixed(1)}%
-Rate limited (429): ${rateLimitedCount}
+Real errors:        ${errorCount} (${errorPct}%)
+Rate limited (429): ${rateLimitedCount} (${rateLimitPct}%)
 Timeouts (504/10s): ${timeoutCount}
 
 Response times:
-  Median:  ${data.metrics.http_req_duration.values.med.toFixed(0)}ms
-  p95:     ${data.metrics.http_req_duration.values["p(95)"].toFixed(0)}ms
-  p99:     ${data.metrics.http_req_duration.values["p(99)"].toFixed(0)}ms
+  Median:  ${med(m.http_req_duration)}
+  p95:     ${p95(m.http_req_duration)}
+  p99:     ${p99(m.http_req_duration)}
 
-Endpoint breakdown:
-  Reps p95:      ${data.metrics.reps_duration ? data.metrics.reps_duration.values["p(95)"].toFixed(0) + "ms" : "N/A"}
-  Finance p95:   ${data.metrics.finance_duration ? data.metrics.finance_duration.values["p(95)"].toFixed(0) + "ms" : "N/A"}
-  Lobbying p95:  ${data.metrics.lobbying_duration ? data.metrics.lobbying_duration.values["p(95)"].toFixed(0) + "ms" : "N/A"}
-  Contracts p95: ${data.metrics.contracts_duration ? data.metrics.contracts_duration.values["p(95)"].toFixed(0) + "ms" : "N/A"}
+Endpoint breakdown (p95):
+  Representatives: ${p95(m.reps_duration)}
+  Campaign finance: ${p95(m.finance_duration)}
+  Lobbying:        ${p95(m.lobbying_duration)}
+  Contracts:       ${p95(m.contracts_duration)}
 
 === RECOMMENDATIONS ===
-${rateLimitedCount > totalReqs * 0.1 ? "⚠ High rate limiting — consider raising limits or adding caching" : "✓ Rate limiting within acceptable range"}
-${timeoutCount > 10 ? "⚠ Timeouts detected — check campaign-finance and lobbying endpoints" : "✓ No significant timeout issues"}
-${failRate > 0.1 ? "⚠ Error rate above 10% — investigate failing endpoints" : "✓ Error rate acceptable"}
+${rateLimitedCount > totalReqs * 0.1 ? `! High rate limiting (${rateLimitPct}%) — consider raising limits or adding response caching` : "  Rate limiting within acceptable range"}
+${timeoutCount > 10 ? `! ${timeoutCount} timeouts detected — check campaign-finance and lobbying endpoints` : "  No significant timeout issues"}
+${errorCount > totalReqs * 0.05 ? `! Error rate above 5% — investigate failing endpoints` : "  Error rate acceptable"}
 `;
 
   return {

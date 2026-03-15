@@ -168,6 +168,6 @@ describe("POST /api/engagement", () => {
     });
     await POST(req);
 
-    expect(mockCheckRateLimit).toHaveBeenCalledWith("1.2.3.4");
+    expect(mockCheckRateLimit).toHaveBeenCalledWith("1.2.3.4", "engagement", 30);
   });
 });

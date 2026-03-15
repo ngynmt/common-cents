@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
     || request.headers.get("x-real-ip")
     || "unknown";
-  const { allowed, retryAfterSeconds } = await checkRateLimit(ip);
+  const { allowed, retryAfterSeconds } = await checkRateLimit(ip, "engagement", 30);
   if (!allowed) {
     logApi({ route: "/api/engagement", event: "rate_limit_hit" });
     return NextResponse.json(

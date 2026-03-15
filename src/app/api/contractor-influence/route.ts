@@ -74,7 +74,7 @@ export async function GET(request: NextRequest) {
     request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
     request.headers.get("x-real-ip") ||
     "unknown";
-  const { allowed, retryAfterSeconds } = await checkRateLimit(ip, "contractor-influence", 10);
+  const { allowed, retryAfterSeconds } = await checkRateLimit(ip, "contractor-influence", 20);
   if (!allowed) {
     logApi({ route: ROUTE, event: "rate_limit_hit" });
     return NextResponse.json(
