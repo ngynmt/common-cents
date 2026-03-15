@@ -423,7 +423,7 @@ export default function BillsPanel({
                         </div>
 
                         {/* Follow the Money */}
-                        <BillInfluenceChain champion={bill.champion} />
+                        <BillInfluenceChain champion={bill.champion} billNumber={bill.billNumber} />
 
                         {/* Take action — support/oppose with engagement counters */}
                         <div className="space-y-2 pt-2 border-t border-white/5">

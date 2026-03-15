@@ -291,6 +291,8 @@ function HomeContent() {
             <a href="https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">Treasury MTS<span className="sr-only"> (opens in new tab)</span></a>
             {" · "}
             <a href="https://www.fec.gov" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">FEC<span className="sr-only"> (opens in new tab)</span></a>
+            {" · "}
+            <a href="https://lda.senate.gov/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">Senate LDA<span className="sr-only"> (opens in new tab)</span></a>
           </p>
           <p>
             Common Cents is not affiliated with any government agency or political organization.
