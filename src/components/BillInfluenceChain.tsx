@@ -8,6 +8,9 @@ import type { CampaignFinanceSummary } from "@/data/campaign-finance";
 import type { DonorContractsResult } from "@/app/api/contractor-contracts/route";
 import type { LobbyingSummary } from "@/app/api/lobbying/route";
 
+// Set to true to preview the overlap alert UI with fake data, then revert to false
+const PREVIEW_OVERLAP = false;
+
 interface BillInfluenceChainProps {
   champion: BillChampion;
   billNumber: string;
@@ -142,17 +145,29 @@ export default function BillInfluenceChain({ champion, billNumber }: BillInfluen
                 const totalContractValue = donorContracts.reduce((s, e) => s + e.totalAmount, 0);
                 const hasFinance = finance && finance.totalRaised > 0;
 
-                // Find lobbying clients that overlap with donor employers
+                // Find lobbying clients that overlap with donor employers or outside spenders
                 const lobbyingClients = new Set(
                   (lobbying?.clients || []).map((c) => c.toUpperCase()),
                 );
-                const donorEmployerNames = topEmployers.map((e) => e.employer.toUpperCase());
-                const overlappingOrgs = donorEmployerNames.filter((name) =>
+                const lobbyingClientsArr = Array.from(lobbyingClients);
+                const fuzzyMatch = (name: string) =>
                   lobbyingClients.has(name) ||
-                  Array.from(lobbyingClients).some((c) =>
-                    c.includes(name) || name.includes(c)
-                  ),
-                );
+                  lobbyingClientsArr.some((c) => c.includes(name) || name.includes(c));
+
+                const donorEmployerNames = topEmployers.map((e) => e.employer.toUpperCase());
+                const overlappingEmployers = donorEmployerNames.filter(fuzzyMatch);
+
+                const outsideSpenders = (finance?.outsideSpending || [])
+                  .filter((s) => s.support)
+                  .map((s) => s.name.toUpperCase());
+                const overlappingSpenders = outsideSpenders.filter(fuzzyMatch);
+
+                let overlappingOrgs = [...new Set([...overlappingEmployers, ...overlappingSpenders])];
+
+                // Preview mode: inject fake overlap to test the UI
+                if (PREVIEW_OVERLAP && overlappingOrgs.length === 0 && lobbying && lobbying.clients.length > 0) {
+                  overlappingOrgs = [lobbying.clients[0].toUpperCase()];
+                }
 
                 // Lobbyists with former government positions
                 const revolvingDoor = (lobbying?.filings || [])
@@ -242,8 +257,13 @@ export default function BillInfluenceChain({ champion, billNumber }: BillInfluen
                               </span>{" "}
                               organization{overlappingOrgs.length > 1 ? "s" : ""} lobbying on
                               this bill also{" "}
-                              {overlappingOrgs.length > 1 ? "have" : "has"} employees who
-                              donated to {champion.name}.
+                              {overlappingEmployers.length > 0 && overlappingSpenders.length > 0
+                                ? `${overlappingEmployers.length > 1 ? "have" : "has"} employees who donated to or Super PACs supporting`
+                                : overlappingSpenders.length > 0
+                                  ? `${overlappingOrgs.length > 1 ? "fund" : "funds"} Super PACs supporting`
+                                  : `${overlappingOrgs.length > 1 ? "have" : "has"} employees who donated to`
+                              }{" "}
+                              {champion.name}.
                             </p>
                             <p className="text-[9px] text-gray-500">
                               Lobbying is legal advocacy — but the overlap between lobbying

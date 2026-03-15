@@ -72,8 +72,10 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ data: null, fallback: true });
   }
 
-  // Search current and previous year for broader coverage
-  const years = [parseInt(year, 10), parseInt(year, 10) - 1];
+  // Search current and two previous years for broader coverage
+  // (lobbying on a bill often spans multiple filing periods and congresses)
+  const baseYear = parseInt(year, 10);
+  const years = [baseYear, baseYear - 1, baseYear - 2];
   const allFilings: LobbyingFiling[] = [];
   let totalCount = 0;
 
