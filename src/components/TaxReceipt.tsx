@@ -13,6 +13,7 @@ import RepresentativesModal from "./RepresentativesModal";
 import type { Representative, VoteRecord } from "@/data/representatives";
 import type { CampaignFinanceSummary } from "@/data/campaign-finance";
 import { trackCategoryToggled, trackRepsModalOpened } from "@/lib/analytics";
+import InfoTooltip from "./InfoTooltip";
 
 interface TaxReceiptProps {
   taxEstimate: TaxEstimate;
@@ -90,8 +91,11 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
               <DeltaBadge current={taxEstimate.totalFederalTax} previous={comparison.estimate.totalFederalTax} />
             )}
           </span>
-          <span>
+          <span className="inline-flex items-center gap-1">
             Effective Rate: <span className="text-white font-medium">{formatPercent(taxEstimate.effectiveRate)}</span>
+            <InfoTooltip>
+              Your effective rate is your total federal tax divided by your gross income ({formatCurrency(taxEstimate.totalFederalTax)} &divide; {formatCurrency(taxEstimate.grossIncome)}). This is different from your marginal rate (tax bracket), which only applies to income above each bracket&apos;s threshold. Your effective rate is always lower because the first dollars you earn are taxed at lower rates.
+            </InfoTooltip>
           </span>
         </div>
         <p className="text-xs text-gray-400 max-w-lg mx-auto">

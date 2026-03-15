@@ -12,7 +12,7 @@ import type { FilingStatus } from "@/lib/tax";
 type TabId = "bills" | "spending" | "compare";
 
 const TABS: { id: TabId; label: string }[] = [
-  { id: "bills", label: "Pending Bills" },
+  { id: "bills", label: "Legislation" },
   { id: "spending", label: "Recent Spending" },
   { id: "compare", label: "Global Compare" },
 ];

@@ -8,6 +8,7 @@ import type { PendingBill } from "@/data/pending-bills";
 import InfluenceChain from "./InfluenceChain";
 import SpendingTrends from "./SpendingTrends";
 import { enrichedContracts } from "@/data/enriched-contracts";
+import InfoTooltip from "./InfoTooltip";
 
 interface RecentExpendituresProps {
   totalFederalTax: number;
@@ -63,8 +64,12 @@ function ContractCard({
           <div className="text-sm font-bold text-white">
             {formatCompact(contract.amount)}
           </div>
-          <div className="text-[10px] text-indigo-400 font-medium">
+          <div className="text-[10px] text-indigo-400 font-medium inline-flex items-center gap-1">
             Cost you: {formatCurrency(personalCost)}
+            <InfoTooltip width="w-60">
+              Your personal cost = (contract amount &divide; $4.9T total federal revenue) &times; your federal tax. This proportionally distributes the contract cost across all taxpayers based on your tax contribution.
+              {contract.annualizedAmount && " The /yr figure assumes the contract continues at its current spending rate."}
+            </InfoTooltip>
           </div>
           {contract.annualizedAmount && (
             <div className="text-[9px] text-gray-500">

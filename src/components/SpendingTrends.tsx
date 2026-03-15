@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { CATEGORY_LABELS } from "@/lib/expenditures";
 import type { SpendingTrend } from "@/app/api/spending-trends/route";
 import { enrichedTrends } from "@/data/enriched-trends";
+import InfoTooltip from "./InfoTooltip";
 
 /** Only show trends with changes above this threshold */
 const ANOMALY_THRESHOLD = 15; // percent
@@ -109,18 +110,21 @@ export default function SpendingTrends() {
   }
 
   return (
-    <div className="rounded-xl bg-white/[0.03] border border-white/10 overflow-hidden">
+    <div className="rounded-xl bg-white/[0.03] border border-white/10">
       <button
         onClick={() => setExpanded(!expanded)}
-        className="w-full px-4 py-3 flex items-center justify-between cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-inset hover:bg-white/[0.02] transition-colors"
+        className="w-full px-4 py-3 flex items-center justify-between cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-inset hover:bg-white/[0.02] transition-colors rounded-xl"
       >
         <div className="flex items-center gap-2">
           <span className="relative flex h-2 w-2" aria-hidden="true">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
           </span>
-          <span className="text-xs font-semibold text-white">
+          <span className="text-xs font-semibold text-white inline-flex items-center gap-1.5">
             Notable Spending Changes vs. Last Year
+            <InfoTooltip width="w-64">
+              These are fiscal year-to-date comparisons from the Monthly Treasury Statement — not full-year totals. They compare spending so far this fiscal year (starting Oct 1) to the same period last year. Only changes above {ANOMALY_THRESHOLD}% are shown to highlight the most significant shifts. Source: U.S. Treasury Fiscal Data.
+            </InfoTooltip>
           </span>
           {recordDate && (
             <span className="text-[10px] text-gray-500">

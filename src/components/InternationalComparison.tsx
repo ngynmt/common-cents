@@ -11,6 +11,7 @@ import {
 import { formatCurrency, formatPercent, type FilingStatus } from "@/lib/tax";
 import { trackInternationalCompared } from "@/lib/analytics";
 import type { PersonalSpendingCategory } from "@/lib/spending";
+import InfoTooltip from "./InfoTooltip";
 
 /** Short display labels for country codes. */
 const COUNTRY_SHORT_LABELS: Record<string, string> = {
@@ -90,8 +91,11 @@ export default function InternationalComparison({
 
   return (
     <div>
-      <h3 className="text-sm font-semibold text-white mb-3">
+      <h3 className="text-sm font-semibold text-white mb-3 inline-flex items-center gap-1.5">
         Your Tax Breakdown vs. Other Countries
+        <InfoTooltip width="w-60">
+          US rate includes federal income tax, Social Security (6.2%), and Medicare (1.45%). Other countries&apos; rates include their equivalent income tax and social contributions. Rates are not perfectly comparable — countries structure taxes differently (e.g., VAT, employer-side contributions, regional taxes are excluded).
+        </InfoTooltip>
       </h3>
             {/* Country selector + mode toggle */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -408,29 +412,41 @@ export default function InternationalComparison({
               <p className="text-center text-[10px] text-gray-500 mt-2">
                 {isAllMode ? (
                   mode === "estimated-tax" ? (
-                    <>
+                    <span className="inline-flex items-center gap-1">
                       Estimated taxes for {formatCurrency(grossIncome)} income,
                       distributed by each country&apos;s spending ratios
-                    </>
+                      <InfoTooltip width="w-60">
+                        Estimated tax mode calculates what you&apos;d roughly owe in each country on the same income, then distributes that amount across their budget categories using OECD spending ratios. Tax estimates use simplified brackets and may not reflect all deductions or credits.
+                      </InfoTooltip>
+                    </span>
                   ) : (
-                    <>
+                    <span className="inline-flex items-center gap-1">
                       Same tax amount ({formatCurrency(totalFederalTax)}),
                       distributed by each country&apos;s spending ratios
-                    </>
+                      <InfoTooltip width="w-60">
+                        Same amount mode takes your actual US tax payment and shows how it would be allocated if spent according to each country&apos;s budget priorities (OECD COFOG data). It answers: &ldquo;If my country spent like theirs, where would my money go?&rdquo;
+                      </InfoTooltip>
+                    </span>
                   )
                 ) : comparison ? (
                   mode === "estimated-tax" ? (
-                    <>
+                    <span className="inline-flex items-center gap-1">
                       Estimated taxes in {comparison.country.name} (
                       {formatCurrency(comparison.countryTotalAmount)}),
                       distributed by spending ratios
-                    </>
+                      <InfoTooltip width="w-60">
+                        Estimated tax mode calculates what you&apos;d roughly owe in {comparison.country.name} on the same income, then distributes that amount across their budget categories. Tax estimates use simplified brackets and may not reflect all deductions or credits.
+                      </InfoTooltip>
+                    </span>
                   ) : (
-                    <>
+                    <span className="inline-flex items-center gap-1">
                       Same tax amount (
                       {formatCurrency(comparison.usTotalAmount)}), distributed by
                       each country&apos;s spending ratios
-                    </>
+                      <InfoTooltip width="w-60">
+                        Same amount mode takes your actual US tax payment and shows how it would be allocated if spent according to {comparison.country.name}&apos;s budget priorities (OECD COFOG data).
+                      </InfoTooltip>
+                    </span>
                   )
                 ) : null}
                 <span aria-hidden="true">{" · "}</span>

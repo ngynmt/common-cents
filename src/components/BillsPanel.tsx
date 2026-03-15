@@ -2,13 +2,14 @@
 
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { pendingBills, getBillImpactForCategory, type PendingBill } from "@/data/pending-bills";
+import { pendingBills, landmarkBills, getBillImpactForCategory, type PendingBill } from "@/data/pending-bills";
 import { TOTAL_FEDERAL_SPENDING, getBudgetData } from "@/data/budget";
 import { formatCurrency } from "@/lib/tax";
 import type { Representative } from "@/data/representatives";
 import { useEngagement } from "@/lib/useEngagement";
 import { trackBillViewed, trackBillVoted, trackRepContactClicked } from "@/lib/analytics";
 import BillInfluenceChain from "./BillInfluenceChain";
+import InfoTooltip from "./InfoTooltip";
 
 type SortMode = "impact" | "date" | "likelihood";
 
@@ -156,10 +157,16 @@ export default function BillsPanel({
   const [userVoted, setUserVoted] = useState<Record<string, boolean>>({});
 
   // Engagement counters
-  const allBillIds = useMemo(() => pendingBills.map((b) => b.id), []);
+  const allBillIds = useMemo(() => [...landmarkBills, ...pendingBills].map((b) => b.id), []);
   const { data: engagement, recordAction } = useEngagement(allBillIds);
 
-  // Filter and sort bills
+  // Filter landmark bills by category
+  const filteredLandmarkBills = useMemo(() => {
+    if (!activeCategoryId) return [...landmarkBills];
+    return landmarkBills.filter((b) => b.impactedCategories.includes(activeCategoryId));
+  }, [activeCategoryId]);
+
+  // Filter and sort upcoming bills
   const filteredBills = useMemo(() => {
     const bills = activeCategoryId
       ? pendingBills.filter((b) => b.impactedCategories.includes(activeCategoryId))
@@ -226,17 +233,426 @@ export default function BillsPanel({
       transition={{ duration: 0.5, delay: 0.4 }}
       className="w-full"
     >
-      {/* Header */}
+      {/* Landmark Laws Section */}
+      {filteredLandmarkBills.length > 0 && (
+        <div className="mb-6">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-base" aria-hidden="true">&#9878;</span>
+            <h3 className="text-sm font-semibold text-white">Landmark Laws (Last 2 Years)</h3>
+          </div>
+          <div className="space-y-2">
+            {filteredLandmarkBills.map((bill) => {
+              const isExpanded = expandedBill === bill.id;
+              const billStance = stance[bill.id];
+
+              return (
+                <motion.div
+                  key={bill.id}
+                  layout
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="rounded-xl border border-indigo-500/20 bg-indigo-500/[0.04] overflow-hidden"
+                >
+                  <button
+                    onClick={() => {
+                      const willExpand = !isExpanded;
+                      setExpandedBill(willExpand ? bill.id : null);
+                      if (willExpand) trackBillViewed(bill.id);
+                    }}
+                    aria-expanded={isExpanded}
+                    className="w-full p-3 text-left hover:bg-white/[0.03] transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-inset"
+                  >
+                    <div className="flex items-start gap-3">
+                      {/* Personal tax impact */}
+                      {(() => {
+                        const impact = getUserImpact(bill);
+                        const isIncrease = impact > 0;
+                        return (
+                          <div className={`mt-0.5 text-right shrink-0 w-16 py-1 px-2 rounded-lg ${isIncrease ? "bg-red-500/10" : "bg-green-500/10"}`}>
+                            <div className={`text-xs font-bold ${isIncrease ? "text-red-400" : "text-green-400"}`}>
+                              {isIncrease ? "+" : ""}{formatCurrency(impact)}
+                            </div>
+                            <div className="text-[10px] text-gray-500">/year</div>
+                          </div>
+                        );
+                      })()}
+
+                      {/* Bill info */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="text-sm font-medium text-white">
+                            {bill.shortTitle}
+                          </span>
+                          <StatusPill status={bill.status} />
+                          {bill.publicLawNumber && (
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-indigo-500/20 text-indigo-400">
+                              {bill.publicLawNumber}
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className="text-[10px] text-gray-500 font-mono">
+                            {bill.billNumber}
+                          </span>
+                          <span className="text-[10px] text-gray-600" aria-hidden="true">&middot;</span>
+                          <span className="text-[10px] text-gray-500">
+                            Enacted {bill.enactedDate}
+                          </span>
+                          <span className="text-[10px] text-gray-600" aria-hidden="true">&middot;</span>
+                          <PartyTag
+                            party={bill.champion.party}
+                            name={bill.champion.name}
+                            state={bill.champion.state}
+                          />
+                        </div>
+                      </div>
+
+                      <motion.span
+                        animate={{ rotate: isExpanded ? 180 : 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="text-gray-500 shrink-0 mt-1 text-lg"
+                        aria-hidden="true"
+                      >
+                        &#9662;
+                      </motion.span>
+                    </div>
+                  </button>
+
+                  {/* Expanded detail */}
+                  <AnimatePresence>
+                    {isExpanded && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-3 pb-3 space-y-3 border-t border-white/5 pt-3">
+                          <p className="text-xs text-gray-400">{bill.summary}</p>
+
+                          {/* Multi-category spending impacts */}
+                          <div className="space-y-2">
+                            <h4 className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
+                              Spending Impacts (Annual)
+                            </h4>
+                            {bill.spendingImpacts.map((impact, i) => {
+                              const catColor = getCategoryColor({ impactedCategories: [impact.categoryId] } as PendingBill);
+                              const isPositive = impact.annualChange > 0;
+                              const personalImpact = (impact.annualChange / totalSpending) * totalFederalTax;
+                              return (
+                                <div key={i} className="p-2.5 rounded-lg bg-white/5 space-y-1.5">
+                                  <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                      <span
+                                        className="w-2 h-2 rounded-full shrink-0"
+                                        style={{ backgroundColor: catColor }}
+                                      />
+                                      <span className="text-xs text-gray-300 capitalize">
+                                        {impact.categoryId.replace(/-/g, " ")}
+                                      </span>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                      <span className={`text-xs font-bold ${isPositive ? "text-red-400" : "text-green-400"}`}>
+                                        {isPositive ? "+" : ""}{formatCurrency(Math.abs(impact.annualChange))}B
+                                      </span>
+                                      <span className={`text-[10px] ${isPositive ? "text-red-400/70" : "text-green-400/70"}`}>
+                                        ({isPositive ? "+" : ""}{formatCurrency(personalImpact)} to you)
+                                      </span>
+                                    </div>
+                                  </div>
+                                  <p className="text-[11px] text-gray-500">{impact.description}</p>
+                                </div>
+                              );
+                            })}
+                          </div>
+
+                          {/* Net impact summary */}
+                          <div className="space-y-2">
+                            <div className="p-2.5 rounded-lg bg-white/5 border border-white/10">
+                              <div className="flex items-center justify-between">
+                                <span className="text-xs text-gray-400">Net spending change</span>
+                                <span className="text-xs font-bold text-green-400">
+                                  {formatCurrency(bill.totalAnnualImpact)}B/year
+                                </span>
+                              </div>
+                            </div>
+                            {bill.deficitImpact && (
+                              <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 space-y-2.5">
+                                <h4 className="text-[11px] font-semibold text-red-300 uppercase tracking-wider">
+                                  But wait — what about the deficit?
+                                </h4>
+                                <p className="text-[11px] text-gray-300 leading-relaxed">
+                                  The spending cuts above save <span className="text-green-400 font-semibold">${Math.abs(bill.totalAnnualImpact)}B/year</span>.
+                                  However, this law also extends the 2017 tax cuts (TCJA), which reduces federal tax
+                                  revenue by roughly <span className="text-red-400 font-semibold">$450B/year</span>.
+                                  The revenue loss is about <span className="text-white font-semibold">4.5x larger</span> than
+                                  the spending savings.
+                                </p>
+                                <div className="space-y-1.5 p-2.5 rounded-lg bg-black/20">
+                                  <div className="flex items-center justify-between text-[11px]">
+                                    <span className="text-gray-400">Spending cuts</span>
+                                    <span className="text-green-400 font-semibold">-${Math.abs(bill.totalAnnualImpact)}B/year</span>
+                                  </div>
+                                  <div className="flex items-center justify-between text-[11px]">
+                                    <span className="text-gray-400">Tax revenue lost</span>
+                                    <span className="text-red-400 font-semibold">-$450B/year</span>
+                                  </div>
+                                  <div className="border-t border-white/10 pt-1.5 flex items-center justify-between text-xs">
+                                    <span className="text-red-300 font-semibold">Net added to deficit</span>
+                                    <span className="text-red-400 font-bold">+${bill.deficitImpact}B/year</span>
+                                  </div>
+                                  <div className="border-t border-white/10 pt-1.5 flex items-center justify-between text-xs">
+                                    <span className="text-[11px] text-red-300/70 inline-flex items-center gap-1">
+                                      Your share of added deficit
+                                      <InfoTooltip width="w-64">
+                                        <span className="text-white font-semibold">How this is calculated:</span> (${bill.deficitImpact}B &divide; ${totalSpending.toLocaleString()}B total federal spending) &times; your {formatCurrency(totalFederalTax)} federal tax = <span className="text-red-400 font-semibold">{formatCurrency((bill.deficitImpact / totalSpending) * totalFederalTax)}</span>.
+                                        <br /><br />
+                                        <span className="text-white font-semibold">Why deficits matter to you:</span> The government borrows to cover the gap, adding to national debt. That debt costs ~$900B/year in interest alone — money that can&apos;t fund services. Over time, deficits lead to higher interest rates (affecting mortgages, loans), potential future tax increases or spending cuts, and inflationary pressure.
+                                        <br /><br />
+                                        This is an approximation — deficit isn&apos;t literally billed to you, but shows your proportional share.
+                                      </InfoTooltip>
+                                    </span>
+                                    <span className="text-red-400 font-bold">
+                                      +{formatCurrency((bill.deficitImpact / totalSpending) * totalFederalTax)}/year
+                                    </span>
+                                  </div>
+                                </div>
+                                <p className="text-[10px] text-gray-500">
+                                  Source: CBO projects $3.4 trillion added to deficits over 10 years.
+                                </p>
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Links */}
+                          <div className="flex items-center gap-2">
+                            <a
+                              href={bill.congressUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs px-3 py-1.5 rounded-lg bg-white/5 text-indigo-400 hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            >
+                              Congress.gov<span className="sr-only-inline"> (opens in new tab)</span>
+                            </a>
+                            {bill.cboScoreUrl && (
+                              <a
+                                href={bill.cboScoreUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-xs px-3 py-1.5 rounded-lg bg-white/5 text-indigo-400 hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                              >
+                                CBO score<span className="sr-only-inline"> (opens in new tab)</span>
+                              </a>
+                            )}
+                          </div>
+
+                          {/* Follow the Money */}
+                          <BillInfluenceChain champion={bill.champion} billNumber={bill.billNumber} />
+
+                          {/* Take action */}
+                          <div className="space-y-2 pt-2 border-t border-white/5">
+                            {(() => {
+                              const billEngagement = engagement[bill.id];
+                              const supportCount = billEngagement?.support || 0;
+                              const opposeCount = billEngagement?.oppose || 0;
+                              const contactedCount = billEngagement?.contacted || 0;
+                              const totalVotes = supportCount + opposeCount;
+                              const supportPct = totalVotes > 0 ? Math.round((supportCount / totalVotes) * 100) : 0;
+                              const opposePct = totalVotes > 0 ? 100 - supportPct : 0;
+
+                              return (
+                                <>
+                                  <div className="flex items-center gap-2 flex-wrap">
+                                    <span className="text-xs text-gray-500">What do you think?</span>
+                                    <button
+                                      onClick={() => {
+                                        const newStance = stance[bill.id] === "support" ? undefined! : "support";
+                                        setStance((s) => ({ ...s, [bill.id]: newStance }));
+                                        if (newStance === "support" && !userVoted[bill.id]) {
+                                          recordAction(bill.id, "support");
+                                          trackBillVoted(bill.id, "support");
+                                          setUserVoted((v) => ({ ...v, [bill.id]: true }));
+                                        }
+                                      }}
+                                      className={`text-xs px-3 py-1.5 rounded-full transition-all cursor-pointer ${
+                                        billStance === "support"
+                                          ? "bg-green-500/20 text-green-400 border border-green-500/30"
+                                          : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10"
+                                      }`}
+                                    >
+                                      I support this
+                                    </button>
+                                    <button
+                                      onClick={() => {
+                                        const newStance = stance[bill.id] === "oppose" ? undefined! : "oppose";
+                                        setStance((s) => ({ ...s, [bill.id]: newStance }));
+                                        if (newStance === "oppose" && !userVoted[bill.id]) {
+                                          recordAction(bill.id, "oppose");
+                                          trackBillVoted(bill.id, "oppose");
+                                          setUserVoted((v) => ({ ...v, [bill.id]: true }));
+                                        }
+                                      }}
+                                      className={`text-xs px-3 py-1.5 rounded-full transition-all cursor-pointer ${
+                                        billStance === "oppose"
+                                          ? "bg-red-500/20 text-red-400 border border-red-500/30"
+                                          : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10"
+                                      }`}
+                                    >
+                                      I oppose this
+                                    </button>
+                                  </div>
+
+                                  {totalVotes > 0 && (
+                                    <div className="space-y-1" aria-live="polite">
+                                      <div className="flex h-2 rounded-full overflow-hidden bg-white/5">
+                                        <motion.div
+                                          initial={{ width: 0 }}
+                                          animate={{ width: `${supportPct}%` }}
+                                          transition={{ duration: 0.5 }}
+                                          className="h-full bg-green-500/60"
+                                        />
+                                        <motion.div
+                                          initial={{ width: 0 }}
+                                          animate={{ width: `${opposePct}%` }}
+                                          transition={{ duration: 0.5 }}
+                                          className="h-full bg-red-500/60"
+                                        />
+                                      </div>
+                                      <div className="flex items-center justify-between text-[10px] text-gray-500">
+                                        <span>
+                                          <span className="text-green-400">{supportPct}%</span> support
+                                          {" · "}
+                                          <span className="text-red-400">{opposePct}%</span> oppose
+                                        </span>
+                                        <span>{formatCount(totalVotes)} votes</span>
+                                      </div>
+                                    </div>
+                                  )}
+
+                                  {representatives && representatives.length > 0 && billStance && (
+                                    <motion.div
+                                      initial={{ height: 0, opacity: 0 }}
+                                      animate={{ height: "auto", opacity: 1 }}
+                                      className="overflow-hidden space-y-2"
+                                    >
+                                      <div className="flex items-center justify-between">
+                                        <p className="text-xs text-gray-400">
+                                          Tell your rep how you feel about{" "}
+                                          <span className="text-white">{bill.shortTitle}</span>:
+                                        </p>
+                                        {contactedCount > 0 && (
+                                          <span className="text-[10px] text-indigo-400 shrink-0">
+                                            {formatCount(contactedCount)} people contacted their rep
+                                          </span>
+                                        )}
+                                      </div>
+                                      <div className="flex flex-wrap gap-2">
+                                        {representatives.map((rep) => (
+                                          <button
+                                            key={rep.id}
+                                            onClick={() =>
+                                              setContactRep(
+                                                contactRep === `${bill.id}::${rep.id}`
+                                                  ? null
+                                                  : `${bill.id}::${rep.id}`
+                                              )
+                                            }
+                                            className={`text-xs px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                                              contactRep === `${bill.id}::${rep.id}`
+                                                ? "bg-indigo-500/20 text-indigo-400 border border-indigo-500/30"
+                                                : "bg-white/5 text-gray-300 border border-white/10 hover:bg-white/10"
+                                            }`}
+                                          >
+                                            {rep.name}
+                                          </button>
+                                        ))}
+                                      </div>
+
+                                      <AnimatePresence>
+                                        {contactRep?.startsWith(`${bill.id}::`) &&
+                                          (() => {
+                                            const repId = contactRep.split("::")[1];
+                                            const rep = representatives.find((r) => r.id === repId);
+                                            if (!rep) return null;
+                                            const userImpact = getUserImpact(bill);
+                                            const script = billStance === "support"
+                                              ? `Hello, my name is [Your Name] and I'm a constituent. I'm calling about ${bill.publicLawNumber}, the ${bill.shortTitle}. This law affects my federal taxes by approximately ${formatCurrency(Math.abs(userImpact))} per year. I support the goals of this legislation and want ${rep.name} to know that. Thank you.`
+                                              : `Hello, my name is [Your Name] and I'm a constituent. I'm calling about ${bill.publicLawNumber}, the ${bill.shortTitle}. This law changes my federal tax burden by approximately ${formatCurrency(Math.abs(userImpact))} per year, and I have concerns about its spending impacts. I'd like ${rep.name} to work on addressing these issues. Thank you.`;
+                                            return (
+                                              <motion.div
+                                                initial={{ height: 0, opacity: 0 }}
+                                                animate={{ height: "auto", opacity: 1 }}
+                                                exit={{ height: 0, opacity: 0 }}
+                                                className="overflow-hidden"
+                                              >
+                                                <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-2">
+                                                  <div className="flex items-center justify-between">
+                                                    <h5 className="text-xs font-semibold text-gray-400">Suggested Script</h5>
+                                                    <button
+                                                      onClick={() => navigator.clipboard.writeText(script)}
+                                                      className="text-xs px-2 py-1 rounded bg-white/5 text-gray-400 hover:bg-white/10 transition-colors cursor-pointer"
+                                                    >
+                                                      Copy
+                                                    </button>
+                                                  </div>
+                                                  <p className="text-xs text-gray-300 leading-relaxed italic">
+                                                    &ldquo;{script}&rdquo;
+                                                  </p>
+                                                  <div className="flex items-center gap-2">
+                                                    <a
+                                                      href={`tel:${rep.phone}`}
+                                                      onClick={() => { recordAction(bill.id, "contacted"); trackRepContactClicked(bill.id, "call", rep.chamber); }}
+                                                      className="text-xs px-3 py-1.5 rounded-lg bg-indigo-500 text-white hover:bg-indigo-600 transition-colors font-medium"
+                                                    >
+                                                      Call: {rep.phone}
+                                                    </a>
+                                                    <a
+                                                      href={rep.contactFormUrl}
+                                                      target="_blank"
+                                                      rel="noopener noreferrer"
+                                                      onClick={() => { recordAction(bill.id, "contacted"); trackRepContactClicked(bill.id, "email", rep.chamber); }}
+                                                      className="text-xs px-3 py-1.5 rounded-lg bg-white/10 text-white hover:bg-white/15 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                                    >
+                                                      Email<span className="sr-only-inline"> (opens in new tab)</span>
+                                                    </a>
+                                                  </div>
+                                                </div>
+                                              </motion.div>
+                                            );
+                                          })()}
+                                      </AnimatePresence>
+                                    </motion.div>
+                                  )}
+                                </>
+                              );
+                            })()}
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Upcoming Bills Header */}
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <span className="relative flex h-2 w-2" aria-hidden="true">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
           </span>
-          <h3 className="text-sm font-semibold text-white">
+          <h3 className="text-sm font-semibold text-white inline-flex items-center gap-1.5">
             {activeCategoryId
               ? `Bills Impacting ${activeCategoryName}`
               : "Upcoming Bills That Could Change Your Receipt"}
+            <InfoTooltip width="w-60">
+              The &plusmn;$/year amount on each bill is your estimated personal impact. It&apos;s calculated as: (bill&apos;s annual spending change &divide; total federal spending) &times; your federal tax. This shows how much your tax allocation to the affected category would shift if the bill passes.
+            </InfoTooltip>
           </h3>
         </div>
       </div>
@@ -265,7 +681,7 @@ export default function BillsPanel({
         ))}
       </div>
 
-      {/* Bills list */}
+      {/* Upcoming Bills list */}
       <div className="space-y-2">
         <AnimatePresence mode="popLayout">
           {filteredBills.length === 0 && (

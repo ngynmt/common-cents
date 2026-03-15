@@ -54,7 +54,73 @@ export interface PendingBill {
   lastActionDate: string;
   enactedDate?: string; // ISO date when signed into law
   publicLawNumber?: string; // e.g. "P.L. 118-63"
+  /** Annual deficit impact in billions (positive = adds to deficit). Includes revenue changes not captured in spendingImpacts. */
+  deficitImpact?: number;
 }
+
+export const landmarkBills: PendingBill[] = [
+  {
+    id: "hr-1-obbba-119",
+    congress: 119,
+    title: "One Big Beautiful Bill Act",
+    shortTitle: "One Big Beautiful Bill",
+    billNumber: "H.R. 1",
+    summary:
+      "Massive reconciliation package signed into law July 4, 2025. Extends 2017 tax cuts ($4.5T revenue loss over 10 years), cuts Medicaid by $911B via work requirements and per-capita caps, reduces SNAP by $295B, increases defense spending by $150B, adds $132B for border security and immigration enforcement, and includes energy provisions. CBO projects $3.4T added to deficits over the next decade.",
+    status: "enacted",
+    passageLikelihood: "enacted",
+    champion: {
+      name: "Speaker Mike Johnson",
+      party: "R",
+      chamber: "house",
+      state: "LA",
+      title: "Speaker of the House",
+    },
+    cosponsors: 0,
+    bipartisan: false,
+    impactedCategories: ["healthcare", "income-security", "defense", "immigration", "science"],
+    spendingImpacts: [
+      {
+        categoryId: "healthcare",
+        annualChange: -91,
+        description:
+          "Cuts Medicaid spending by ~$91B/year through work requirements, per-capita caps, and reduced federal matching rates.",
+      },
+      {
+        categoryId: "income-security",
+        annualChange: -30,
+        description:
+          "Reduces SNAP (food stamps) spending by ~$30B/year through stricter eligibility and benefit reductions.",
+      },
+      {
+        categoryId: "defense",
+        annualChange: 15,
+        description:
+          "Increases defense spending by ~$15B/year for military modernization and readiness.",
+      },
+      {
+        categoryId: "immigration",
+        annualChange: 13,
+        description:
+          "Adds ~$13B/year for border wall construction, ICE enforcement, and immigration court expansion.",
+      },
+      {
+        categoryId: "science",
+        annualChange: -5,
+        description:
+          "Reduces clean energy tax credits by ~$5B/year by rolling back portions of the Inflation Reduction Act.",
+      },
+    ],
+    totalAnnualImpact: -98,
+    deficitImpact: 340, // $3.4T over 10 years: -$98B spending cuts + $450B/yr revenue loss from tax cut extensions
+    cboScoreUrl: "https://www.cbo.gov/publication/61697",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/1",
+    lastAction: "Became Public Law No: 119-21.",
+    lastActionDate: "2025-07-04",
+    enactedDate: "2025-07-04",
+    publicLawNumber: "P.L. 119-21",
+  },
+];
 
 export const pendingBills: PendingBill[] = [
   {

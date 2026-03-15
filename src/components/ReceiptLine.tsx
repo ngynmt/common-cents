@@ -5,6 +5,7 @@ import type { PersonalSpendingCategory } from "@/lib/spending";
 import { calculateSubcategorySpending } from "@/lib/spending";
 import { formatCurrency, formatPercent } from "@/lib/tax";
 import type { Legislation } from "@/data/budget";
+import InfoTooltip from "./InfoTooltip";
 
 interface ReceiptLineProps {
   item: PersonalSpendingCategory;
@@ -124,8 +125,11 @@ export default function ReceiptLine({
 
               {/* Subcategories */}
               <div className="pl-10 space-y-1">
-                <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 inline-flex items-center gap-1.5">
                   Breakdown
+                  <InfoTooltip position="below">
+                    Each subcategory shows how much of your tax contribution to {item.category.name} goes to that program. Amounts are calculated by applying the federal budget&apos;s percentage breakdown to your personal tax payment. Percentages are relative to this category, not your total taxes.
+                  </InfoTooltip>
                 </h4>
                 {subcategories.map((sub, i) => (
                   <div

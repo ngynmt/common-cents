@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import type { CampaignFinanceSummary } from "@/data/campaign-finance";
 import { formatCurrency } from "@/lib/tax";
 import type { DonorContractsResult } from "@/app/api/contractor-contracts/route";
+import InfoTooltip from "./InfoTooltip";
 
 interface FinanceChartProps {
   finance: CampaignFinanceSummary;
@@ -71,8 +72,11 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
   return (
     <div className="space-y-2">
       {/* Headline */}
-      <div className="text-xs text-gray-400">
+      <div className="text-xs text-gray-400 inline-flex items-center gap-1">
         {finance.cycle} cycle · <span className="text-white font-medium">{formatCompact(finance.totalRaised)} total raised</span>
+        <InfoTooltip width="w-60">
+          A cycle is the 2-year election period (e.g., &ldquo;2024&rdquo; covers Jan 2023 &ndash; Dec 2024). &ldquo;Total raised&rdquo; includes all contributions to this candidate&apos;s principal campaign committee during that cycle. Source: FEC.gov.
+        </InfoTooltip>
       </div>
 
       {/* Outside spending (PACs / Super PACs) — primary */}
@@ -214,8 +218,11 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
         </div>
       )}
 
-      <p className="text-[10px] text-gray-500">
+      <p className="text-[10px] text-gray-500 inline-flex items-center gap-1">
         Personal donations from employees, not corporate <span aria-hidden="true">·</span> Source: FEC.gov
+        <InfoTooltip width="w-60">
+          These are donations from individual employees who listed this company as their employer on FEC filings. They are personal contributions, not corporate spending. Companies cannot donate directly to candidates. Totals aggregate all individual donations from employees of the same employer.
+        </InfoTooltip>
       </p>
 
       {/* Donor employer federal contracts */}
@@ -371,8 +378,12 @@ function DonorContracts({ employers, repName }: { employers: { employer: string;
               ))}
 
               {!loading && data && (
-                <p className="text-[9px] text-gray-600 pt-1 border-t border-white/5">
-                  Contract values are total award amounts, not annual spending <span aria-hidden="true">·</span>{" "}
+                <p className="text-[9px] text-gray-600 pt-1 border-t border-white/5 inline-flex items-center gap-1 flex-wrap">
+                  Contract values are total award amounts, not annual spending
+                  <InfoTooltip width="w-56">
+                    Federal contracts are often multi-year awards. A $500M contract might be spent over 5-10 years, so the annual cost is much lower than the headline number. These are total obligated amounts, not payments made in a single year.
+                  </InfoTooltip>
+                  <span aria-hidden="true">·</span>{" "}
                   <a
                     href="https://www.usaspending.gov"
                     target="_blank"
