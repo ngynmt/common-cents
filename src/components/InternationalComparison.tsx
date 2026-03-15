@@ -7,7 +7,6 @@ import {
   useAllCountriesComparison,
   getAvailableCountries,
   type ComparisonMode,
-  type InternationalComparison as ComparisonData,
 } from "@/hooks/useInternationalComparison";
 import { formatCurrency, formatPercent, type FilingStatus } from "@/lib/tax";
 import { trackInternationalCompared } from "@/lib/analytics";

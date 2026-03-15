@@ -169,9 +169,6 @@ describe("parseOmbTable32", () => {
   });
 
   it("treats '...' cells as 0 and emits a warning", () => {
-    const rows: MockRow[] = [
-      { label: "National Defense: (050)", amount: 900_000 },
-    ];
     // Build manually with "..." cell
     const wb = XLSX.utils.book_new();
     const ws = XLSX.utils.aoa_to_sheet([

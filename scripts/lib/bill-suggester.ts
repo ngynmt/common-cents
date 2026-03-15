@@ -11,7 +11,6 @@ import {
   fetchBillDetail,
   fetchBillCommittees,
   fetchBillCosponsors,
-  type BillSummary,
   type Sponsor,
 } from "./congress-api";
 import {

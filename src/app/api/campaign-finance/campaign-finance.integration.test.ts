@@ -180,12 +180,10 @@ describe("GET /api/campaign-finance", () => {
   });
 
   it("selects the most recent cycle with receipts", async () => {
-    let callIndex = 0;
     mockFetch.mockImplementation(async (url: string) => {
       const u = String(url);
 
       if (u.includes("/candidate/") && u.includes("/totals/")) {
-        callIndex++;
         // First cycle (2026) has zero receipts, second (2024) has data
         if (u.includes("cycle=2026")) {
           return fecResponse([{ receipts: 0, cycle: 2026 }]);

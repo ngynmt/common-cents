@@ -22,7 +22,8 @@
     "budget:update": "npx tsx scripts/update-budget-data.ts",
     "budget:validate": "npx tsx scripts/update-budget-data.ts --validate",
     "intl:update": "npx tsx scripts/update-intl-data.ts",
-    "intl:validate": "npx tsx scripts/update-intl-data.ts --validate"
+    "intl:validate": "npx tsx scripts/update-intl-data.ts --validate",
+    "prepare": "husky"
   },
   "dependencies": {
     "@upstash/redis": "^1.36.4",
@@ -47,10 +48,17 @@
     "dotenv": "^17.3.1",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^5",
     "vitest": "^4.0.18",
     "xlsx": "^0.18.5"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --max-warnings 0"
+    ]
   }
 }

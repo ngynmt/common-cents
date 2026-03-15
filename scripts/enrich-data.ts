@@ -187,7 +187,7 @@ async function main() {
   const today = new Date().toISOString().split("T")[0];
 
   // --- Contracts ---
-  let updatedContracts: Record<string, EnrichedContract> = {};
+  const updatedContracts: Record<string, EnrichedContract> = {};
 
   if (!opts.trendsOnly) {
     console.log("--- Contracts ---");
@@ -263,7 +263,7 @@ async function main() {
   }
 
   // --- Spending Trends ---
-  let updatedTrends: Record<string, EnrichedTrend> = {};
+  const updatedTrends: Record<string, EnrichedTrend> = {};
 
   if (!opts.contractsOnly) {
     console.log("--- Spending Trends ---");

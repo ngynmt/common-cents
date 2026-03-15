@@ -142,8 +142,6 @@ function EnactedBillCard({
   );
 }
 
-const PAGE_SIZE = 10;
-
 export default function RecentExpenditures({ totalFederalTax }: RecentExpendituresProps) {
   const [contracts, setContracts] = useState<FederalContract[]>([]);
   const [enactedBills, setEnactedBills] = useState<PendingBill[]>([]);

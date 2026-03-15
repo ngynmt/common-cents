@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import type { BillSummary, BillDetail, Sponsor } from "./congress-api";
+import type { BillDetail } from "./congress-api";
 
 // Mock all API modules before importing bill-suggester
 vi.mock("./congress-api", () => ({
