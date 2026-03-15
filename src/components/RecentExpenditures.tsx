@@ -6,6 +6,7 @@ import { formatCurrency } from "@/lib/tax";
 import { calculatePersonalCost, calculateBillPersonalCost, CATEGORY_LABELS, type FederalContract } from "@/lib/expenditures";
 import type { PendingBill } from "@/data/pending-bills";
 import InfluenceChain from "./InfluenceChain";
+import SpendingTrends from "./SpendingTrends";
 
 interface RecentExpendituresProps {
   totalFederalTax: number;
@@ -294,6 +295,8 @@ export default function RecentExpenditures({ totalFederalTax }: RecentExpenditur
 
   return (
     <div className="space-y-3">
+      <SpendingTrends />
+
       <h3 className="text-sm font-semibold text-white">
         How Your Tax Dollars Were Spent in the Last 6 Months
       </h3>

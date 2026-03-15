@@ -53,7 +53,7 @@ export default function InternationalComparison({
   onCountryChange,
 }: InternationalComparisonProps) {
   const [selectedCountry, setSelectedCountry] = useState<string | null>(
-    initialCountry
+    initialCountry ?? "ALL"
   );
   const [mode, setMode] = useState<ComparisonMode>("same-amount");
 
@@ -106,7 +106,7 @@ export default function InternationalComparison({
                 <select
                   id="compare-country"
                   value={selectedCountry ?? ""}
-                  onChange={(e) => handleCountrySelect(e.target.value || null)}
+                  onChange={(e) => handleCountrySelect(e.target.value)}
                   className="text-xs px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 text-gray-300 cursor-pointer hover:border-white/20 transition-colors appearance-none pr-7 focus:outline-none focus:border-sky-500/40"
                   style={{
                     backgroundImage:
@@ -115,7 +115,6 @@ export default function InternationalComparison({
                     backgroundPosition: "right 8px center",
                   }}
                 >
-                  <option value="">Select a country</option>
                   <option value="ALL">All countries</option>
                   {countries.map((c) => (
                     <option key={c.code} value={c.code}>
@@ -213,8 +212,8 @@ export default function InternationalComparison({
                     <div className="flex items-center justify-between mb-2">
                       <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
                         {mode === "estimated-tax"
-                          ? "Your taxes across countries"
-                          : "US spending vs all countries"}
+                          ? "What your taxes would look like in other countries"
+                          : "US spending ratio vs. other countries"}
                       </h4>
                       <span className="text-[10px] text-gray-500">
                         OECD {allComparisons[0].dataYear} data
@@ -340,8 +339,8 @@ export default function InternationalComparison({
                   <div className="px-4 py-3 border-b border-white/10 flex items-center justify-between">
                     <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
                       {mode === "estimated-tax"
-                        ? `Your taxes in ${comparison.country.name}`
-                        : `If the US spent like ${comparison.country.name}`}
+                        ? `What your taxes would look like in ${comparison.country.name}`
+                        : `US spending ratio vs. ${comparison.country.name}`}
                     </h4>
                     <span className="text-[10px] text-gray-500">
                       OECD {comparison.dataYear} data
