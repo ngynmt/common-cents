@@ -4,7 +4,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 vi.stubEnv("UPSTASH_REDIS_REST_URL", "");
 vi.stubEnv("UPSTASH_REDIS_REST_TOKEN", "");
 
-const { incrementCounter, getCounter, getCounters, keys, _resetMemoryCounters } = await import("./redis");
+const { incrementCounter, getCounter, getCounters, checkRateLimit, keys, _resetMemoryCounters } = await import("./redis");
 
 // Use unique keys per test to avoid cross-test pollution from the shared module-level Map.
 let testId = 0;
@@ -76,5 +76,55 @@ describe("keys helpers", () => {
     expect(keys.billSupport("hr-123")).toBe("bill:hr-123:support");
     expect(keys.billOppose("hr-123")).toBe("bill:hr-123:oppose");
     expect(keys.billContacted("hr-123")).toBe("bill:hr-123:contacted");
+  });
+
+  it("generates rate limit keys with route", () => {
+    expect(keys.rateLimit("1.2.3.4", "lobbying")).toBe("ratelimit:lobbying:1.2.3.4");
+    expect(keys.rateLimit("1.2.3.4")).toBe("ratelimit:engagement:1.2.3.4");
+  });
+});
+
+describe("checkRateLimit (in-memory)", () => {
+  it("allows requests under the limit", async () => {
+    const result = await checkRateLimit("10.0.0.1", "test-route", 5);
+    expect(result.allowed).toBe(true);
+  });
+
+  it("allows up to max requests", async () => {
+    for (let i = 0; i < 5; i++) {
+      const result = await checkRateLimit("10.0.0.2", "test-route", 5);
+      expect(result.allowed).toBe(true);
+    }
+  });
+
+  it("blocks after exceeding the limit", async () => {
+    for (let i = 0; i < 5; i++) {
+      await checkRateLimit("10.0.0.3", "test-route", 5);
+    }
+    const result = await checkRateLimit("10.0.0.3", "test-route", 5);
+    expect(result.allowed).toBe(false);
+    expect(result.retryAfterSeconds).toBeGreaterThan(0);
+  });
+
+  it("tracks routes independently", async () => {
+    for (let i = 0; i < 3; i++) {
+      await checkRateLimit("10.0.0.4", "route-a", 3);
+    }
+    // route-a is at limit, route-b should still be allowed
+    const resultA = await checkRateLimit("10.0.0.4", "route-a", 3);
+    const resultB = await checkRateLimit("10.0.0.4", "route-b", 3);
+    expect(resultA.allowed).toBe(false);
+    expect(resultB.allowed).toBe(true);
+  });
+
+  it("tracks IPs independently", async () => {
+    for (let i = 0; i < 3; i++) {
+      await checkRateLimit("10.0.0.5", "test-route", 3);
+    }
+    // 10.0.0.5 is at limit, different IP should still be allowed
+    const blocked = await checkRateLimit("10.0.0.5", "test-route", 3);
+    const allowed = await checkRateLimit("10.0.0.6", "test-route", 3);
+    expect(blocked.allowed).toBe(false);
+    expect(allowed.allowed).toBe(true);
   });
 });
