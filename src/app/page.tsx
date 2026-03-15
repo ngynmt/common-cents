@@ -274,8 +274,23 @@ function HomeContent() {
       <footer className="border-t border-white/5 mt-20">
         <div className="max-w-6xl mx-auto px-4 py-6 text-center text-xs text-gray-400 space-y-3">
           <p>
-            Tax estimates are approximations based on standard deduction and IRS brackets.
-            Spending data from OMB and CBO.
+            Tax estimates are approximations based on standard deduction and{" "}
+            <a href="https://www.irs.gov/taxtopics/tc751" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-gray-200 underline">IRS<span className="sr-only"> (opens in new tab)</span></a>
+            {" "}brackets. Some descriptions are AI-generated summaries of government filings.
+          </p>
+          <p className="text-[10px] text-gray-500">
+            Sources:{" "}
+            <a href="https://www.whitehouse.gov/omb/budget/historical-tables/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">OMB<span className="sr-only"> (opens in new tab)</span></a>
+            {" · "}
+            <a href="https://www.cbo.gov/cost-estimates" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">CBO<span className="sr-only"> (opens in new tab)</span></a>
+            {" · "}
+            <a href="https://www.congress.gov/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">Congress.gov<span className="sr-only"> (opens in new tab)</span></a>
+            {" · "}
+            <a href="https://www.usaspending.gov" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">USASpending.gov<span className="sr-only"> (opens in new tab)</span></a>
+            {" · "}
+            <a href="https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">Treasury MTS<span className="sr-only"> (opens in new tab)</span></a>
+            {" · "}
+            <a href="https://www.fec.gov" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">FEC<span className="sr-only"> (opens in new tab)</span></a>
           </p>
           <p>
             Common Cents is not affiliated with any government agency or political organization.

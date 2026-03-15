@@ -286,20 +286,6 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
         </motion.div>
       )}
 
-      {/* Source attribution */}
-      <div className="text-center pt-4">
-        <p className="text-[10px] text-gray-500">
-          Spending data:{" "}
-          <a href="https://www.whitehouse.gov/omb/budget/historical-tables/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">OMB Historical Tables<span className="sr-only-inline"> (opens in new tab)</span></a>
-          {" · "}Tax brackets:{" "}
-          <a href="https://www.irs.gov/taxtopics/tc751" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">IRS<span className="sr-only-inline"> (opens in new tab)</span></a>
-          {" · "}Bills:{" "}
-          <a href="https://www.congress.gov/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">Congress.gov<span className="sr-only-inline"> (opens in new tab)</span></a>
-          {" · "}Cost estimates:{" "}
-          <a href="https://www.cbo.gov/cost-estimates" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">CBO<span className="sr-only-inline"> (opens in new tab)</span></a>
-        </p>
-      </div>
-
       {/* Representatives modal */}
       {representatives && (
         <RepresentativesModal

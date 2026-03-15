@@ -1,0 +1,90 @@
+name: AI Data Enrichment
+
+on:
+  schedule:
+    # Every Monday and Thursday at 10am UTC
+    - cron: "0 10 * * 1,4"
+  workflow_dispatch:
+    inputs:
+      contracts_only:
+        description: "Only enrich contracts"
+        required: false
+        default: "false"
+      trends_only:
+        description: "Only enrich spending trends"
+        required: false
+        default: "false"
+      force:
+        description: "Force re-enrichment of all items"
+        required: false
+        default: "false"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  enrich:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Run enrichment
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          args=""
+          if [ "${{ github.event.inputs.contracts_only }}" = "true" ]; then
+            args="$args --contracts-only"
+          fi
+          if [ "${{ github.event.inputs.trends_only }}" = "true" ]; then
+            args="$args --trends-only"
+          fi
+          if [ "${{ github.event.inputs.force }}" = "true" ]; then
+            args="$args --force"
+          fi
+          npx tsx scripts/enrich-data.ts $args
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet src/data/enriched-contracts.ts src/data/enriched-trends.ts 2>/dev/null; then
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create draft PR
+        if: steps.changes.outputs.has_changes == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          branch="ai-enrichment/$(date +%Y-%m-%d)"
+          git checkout -b "$branch"
+          git add src/data/enriched-contracts.ts src/data/enriched-trends.ts
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "data: update AI-enriched contract and trend descriptions"
+          git push -u origin "$branch"
+
+          body=""
+          if [ -f .enrichment-summary.md ]; then
+            body=$(cat .enrichment-summary.md)
+          else
+            body="Updated AI-enriched descriptions for contracts and spending trends."
+          fi
+
+          gh pr create \
+            --title "Update AI-enriched spending descriptions" \
+            --body "$body" \
+            --draft \
+            --base main \
+            --head "$branch"

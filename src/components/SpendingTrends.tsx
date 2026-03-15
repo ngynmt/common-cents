@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CATEGORY_LABELS } from "@/lib/expenditures";
 import type { SpendingTrend } from "@/app/api/spending-trends/route";
+import { enrichedTrends } from "@/data/enriched-trends";
 
 /** Only show trends with changes above this threshold */
 const ANOMALY_THRESHOLD = 15; // percent
@@ -81,7 +82,7 @@ export default function SpendingTrends() {
             <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
           </span>
           <span className="text-xs font-semibold text-white">
-            Spending Trends vs. Last Year
+            Notable Spending Changes vs. Last Year
           </span>
           {recordDate && (
             <span className="text-[10px] text-gray-500">
@@ -108,7 +109,7 @@ export default function SpendingTrends() {
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            <div className="px-4 pb-3 space-y-3">
+            <div className="px-4 pt-1 pb-3 space-y-3">
               {/* Outlay anomalies */}
               {anomalies.length > 0 && (
                 <div className="space-y-1.5">
@@ -135,15 +136,7 @@ export default function SpendingTrends() {
 
               <p className="text-[9px] text-gray-600 pt-1 border-t border-white/5">
                 Fiscal year-to-date vs. same period last year. Only showing changes above {ANOMALY_THRESHOLD}%.{" "}
-                Source:{" "}
-                <a
-                  href="https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-500 hover:text-gray-400 underline"
-                >
-                  Monthly Treasury Statement<span className="sr-only"> (opens in new tab)</span>
-                </a>
+                Explanations are AI-generated and may not reflect all factors.
               </p>
             </div>
           </motion.div>
@@ -207,6 +200,11 @@ function TrendRow({ trend }: { trend: SpendingTrend }) {
       {consumerNote && (
         <p className="text-[9px] text-amber-400/80 mt-0.5">
           {consumerNote}
+        </p>
+      )}
+      {!consumerNote && enrichedTrends[trend.classification]?.whyItMatters && (
+        <p className="text-[9px] text-gray-400 mt-0.5">
+          {enrichedTrends[trend.classification].whyItMatters}
         </p>
       )}
     </div>

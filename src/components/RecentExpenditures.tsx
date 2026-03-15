@@ -7,6 +7,7 @@ import { calculatePersonalCost, calculateBillPersonalCost, CATEGORY_LABELS, type
 import type { PendingBill } from "@/data/pending-bills";
 import InfluenceChain from "./InfluenceChain";
 import SpendingTrends from "./SpendingTrends";
+import { enrichedContracts } from "@/data/enriched-contracts";
 
 interface RecentExpendituresProps {
   totalFederalTax: number;
@@ -48,7 +49,7 @@ function ContractCard({
             </span>
           </div>
           <p className="text-xs text-gray-400 mt-1 line-clamp-2">
-            {contract.description || "Federal contract award"}
+            {enrichedContracts[contract.id]?.summary || contract.description || "Federal contract award"}
           </p>
         </div>
         <div className="text-right shrink-0">
@@ -386,24 +387,18 @@ export default function RecentExpenditures({ totalFederalTax }: RecentExpenditur
       )}
 
       <p className="text-center text-[10px] text-gray-500 mt-2">
-        Contracts from{" "}
-        <a
-          href="https://www.usaspending.gov"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-gray-400 hover:text-gray-300 underline"
-        >
+        <a href="https://www.usaspending.gov" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">
           USASpending.gov<span className="sr-only"> (opens in new tab)</span>
         </a>
-        {" · "}Bills from{" "}
-        <a
-          href="https://www.congress.gov"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-gray-400 hover:text-gray-300 underline"
-        >
+        {" · "}
+        <a href="https://www.congress.gov" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">
           Congress.gov<span className="sr-only"> (opens in new tab)</span>
         </a>
+        {" · "}
+        <a href="https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">
+          Treasury MTS<span className="sr-only"> (opens in new tab)</span>
+        </a>
+        {" · "}Some descriptions are AI-summarized
       </p>
     </div>
   );

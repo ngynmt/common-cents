@@ -41,8 +41,10 @@ yarn-error.log*
 .claude/
 SCRATCHPAD.md
 
-# bill tracker temp artifacts
+# pipeline temp artifacts
 .bill-tracker-summary.md
+.bill-suggestions-summary.md
+.enrichment-summary.md
 
 # budget updater output
 scripts/output/
