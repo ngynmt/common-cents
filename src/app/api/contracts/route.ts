@@ -48,8 +48,10 @@ export async function GET(request: NextRequest) {
       "Award ID",
       "Recipient Name",
       "Award Amount",
+      "Total Outlays",
       "Description",
       "Start Date",
+      "End Date",
       "Awarding Agency",
       "Funding Agency",
       "generated_internal_id",
@@ -88,15 +90,38 @@ export async function GET(request: NextRequest) {
       const awardingAgency = String(r["Awarding Agency"] ?? "Unknown");
       const categoryAgency = fundingAgency || awardingAgency;
       const internalId = String(r["generated_internal_id"] ?? "");
+      const awardAmount = Number(r["Award Amount"]) || 0;
+      const totalOutlays = Number(r["Total Outlays"]) || 0;
+      const contractStart = String(r["Start Date"] ?? "");
+      const contractEnd = String(r["End Date"] ?? "");
+
+      // Estimate annualized spending from outlays or award amount / duration
+      let annualizedAmount: number | null = null;
+      const startMs = Date.parse(contractStart);
+      const endMs = Date.parse(contractEnd);
+      if (startMs && endMs && endMs > startMs) {
+        const durationYears = (endMs - startMs) / (365.25 * 86_400_000);
+        if (durationYears >= 1) {
+          // Prefer actual outlays; fall back to award amount spread over duration
+          const basis = totalOutlays > 0 ? totalOutlays : awardAmount;
+          const elapsedYears = totalOutlays > 0
+            ? Math.max((Date.now() - startMs) / (365.25 * 86_400_000), 1)
+            : durationYears;
+          annualizedAmount = Math.round(basis / elapsedYears);
+        }
+      }
+
       return {
         id: internalId || String(r["Award ID"] ?? ""),
         awardId: String(r["Award ID"] ?? ""),
         recipientName: String(r["Recipient Name"] ?? "Unknown"),
         description: String(r["Description"] ?? ""),
-        amount: Number(r["Award Amount"]) || 0,
+        amount: awardAmount,
+        annualizedAmount,
         awardingAgency,
         categoryId: agencyToCategory(categoryAgency),
-        startDate: String(r["Start Date"] ?? ""),
+        startDate: contractStart,
+        endDate: contractEnd,
         url: internalId
           ? `https://www.usaspending.gov/award/${internalId}`
           : "https://www.usaspending.gov",

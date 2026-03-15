@@ -8,6 +8,7 @@ import { formatCurrency } from "@/lib/tax";
 import type { Representative } from "@/data/representatives";
 import { useEngagement } from "@/lib/useEngagement";
 import { trackBillViewed, trackBillVoted, trackRepContactClicked } from "@/lib/analytics";
+import BillInfluenceChain from "./BillInfluenceChain";
 
 type SortMode = "impact" | "date" | "likelihood";
 
@@ -420,6 +421,9 @@ export default function BillsPanel({
                             CBO score<span className="sr-only-inline"> (opens in new tab)</span>
                           </a>
                         </div>
+
+                        {/* Follow the Money */}
+                        <BillInfluenceChain champion={bill.champion} />
 
                         {/* Take action — support/oppose with engagement counters */}
                         <div className="space-y-2 pt-2 border-t border-white/5">

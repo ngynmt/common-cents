@@ -24,9 +24,11 @@ function formatCompact(n: number): string {
 function ContractCard({
   contract,
   personalCost,
+  personalCostTax,
 }: {
   contract: FederalContract;
   personalCost: number;
+  personalCostTax: number;
 }) {
   return (
     <motion.div
@@ -55,6 +57,11 @@ function ContractCard({
           <div className="text-[10px] text-indigo-400 font-medium">
             Cost you: {formatCurrency(personalCost)}
           </div>
+          {contract.annualizedAmount && (
+            <div className="text-[9px] text-gray-500">
+              ~{formatCurrency(calculatePersonalCost(contract.annualizedAmount, personalCostTax))}/yr
+            </div>
+          )}
         </div>
       </div>
       <div className="flex items-center justify-between text-[10px] text-gray-500">
@@ -342,6 +349,7 @@ export default function RecentExpenditures({ totalFederalTax }: RecentExpenditur
                 key={item.data.id}
                 contract={item.data}
                 personalCost={pc}
+                personalCostTax={totalFederalTax}
               />
             );
           } else {
@@ -375,10 +383,6 @@ export default function RecentExpenditures({ totalFederalTax }: RecentExpenditur
       )}
 
       <p className="text-center text-[10px] text-gray-500 mt-2">
-        Contract amounts reflect total award value over the life of the contract, not annual spending.
-        Your actual annual cost may be significantly lower.
-      </p>
-      <p className="text-center text-[10px] text-gray-500">
         Contracts from{" "}
         <a
           href="https://www.usaspending.gov"

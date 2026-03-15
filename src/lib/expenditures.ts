@@ -19,10 +19,12 @@ export interface FederalContract {
   awardId: string;
   recipientName: string;
   description: string;
-  amount: number; // dollars
+  amount: number; // total award amount (lifetime), dollars
+  annualizedAmount: number | null; // estimated annual spend, dollars
   awardingAgency: string;
   categoryId: string; // mapped from agency
   startDate: string; // ISO date
+  endDate: string; // ISO date
   url: string; // USASpending award page
 }
 
