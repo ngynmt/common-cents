@@ -23,6 +23,8 @@
     "budget:validate": "npx tsx scripts/update-budget-data.ts --validate",
     "intl:update": "npx tsx scripts/update-intl-data.ts",
     "intl:validate": "npx tsx scripts/update-intl-data.ts --validate",
+    "load:smoke": "k6 run load-tests/smoke.js",
+    "load:stress": "k6 run load-tests/stress.js",
     "prepare": "husky"
   },
   "dependencies": {

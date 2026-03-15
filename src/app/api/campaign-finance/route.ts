@@ -187,35 +187,22 @@ async function fetchFinanceForCandidate(
   const candidate = candidateData?.results?.[0];
   if (!candidate) return null;
 
-  // 2. Get totals for each cycle we care about — query per cycle to avoid
-  //    null-cycle aggregate rows pushing real data off the first page
-  const totalsResults = (
-    await Promise.all(
-      CYCLES.map((cycle) =>
-        fecFetch<{ results: FECTotalsResult[] }>(
-          `/candidate/${candidateId}/totals/`,
-          { cycle, per_page: 1 },
-        ),
-      ),
-    )
-  ).flatMap((data, i) => {
-    const r = data?.results?.[0];
-    // Ensure cycle is set (some entries come back with cycle=null even when queried by cycle)
-    return r ? [{ ...r, cycle: r.cycle ?? CYCLES[i] }] : [];
-  });
-
-  // Pick the most recent cycle that has meaningful receipts
+  // 2. Get totals — try most recent cycle first, stop as soon as we find data.
+  //    This avoids querying all 3 cycles in parallel (saves ~8 FEC calls per rep).
   let bestTotals: FECTotalsResult | undefined;
   for (const cycle of CYCLES) {
-    const match = totalsResults.find((t) => t.cycle === cycle);
-    if (match && (match.receipts ?? match.contributions ?? 0) > 0) {
-      bestTotals = match;
+    const data = await fecFetch<{ results: FECTotalsResult[] }>(
+      `/candidate/${candidateId}/totals/`,
+      { cycle, per_page: 1 },
+    );
+    const r = data?.results?.[0];
+    if (r && (r.receipts ?? r.contributions ?? 0) > 0) {
+      bestTotals = { ...r, cycle: r.cycle ?? cycle };
       break;
     }
-  }
-  if (!bestTotals && totalsResults.length > 0) {
-    bestTotals = totalsResults.find((t) => (t.receipts ?? t.contributions ?? 0) > 0)
-      ?? totalsResults[0];
+    if (r && !bestTotals) {
+      bestTotals = { ...r, cycle: r.cycle ?? cycle };
+    }
   }
 
   const cycle = bestTotals?.cycle ?? CYCLES[0];

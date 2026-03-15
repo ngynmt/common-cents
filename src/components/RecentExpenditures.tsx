@@ -23,6 +23,13 @@ function formatCompact(n: number): string {
   return formatCurrency(n);
 }
 
+function titleCase(str: string): string {
+  return str
+    .toLowerCase()
+    .replace(/\b\w/g, (c) => c.toUpperCase())
+    .replace(/\b(Llc|Inc|Corp|Ltd|Lp|Llp)\b/gi, (m) => m.toUpperCase());
+}
+
 function ContractCard({
   contract,
   personalCost,
@@ -42,7 +49,7 @@ function ContractCard({
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             <span className="text-xs font-semibold text-white truncate">
-              {contract.recipientName}
+              {titleCase(contract.recipientName)}
             </span>
             <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-indigo-500/20 text-indigo-400 shrink-0">
               {CATEGORY_LABELS[contract.categoryId] || contract.categoryId}
@@ -284,10 +291,45 @@ export default function RecentExpenditures({ totalFederalTax }: RecentExpenditur
 
   if (error || (contracts.length === 0 && enactedBills.length === 0)) {
     return (
-      <div className="text-center py-8 text-gray-500 text-sm">
-        {error
-          ? "Unable to fetch recent spending data. Try again later."
-          : "No recent expenditures found."}
+      <div className="text-center py-8 text-gray-500 text-sm space-y-2">
+        <p>
+          {error
+            ? "Unable to fetch recent spending data."
+            : "No recent expenditures found."}
+        </p>
+        {error && (
+          <button
+            onClick={() => {
+              setError(false);
+              setLoading(true);
+              setContractPage(1);
+              // Re-trigger the effect by forcing a re-mount isn't possible,
+              // so we inline the fetch logic
+              Promise.allSettled([
+                fetch("/api/contracts?days=180&min_amount=100000000&page=1")
+                  .then((r) => r.json())
+                  .then((d) => ({ contracts: d.contracts ?? [], hasMore: d.hasMore ?? false })),
+                fetch("/api/bills?status=enacted&days=180")
+                  .then((r) => r.json())
+                  .then((d) => d.bills ?? []),
+              ]).then((results) => {
+                if (results[0].status === "fulfilled") {
+                  setContracts(results[0].value.contracts);
+                  setHasMore(results[0].value.hasMore);
+                }
+                if (results[1].status === "fulfilled") {
+                  setEnactedBills(results[1].value);
+                }
+                const allFailed = results[0].status === "rejected" && results[1].status === "rejected";
+                setError(allFailed);
+                setLoading(false);
+              });
+            }}
+            className="text-indigo-400 hover:text-indigo-300 underline cursor-pointer focus:outline-none text-sm"
+          >
+            Retry
+          </button>
+        )}
       </div>
     );
   }

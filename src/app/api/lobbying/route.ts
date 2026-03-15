@@ -79,18 +79,21 @@ export async function GET(request: NextRequest) {
   const allFilings: LobbyingFiling[] = [];
   let totalCount = 0;
 
-  for (const y of years) {
-    const url = `${LDA_BASE}?filing_specific_lobbying_issues=${encodeURIComponent(billNumber)}&filing_year=${y}&page_size=25`;
+  // Fetch all years in parallel to reduce latency (was serial)
+  const yearResults = await Promise.all(
+    years.map(async (y) => {
+      const url = `${LDA_BASE}?filing_specific_lobbying_issues=${encodeURIComponent(billNumber)}&filing_year=${y}&page_size=25`;
+      const res = await trackedFetch(url, ROUTE, "lda", {
+        headers: { Authorization: `Token ${apiKey}` },
+        next: { revalidate: 86400 },
+      });
+      if (!res) return null;
+      return await res.json();
+    }),
+  );
 
-    const res = await trackedFetch(url, ROUTE, "lda", {
-      headers: { Authorization: `Token ${apiKey}` },
-      next: { revalidate: 86400 },
-    });
-
-    if (!res) continue;
-
-    const data = await res.json();
-    if (!data.results || !Array.isArray(data.results)) continue;
+  for (const data of yearResults) {
+    if (!data?.results || !Array.isArray(data.results)) continue;
 
     totalCount += data.count || 0;
 

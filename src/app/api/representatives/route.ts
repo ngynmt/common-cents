@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import type { Representative } from "@/data/representatives";
 import { getSenatorNextElection } from "@/data/senate-classes";
 import { logApi, trackedFetch } from "@/lib/api-logger";
-import { checkRateLimit } from "@/lib/redis";
+import { checkRateLimit, getCached, setCached, keys as redisKeys } from "@/lib/redis";
 
 const ZIP_REGEX = /^\d{5}$/;
 
@@ -130,6 +130,13 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ fallback: true, representatives: null });
   }
 
+  // Check cache first to avoid burning Geocodio quota
+  const cacheKey = redisKeys.geoCache(zip);
+  const cached = await getCached<{ state: string; representatives: Representative[] }>(cacheKey);
+  if (cached) {
+    return NextResponse.json({ fallback: false, ...cached });
+  }
+
   try {
     const url = `${GEOCODIO_URL}?q=${encodeURIComponent(zip)}&fields=cd&api_key=${GEOCODIO_API_KEY}`;
     const res = await trackedFetch(url, "/api/representatives", "geocodio", { next: { revalidate: 86400 } });
@@ -194,6 +201,9 @@ export async function GET(request: NextRequest) {
       if (a.chamber !== b.chamber) return a.chamber === "senate" ? -1 : 1;
       return (a.district || "").localeCompare(b.district || "");
     });
+
+    // Cache for 24 hours — reps rarely change
+    await setCached(cacheKey, { state, representatives }, 86400);
 
     return NextResponse.json({
       fallback: false,

@@ -26,27 +26,51 @@ export default function SpendingTrends() {
   const [trends, setTrends] = useState<SpendingTrend[]>([]);
   const [recordDate, setRecordDate] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(false);
   const [expanded, setExpanded] = useState(true);
+
+  const fetchTrends = async () => {
+    setLoading(true);
+    setFetchError(false);
+    try {
+      const res = await fetch("/api/spending-trends");
+      if (!res.ok) {
+        setFetchError(true);
+        return;
+      }
+      const data = await res.json();
+      setTrends(data.trends ?? []);
+      setRecordDate(data.recordDate ?? null);
+    } catch {
+      setFetchError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     let cancelled = false;
 
-    async function fetchTrends() {
+    const doFetch = async () => {
       try {
         const res = await fetch("/api/spending-trends");
-        if (!res.ok) return;
+        if (!res.ok) {
+          if (!cancelled) setFetchError(true);
+          return;
+        }
         const data = await res.json();
-        if (cancelled) return;
-        setTrends(data.trends ?? []);
-        setRecordDate(data.recordDate ?? null);
+        if (!cancelled) {
+          setTrends(data.trends ?? []);
+          setRecordDate(data.recordDate ?? null);
+        }
       } catch {
-        // Silent fail
+        if (!cancelled) setFetchError(true);
       } finally {
         if (!cancelled) setLoading(false);
       }
-    }
+    };
 
-    fetchTrends();
+    doFetch();
     return () => { cancelled = true; };
   }, []);
 
@@ -63,6 +87,20 @@ export default function SpendingTrends() {
   if (loading) {
     return (
       <div className="h-16 rounded-xl bg-white/5 border border-white/10 animate-pulse" />
+    );
+  }
+
+  if (fetchError) {
+    return (
+      <div className="rounded-xl bg-white/[0.03] border border-white/10 px-4 py-3 flex items-center justify-between">
+        <span className="text-xs text-gray-500">Unable to load spending trends.</span>
+        <button
+          onClick={fetchTrends}
+          className="text-xs text-indigo-400 hover:text-indigo-300 underline cursor-pointer focus:outline-none"
+        >
+          Retry
+        </button>
+      </div>
     );
   }
 

@@ -14,7 +14,7 @@ type TabId = "bills" | "spending" | "compare";
 const TABS: { id: TabId; label: string }[] = [
   { id: "bills", label: "Pending Bills" },
   { id: "spending", label: "Recent Spending" },
-  { id: "compare", label: "Global Comparison" },
+  { id: "compare", label: "Global Compare" },
 ];
 
 interface SecondaryTabsProps {

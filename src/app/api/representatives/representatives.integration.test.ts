@@ -4,6 +4,11 @@ import { NextRequest } from "next/server";
 // Mock Redis so Upstash HTTP calls don't hit the global fetch mock
 vi.mock("@/lib/redis", () => ({
   checkRateLimit: vi.fn().mockResolvedValue({ allowed: true }),
+  getCached: vi.fn().mockResolvedValue(null),
+  setCached: vi.fn().mockResolvedValue(undefined),
+  keys: {
+    geoCache: (zip: string) => `geo:${zip}`,
+  },
 }));
 
 // Mock fetch globally

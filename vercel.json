@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "src/app/api/campaign-finance/route.ts": {
+      "maxDuration": 30
+    },
+    "src/app/api/lobbying/route.ts": {
+      "maxDuration": 15
+    },
+    "src/app/api/contractor-influence/route.ts": {
+      "maxDuration": 15
+    }
+  }
+}
