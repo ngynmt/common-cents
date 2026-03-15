@@ -35,7 +35,7 @@ test.describe("Tax Receipt Flow", () => {
     await page.goto("/");
 
     await page.getByLabel("Annual Gross Income").fill("100000");
-    await page.getByRole("button", { name: "Married" }).click();
+    await page.getByRole("radio", { name: "Married" }).click();
     await page.getByRole("button", { name: "See Where Your Money Goes" }).click();
 
     await expect(page.getByText("Your Federal Tax Receipt")).toBeVisible({ timeout: 10000 });
