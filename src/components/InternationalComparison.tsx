@@ -13,6 +13,10 @@ import { formatCurrency, formatPercent, type FilingStatus } from "@/lib/tax";
 import { trackInternationalCompared } from "@/lib/analytics";
 import type { PersonalSpendingCategory } from "@/lib/spending";
 import InfoTooltip from "./InfoTooltip";
+import outcomesData from "@/data/international-outcomes.json";
+import type { InternationalOutcomes } from "@/data/international-outcomes";
+
+const outcomes = outcomesData as unknown as InternationalOutcomes;
 
 /** Short display labels for country codes. */
 const COUNTRY_SHORT_LABELS: Record<string, string> = {
@@ -33,6 +37,16 @@ const COUNTRY_COLORS: Record<string, string> = {
   KOR: "#60a5fa", // blue
   FRA: "#a78bfa", // purple
 };
+
+/**
+ * Cross-cutting insights shown in the all-countries comparison header.
+ * These are manually curated — update if the country list changes.
+ */
+const ALL_COUNTRIES_INSIGHTS = [
+  "Every country shown here provides universal healthcare coverage. The US does not.",
+  "The US spends more on healthcare per person than any country here — and has the lowest life expectancy.",
+  "All six comparison countries have lower income inequality (Gini index) than the United States.",
+];
 
 interface InternationalComparisonProps {
   spending: PersonalSpendingCategory[];
@@ -256,6 +270,10 @@ export default function InternationalComparison({
                         </span>
                       ))}
                     </div>
+                    {/* Cross-cutting insight */}
+                    <p className="text-xs text-slate-400 mt-2 leading-relaxed italic">
+                      {ALL_COUNTRIES_INSIGHTS[0]}
+                    </p>
                   </div>
 
                   {/* Rows */}
@@ -570,6 +588,13 @@ function ComparisonRow({
           )}
         </div>
       </div>
+
+      {/* Editorial callout */}
+      {outcomes.callouts?.[item.categoryId]?.[countryCode]?.text && (
+        <p className="text-xs text-slate-400 mt-1.5 leading-relaxed italic">
+          {outcomes.callouts[item.categoryId][countryCode].text}
+        </p>
+      )}
     </div>
   );
 }
