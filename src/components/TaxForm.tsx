@@ -42,11 +42,11 @@ export default function TaxForm({ onSubmit }: TaxFormProps) {
     >
       {/* Income */}
       <div className="space-y-2">
-        <label htmlFor="income" className="block text-sm font-medium text-slate-300">
+        <label htmlFor="income" className="block text-xs font-medium text-slate-400 uppercase tracking-[1.5px]">
           Annual Gross Income
         </label>
         <div className="relative">
-          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg">
+          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-lg">
             $
           </span>
           <input
@@ -56,14 +56,14 @@ export default function TaxForm({ onSubmit }: TaxFormProps) {
             value={formattedIncome}
             onChange={handleIncomeChange}
             placeholder="75,000"
-            className="w-full pl-8 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white text-lg placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+            className="w-full pl-8 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white text-lg font-amount placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
           />
         </div>
       </div>
 
       {/* Filing Status */}
       <div className="space-y-2">
-        <label id="filing-status-label" className="block text-sm font-medium text-slate-300">
+        <label id="filing-status-label" className="block text-xs font-medium text-slate-400 uppercase tracking-[1.5px]">
           Filing Status
         </label>
         <div className="grid grid-cols-3 gap-2" role="radiogroup" aria-labelledby="filing-status-label">
@@ -92,8 +92,8 @@ export default function TaxForm({ onSubmit }: TaxFormProps) {
 
       {/* ZIP Code */}
       <div className="space-y-2">
-        <label htmlFor="zipCode" className="block text-sm font-medium text-slate-300">
-          ZIP Code <span className="text-slate-400">(optional — for representative lookup)</span>
+        <label htmlFor="zipCode" className="block text-xs font-medium text-slate-400 uppercase tracking-[1.5px]">
+          ZIP Code <span className="text-slate-500 normal-case tracking-normal italic">(optional — for representative lookup)</span>
         </label>
         <input
           id="zipCode"
@@ -101,9 +101,9 @@ export default function TaxForm({ onSubmit }: TaxFormProps) {
           inputMode="numeric"
           value={zipCode}
           onChange={(e) => setZipCode(e.target.value.replace(/[^0-9]/g, "").slice(0, 5))}
-          placeholder="10001"
+          placeholder="5 digits"
           maxLength={5}
-          className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white text-lg placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+          className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white text-lg font-amount placeholder:text-slate-600 placeholder:font-sans focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
         />
       </div>
 
