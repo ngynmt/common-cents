@@ -20,21 +20,42 @@ import { fetchRecentContracts, fetchSpendingTrends } from "./lib/data-fetcher";
 import {
   enrichContractDescription,
   enrichSpendingAnomaly,
+  enrichOutcomeCallout,
   delay,
 } from "./lib/ai-enricher";
 import type { EnrichedContract } from "../src/data/enriched-contracts";
 import type { EnrichedTrend } from "../src/data/enriched-trends";
+import type {
+  InternationalOutcomes,
+  OutcomeCallout,
+} from "../src/data/international-outcomes";
 
 const ENRICHED_CONTRACTS_PATH = path.resolve(__dirname, "../src/data/enriched-contracts.ts");
 const ENRICHED_TRENDS_PATH = path.resolve(__dirname, "../src/data/enriched-trends.ts");
 const SUMMARY_PATH = path.resolve(__dirname, "../.enrichment-summary.md");
+const OUTCOMES_PATH = path.resolve(__dirname, "../src/data/international-outcomes.json");
+const INTL_PATH = path.resolve(__dirname, "../src/data/international.json");
 
 const MAX_ENRICHMENTS_PER_RUN = 50;
+
+/** Maps budget category IDs to the indicator keys that inform their callouts. */
+const CATEGORY_INDICATORS: Record<string, { name: string; keys: string[] }> = {
+  healthcare: { name: "Healthcare", keys: ["life_expectancy", "infant_mortality", "out_of_pocket_health"] },
+  education: { name: "Education", keys: ["education_spending_gdp", "tertiary_enrollment"] },
+  "income-security": { name: "Income Security", keys: ["gini_index", "poverty_rate", "income_share_bottom_20"] },
+  "social-security": { name: "Social Security", keys: ["social_insurance_coverage"] },
+  infrastructure: { name: "Infrastructure", keys: ["broadband_per_100"] },
+  defense: { name: "Defense", keys: ["military_spending_gdp"] },
+  science: { name: "Science & R&D", keys: ["rd_spending_gdp"] },
+};
+
+const STALENESS_THRESHOLD = 0.05;
 
 interface Options {
   dryRun: boolean;
   contractsOnly: boolean;
   trendsOnly: boolean;
+  outcomesOnly: boolean;
   force: boolean;
 }
 
@@ -44,6 +65,7 @@ function parseArgs(): Options {
     dryRun: false,
     contractsOnly: false,
     trendsOnly: false,
+    outcomesOnly: false,
     force: false,
   };
 
@@ -57,6 +79,9 @@ function parseArgs(): Options {
         break;
       case "--trends-only":
         opts.trendsOnly = true;
+        break;
+      case "--outcomes-only":
+        opts.outcomesOnly = true;
         break;
       case "--force":
         opts.force = true;
@@ -165,6 +190,7 @@ async function main() {
   if (opts.dryRun) console.log("Mode: dry run");
   if (opts.contractsOnly) console.log("Scope: contracts only");
   if (opts.trendsOnly) console.log("Scope: trends only");
+  if (opts.outcomesOnly) console.log("Scope: outcomes only");
   if (opts.force) console.log("Force: re-enriching all items");
   console.log("");
 
@@ -189,7 +215,7 @@ async function main() {
   // --- Contracts ---
   const updatedContracts: Record<string, EnrichedContract> = {};
 
-  if (!opts.trendsOnly) {
+  if (!opts.outcomesOnly && !opts.trendsOnly) {
     console.log("--- Contracts ---");
     const existing = loadExistingContracts();
     const rawContracts = await fetchRecentContracts();
@@ -265,7 +291,7 @@ async function main() {
   // --- Spending Trends ---
   const updatedTrends: Record<string, EnrichedTrend> = {};
 
-  if (!opts.contractsOnly) {
+  if (!opts.outcomesOnly && !opts.contractsOnly) {
     console.log("--- Spending Trends ---");
     const existing = loadExistingTrends();
     const rawTrends = await fetchSpendingTrends();
@@ -337,6 +363,168 @@ async function main() {
       console.log(`  Wrote ${Object.keys(updatedTrends).length} entries to enriched-trends.ts`);
     }
     console.log("");
+  }
+
+  // --- Outcome Callouts ---
+  if (!opts.contractsOnly && !opts.trendsOnly) {
+    console.log("--- Outcome Callouts ---");
+
+    if (!fs.existsSync(OUTCOMES_PATH)) {
+      console.log("  No international-outcomes.json found. Run `npm run intl:update` first.");
+    } else if (!fs.existsSync(INTL_PATH)) {
+      console.log("  No international.json found. Run `npm run intl:update` first.");
+    } else {
+      const outcomes: InternationalOutcomes = JSON.parse(
+        fs.readFileSync(OUTCOMES_PATH, "utf-8")
+      );
+      const intlData = JSON.parse(fs.readFileSync(INTL_PATH, "utf-8"));
+      const existingCallouts = outcomes.callouts ?? {};
+      const updatedCallouts: Record<string, Record<string, OutcomeCallout>> = { ...existingCallouts };
+
+      const usIndicators = outcomes.countries.USA?.indicators ?? {};
+      const countryCodes = Object.keys(intlData.countries ?? {});
+
+      // US spending ratios from budget.ts FY2025 data ($7,000B total)
+      // Cannot import budget.ts directly (uses @/* path aliases)
+      const US_RATIOS: Record<string, number> = {
+        "social-security": 1540 / 7000,
+        healthcare: 1810 / 7000,
+        defense: 895 / 7000,
+        interest: 952 / 7000,
+        "income-security": 660 / 7000,
+        veterans: 190 / 7000,
+        education: 265 / 7000,
+        infrastructure: 175 / 7000,
+        immigration: 68 / 7000,
+        science: 75 / 7000,
+        international: 65 / 7000,
+        justice: 82 / 7000,
+        agriculture: 42 / 7000,
+        government: 181 / 7000,
+      };
+
+      let outcomesEnriched = 0;
+      let outcomesSkipped = 0;
+
+      for (const [categoryId, catDef] of Object.entries(CATEGORY_INDICATORS)) {
+        if (!updatedCallouts[categoryId]) {
+          updatedCallouts[categoryId] = {};
+        }
+
+        for (const countryCode of countryCodes) {
+          if (totalApiCalls >= MAX_ENRICHMENTS_PER_RUN) {
+            console.log("  Hit max enrichments per run, stopping outcomes.");
+            break;
+          }
+
+          const countryOutcomes = outcomes.countries[countryCode];
+          if (!countryOutcomes) continue;
+
+          const countryIndicators = countryOutcomes.indicators;
+
+          // Check if we have enough indicators for this category
+          const availableKeys = catDef.keys.filter(
+            (k) => usIndicators[k] && countryIndicators[k]
+          );
+          if (availableKeys.length === 0) continue;
+
+          // Staleness check
+          const existing = existingCallouts[categoryId]?.[countryCode];
+          if (existing && !opts.force) {
+            const stale = availableKeys.some((k) => {
+              const usKey = `${k}_usa`;
+              const countryKey = `${k}_country`;
+              const prevUs = existing.indicatorValuesAtEnrichment[usKey];
+              const prevCountry = existing.indicatorValuesAtEnrichment[countryKey];
+              const currUs = usIndicators[k]?.value;
+              const currCountry = countryIndicators[k]?.value;
+
+              if (prevUs == null || prevCountry == null) return true;
+              if (currUs == null || currCountry == null) return false;
+
+              const usDrift = Math.abs(currUs - prevUs) / Math.abs(prevUs || 1);
+              const countryDrift = Math.abs(currCountry - prevCountry) / Math.abs(prevCountry || 1);
+              return usDrift > STALENESS_THRESHOLD || countryDrift > STALENESS_THRESHOLD;
+            });
+
+            if (!stale) {
+              outcomesSkipped++;
+              continue;
+            }
+          }
+
+          // Format indicators for the prompt
+          const countryName = countryOutcomes.name;
+          const lines: string[] = [];
+          for (const k of availableKeys) {
+            const usVal = usIndicators[k];
+            const countryVal = countryIndicators[k];
+            lines.push(`- ${k.replace(/_/g, " ")}: US ${usVal.value} ${usVal.unit}, ${countryName} ${countryVal.value} ${countryVal.unit}`);
+          }
+
+          // Add healthcare system info if healthcare category
+          if (categoryId === "healthcare") {
+            const usHealth = outcomes.countries.USA?.healthcareSystem;
+            const countryHealth = countryOutcomes.healthcareSystem;
+            if (usHealth) lines.push(`- Healthcare system: US ${usHealth.type}, coverage ${usHealth.covered}`);
+            if (countryHealth) lines.push(`- Healthcare system: ${countryName} ${countryHealth.type}, coverage ${countryHealth.covered}`);
+          }
+
+          // Get spending ratios
+          const usRatio = US_RATIOS[categoryId] ?? 0;
+          const countryRatios = intlData.countries[countryCode]?.ratios ?? {};
+          const countryRatio = countryRatios[categoryId] ?? 0;
+
+          if (opts.dryRun) {
+            console.log(`  Would enrich: ${catDef.name} × ${countryName}`);
+            outcomesEnriched++;
+            continue;
+          }
+
+          console.log(`  Enriching: ${catDef.name} × ${countryName}...`);
+          const calloutText = await enrichOutcomeCallout(
+            catDef.name,
+            countryName,
+            usRatio,
+            countryRatio,
+            lines.join("\n"),
+            apiKey,
+          );
+
+          if (!calloutText) {
+            stats.errors++;
+            continue;
+          }
+
+          // Build staleness snapshot
+          const snapshot: Record<string, number> = {};
+          for (const k of availableKeys) {
+            snapshot[`${k}_usa`] = usIndicators[k].value;
+            snapshot[`${k}_country`] = countryIndicators[k].value;
+          }
+
+          updatedCallouts[categoryId][countryCode] = {
+            text: calloutText,
+            indicatorValuesAtEnrichment: snapshot,
+            enrichedAt: today,
+          };
+
+          outcomesEnriched++;
+          totalApiCalls++;
+          await delay(200);
+        }
+      }
+
+      if (!opts.dryRun) {
+        outcomes.callouts = updatedCallouts;
+        outcomes.lastUpdated = today;
+        fs.writeFileSync(OUTCOMES_PATH, JSON.stringify(outcomes, null, 2) + "\n");
+        console.log(`  Wrote callouts to international-outcomes.json`);
+      }
+
+      console.log(`  Outcomes: ${outcomesEnriched} enriched, ${outcomesSkipped} skipped (not stale)`);
+      console.log("");
+    }
   }
 
   // --- Summary ---
