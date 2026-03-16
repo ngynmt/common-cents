@@ -44,7 +44,6 @@ const COUNTRY_COLORS: Record<string, string> = {
  */
 const ALL_COUNTRIES_INSIGHTS = [
   "Every country shown here provides universal healthcare coverage. The US does not.",
-  "The US spends more on healthcare per person than any country here — and has the lowest life expectancy.",
   "All six comparison countries have lower income inequality (Gini index) than the United States.",
 ];
 
