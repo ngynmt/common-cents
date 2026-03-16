@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { TaxEstimate, TaxYear } from "@/lib/tax";
 import { estimateFederalTax, formatCurrency, formatPercent, SUPPORTED_TAX_YEARS } from "@/lib/tax";
@@ -12,6 +12,7 @@ import SecondaryTabs, { type TabId } from "./SecondaryTabs";
 import SpendingTrends from "./SpendingTrends";
 import RepresentativesModal from "./RepresentativesModal";
 import StickyNav from "./StickyNav";
+import ShareSheet from "./ShareSheet";
 
 import type { Representative, VoteRecord } from "@/data/representatives";
 import type { CampaignFinanceSummary } from "@/data/campaign-finance";
@@ -66,7 +67,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
   const currentYear = taxEstimate.taxYear;
   const priorYear = SUPPORTED_TAX_YEARS.filter((y) => y < currentYear).at(-1) ?? null;
 
-  const [shareStatus, setShareStatus] = useState<"idle" | "copied">("idle");
+  const [showShareSheet, setShowShareSheet] = useState(false);
   const [secondaryTab, setSecondaryTab] = useState<TabId>("bills");
 
   // International rate comparison for callout
@@ -82,26 +83,6 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
     });
   }, [taxEstimate.grossIncome, taxEstimate.filingStatus]);
 
-  const handleShare = useCallback(async () => {
-    const top3 = spending.slice(0, 3);
-    const breakdown = top3
-      .map((s) => `${s.category.icon} ${s.category.name} (${s.percentage.toFixed(1)}%)`)
-      .join(", ");
-    const text = `Where do my federal tax dollars go?\n\n${breakdown}, and more.\n\nSee yours at`;
-    const url = typeof window !== "undefined" ? window.location.origin : "https://commoncents.app";
-
-    if (typeof navigator !== "undefined" && navigator.share) {
-      try {
-        await navigator.share({ title: "Common Cents — Your Federal Tax Receipt", text, url });
-      } catch {
-        // User cancelled share — ignore
-      }
-    } else {
-      await navigator.clipboard.writeText(`${text} ${url}`);
-      setShareStatus("copied");
-      setTimeout(() => setShareStatus("idle"), 2000);
-    }
-  }, [spending]);
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-8">
@@ -246,20 +227,14 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
               Spending Breakdown
             </h3>
             <button
-              onClick={handleShare}
+              onClick={() => setShowShareSheet(true)}
               className="text-slate-400 hover:text-white transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-lg p-1"
               aria-label="Share the breakdown"
-              title={shareStatus === "copied" ? "Copied!" : "Share the breakdown"}
+              title="Share the breakdown"
             >
-              {shareStatus === "copied" ? (
-                <svg className="w-3.5 h-3.5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-              ) : (
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                </svg>
-              )}
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+              </svg>
             </button>
           </div>
 
@@ -358,11 +333,20 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
         />
       </div>
 
+      {/* Share sheet */}
+      <ShareSheet
+        isOpen={showShareSheet}
+        onClose={() => setShowShareSheet(false)}
+        spending={spending}
+        effectiveRate={taxEstimate.effectiveRate}
+        taxYear={taxEstimate.taxYear}
+      />
+
       {/* Sticky jump-to nav (mobile only) */}
       <StickyNav
         activeSecondaryTab={secondaryTab}
         onTabChange={setSecondaryTab}
-        hidden={showRepsModal}
+        hidden={showRepsModal || showShareSheet}
       />
 
       {/* Representatives modal */}
