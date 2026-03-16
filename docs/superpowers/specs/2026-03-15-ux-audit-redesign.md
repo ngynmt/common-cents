@@ -1,7 +1,7 @@
 # UX Audit Redesign: Elevated Civic + Editorial Hybrid
 
 **Date:** 2026-03-15
-**Status:** Draft
+**Status:** Review v2
 **Approach:** Component-by-component (Approach A) with incremental review
 
 ## Overview
@@ -51,24 +51,39 @@ Comprehensive UX pass combining a visual redesign ("Elevated Civic + Editorial" 
 
 ### Step 0: Foundations
 
-**Files changed:** `src/app/layout.tsx`, `tailwind.config.ts` (or `@theme` block in CSS)
+**Files changed:** `src/app/layout.tsx`, `src/app/globals.css` (Tailwind v4 `@theme inline` block)
 
 **Typography:**
 - No new font downloads needed — Georgia and Courier New are system fonts
-- Add `font-serif` class mapped to `Georgia, 'Times New Roman', serif` in Tailwind theme
-- `font-mono` already maps to Geist Mono; keep for code, use `font-receipt` or direct `font-family: 'Courier New', Courier, monospace` for dollar amounts via a utility class
-- Define a `.font-amount` utility for monospace dollar rendering
+- Add serif font family in `globals.css` via `@theme inline`:
+  ```css
+  @theme inline {
+    --font-serif: Georgia, 'Times New Roman', serif;
+  }
+  ```
+- Define a `.font-amount` utility class in `globals.css` for monospace dollar rendering:
+  ```css
+  .font-amount { font-family: 'Courier New', Courier, monospace; }
+  ```
+- `font-mono` (Geist Mono) stays for code; `.font-amount` is distinct for receipt-style numbers
+- Respect `prefers-reduced-motion`: new Framer Motion animations should check `useReducedMotion()` or rely on the existing CSS media query in `globals.css`
 
 **Colors:**
 - Global find-and-replace: `text-gray-300` → `text-slate-300`, `text-gray-400` → `text-slate-400`, `text-gray-500` → `text-slate-400` (bump up), `bg-gray-950` → `bg-slate-950`, `border-white/5` → `border-white/8`
+- Also update the hardcoded `background: #030712` in `globals.css` to `#020617` (slate-950)
 - Exception: keep `text-gray-500` only for truly tertiary text (source attributions in footer)
 - Verify WCAG AA (4.5:1 minimum) for all text-on-background combinations
 
+**`text-[10px]` triage:**
+- **Keep as-is:** Source attributions in footer, tooltip fine print, data source labels
+- **Bump to `text-xs` (12px):** Form labels (use uppercase tracking instead for smallness), comparison card labels, metadata lines in ReceiptLine, badge text in BillsPanel
+- **Review case-by-case:** Chart annotations, DeltaBadge amounts, SpendingTrends labels — bump where readability suffers on mobile
+
 **Shared utilities:**
-- Animation easing: export `EASE_OUT_CUBIC = [0.33, 1, 0.68, 1]` from a constants file, use across all Framer Motion transitions
+- Animation easing: export `EASE_OUT_CUBIC = [0.33, 1, 0.68, 1]` from `src/lib/constants.ts`, use across all Framer Motion transitions to replace inconsistent hardcoded easing values
 - Viewport-aware tooltip: new positioning logic in `InfoTooltip.tsx` using `getBoundingClientRect()` to flip above/below/left/right
 
-**Files created:** None (utilities go in existing files)
+**Files created:** `src/lib/constants.ts` (animation easing, shared design tokens)
 
 ---
 
@@ -84,7 +99,8 @@ Comprehensive UX pass combining a visual redesign ("Elevated Civic + Editorial" 
 **Footer changes:**
 - Data sources line: keep `text-[10px]` (this is the one exception)
 - Attribution text: `font-serif italic` for the disclaimer
-- Separator dots: use `·` (middle dot) instead of `•` (bullet) for editorial feel
+- Separator dots in footer: already uses `·` middle dot — no change needed
+- Trust indicators in hero section (page.tsx line ~243): change `•` bullet to `·` middle dot for consistency
 - "Share feedback" and "Buy me a coffee" buttons: `rounded-lg` instead of `rounded-full` (less playful, more editorial)
 
 ---
@@ -106,7 +122,7 @@ Comprehensive UX pass combining a visual redesign ("Elevated Civic + Editorial" 
 - Filing status buttons: keep current pill style but use `slate` borders
 
 **TaxForm — inline validation:**
-- Income field: if user submits with empty/zero income, show inline error below input: `<p className="text-xs text-red-400 mt-1">Enter your annual income</p>` with `border-red-400/50` on the input
+- Income field: validate on blur — if field is empty or zero, show inline error below input: `<p className="text-xs text-red-400 mt-1">Enter your annual income</p>` with `border-red-400/50` on the input. Note: the submit button is already disabled when income is invalid, so this is a blur-based hint, not a submit-time error.
 - ZIP field: validate on blur — if 1-4 chars, show `"Enter a valid 5-digit ZIP code"` in same error style. If 0 chars, no error (it's optional). If 5 chars, validate silently.
 - Error state clears when user starts typing in the field
 - Add `aria-invalid` and `aria-describedby` linking input to error message for screen readers
@@ -153,7 +169,9 @@ Comprehensive UX pass combining a visual redesign ("Elevated Civic + Editorial" 
 - Transition from skeleton to chart with opacity fade
 
 **Keyboard navigation:**
+- Remove existing `role="img"` from the chart container
 - Add `tabIndex={0}` to the chart container, `role="application"`, `aria-roledescription="interactive chart"`
+- Implementation note: Recharts renders `<Cell>` as SVG `<path>` elements that cannot receive focus natively. Keyboard navigation is a custom JS implementation: `onKeyDown` handler on the chart container programmatically updates `hoveredId`/`activeCategoryId` state based on arrow key input, cycling through the `chartData` array index.
 - On focus, activate first segment; arrow keys (Left/Right) cycle through segments
 - Active segment triggers same visual state as hover (highlight + center label update)
 - Add `aria-live="polite"` region for announcing: `"Social Security: $2,432, 23.0% of your taxes"`
@@ -185,8 +203,8 @@ Comprehensive UX pass combining a visual redesign ("Elevated Civic + Editorial" 
 - Percentage values: keep sans-serif, `text-slate-400`
 
 **Expandable descriptions (replacing silent truncation):**
-- Subcategory descriptions and bill summaries: remove `line-clamp-2`
-- Add controlled truncation with "Show more" / "Show less" toggle:
+- Note: `line-clamp-2` is NOT in ReceiptLine — it is in `RecentExpenditures.tsx` (lines 59, 125) and `line-clamp-1` in `FinanceCard.tsx` (line 356) and `BillInfluenceChain.tsx` (line 482). The "Show more" pattern applies to those files.
+- In `RecentExpenditures.tsx` and `BillInfluenceChain.tsx`: replace `line-clamp-2` / `line-clamp-1` with controlled truncation:
   - Default: `line-clamp-3` with a `<button className="text-xs text-indigo-400 hover:text-indigo-300 mt-1">Show more</button>`
   - Expanded: full text with `<button>Show less</button>`
   - Track expanded state per-item locally
@@ -201,7 +219,7 @@ Comprehensive UX pass combining a visual redesign ("Elevated Civic + Editorial" 
 
 ### Step 6: SecondaryTabs & Panels
 
-**Files changed:** `src/components/SecondaryTabs.tsx`, `src/components/BillsPanel.tsx`, `src/components/RecentExpenditures.tsx`, `src/components/FinanceCard.tsx`, `src/components/InternationalComparison.tsx`, `src/components/SpendingTrends.tsx`
+**Files changed:** `src/components/SecondaryTabs.tsx`, `src/components/BillsPanel.tsx`, `src/components/BillInfluenceChain.tsx`, `src/components/RecentExpenditures.tsx`, `src/components/FinanceCard.tsx` (exported as `FinanceChart`), `src/components/InfluenceChain.tsx`, `src/components/InternationalComparison.tsx`, `src/components/SpendingTrends.tsx`
 
 **SecondaryTabs:**
 - Tab labels: keep sans-serif (they're UI controls, not editorial content)
@@ -219,15 +237,27 @@ Comprehensive UX pass combining a visual redesign ("Elevated Civic + Editorial" 
 - Loading skeletons: already has them, verify slate palette
 - "Load More" button: style consistent with editorial tone
 
-**FinanceCard:**
+**BillInfluenceChain:**
+- Palette shift: `gray-*` → `slate-*` throughout (this is a 500+ line component)
+- Dollar amounts: monospace font
+- `line-clamp-1` descriptions: add "Show more" affordance (same pattern as RecentExpenditures)
+- `text-[10px]` instances: triage per foundation rules (bump labels to `text-xs`)
+
+**FinanceCard (exported as FinanceChart):**
 - Dollar amounts on bars: monospace font
 - Loading skeleton: already has shimmer, verify slate palette
 - Section headings: `font-serif` for "Outside Spending", "Top Donor Employers"
+
+**InfluenceChain:**
+- Palette shift: `gray-*` → `slate-*`
+- Dollar amounts: monospace font
+- `text-[10px]` instances: triage per foundation rules
 
 **InternationalComparison:**
 - Country comparison amounts: monospace font
 - Section headings: `font-serif`
 - "No equivalent" placeholder: `font-serif italic text-slate-500`
+- Scroll container: `max-h-[600px] overflow-y-auto` on line 261 has same mobile nested-scroll problem as TaxReceipt — apply same responsive fix: `lg:max-h-[600px] lg:overflow-y-auto`
 
 **SpendingTrends:**
 - Dollar amounts: monospace font
@@ -249,9 +279,10 @@ Comprehensive UX pass combining a visual redesign ("Elevated Civic + Editorial" 
 - Dollar amounts (campaign finance): monospace font
 
 **InfoTooltip — viewport awareness:**
+- The existing `position` prop (`"above" | "below"`) becomes the *preferred* direction. Add a new default behavior: `"auto"` (smart positioning). Existing call sites passing `position="below"` (e.g., `ReceiptLine.tsx` line 130) continue to work as a hint, but auto-flip overrides if the tooltip would clip.
 - Replace fixed `absolute bottom-full` / `top-full` with dynamic positioning:
   1. On show (hover/focus), call `getBoundingClientRect()` on the trigger element
-  2. Calculate if tooltip would overflow viewport in current direction
+  2. Calculate if tooltip would overflow viewport in the preferred direction
   3. Flip to opposite side if needed: above ↔ below
   4. Also check horizontal bounds: if tooltip extends past left/right edge, shift it
 - Implementation approach: add a `useEffect` that runs on visibility change, calculates position, and sets `top`/`left`/`transform` via inline style
