@@ -47,7 +47,6 @@ export default function InfoTooltip({ children, width = "w-56", position = "auto
         position === "above" ? triggerRect.top : window.innerHeight - triggerRect.bottom;
       vertical = spacePreferred >= tooltipRect.height + gap ? position : (position === "above" ? "below" : "above");
     }
-    setResolvedPosition(vertical);
 
     // Calculate top
     const top =
