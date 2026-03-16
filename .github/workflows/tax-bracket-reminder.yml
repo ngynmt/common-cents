@@ -1,6 +1,7 @@
 name: Tax Bracket Reminder
 
 on:
+  workflow_dispatch:
   schedule:
     # November 1st at 14:00 UTC — IRS typically publishes Rev. Proc. in Oct/Nov
     - cron: "0 14 1 11 *"
@@ -34,23 +35,22 @@ jobs:
             exit 0
           fi
 
+          body="The IRS has likely published the inflation-adjusted tax brackets for **${next_year}** (via Revenue Procedure, typically released in October/November).
+
+          ## Action needed
+
+          1. Confirm brackets are published: check [Tax Foundation](https://taxfoundation.org/data/all/federal/${next_year}-tax-brackets/) or [IRS Newsroom](https://www.irs.gov/newsroom)
+          2. Find the ${next_year} Social Security wage base from [SSA](https://www.ssa.gov/oact/cola/cbb.html)
+          3. Run the updater workflow: **Actions → Tax Bracket Updater → Run workflow**
+             - Enter year: \`${next_year}\`
+             - Enter SS wage base from step 2
+          4. Review the generated PR and apply the config to \`src/lib/tax.ts\`
+
+          ## Quick link
+
+          [Run Tax Bracket Updater →](https://github.com/${repo}/actions/workflows/tax-bracket-updater.yml)"
+
           gh issue create --repo "$repo" \
             --title "Update tax brackets for ${next_year}" \
-            --body "$(cat <<EOF
-The IRS has likely published the inflation-adjusted tax brackets for **${next_year}** (via Revenue Procedure, typically released in October/November).
-
-## Action needed
-
-1. Confirm brackets are published: check [Tax Foundation](https://taxfoundation.org/data/all/federal/${next_year}-tax-brackets/) or [IRS Newsroom](https://www.irs.gov/newsroom)
-2. Find the ${next_year} Social Security wage base from [SSA](https://www.ssa.gov/oact/cola/cbb.html)
-3. Run the updater workflow: **Actions → Tax Bracket Updater → Run workflow**
-   - Enter year: \`${next_year}\`
-   - Enter SS wage base from step 2
-4. Review the generated PR and apply the config to \`src/lib/tax.ts\`
-
-## Quick link
-
-[Run Tax Bracket Updater →](https://github.com/${repo}/actions/workflows/tax-bracket-updater.yml)
-EOF
-)" \
+            --body "$body" \
             --label "maintenance"
