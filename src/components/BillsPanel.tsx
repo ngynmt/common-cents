@@ -60,7 +60,7 @@ function StatusPill({ status }: { status: PendingBill["status"] }) {
     enacted: "bg-green-500/20 text-green-400",
   };
   return (
-    <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${styles[status]}`}>
+    <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${styles[status]}`}>
       {labels[status]}
     </span>
   );
@@ -110,7 +110,7 @@ function ImpactBar({
             className="h-full rounded-full flex items-center justify-end pr-1.5"
             style={{ backgroundColor: color }}
           >
-            <span className="text-[9px] font-semibold text-white/90">
+            <span className="text-[9px] font-semibold font-amount text-white/90">
               {formatCurrency(currentAmount)}
             </span>
           </motion.div>
@@ -132,7 +132,7 @@ function ImpactBar({
                 : undefined,
             }}
           >
-            <span className="text-[9px] font-semibold text-white/90">
+            <span className="text-[9px] font-semibold font-amount text-white/90">
               {formatCurrency(projectedAmount)}
             </span>
           </motion.div>
@@ -238,7 +238,7 @@ export default function BillsPanel({
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-3">
             <span className="text-base" aria-hidden="true">&#9878;</span>
-            <h3 className="text-sm font-semibold text-white">Landmark Laws (Last 2 Years)</h3>
+            <h3 className="text-sm font-semibold font-serif text-white">Landmark Laws (Last 2 Years)</h3>
           </div>
           <div className="space-y-2">
             {filteredLandmarkBills.map((bill) => {
@@ -269,10 +269,10 @@ export default function BillsPanel({
                         const isIncrease = impact > 0;
                         return (
                           <div className={`mt-0.5 text-right shrink-0 w-16 py-1 px-2 rounded-lg ${isIncrease ? "bg-red-500/10" : "bg-green-500/10"}`}>
-                            <div className={`text-xs font-bold ${isIncrease ? "text-red-400" : "text-green-400"}`}>
+                            <div className={`text-xs font-bold font-amount ${isIncrease ? "text-red-400" : "text-green-400"}`}>
                               {isIncrease ? "+" : ""}{formatCurrency(impact)}
                             </div>
-                            <div className="text-[10px] text-slate-400">/year</div>
+                            <div className="text-xs text-slate-400">/year</div>
                           </div>
                         );
                       })()}
@@ -285,17 +285,17 @@ export default function BillsPanel({
                           </span>
                           <StatusPill status={bill.status} />
                           {bill.publicLawNumber && (
-                            <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-indigo-500/20 text-indigo-400">
+                            <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-indigo-500/20 text-indigo-400">
                               {bill.publicLawNumber}
                             </span>
                           )}
                         </div>
                         <div className="flex items-center gap-2 mt-1">
-                          <span className="text-[10px] text-slate-400 font-mono">
+                          <span className="text-xs text-slate-400 font-mono">
                             {bill.billNumber}
                           </span>
                           <span className="text-[10px] text-gray-600" aria-hidden="true">&middot;</span>
-                          <span className="text-[10px] text-slate-400">
+                          <span className="text-xs text-slate-400">
                             Enacted {bill.enactedDate}
                           </span>
                           <span className="text-[10px] text-gray-600" aria-hidden="true">&middot;</span>
@@ -353,10 +353,10 @@ export default function BillsPanel({
                                       </span>
                                     </div>
                                     <div className="flex items-center gap-3">
-                                      <span className={`text-xs font-bold ${isPositive ? "text-red-400" : "text-green-400"}`}>
+                                      <span className={`text-xs font-bold font-amount ${isPositive ? "text-red-400" : "text-green-400"}`}>
                                         {isPositive ? "+" : ""}{formatCurrency(Math.abs(impact.annualChange))}B
                                       </span>
-                                      <span className={`text-[10px] ${isPositive ? "text-red-400/70" : "text-green-400/70"}`}>
+                                      <span className={`text-xs font-amount ${isPositive ? "text-red-400/70" : "text-green-400/70"}`}>
                                         ({isPositive ? "+" : ""}{formatCurrency(personalImpact)} to you)
                                       </span>
                                     </div>
@@ -372,7 +372,7 @@ export default function BillsPanel({
                             <div className="p-2.5 rounded-lg bg-white/5 border border-white/10">
                               <div className="flex items-center justify-between">
                                 <span className="text-xs text-slate-400">Net spending change</span>
-                                <span className="text-xs font-bold text-green-400">
+                                <span className="text-xs font-bold font-amount text-green-400">
                                   {formatCurrency(bill.totalAnnualImpact)}B/year
                                 </span>
                               </div>
@@ -413,7 +413,7 @@ export default function BillsPanel({
                                         This is an approximation — deficit isn&apos;t literally billed to you, but shows your proportional share.
                                       </InfoTooltip>
                                     </span>
-                                    <span className="text-red-400 font-bold">
+                                    <span className="text-red-400 font-bold font-amount">
                                       +{formatCurrency((bill.deficitImpact / totalSpending) * totalFederalTax)}/year
                                     </span>
                                   </div>
@@ -519,7 +519,7 @@ export default function BillsPanel({
                                           className="h-full bg-red-500/60"
                                         />
                                       </div>
-                                      <div className="flex items-center justify-between text-[10px] text-slate-400">
+                                      <div className="flex items-center justify-between text-xs text-slate-400">
                                         <span>
                                           <span className="text-green-400">{supportPct}%</span> support
                                           {" · "}
@@ -542,7 +542,7 @@ export default function BillsPanel({
                                           <span className="text-white">{bill.shortTitle}</span>:
                                         </p>
                                         {contactedCount > 0 && (
-                                          <span className="text-[10px] text-indigo-400 shrink-0">
+                                          <span className="text-xs text-indigo-400 shrink-0">
                                             {formatCount(contactedCount)} people contacted their rep
                                           </span>
                                         )}
@@ -646,7 +646,7 @@ export default function BillsPanel({
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
           </span>
-          <h3 className="text-sm font-semibold text-white inline-flex items-center gap-1.5">
+          <h3 className="text-sm font-semibold font-serif text-white inline-flex items-center gap-1.5">
             {activeCategoryId
               ? `Bills Impacting ${activeCategoryName}`
               : "Upcoming Bills That Could Change Your Receipt"}
@@ -730,14 +730,14 @@ export default function BillsPanel({
                       }`}
                     >
                       <div
-                        className={`text-xs font-bold ${
+                        className={`text-xs font-bold font-amount ${
                           isIncrease ? "text-red-400" : "text-green-400"
                         }`}
                       >
                         {isIncrease ? "+" : ""}
                         {formatCurrency(userImpact)}
                       </div>
-                      <div className="text-[10px] text-slate-400">/year</div>
+                      <div className="text-xs text-slate-400">/year</div>
                     </div>
 
                     {/* Bill info */}
@@ -750,7 +750,7 @@ export default function BillsPanel({
                         <LikelihoodDot likelihood={bill.passageLikelihood} />
                       </div>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className="text-[10px] text-slate-400 font-mono">
+                        <span className="text-xs text-slate-400 font-mono">
                           {bill.billNumber}
                         </span>
                         <span className="text-[10px] text-gray-600" aria-hidden="true">·</span>
@@ -762,7 +762,7 @@ export default function BillsPanel({
                         {bill.bipartisan && (
                           <>
                             <span className="text-[10px] text-gray-600" aria-hidden="true">·</span>
-                            <span className="text-[10px] text-purple-400">Bipartisan</span>
+                            <span className="text-xs text-purple-400">Bipartisan</span>
                           </>
                         )}
                       </div>
@@ -913,7 +913,7 @@ export default function BillsPanel({
                                         className="h-full bg-red-500/60"
                                       />
                                     </div>
-                                    <div className="flex items-center justify-between text-[10px] text-slate-400">
+                                    <div className="flex items-center justify-between text-xs text-slate-400">
                                       <span>
                                         <span className="text-green-400">{supportPct}%</span> support
                                         {" · "}
@@ -940,7 +940,7 @@ export default function BillsPanel({
                                             <span className="text-white">{bill.shortTitle}</span>:
                                           </p>
                                           {contactedCount > 0 && (
-                                            <span className="text-[10px] text-indigo-400 shrink-0">
+                                            <span className="text-xs text-indigo-400 shrink-0">
                                               {formatCount(contactedCount)} people contacted their rep
                                             </span>
                                           )}
