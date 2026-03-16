@@ -76,17 +76,20 @@ export default function ReceiptLine({
         <span className="text-lg shrink-0">{item.category.icon}</span>
 
         {/* Category name */}
-        <span className="text-sm font-medium text-white text-left flex-1">
+        <span className="text-sm font-medium text-white text-left flex-1 min-w-0 truncate">
           {item.category.name}
         </span>
 
+        {/* Dotted leader */}
+        <span className="shrink-0 w-8 border-b border-dotted border-white/10 self-end mb-1" aria-hidden="true" />
+
         {/* Amount & percentage */}
         <div className="text-right shrink-0">
-          <div className="text-sm font-semibold text-white">
+          <div className="text-sm font-semibold text-white font-amount">
             {formatCurrency(item.amount)}
           </div>
           {previousAmount !== undefined && Math.abs(item.amount - previousAmount) >= 1 ? (
-            <div className={`text-[10px] font-medium ${item.amount > previousAmount ? "text-red-400" : "text-green-400"}`}>
+            <div className={`text-[10px] font-medium font-amount ${item.amount > previousAmount ? "text-red-400" : "text-green-400"}`}>
               {item.amount > previousAmount ? "+" : ""}{formatCurrency(item.amount - previousAmount)}
             </div>
           ) : (
@@ -147,7 +150,7 @@ export default function ReceiptLine({
                       )}
                     </div>
                     <div className="text-right shrink-0 ml-4">
-                      <div className="text-sm text-white font-medium">
+                      <div className="text-sm text-white font-medium font-amount">
                         {formatCurrency(sub.amount)}
                       </div>
                       <div className="text-xs text-slate-400">
