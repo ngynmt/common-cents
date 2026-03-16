@@ -102,7 +102,7 @@ export default function RepresentativesModal({
             <div className="bg-slate-900 border border-white/10 rounded-2xl overflow-hidden flex flex-col max-h-full">
               {/* Header */}
               <div className="px-5 py-4 border-b border-white/10 flex items-center justify-between shrink-0">
-                <h2 id="reps-modal-title" className="text-lg font-semibold text-white">
+                <h2 id="reps-modal-title" className="text-lg font-semibold font-serif text-white">
                   Your Representatives
                 </h2>
                 <button

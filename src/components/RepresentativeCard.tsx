@@ -55,8 +55,8 @@ function VoteBadge({ vote }: { vote: VoteRecord["vote"] }) {
   const styles: Record<string, string> = {
     yes: "bg-green-500/20 text-green-400",
     no: "bg-red-500/20 text-red-400",
-    abstain: "bg-gray-500/20 text-slate-400",
-    not_voting: "bg-gray-500/20 text-slate-400",
+    abstain: "bg-slate-500/20 text-slate-400",
+    not_voting: "bg-slate-500/20 text-slate-400",
   };
   const labels: Record<string, string> = {
     yes: "YES",
@@ -107,7 +107,7 @@ export default function RepresentativeCard({ rep, votes, compact, finance }: Rep
       <div className="flex items-center justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-sm font-semibold text-white">{rep.name}</span>
+            <span className="text-sm font-semibold font-serif text-white">{rep.name}</span>
             <PartyBadge party={rep.party} />
           </div>
           <div className="text-xs text-slate-400">{chamberLabel}</div>
