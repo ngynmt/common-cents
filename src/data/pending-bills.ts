@@ -327,6 +327,214 @@ export const pendingBills: PendingBill[] = [
     lastAction: "Referred to the Subcommittee on Railroads, Pipelines, and Hazardous Materials.",
     lastActionDate: "2025-02-27",
   },
+  {
+    id: "hr-7678-placeholder",
+    congress: 119,
+    title: "Gun Owner Registration Information Protection Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 7678",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/7678", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Rep. Gosar, Paul A. [R-AZ-9]",
+      party: "R",
+      chamber: "house",
+      state: "AZ",
+      title: "Representative",
+    },
+    cosponsors: 81,
+    bipartisan: false,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/7678",
+    lastAction: "Referred to the House Committee on the Judiciary.",
+    lastActionDate: "2026-02-25",
+  },
+  {
+    id: "hr-1028-placeholder",
+    congress: 119,
+    title: "Protection of Women in Olympic and Amateur Sports Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 1028",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/1028", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Rep. Steube, W. Gregory [R-FL-17]",
+      party: "R",
+      chamber: "house",
+      state: "FL",
+      title: "Representative",
+    },
+    cosponsors: 73,
+    bipartisan: false,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/1028",
+    lastAction: "Placed on the Union Calendar, Calendar No. 423.",
+    lastActionDate: "2026-02-17",
+  },
+  {
+    id: "hr-7917-placeholder",
+    congress: 119,
+    title: "To amend the Fair Labor Standards Act of 1938 to ensure that certain caregiving employees are no longer exempted from overtime and minimum wage protections.",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 7917",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/7917", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Rep. Ocasio-Cortez, Alexandria [D-NY-14]",
+      party: "D",
+      chamber: "house",
+      state: "NY",
+      title: "Representative",
+    },
+    cosponsors: 58,
+    bipartisan: false,
+    impactedCategories: ["education"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/7917",
+    lastAction: "Referred to the House Committee on Education and Workforce.",
+    lastActionDate: "2026-03-12",
+  },
+  {
+    id: "hr-6644-placeholder",
+    congress: 119,
+    title: "21st Century ROAD to Housing Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 6644",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/6644", // NEEDS EDIT
+    status: "passed_senate",
+    passageLikelihood: "high",
+    champion: {
+      name: "Rep. Hill, J. French [R-AR-2]",
+      party: "R",
+      chamber: "house",
+      state: "AR",
+      title: "Representative",
+    },
+    cosponsors: 31,
+    bipartisan: true,
+    impactedCategories: ["veterans"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/6644",
+    lastAction: "Passed Senate with an amendment by Yea-Nay Vote. 89 - 10. Record Vote Number: 53.",
+    lastActionDate: "2026-03-12",
+  },
+  {
+    id: "s-3938-placeholder",
+    congress: 119,
+    title: "A bill to amend title 10, United States Code, to authorize representatives of veterans service organizations to participate in presentations to promote certain benefits available to veterans during preseparation counseling under the Transition Assistance Program of the Department of Defense, and for other purposes.",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 3938",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/3938", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. King, Angus S., Jr. [I-ME]",
+      party: "I",
+      chamber: "senate",
+      state: "ME",
+      title: "Senator",
+    },
+    cosponsors: 26,
+    bipartisan: true,
+    impactedCategories: ["veterans"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/3938",
+    lastAction: "Read twice and referred to the Committee on Veterans' Affairs.",
+    lastActionDate: "2026-02-26",
+  },
+  {
+    id: "s-4081-placeholder",
+    congress: 119,
+    title: "A bill to amend the Fair Labor Standards Act of 1938 to ensure that certain caregiving employees are no longer exempted from overtime and minimum wage protections.",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 4081",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/4081", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Sen. Murray, Patty [D-WA]",
+      party: "D",
+      chamber: "senate",
+      state: "WA",
+      title: "Senator",
+    },
+    cosponsors: 18,
+    bipartisan: false,
+    impactedCategories: ["healthcare"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/4081",
+    lastAction: "Read twice and referred to the Committee on Health, Education, Labor, and Pensions.",
+    lastActionDate: "2026-03-12",
+  },
+  {
+    id: "s-4083-placeholder",
+    congress: 119,
+    title: "A bill to amend the Internal Revenue Code of 1986 to make certain modifications in relation to the taxation of income required to fund basic living expenses, and for other purposes.",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 4083",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/4083", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Sen. Van Hollen, Chris [D-MD]",
+      party: "D",
+      chamber: "senate",
+      state: "MD",
+      title: "Senator",
+    },
+    cosponsors: 18,
+    bipartisan: false,
+    impactedCategories: ["government"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/4083",
+    lastAction: "Read twice and referred to the Committee on Finance.",
+    lastActionDate: "2026-03-12",
+  },
+  {
+    id: "s-3916-placeholder",
+    congress: 119,
+    title: "Gun Owner Registration Information Protection Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 3916",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/3916", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Sen. Hyde-Smith, Cindy [R-MS]",
+      party: "R",
+      chamber: "senate",
+      state: "MS",
+      title: "Senator",
+    },
+    cosponsors: 16,
+    bipartisan: false,
+    impactedCategories: ["immigration"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/3916",
+    lastAction: "Read twice and referred to the Committee on Homeland Security and Governmental Affairs.",
+    lastActionDate: "2026-02-25",
+  },
 ];
 
 /**
