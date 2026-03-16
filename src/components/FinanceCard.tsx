@@ -90,7 +90,7 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
       )}
       {hasOutsideSpending && (
         <div className="space-y-1">
-          <div className="text-[10px] text-slate-400 font-medium uppercase tracking-wider">
+          <div className="text-xs font-serif text-slate-400 font-medium uppercase tracking-wider">
             Outside spending (Super PACs){finance.outsideSpendingCycle && finance.outsideSpendingCycle !== finance.cycle ? ` · ${finance.outsideSpendingCycle} cycle` : ""}
           </div>
           <div ref={outsideRef} className="w-full h-[150px]" role="img" aria-label={`Outside spending: ${outsideData.map((d) => `${d.fullName}: ${formatCompact(d.total)} ${d.support ? "supporting" : "opposing"}`).join(", ")}`}>
@@ -142,7 +142,7 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
                     dataKey="total"
                     position="right"
                     formatter={(v) => formatCompact(Number(v))}
-                    style={{ fill: "#9ca3af", fontSize: 10 }}
+                    style={{ fill: "#9ca3af", fontSize: 10, fontFamily: "Courier New, monospace" }}
                   />
                 </Bar>
               </BarChart>
@@ -162,7 +162,7 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
       {/* Donor employers — secondary */}
       {hasEmployers && (
         <div className="space-y-1">
-          <div className="text-[10px] text-slate-400 font-medium uppercase tracking-wider">
+          <div className="text-xs font-serif text-slate-400 font-medium uppercase tracking-wider">
             Top donor employers
           </div>
           <div ref={employerRef} className="w-full h-[150px]" role="img" aria-label={`Top donor employers: ${employerData.map((d) => `${d.fullName}: ${formatCompact(d.total)}`).join(", ")}`}>
@@ -209,7 +209,7 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
                     dataKey="total"
                     position="right"
                     formatter={(v) => formatCompact(Number(v))}
-                    style={{ fill: "#9ca3af", fontSize: 10 }}
+                    style={{ fill: "#9ca3af", fontSize: 10, fontFamily: "Courier New, monospace" }}
                   />
                 </Bar>
               </BarChart>
@@ -324,9 +324,9 @@ function DonorContracts({ employers, repName }: { employers: { employer: string;
                       <span className="text-amber-400 font-medium">{employersWithContracts}</span> of{" "}
                       {repName}&apos;s top donor employers also receive federal contracts.
                       Their employees donated{" "}
-                      <span className="text-white font-medium">{formatCompact(totalDonated)}</span>{" "}
+                      <span className="font-amount text-white font-medium">{formatCompact(totalDonated)}</span>{" "}
                       to this representative while holding{" "}
-                      <span className="text-white font-medium">{formatCompact(totalContractValue)}</span>{" "}
+                      <span className="font-amount text-white font-medium">{formatCompact(totalContractValue)}</span>{" "}
                       in government contracts.
                     </p>
                     <p className="text-[9px] text-slate-400">
@@ -343,42 +343,18 @@ function DonorContracts({ employers, repName }: { employers: { employer: string;
                     <span className="text-[10px] font-medium text-white">
                       {employer.employer}
                     </span>
-                    <span className="text-[10px] text-indigo-400 font-medium">
+                    <span className="font-amount text-[10px] text-indigo-400 font-medium">
                       {formatCompact(employer.totalAmount)} total
                     </span>
                   </div>
                   {employer.contracts.map((c) => (
-                    <div
-                      key={c.awardId}
-                      className="pl-2 border-l-2 border-white/10 flex items-start justify-between gap-2"
-                    >
-                      <div className="min-w-0">
-                        <p className="text-[10px] text-slate-400 line-clamp-1">
-                          {c.description}
-                        </p>
-                        <div className="flex items-center gap-1.5 mt-0.5">
-                          <span className="text-[9px] text-slate-400">{c.agency}</span>
-                          <span className="px-1.5 py-0.5 rounded-full text-[9px] bg-indigo-500/20 text-indigo-400">
-                            {c.categoryLabel}
-                          </span>
-                        </div>
-                      </div>
-                      <a
-                        href={c.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[10px] text-white font-medium shrink-0 hover:text-indigo-400 transition-colors"
-                      >
-                        {formatCompact(c.amount)}
-                        <span className="sr-only"> — view on USASpending.gov (opens in new tab)</span>
-                      </a>
-                    </div>
+                    <ContractRow key={c.awardId} contract={c} />
                   ))}
                 </div>
               ))}
 
               {!loading && data && (
-                <p className="text-[9px] text-gray-600 pt-1 border-t border-white/8 inline-flex items-center gap-1 flex-wrap">
+                <p className="text-[9px] text-slate-500 pt-1 border-t border-white/8 inline-flex items-center gap-1 flex-wrap">
                   Contract values are total award amounts, not annual spending
                   <InfoTooltip width="w-56">
                     Federal contracts are often multi-year awards. A $500M contract might be spent over 5-10 years, so the annual cost is much lower than the headline number. These are total obligated amounts, not payments made in a single year.
@@ -398,6 +374,46 @@ function DonorContracts({ employers, repName }: { employers: { employer: string;
           </motion.div>
         )}
       </AnimatePresence>
+    </div>
+  );
+}
+
+const DESCRIPTION_THRESHOLD = 60;
+
+function ContractRow({ contract: c }: { contract: import("@/app/api/contractor-contracts/route").DonorContract }) {
+  const [showMore, setShowMore] = useState(false);
+  const isLong = c.description.length > DESCRIPTION_THRESHOLD;
+
+  return (
+    <div className="pl-2 border-l-2 border-white/10 flex items-start justify-between gap-2">
+      <div className="min-w-0">
+        <p className={`text-[10px] text-slate-400 ${!showMore && isLong ? "line-clamp-1" : ""}`}>
+          {c.description}
+        </p>
+        {isLong && (
+          <button
+            onClick={() => setShowMore((v) => !v)}
+            className="text-[9px] text-indigo-400 hover:text-indigo-300 transition-colors cursor-pointer focus:outline-none mt-0.5"
+          >
+            {showMore ? "Show less" : "Show more"}
+          </button>
+        )}
+        <div className="flex items-center gap-1.5 mt-0.5">
+          <span className="text-[9px] text-slate-400">{c.agency}</span>
+          <span className="px-1.5 py-0.5 rounded-full text-[9px] bg-indigo-500/20 text-indigo-400">
+            {c.categoryLabel}
+          </span>
+        </div>
+      </div>
+      <a
+        href={c.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="font-amount text-[10px] text-white font-medium shrink-0 hover:text-indigo-400 transition-colors"
+      >
+        {formatCompact(c.amount)}
+        <span className="sr-only"> — view on USASpending.gov (opens in new tab)</span>
+      </a>
     </div>
   );
 }

@@ -170,7 +170,7 @@ export default function InternationalComparison({
                         <div className="text-[10px] text-slate-400 uppercase tracking-wider">
                           US taxes
                         </div>
-                        <div className="text-lg font-bold text-white">
+                        <div className="font-amount text-lg font-bold text-white">
                           {formatCurrency(totalFederalTax)}
                         </div>
                         <div className="text-[10px] text-slate-400">
@@ -182,7 +182,7 @@ export default function InternationalComparison({
                         <div className="text-[10px] text-sky-400 uppercase tracking-wider">
                           {comparison.country.name}
                         </div>
-                        <div className="text-lg font-bold text-sky-300">
+                        <div className="font-amount text-lg font-bold text-sky-300">
                           {formatCurrency(comparison.taxEstimate.totalTaxUsd)}
                         </div>
                         <div className="text-[10px] text-sky-400/60">
@@ -213,7 +213,7 @@ export default function InternationalComparison({
                   {/* Header */}
                   <div className="px-4 py-3 border-b border-white/10">
                     <div className="flex items-center justify-between mb-2">
-                      <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                      <h4 className="text-xs font-serif font-semibold text-slate-400 uppercase tracking-wider">
                         {mode === "estimated-tax"
                           ? "What your taxes would look like in other countries"
                           : "US spending ratio vs. other countries"}
@@ -228,7 +228,7 @@ export default function InternationalComparison({
                         <span className="w-2 h-2 rounded-full bg-white/40" />
                         US
                         {mode === "estimated-tax" && (
-                          <span className="text-slate-400 ml-0.5">
+                          <span className="font-amount text-slate-400 ml-0.5">
                             {formatCurrency(totalFederalTax)}
                           </span>
                         )}
@@ -248,7 +248,7 @@ export default function InternationalComparison({
                           {COUNTRY_SHORT_LABELS[c.country.code] ??
                             c.country.code}
                           {mode === "estimated-tax" && (
-                            <span className="text-slate-400 ml-0.5">
+                            <span className="font-amount text-slate-400 ml-0.5">
                               {formatCurrency(c.countryTotalAmount)}
                             </span>
                           )}
@@ -258,7 +258,7 @@ export default function InternationalComparison({
                   </div>
 
                   {/* Rows */}
-                  <div className="max-h-[600px] overflow-y-auto">
+                  <div className="lg:max-h-[600px] lg:overflow-y-auto">
                     {allComparisons[0].items.map((usItem) => (
                       <AllCountriesRow
                         key={usItem.categoryId}
@@ -299,7 +299,7 @@ export default function InternationalComparison({
                         <span className="text-[10px] text-slate-400 w-7 shrink-0">
                           US
                         </span>
-                        <span className="text-xs font-bold text-white">
+                        <span className="font-amount text-xs font-bold text-white">
                           {formatCurrency(totalFederalTax)}
                         </span>
                       </div>
@@ -314,7 +314,7 @@ export default function InternationalComparison({
                                 c.country.code}
                             </span>
                             <span
-                              className="text-xs font-bold"
+                              className="font-amount text-xs font-bold"
                               style={{ color: COUNTRY_COLORS[c.country.code] ?? "#888" }}
                             >
                               {formatCurrency(c.countryTotalAmount)}
@@ -340,7 +340,7 @@ export default function InternationalComparison({
                 >
                   {/* Header */}
                   <div className="px-4 py-3 border-b border-white/10 flex items-center justify-between">
-                    <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                    <h4 className="text-xs font-serif font-semibold text-slate-400 uppercase tracking-wider">
                       {mode === "estimated-tax"
                         ? `What your taxes would look like in ${comparison.country.name}`
                         : `US spending ratio vs. ${comparison.country.name}`}
@@ -377,7 +377,7 @@ export default function InternationalComparison({
                         <span className="text-[10px] text-slate-400 w-7 shrink-0">
                           US
                         </span>
-                        <span className="text-xs font-bold text-white">
+                        <span className="font-amount text-xs font-bold text-white">
                           {formatCurrency(comparison.usTotalAmount)}
                         </span>
                       </div>
@@ -389,7 +389,7 @@ export default function InternationalComparison({
                               {COUNTRY_SHORT_LABELS[comparison.country.code] ??
                                 comparison.country.code}
                             </span>
-                            <span className="text-xs font-bold text-sky-400">
+                            <span className="font-amount text-xs font-bold text-sky-400">
                               {formatCurrency(comparison.countryTotalAmount)}
                             </span>
                           </div>
@@ -519,7 +519,7 @@ function ComparisonRow({
               transition={{ duration: 0.5, ease: "easeOut" }}
             />
           </div>
-          <span className="w-24 text-right text-[10px] text-slate-400 tabular-nums shrink-0 whitespace-nowrap">
+          <span className="font-amount w-24 text-right text-[10px] text-slate-400 tabular-nums shrink-0 whitespace-nowrap">
             {formatCurrency(item.usAmount)}{" "}
             <span className="text-slate-400">({item.usPct.toFixed(1)}%)</span>
           </span>
@@ -537,7 +537,7 @@ function ComparisonRow({
             <>
               <div className="flex-1 h-3 bg-white/5 rounded-full overflow-hidden relative">
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-[9px] text-slate-400">
+                  <span className="font-serif italic text-[9px] text-slate-500">
                     No equivalent
                   </span>
                 </div>
@@ -559,7 +559,7 @@ function ComparisonRow({
                   transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
                 />
               </div>
-              <span className="w-24 text-right text-[10px] text-sky-400/80 tabular-nums shrink-0 whitespace-nowrap">
+              <span className="font-amount w-24 text-right text-[10px] text-sky-400/80 tabular-nums shrink-0 whitespace-nowrap">
                 {formatCurrency(item.countryAmount)}{" "}
                 <span className="text-sky-400/40">
                   ({item.countryPct.toFixed(1)}%)
@@ -625,7 +625,7 @@ function AllCountriesRow({
               transition={{ duration: 0.5, ease: "easeOut" }}
             />
           </div>
-          <span className="w-24 text-right text-[10px] text-slate-400 tabular-nums shrink-0 whitespace-nowrap">
+          <span className="font-amount w-24 text-right text-[10px] text-slate-400 tabular-nums shrink-0 whitespace-nowrap">
             {formatCurrency(usAmount)}{" "}
             <span className="text-slate-400">{usPct.toFixed(0)}%</span>
           </span>
@@ -668,7 +668,7 @@ function AllCountriesRow({
                     />
                   </div>
                   <span
-                    className="w-24 text-right text-[10px] tabular-nums shrink-0 whitespace-nowrap"
+                    className="font-amount w-24 text-right text-[10px] tabular-nums shrink-0 whitespace-nowrap"
                     style={{ color: countryColor, opacity: 0.8 }}
                   >
                     {formatCurrency(cd.amount)}{" "}

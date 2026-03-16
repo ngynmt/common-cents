@@ -155,7 +155,7 @@ export default function SpendingTrends() {
               {/* Outlay anomalies */}
               {anomalies.length > 0 && (
                 <div className="space-y-1.5">
-                  <div className="text-[10px] text-slate-400 uppercase tracking-wider">
+                  <div className="text-[10px] font-serif text-slate-400 uppercase tracking-wider">
                     Spending
                   </div>
                   {anomalies.map((t) => (
@@ -167,7 +167,7 @@ export default function SpendingTrends() {
               {/* Receipt anomalies */}
               {receiptAnomalies.length > 0 && (
                 <div className="space-y-1.5">
-                  <div className="text-[10px] text-slate-400 uppercase tracking-wider">
+                  <div className="text-[10px] font-serif text-slate-400 uppercase tracking-wider">
                     Revenue (taxes &amp; tariffs)
                   </div>
                   {receiptAnomalies.map((t) => (
@@ -176,7 +176,7 @@ export default function SpendingTrends() {
                 </div>
               )}
 
-              <p className="text-[9px] text-gray-600 pt-1 border-t border-white/8">
+              <p className="text-[9px] text-slate-500 pt-1 border-t border-white/8">
                 Fiscal year-to-date vs. same period last year. Only showing changes above {ANOMALY_THRESHOLD}%.{" "}
                 Explanations are AI-generated and may not reflect all factors.
               </p>
@@ -221,7 +221,7 @@ function TrendRow({ trend }: { trend: SpendingTrend }) {
       <div className="flex items-center justify-between text-[10px]">
         <span className="text-slate-300">{label}</span>
         <div className="flex items-center gap-2 shrink-0 ml-2">
-          <span className="text-[9px] text-slate-400">
+          <span className="font-amount text-[9px] text-slate-400">
             {formatCompact(trend.currentFytd)} vs {formatCompact(trend.priorFytd)}
           </span>
           <span
