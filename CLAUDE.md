@@ -10,7 +10,7 @@ A civic tech web app that transforms your federal tax contribution into a person
 - **Charts:** Recharts v3
 - **State:** React hooks + URL search params (no external state library)
 - **Engagement counters:** Upstash Redis (in-memory Map fallback for dev)
-- **APIs:** Geocodio (ZIP → reps), House Clerk + Senate XML (roll call votes)
+- **APIs:** Geocodio (ZIP → reps), House Clerk + Senate XML (roll call votes), World Bank (international outcome indicators)
 - **Hosting:** Vercel
 
 ## Key Decisions
@@ -90,7 +90,7 @@ src/
 │   ├── layout.tsx     # Root layout
 │   └── page.tsx       # Home page — main client component, orchestrates all data fetching
 ├── components/        # Client components (all "use client") with Framer Motion animations
-├── data/              # Static data: budget.ts, pending-bills.ts, tracked-votes.ts, international.json
+├── data/              # Static data: budget.ts, pending-bills.ts, tracked-votes.ts, international.json, international-outcomes.json/.ts
 ├── hooks/             # Custom hooks: useInternationalComparison
 └── lib/               # Utilities: tax.ts, spending.ts, redis.ts, useEngagement.ts
 ```

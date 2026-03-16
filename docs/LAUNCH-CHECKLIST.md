@@ -125,6 +125,19 @@ After 1 week of traffic, review actual costs vs. projections:
 
 ---
 
+### 9. Periodic Data Updates
+
+Run annually (after OECD publishes new COFOG data, typically mid-year):
+
+```bash
+npm run intl:update          # Fetch OECD ratios + World Bank indicators
+npm run enrich -- --outcomes-only  # Generate editorial callouts
+```
+
+Review the generated callouts in `src/data/international-outcomes.json` before committing.
+
+---
+
 ## Known Limitations at Scale
 
 - **FEC API:** 1,000 req/hr even with a real key. At >10K users/day, some finance cards may show empty. Future fix: cache FEC results in Redis by candidate ID.
