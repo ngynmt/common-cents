@@ -74,21 +74,20 @@ jobs:
           git commit -m "data: update international spending ratios from OECD COFOG"
           git push -u origin "$branch"
 
+          body="## Summary
+          - Updated international spending ratios from OECD COFOG data
+          - Data validated and tests passing
+          - Review the ratio changes before merging
+
+          ## Checklist
+          - [ ] Spot-check a few ratios against [OECD stats](https://stats.oecd.org/)
+          - [ ] Verify no country has suspicious spikes vs prior data
+          - [ ] Run \`npm run dev\` and check the comparison UI
+          - [ ] Review tax brackets/rates in \`src/lib/international-tax.ts\` — these are **not** auto-updated and may need annual adjustment for each country's new tax year"
+
           gh pr create \
             --title "Update international spending data (OECD COFOG)" \
-            --body "$(cat <<'EOF'
-## Summary
-- Updated international spending ratios from OECD COFOG data
-- Data validated and tests passing
-- Review the ratio changes before merging
-
-## Checklist
-- [ ] Spot-check a few ratios against [OECD stats](https://stats.oecd.org/)
-- [ ] Verify no country has suspicious spikes vs prior data
-- [ ] Run `npm run dev` and check the comparison UI
-- [ ] Review tax brackets/rates in `src/lib/international-tax.ts` — these are **not** auto-updated and may need annual adjustment for each country's new tax year
-EOF
-          )" \
+            --body "$body" \
             --draft \
             --base main \
             --head "$branch"
