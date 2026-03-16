@@ -351,7 +351,7 @@ export default function InternationalComparison({
                   </div>
 
                   {/* Rows */}
-                  <div className="max-h-[500px] overflow-y-auto">
+                  <div className="lg:max-h-[500px] lg:overflow-y-auto">
                     {comparison.items.map((item) => (
                       <ComparisonRow
                         key={item.categoryId}

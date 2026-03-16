@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { TaxEstimate, TaxYear } from "@/lib/tax";
 import { estimateFederalTax, formatCurrency, formatPercent, SUPPORTED_TAX_YEARS } from "@/lib/tax";
+import { TRANSITION_DEFAULT } from "@/lib/constants";
 import { calculatePersonalSpending } from "@/lib/spending";
 import SpendingChart from "./SpendingChart";
 import ReceiptLine from "./ReceiptLine";
@@ -77,7 +78,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ ...TRANSITION_DEFAULT, duration: 0.5 }}
         className="text-center space-y-2"
       >
         <h2 className="text-2xl font-bold text-white font-serif">Your Federal Tax Receipt</h2>
@@ -98,12 +99,12 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
             </InfoTooltip>
           </span>
         </div>
+        <p className="text-[10px] text-slate-500 uppercase tracking-[1.5px]">
+          Fiscal Year {currentYear} · {taxEstimate.filingStatus === "single" ? "Single Filer" : taxEstimate.filingStatus === "married" ? "Married Filing Jointly" : "Head of Household"}
+        </p>
         <p className="text-xs text-slate-400 max-w-lg mx-auto font-serif italic">
           This is an estimate based on standard deduction and FY {currentYear} tax brackets.
           Your actual taxes may differ based on deductions, credits, and other factors.
-        </p>
-        <p className="text-xs text-slate-500 uppercase tracking-[1.5px]">
-          Fiscal Year {currentYear} · {taxEstimate.filingStatus === "single" ? "Single Filer" : taxEstimate.filingStatus === "married" ? "Married Filing Jointly" : "Head of Household"}
         </p>
       </motion.div>
 
@@ -140,12 +141,12 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
             <div className="grid grid-cols-2 gap-3 max-w-lg mx-auto">
               <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
                 <div className="text-xs text-slate-400 uppercase tracking-wider">FY {priorYear}</div>
-                <div className="text-lg font-bold text-slate-400">{formatCurrency(comparison.estimate.totalFederalTax)}</div>
+                <div className="text-lg font-bold text-slate-400 font-amount">{formatCurrency(comparison.estimate.totalFederalTax)}</div>
                 <div className="text-xs text-slate-400">Effective: {formatPercent(comparison.estimate.effectiveRate)}</div>
               </div>
               <div className="text-center p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20">
                 <div className="text-xs text-indigo-400 uppercase tracking-wider">FY {currentYear}</div>
-                <div className="text-lg font-bold text-white">{formatCurrency(taxEstimate.totalFederalTax)}</div>
+                <div className="text-lg font-bold text-white font-amount">{formatCurrency(taxEstimate.totalFederalTax)}</div>
                 <div className="text-xs text-slate-400">Effective: {formatPercent(taxEstimate.effectiveRate)}</div>
               </div>
             </div>
@@ -195,7 +196,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          transition={{ ...TRANSITION_DEFAULT, duration: 0.5, delay: 0.3 }}
           className="bg-white/[0.03] backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden"
         >
           {/* Receipt header */}

@@ -244,7 +244,7 @@ function HomeContent() {
                 <span aria-hidden="true">·</span>
                 <span>Calculated in your browser</span>
                 <span aria-hidden="true">·</span>
-                <a href="https://github.com/ngynmt/common-cents" target="_blank" rel="noopener noreferrer" className="underline decoration-gray-500 underline-offset-2 hover:decoration-gray-300 transition-colors">100% open source</a>
+                <a href="https://github.com/ngynmt/common-cents" target="_blank" rel="noopener noreferrer" className="underline decoration-slate-500 underline-offset-2 hover:decoration-slate-300 transition-colors">100% open source</a>
               </div>
             </motion.div>
           )}
@@ -276,7 +276,7 @@ function HomeContent() {
         <div className="max-w-6xl mx-auto px-4 py-6 text-center text-xs text-slate-400 space-y-3">
           <p className="font-serif italic">
             Tax estimates are approximations based on standard deduction and{" "}
-            <a href="https://www.irs.gov/taxtopics/tc751" target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-gray-200 underline">IRS<span className="sr-only"> (opens in new tab)</span></a>
+            <a href="https://www.irs.gov/taxtopics/tc751" target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-slate-200 underline">IRS<span className="sr-only"> (opens in new tab)</span></a>
             {" "}brackets. Some descriptions are AI-generated summaries of government filings.
           </p>
           <p className="text-[10px] text-gray-500">

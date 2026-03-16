@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { TRANSITION_DEFAULT } from "@/lib/constants";
 import { formatCurrency } from "@/lib/tax";
 import { calculatePersonalCost, calculateBillPersonalCost, CATEGORY_LABELS, type FederalContract } from "@/lib/expenditures";
 import type { PendingBill } from "@/data/pending-bills";
@@ -47,6 +48,7 @@ function ContractCard({
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
+      transition={TRANSITION_DEFAULT}
       className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2"
     >
       <div className="flex items-start justify-between gap-3">
@@ -119,6 +121,7 @@ function EnactedBillCard({
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
+      transition={TRANSITION_DEFAULT}
       className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2"
     >
       <div className="flex items-start justify-between gap-3">
@@ -365,7 +368,7 @@ export default function RecentExpenditures({ totalFederalTax }: RecentExpenditur
     <div className="space-y-3">
       <SpendingTrends />
 
-      <h3 className="text-sm font-semibold text-white">
+      <h3 className="text-sm font-semibold text-white font-serif">
         How Your Tax Dollars Were Spent in the Last 6 Months
       </h3>
 

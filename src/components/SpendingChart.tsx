@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
+import { TRANSITION_DEFAULT } from "@/lib/constants";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import type { PersonalSpendingCategory } from "@/lib/spending";
 import { formatCurrency, formatPercent } from "@/lib/tax";
@@ -96,7 +97,7 @@ export default function SpendingChart({
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.6, delay: 0.2 }}
+      transition={{ ...TRANSITION_DEFAULT, duration: 0.6, delay: 0.2 }}
       className="w-full h-[400px] relative outline-none"
       role="application"
       aria-roledescription="interactive chart"

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
+import { TRANSITION_DEFAULT, STAGGER_DELAY } from "@/lib/constants";
 import type { PersonalSpendingCategory } from "@/lib/spending";
 import { calculateSubcategorySpending } from "@/lib/spending";
 import { formatCurrency, formatPercent } from "@/lib/tax";
@@ -22,7 +23,7 @@ function StatusBadge({ status }: { status: Legislation["status"] }) {
     passed_house: "bg-blue-500/20 text-blue-400",
     passed_senate: "bg-blue-500/20 text-blue-400",
     in_committee: "bg-yellow-500/20 text-yellow-400",
-    introduced: "bg-gray-500/20 text-slate-400",
+    introduced: "bg-slate-500/20 text-slate-400",
   };
 
   const labels: Record<string, string> = {
@@ -54,7 +55,7 @@ export default function ReceiptLine({
     <motion.div
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.3, delay: index * 0.05 }}
+      transition={{ ...TRANSITION_DEFAULT, delay: index * STAGGER_DELAY }}
       className="border-b border-white/8 last:border-b-0"
     >
       {/* Main line item */}
@@ -81,7 +82,7 @@ export default function ReceiptLine({
         </span>
 
         {/* Dotted leader */}
-        <span className="shrink-0 w-8 border-b border-dotted border-white/10 self-end mb-1" aria-hidden="true" />
+        <span className="flex-1 border-b border-dotted border-white/10 mx-2 self-end mb-1" aria-hidden="true" />
 
         {/* Amount & percentage */}
         <div className="text-right shrink-0">

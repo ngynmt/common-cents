@@ -277,7 +277,7 @@ export default function BillInfluenceChain({
                                         {f.client}
                                       </span>
                                       {f.client !== f.registrant && (
-                                        <span className="text-[9px] text-gray-600 shrink-0">
+                                        <span className="text-[9px] text-slate-500 shrink-0">
                                           via {f.registrant}
                                         </span>
                                       )}
@@ -305,7 +305,7 @@ export default function BillInfluenceChain({
                                     <span className="text-slate-300">
                                       {l.name}
                                     </span>
-                                    <span className="text-gray-600">
+                                    <span className="text-slate-500">
                                       {" "}
                                       — formerly {l.coveredPosition}
                                     </span>
@@ -394,7 +394,7 @@ export default function BillInfluenceChain({
                                       </div>
                                     ))}
                                 </div>
-                                <div className="flex items-center gap-3 text-[9px] text-gray-600 mt-1">
+                                <div className="flex items-center gap-3 text-[9px] text-slate-500 mt-1">
                                   <span className="flex items-center gap-1">
                                     <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-500/70" />{" "}
                                     Supporting
@@ -432,7 +432,7 @@ export default function BillInfluenceChain({
                           {/* Connection to federal contracts */}
                           {employersWithContracts > 0 && (
                             <>
-                              <div className="flex items-center gap-1 text-gray-600">
+                              <div className="flex items-center gap-1 text-slate-500">
                                 <span className="text-xs">↓</span>
                                 <span className="text-xs">
                                   These employers also receive federal contracts
@@ -532,7 +532,7 @@ export default function BillInfluenceChain({
                       )}
 
                       {/* Source */}
-                      <p className="text-[9px] text-gray-600 pt-1 border-t border-white/8">
+                      <p className="text-[9px] text-gray-500 pt-1 border-t border-white/8">
                         Source:{" "}
                         <a
                           href="https://lda.senate.gov/"

@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { TRANSITION_DEFAULT } from "@/lib/constants";
 import { pendingBills, landmarkBills, getBillImpactForCategory, type PendingBill } from "@/data/pending-bills";
 import { TOTAL_FEDERAL_SPENDING, getBudgetData } from "@/data/budget";
 import { formatCurrency } from "@/lib/tax";
@@ -30,7 +31,7 @@ function LikelihoodDot({ likelihood }: { likelihood: PendingBill["passageLikelih
   const colors: Record<string, string> = {
     high: "bg-green-400",
     medium: "bg-yellow-400",
-    low: "bg-gray-400",
+    low: "bg-slate-400",
     enacted: "bg-indigo-400",
   };
   return (
@@ -55,7 +56,7 @@ function StatusPill({ status }: { status: PendingBill["status"] }) {
     passed_house: "bg-blue-500/20 text-blue-400",
     passed_senate: "bg-blue-500/20 text-blue-400",
     in_committee: "bg-yellow-500/20 text-yellow-400",
-    introduced: "bg-gray-500/20 text-slate-400",
+    introduced: "bg-slate-500/20 text-slate-400",
     floor_vote_scheduled: "bg-orange-500/20 text-orange-400",
     enacted: "bg-green-500/20 text-green-400",
   };
@@ -230,7 +231,7 @@ export default function BillsPanel({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.4 }}
+      transition={{ ...TRANSITION_DEFAULT, duration: 0.5, delay: 0.4 }}
       className="w-full"
     >
       {/* Landmark Laws Section */}
@@ -294,11 +295,11 @@ export default function BillsPanel({
                           <span className="text-xs text-slate-400 font-mono">
                             {bill.billNumber}
                           </span>
-                          <span className="text-[10px] text-gray-600" aria-hidden="true">&middot;</span>
+                          <span className="text-[10px] text-slate-500" aria-hidden="true">&middot;</span>
                           <span className="text-xs text-slate-400">
                             Enacted {bill.enactedDate}
                           </span>
-                          <span className="text-[10px] text-gray-600" aria-hidden="true">&middot;</span>
+                          <span className="text-[10px] text-slate-500" aria-hidden="true">&middot;</span>
                           <PartyTag
                             party={bill.champion.party}
                             name={bill.champion.name}
@@ -753,7 +754,7 @@ export default function BillsPanel({
                         <span className="text-xs text-slate-400 font-mono">
                           {bill.billNumber}
                         </span>
-                        <span className="text-[10px] text-gray-600" aria-hidden="true">·</span>
+                        <span className="text-[10px] text-slate-500" aria-hidden="true">·</span>
                         <PartyTag
                           party={bill.champion.party}
                           name={bill.champion.name}
@@ -761,7 +762,7 @@ export default function BillsPanel({
                         />
                         {bill.bipartisan && (
                           <>
-                            <span className="text-[10px] text-gray-600" aria-hidden="true">·</span>
+                            <span className="text-[10px] text-slate-500" aria-hidden="true">·</span>
                             <span className="text-xs text-purple-400">Bipartisan</span>
                           </>
                         )}
