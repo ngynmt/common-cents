@@ -197,12 +197,12 @@ function HomeContent() {
               onClick={showReceipt ? handleBack : undefined}
               className={showReceipt ? "cursor-pointer" : "cursor-default"}
             >
-              <span className="text-2xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+              <span className="text-2xl font-bold font-serif tracking-tight bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
                 Common Cents
               </span>
             </button>
           </div>
-          <span className="text-xs text-slate-400">
+          <span className="text-xs text-slate-500 uppercase tracking-[3px]">
             FY {SUPPORTED_TAX_YEARS[SUPPORTED_TAX_YEARS.length - 1]} Estimates
           </span>
         </div>
@@ -240,9 +240,9 @@ function HomeContent() {
               {/* Trust indicators */}
               <div className="flex items-center gap-6 text-xs text-slate-400">
                 <span>No data stored</span>
-                <span aria-hidden="true">•</span>
+                <span aria-hidden="true">·</span>
                 <span>Calculated in your browser</span>
-                <span aria-hidden="true">•</span>
+                <span aria-hidden="true">·</span>
                 <a href="https://github.com/ngynmt/common-cents" target="_blank" rel="noopener noreferrer" className="underline decoration-gray-500 underline-offset-2 hover:decoration-gray-300 transition-colors">100% open source</a>
               </div>
             </motion.div>
@@ -273,7 +273,7 @@ function HomeContent() {
       {/* Footer */}
       <footer className="border-t border-white/8 mt-20">
         <div className="max-w-6xl mx-auto px-4 py-6 text-center text-xs text-slate-400 space-y-3">
-          <p>
+          <p className="font-serif italic">
             Tax estimates are approximations based on standard deduction and{" "}
             <a href="https://www.irs.gov/taxtopics/tc751" target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-gray-200 underline">IRS<span className="sr-only"> (opens in new tab)</span></a>
             {" "}brackets. Some descriptions are AI-generated summaries of government filings.
@@ -294,7 +294,7 @@ function HomeContent() {
             {" · "}
             <a href="https://lda.senate.gov/" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-300 underline">Senate LDA<span className="sr-only"> (opens in new tab)</span></a>
           </p>
-          <p>
+          <p className="font-serif italic text-slate-500">
             Common Cents is not affiliated with any government agency or political organization.
           </p>
           <div className="flex items-center justify-center gap-3 flex-wrap">
@@ -302,7 +302,7 @@ function HomeContent() {
               href="https://docs.google.com/forms/d/e/1FAIpQLScpU812Yifx_E9eu3MtKZzVxp6Kwar9Cbr7ucFR6CdXW6pPSw/viewform?usp=publish-editor"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/5 text-slate-300 hover:bg-white/10 transition-colors text-xs font-medium"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white/5 text-slate-300 hover:bg-white/10 transition-colors text-xs font-medium"
             >
               Share feedback
             </a>
@@ -310,7 +310,7 @@ function HomeContent() {
               href="https://buymeacoffee.com/meeshers"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#FFDD00]/10 text-[#FFDD00] hover:bg-[#FFDD00]/20 transition-colors text-xs font-medium"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#FFDD00]/10 text-[#FFDD00] hover:bg-[#FFDD00]/20 transition-colors text-xs font-medium"
             >
               <span aria-hidden="true">&#9749;</span>
               Buy me a coffee
