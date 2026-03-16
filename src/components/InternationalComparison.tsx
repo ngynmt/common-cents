@@ -476,6 +476,7 @@ export default function InternationalComparison({
                 >
                   OECD COFOG<span className="sr-only-inline"> (opens in new tab)</span>
                 </a>
+                {" · "}Some descriptions are AI-summarized
               </p>
             )}
     </div>
