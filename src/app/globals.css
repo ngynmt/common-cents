@@ -3,10 +3,16 @@
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-serif: Georgia, 'Times New Roman', serif;
+}
+
+/* Monospace font for dollar amounts — receipt/ledger style */
+.font-amount {
+  font-family: 'Courier New', Courier, monospace;
 }
 
 body {
-  background: #030712;
+  background: #020617;
   color: #ededed;
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
