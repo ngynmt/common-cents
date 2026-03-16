@@ -222,14 +222,15 @@ function HomeContent() {
             >
               {/* Hero */}
               <div className="text-center space-y-4 max-w-lg">
-                <h1 className="text-4xl sm:text-5xl font-bold">
+                <h1 className="text-4xl sm:text-5xl font-bold font-serif">
                   Where do your{" "}
                   <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
                     tax dollars
                   </span>{" "}
                   go?
                 </h1>
-                <p className="text-slate-400 text-lg">
+                <div className="w-10 h-0.5 bg-gradient-to-r from-indigo-400 to-purple-400 mx-auto" />
+                <p className="text-slate-400 text-lg font-serif italic">
                   Get a personalized receipt for your federal taxes. See exactly
                   how your money is spent — and who decides.
                 </p>
