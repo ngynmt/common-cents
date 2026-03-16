@@ -232,8 +232,11 @@ export default function InternationalComparison({
                           ? "What your taxes would look like in other countries"
                           : "US spending ratio vs. other countries"}
                       </h4>
-                      <span className="text-[10px] text-slate-400">
+                      <span className="text-[10px] text-slate-400 inline-flex items-center gap-1">
                         OECD {allComparisons[0].dataYear} data
+                        <InfoTooltip width="w-56">
+                          OECD spending data typically lags 1-2 years. {allComparisons[0].dataYear} is the most recent year with complete data for all countries shown.
+                        </InfoTooltip>
                       </span>
                     </div>
                     {/* Legend */}
@@ -363,8 +366,11 @@ export default function InternationalComparison({
                         ? `What your taxes would look like in ${comparison.country.name}`
                         : `US spending ratio vs. ${comparison.country.name}`}
                     </h4>
-                    <span className="text-[10px] text-slate-400">
+                    <span className="text-[10px] text-slate-400 inline-flex items-center gap-1">
                       OECD {comparison.dataYear} data
+                      <InfoTooltip width="w-56">
+                        OECD spending data typically lags 1-2 years. {comparison.dataYear} is the most recent year with complete data for all countries shown.
+                      </InfoTooltip>
                     </span>
                   </div>
 
