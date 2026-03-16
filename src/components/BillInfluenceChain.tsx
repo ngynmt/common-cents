@@ -31,6 +31,7 @@ export default function BillInfluenceChain({
   billNumber,
 }: BillInfluenceChainProps) {
   const [expanded, setExpanded] = useState(false);
+  const [expandedDescriptions, setExpandedDescriptions] = useState<Set<string>>(new Set());
   const [data, setData] = useState<InfluenceData | null | undefined>(undefined);
   const [loading, setLoading] = useState(false);
   const [fetchError, setFetchError] = useState(false);
@@ -230,7 +231,7 @@ export default function BillInfluenceChain({
                       {/* Lobbying section */}
                       {lobbying && lobbying.filings.length > 0 && (
                         <>
-                          <div className="text-[10px] text-slate-400">
+                          <div className="text-xs text-slate-400">
                             <span className="text-amber-400 font-medium">
                               {lobbying.totalFilings}
                             </span>{" "}
@@ -242,7 +243,7 @@ export default function BillInfluenceChain({
                               <>
                                 {" "}
                                 totaling{" "}
-                                <span className="text-amber-400 font-medium">
+                                <span className="text-amber-400 font-medium font-amount">
                                   {formatCompact(lobbying.totalSpending)}
                                 </span>{" "}
                                 in reported spending
@@ -251,7 +252,7 @@ export default function BillInfluenceChain({
                           </div>
 
                           <div>
-                            <div className="text-[10px] text-slate-400 mb-1">
+                            <div className="text-xs text-slate-400 mb-1">
                               Top organizations lobbying on this bill
                             </div>
                             <div className="space-y-0.5">
@@ -269,7 +270,7 @@ export default function BillInfluenceChain({
                                 .map((f) => (
                                   <div
                                     key={`${f.client}-${f.filingYear}-${f.filingPeriod}`}
-                                    className="flex items-center justify-between text-[10px]"
+                                    className="flex items-center justify-between text-xs"
                                   >
                                     <div className="flex items-center gap-1.5 min-w-0">
                                       <span className="text-slate-300 truncate">
@@ -281,7 +282,7 @@ export default function BillInfluenceChain({
                                         </span>
                                       )}
                                     </div>
-                                    <span className="text-slate-400 font-medium ml-2 shrink-0">
+                                    <span className="text-slate-400 font-medium font-amount ml-2 shrink-0">
                                       {formatCompact(f.amount)}
                                     </span>
                                   </div>
@@ -292,14 +293,14 @@ export default function BillInfluenceChain({
                           {/* Revolving door */}
                           {revolvingDoor.length > 0 && (
                             <div>
-                              <div className="text-[10px] text-slate-400 mb-1">
+                              <div className="text-xs text-slate-400 mb-1">
                                 Lobbyists with prior government roles
                               </div>
                               <div className="space-y-0.5">
                                 {revolvingDoor.map((l, i) => (
                                   <div
                                     key={`${l.name}-${i}`}
-                                    className="text-[10px]"
+                                    className="text-xs"
                                   >
                                     <span className="text-slate-300">
                                       {l.name}
@@ -345,12 +346,12 @@ export default function BillInfluenceChain({
                       {/* Champion funding summary */}
                       {hasFinance && (
                         <>
-                          <div className="text-[10px] text-slate-400">
+                          <div className="text-xs text-slate-400">
                             <span className="text-white font-medium">
                               {champion.title} {champion.name}
                             </span>{" "}
                             raised{" "}
-                            <span className="text-indigo-400 font-medium">
+                            <span className="text-indigo-400 font-medium font-amount">
                               {formatCompact(finance.totalRaised)}
                             </span>{" "}
                             ({finance.cycle} cycle)
@@ -360,7 +361,7 @@ export default function BillInfluenceChain({
                           {finance.outsideSpending &&
                             finance.outsideSpending.length > 0 && (
                               <div>
-                                <div className="text-[10px] text-slate-400 mb-1">
+                                <div className="text-xs text-slate-400 mb-1">
                                   Outside spending (Super PACs)
                                   {finance.outsideSpendingCycle &&
                                   finance.outsideSpendingCycle !== finance.cycle
@@ -373,7 +374,7 @@ export default function BillInfluenceChain({
                                     .map((s) => (
                                       <div
                                         key={`${s.name}-${s.support}`}
-                                        className="flex items-center justify-between text-[10px]"
+                                        className="flex items-center justify-between text-xs"
                                       >
                                         <div className="flex items-center gap-1.5 min-w-0">
                                           <span
@@ -387,7 +388,7 @@ export default function BillInfluenceChain({
                                             {s.name}
                                           </span>
                                         </div>
-                                        <span className="text-slate-400 font-medium ml-2 shrink-0">
+                                        <span className="text-slate-400 font-medium font-amount ml-2 shrink-0">
                                           {formatCompact(s.total)}
                                         </span>
                                       </div>
@@ -408,19 +409,19 @@ export default function BillInfluenceChain({
 
                           {/* Top donor employers */}
                           <div>
-                            <div className="text-[10px] text-slate-400 mb-1">
+                            <div className="text-xs text-slate-400 mb-1">
                               Top donor employers
                             </div>
                             <div className="space-y-0.5">
                               {topEmployers.map((e) => (
                                 <div
                                   key={e.employer}
-                                  className="flex items-center justify-between text-[10px]"
+                                  className="flex items-center justify-between text-xs"
                                 >
                                   <span className="text-slate-300">
                                     {e.employer}
                                   </span>
-                                  <span className="text-slate-400 font-medium ml-2 shrink-0">
+                                  <span className="text-slate-400 font-medium font-amount ml-2 shrink-0">
                                     {formatCompact(e.total)}
                                   </span>
                                 </div>
@@ -432,8 +433,8 @@ export default function BillInfluenceChain({
                           {employersWithContracts > 0 && (
                             <>
                               <div className="flex items-center gap-1 text-gray-600">
-                                <span className="text-[10px]">↓</span>
-                                <span className="text-[10px]">
+                                <span className="text-xs">↓</span>
+                                <span className="text-xs">
                                   These employers also receive federal contracts
                                 </span>
                               </div>
@@ -467,43 +468,62 @@ export default function BillInfluenceChain({
                                   className="space-y-1"
                                 >
                                   <div className="flex items-center justify-between">
-                                    <span className="text-[10px] font-medium text-white">
+                                    <span className="text-xs font-medium text-white">
                                       {employer.employer}
                                     </span>
-                                    <span className="text-[10px] text-indigo-400 font-medium">
+                                    <span className="text-xs text-indigo-400 font-medium font-amount">
                                       {formatCompact(employer.totalAmount)}
                                     </span>
                                   </div>
-                                  {employer.contracts.slice(0, 3).map((c) => (
-                                    <div
-                                      key={c.awardId}
-                                      className="pl-2 border-l-2 border-white/10 flex items-start justify-between gap-2"
-                                    >
-                                      <p className="text-[10px] text-slate-400 line-clamp-1 min-w-0">
-                                        {c.description}
-                                      </p>
-                                      <a
-                                        href={c.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-[10px] text-white font-medium shrink-0 hover:text-indigo-400 transition-colors"
+                                  {employer.contracts.slice(0, 3).map((c) => {
+                                    const descKey = `contract-${c.awardId}`;
+                                    const isDescExpanded = expandedDescriptions.has(descKey);
+                                    return (
+                                      <div
+                                        key={c.awardId}
+                                        className="pl-2 border-l-2 border-white/10 flex items-start justify-between gap-2"
                                       >
-                                        {formatCompact(c.amount)}
-                                        <span className="sr-only">
-                                          {" "}
-                                          — view on USASpending.gov (opens in
-                                          new tab)
-                                        </span>
-                                      </a>
-                                    </div>
-                                  ))}
+                                        <div className="min-w-0 flex-1">
+                                          <p className={`text-xs text-slate-400${!isDescExpanded ? " line-clamp-1" : ""}`}>
+                                            {c.description}
+                                          </p>
+                                          {c.description && c.description.length > 60 && (
+                                            <button
+                                              onClick={() => setExpandedDescriptions((prev) => {
+                                                const next = new Set(prev);
+                                                if (next.has(descKey)) next.delete(descKey);
+                                                else next.add(descKey);
+                                                return next;
+                                              })}
+                                              className="text-xs text-indigo-400 hover:text-indigo-300 mt-0.5 cursor-pointer focus:outline-none"
+                                            >
+                                              {isDescExpanded ? "Show less" : "Show more"}
+                                            </button>
+                                          )}
+                                        </div>
+                                        <a
+                                          href={c.url}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="text-xs text-white font-medium font-amount shrink-0 hover:text-indigo-400 transition-colors"
+                                        >
+                                          {formatCompact(c.amount)}
+                                          <span className="sr-only">
+                                            {" "}
+                                            — view on USASpending.gov (opens in
+                                            new tab)
+                                          </span>
+                                        </a>
+                                      </div>
+                                    );
+                                  })}
                                 </div>
                               ))}
                             </>
                           )}
 
                           {employersWithContracts === 0 && (
-                            <p className="text-[10px] text-slate-400">
+                            <p className="text-xs text-slate-400">
                               None of {champion.name}&apos;s top donor employers
                               were found to hold major federal contracts.
                             </p>

@@ -40,6 +40,9 @@ function ContractCard({
   personalCost: number;
   personalCostTax: number;
 }) {
+  const [descExpanded, setDescExpanded] = useState(false);
+  const description = enrichedContracts[contract.id]?.summary || contract.description || "Federal contract award";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -52,27 +55,35 @@ function ContractCard({
             <span className="text-xs font-semibold text-white truncate">
               {titleCase(contract.recipientName)}
             </span>
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-indigo-500/20 text-indigo-400 shrink-0">
+            <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-indigo-500/20 text-indigo-400 shrink-0">
               {CATEGORY_LABELS[contract.categoryId] || contract.categoryId}
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-1 line-clamp-2">
-            {enrichedContracts[contract.id]?.summary || contract.description || "Federal contract award"}
+          <p className={`text-xs text-slate-400 mt-1${!descExpanded ? " line-clamp-3" : ""}`}>
+            {description}
           </p>
+          {description.length > 120 && (
+            <button
+              onClick={() => setDescExpanded((prev) => !prev)}
+              className="text-xs text-indigo-400 hover:text-indigo-300 mt-1 cursor-pointer focus:outline-none"
+            >
+              {descExpanded ? "Show less" : "Show more"}
+            </button>
+          )}
         </div>
         <div className="text-right shrink-0">
-          <div className="text-sm font-bold text-white">
+          <div className="text-sm font-bold text-white font-amount">
             {formatCompact(contract.amount)}
           </div>
           <div className="text-[10px] text-indigo-400 font-medium inline-flex items-center gap-1">
-            Cost you: {formatCurrency(personalCost)}
+            Cost you: <span className="font-amount">{formatCurrency(personalCost)}</span>
             <InfoTooltip width="w-60">
               Your personal cost = (contract amount &divide; $4.9T total federal revenue) &times; your federal tax. This proportionally distributes the contract cost across all taxpayers based on your tax contribution.
               {contract.annualizedAmount && " The /yr figure assumes the contract continues at its current spending rate."}
             </InfoTooltip>
           </div>
           {contract.annualizedAmount && (
-            <div className="text-[9px] text-slate-400">
+            <div className="text-[9px] text-slate-400 font-amount">
               ~{formatCurrency(calculatePersonalCost(contract.annualizedAmount, personalCostTax))}/yr
             </div>
           )}
@@ -101,6 +112,9 @@ function EnactedBillCard({
   bill: PendingBill;
   personalCost: number;
 }) {
+  const [descExpanded, setDescExpanded] = useState(false);
+  const description = bill.summary || bill.title;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -113,26 +127,34 @@ function EnactedBillCard({
             <span className="text-xs font-semibold text-white">
               {bill.shortTitle}
             </span>
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-green-500/20 text-green-400 shrink-0">
+            <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-green-500/20 text-green-400 shrink-0">
               Enacted
             </span>
             {bill.publicLawNumber && (
-              <span className="text-[10px] text-slate-400">
+              <span className="text-xs text-slate-400">
                 {bill.publicLawNumber}
               </span>
             )}
           </div>
-          <p className="text-xs text-slate-400 mt-1 line-clamp-2">
-            {bill.summary || bill.title}
+          <p className={`text-xs text-slate-400 mt-1${!descExpanded ? " line-clamp-3" : ""}`}>
+            {description}
           </p>
+          {description.length > 120 && (
+            <button
+              onClick={() => setDescExpanded((prev) => !prev)}
+              className="text-xs text-indigo-400 hover:text-indigo-300 mt-1 cursor-pointer focus:outline-none"
+            >
+              {descExpanded ? "Show less" : "Show more"}
+            </button>
+          )}
         </div>
         {bill.totalAnnualImpact !== 0 && (
           <div className="text-right shrink-0">
-            <div className="text-sm font-bold text-white">
+            <div className="text-sm font-bold text-white font-amount">
               {formatCompact(Math.abs(bill.totalAnnualImpact) * 1e9)}/yr
             </div>
             <div className="text-[10px] text-indigo-400 font-medium">
-              Cost you: {formatCurrency(personalCost)}/yr
+              Cost you: <span className="font-amount">{formatCurrency(personalCost)}</span>/yr
             </div>
           </div>
         )}
