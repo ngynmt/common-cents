@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { TaxEstimate, TaxYear } from "@/lib/tax";
 import { estimateFederalTax, formatCurrency, formatPercent, SUPPORTED_TAX_YEARS } from "@/lib/tax";
@@ -8,11 +8,14 @@ import { TRANSITION_DEFAULT } from "@/lib/constants";
 import { calculatePersonalSpending } from "@/lib/spending";
 import SpendingChart from "./SpendingChart";
 import ReceiptLine from "./ReceiptLine";
-import SecondaryTabs from "./SecondaryTabs";
+import SecondaryTabs, { type TabId } from "./SecondaryTabs";
+import SpendingTrends from "./SpendingTrends";
 import RepresentativesModal from "./RepresentativesModal";
+import StickyNav from "./StickyNav";
 
 import type { Representative, VoteRecord } from "@/data/representatives";
 import type { CampaignFinanceSummary } from "@/data/campaign-finance";
+import { estimateInternationalTax, type SupportedCountry } from "@/lib/international-tax";
 import { trackCategoryToggled, trackRepsModalOpened } from "@/lib/analytics";
 import InfoTooltip from "./InfoTooltip";
 
@@ -24,9 +27,10 @@ interface TaxReceiptProps {
   financeData?: Record<string, CampaignFinanceSummary | null>;
   compareCountry?: string | null;
   onCompareCountryChange?: (code: string | null) => void;
+  onZipSubmit?: (zip: string) => void;
 }
 
-export default function TaxReceipt({ taxEstimate, representatives, votes, onBack, financeData, compareCountry, onCompareCountryChange }: TaxReceiptProps) {
+export default function TaxReceipt({ taxEstimate, representatives, votes, onBack, financeData, compareCountry, onCompareCountryChange, onZipSubmit }: TaxReceiptProps) {
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
   const [showRepsModal, setShowRepsModal] = useState(false);
@@ -61,6 +65,43 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
   const isComparing = comparison !== null;
   const currentYear = taxEstimate.taxYear;
   const priorYear = SUPPORTED_TAX_YEARS.filter((y) => y < currentYear).at(-1) ?? null;
+
+  const [shareStatus, setShareStatus] = useState<"idle" | "copied">("idle");
+  const [secondaryTab, setSecondaryTab] = useState<TabId>("bills");
+
+  // International rate comparison for callout
+  const intlCallout = useMemo(() => {
+    const countries: { code: SupportedCountry; label: string }[] = [
+      { code: "GBR", label: "UK" },
+      { code: "DEU", label: "Germany" },
+      { code: "AUS", label: "Australia" },
+    ];
+    return countries.map(({ code, label }) => {
+      const est = estimateInternationalTax(taxEstimate.grossIncome, taxEstimate.filingStatus, code);
+      return { label, rate: est.effectiveRate };
+    });
+  }, [taxEstimate.grossIncome, taxEstimate.filingStatus]);
+
+  const handleShare = useCallback(async () => {
+    const top3 = spending.slice(0, 3);
+    const breakdown = top3
+      .map((s) => `${s.category.icon} ${s.category.name} (${s.percentage.toFixed(1)}%)`)
+      .join(", ");
+    const text = `Where do my federal tax dollars go?\n\n${breakdown}, and more.\n\nSee yours at`;
+    const url = typeof window !== "undefined" ? window.location.origin : "https://commoncents.app";
+
+    if (typeof navigator !== "undefined" && navigator.share) {
+      try {
+        await navigator.share({ title: "Common Cents — Your Federal Tax Receipt", text, url });
+      } catch {
+        // User cancelled share — ignore
+      }
+    } else {
+      await navigator.clipboard.writeText(`${text} ${url}`);
+      setShareStatus("copied");
+      setTimeout(() => setShareStatus("idle"), 2000);
+    }
+  }, [spending]);
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-8">
@@ -102,7 +143,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
         <p className="text-[10px] text-slate-500 uppercase tracking-[1.5px]">
           Fiscal Year {currentYear} · {taxEstimate.filingStatus === "single" ? "Single Filer" : taxEstimate.filingStatus === "married" ? "Married Filing Jointly" : "Head of Household"}
         </p>
-        <p className="text-xs text-slate-400 max-w-lg mx-auto font-serif italic">
+        <p className="text-xs text-slate-400 max-w-lg mx-auto italic">
           This is an estimate based on standard deduction and FY {currentYear} tax brackets.
           Your actual taxes may differ based on deductions, credits, and other factors.
         </p>
@@ -182,7 +223,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
       </motion.div>
 
       {/* Chart + Receipt layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div id="section-receipt" className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Donut chart */}
         <div className="flex items-center justify-center">
           <SpendingChart
@@ -200,15 +241,26 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
           className="bg-white/[0.03] backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden"
         >
           {/* Receipt header */}
-          <div className="px-4 py-3 border-b-2 border-white/10">
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-slate-300 uppercase tracking-wider font-serif">
-                Spending Breakdown
-              </h3>
-              <span className="text-sm font-bold text-white font-amount">
-                {formatCurrency(taxEstimate.totalFederalTax)}
-              </span>
-            </div>
+          <div className="px-4 py-3 border-b-2 border-white/10 flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-slate-300 uppercase tracking-wider">
+              Spending Breakdown
+            </h3>
+            <button
+              onClick={handleShare}
+              className="text-slate-400 hover:text-white transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-lg p-1"
+              aria-label="Share the breakdown"
+              title={shareStatus === "copied" ? "Copied!" : "Share the breakdown"}
+            >
+              {shareStatus === "copied" ? (
+                <svg className="w-3.5 h-3.5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              ) : (
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                </svg>
+              )}
+            </button>
           </div>
 
           {/* Receipt lines */}
@@ -241,22 +293,52 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
             </div>
           </div>
 
-          {/* Contact reps button — inside receipt card */}
-          {representatives && representatives.length > 0 && (
-            <div className="px-4 py-3 border-t border-white/8">
-              <button
-                onClick={() => { trackRepsModalOpened(); setShowRepsModal(true); }}
-                className="w-full py-2.5 rounded-xl bg-indigo-500 text-white shadow-lg shadow-indigo-500/25 hover:bg-indigo-400 transition-colors font-medium cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              >
-                See How Your Reps Voted
-              </button>
-            </div>
-          )}
+          {/* Contact reps button — always visible */}
+          <div className="px-4 py-3 border-t border-white/8">
+            <button
+              onClick={() => { trackRepsModalOpened(); setShowRepsModal(true); }}
+              className="w-full py-2.5 rounded-xl bg-indigo-500 text-white shadow-lg shadow-indigo-500/25 hover:bg-indigo-400 transition-colors font-medium cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            >
+              See How Your Reps Voted
+            </button>
+          </div>
         </motion.div>
       </div>
 
+      {/* International rate callout */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.4 }}
+        className="flex items-center justify-center gap-x-2 gap-y-1 flex-wrap text-xs text-slate-400"
+      >
+        <span>Your effective rate: <span className="text-white font-medium">{formatPercent(taxEstimate.effectiveRate)}</span></span>
+        <span aria-hidden="true" className="leading-none">·</span>
+        {intlCallout.map((c, i) => (
+          <span key={c.label} className="inline-flex items-center gap-2">
+            <span>{c.label}: <span className="text-white font-medium">{formatPercent(c.rate)}</span></span>
+            {i < intlCallout.length - 1 && <span aria-hidden="true" className="leading-none">·</span>}
+          </span>
+        ))}
+        <button
+          onClick={() => {
+            setSecondaryTab("compare");
+            const tabsEl = document.getElementById("secondary-tabs");
+            if (tabsEl) tabsEl.scrollIntoView({ behavior: "smooth" });
+          }}
+          className="text-indigo-400 hover:text-indigo-300 transition-colors cursor-pointer focus:outline-none"
+        >
+          Compare more →
+        </button>
+      </motion.div>
+
+      {/* Spending trends — above tabs for visibility */}
+      <div id="section-trends" className="mt-8">
+        <SpendingTrends />
+      </div>
+
       {/* Secondary content tabs — Pending Bills, Recent Spending, Global Comparison */}
-      <div className="mt-10">
+      <div id="secondary-tabs" className="mt-6">
         <SecondaryTabs
           activeCategoryId={activeCategoryId}
           activeCategoryName={
@@ -271,39 +353,27 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
           filingStatus={taxEstimate.filingStatus}
           compareCountry={compareCountry ?? null}
           onCompareCountryChange={onCompareCountryChange ?? (() => {})}
+          activeTab={secondaryTab}
+          onTabChange={setSecondaryTab}
         />
       </div>
 
-      {/* Nudge to add ZIP if not provided */}
-      {!representatives && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
-          className="text-center p-4 rounded-xl bg-indigo-500/10 border border-indigo-500/20"
-        >
-          <p className="text-sm text-slate-300">
-            Want to see how your representatives voted on these spending decisions?
-          </p>
-          <button
-            onClick={onBack}
-            className="mt-2 text-sm text-indigo-400 hover:text-indigo-300 font-medium transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
-          >
-            ← Go back and add your ZIP code
-          </button>
-        </motion.div>
-      )}
+      {/* Sticky jump-to nav (mobile only) */}
+      <StickyNav
+        activeSecondaryTab={secondaryTab}
+        onTabChange={setSecondaryTab}
+        hidden={showRepsModal}
+      />
 
       {/* Representatives modal */}
-      {representatives && (
-        <RepresentativesModal
-          isOpen={showRepsModal}
-          onClose={() => setShowRepsModal(false)}
-          representatives={representatives}
-          votes={votes}
-          financeData={financeData}
-        />
-      )}
+      <RepresentativesModal
+        isOpen={showRepsModal}
+        onClose={() => setShowRepsModal(false)}
+        representatives={representatives ?? []}
+        votes={votes}
+        financeData={financeData}
+        onZipSubmit={onZipSubmit}
+      />
     </div>
   );
 }
