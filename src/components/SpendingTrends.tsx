@@ -20,7 +20,7 @@ function formatCompact(n: number): string {
 
 function formatMonth(dateStr: string): string {
   const d = new Date(dateStr + "T00:00:00");
-  return d.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+  return d.toLocaleDateString("en-US", { month: "long", year: "numeric" });
 }
 
 export default function SpendingTrends() {
