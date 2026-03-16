@@ -52,7 +52,7 @@ export default function StickyNav({ activeSecondaryTab, onTabChange, hidden }: S
         // Hide near top of page (before receipt card)
         const receiptEl = document.getElementById("section-receipt");
         const receiptBottom = receiptEl
-          ? receiptEl.getBoundingClientRect().bottom + currentY
+          ? receiptEl.offsetTop + receiptEl.offsetHeight
           : 400;
 
         if (currentY < receiptBottom - 200) {
