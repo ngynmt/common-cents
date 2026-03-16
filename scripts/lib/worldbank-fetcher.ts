@@ -57,6 +57,11 @@ export interface WorldBankIndicatorResult {
 const WB_BASE_URL = "https://api.worldbank.org/v2";
 const REQUEST_DELAY_MS = 300;
 
+/** World Bank API returns ISO-2 codes; the rest of the codebase uses ISO-3. */
+const ISO2_TO_ISO3: Record<string, string> = {
+  US: "USA", GB: "GBR", DE: "DEU", AU: "AUS", JP: "JPN", KR: "KOR", FR: "FRA",
+};
+
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -98,7 +103,8 @@ export async function fetchIndicator(
   );
 
   for (const entry of sorted) {
-    const countryCode = entry.country.id;
+    const rawCode = entry.country.id;
+    const countryCode = ISO2_TO_ISO3[rawCode] ?? rawCode;
     if (entry.value == null) continue;
     if (byCountry.has(countryCode)) continue; // already have a more recent value
 

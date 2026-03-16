@@ -1,7 +1,786 @@
 {
-  "lastUpdated": "",
-  "source": "",
-  "primaryYear": 0,
-  "countries": {},
-  "callouts": {}
+  "lastUpdated": "2026-03-16",
+  "source": "World Bank Open Data + Claude editorial",
+  "primaryYear": 2023,
+  "countries": {
+    "AUS": {
+      "name": "Australia",
+      "indicators": {
+        "life_expectancy": {
+          "value": 83.0512195121951,
+          "year": 2023,
+          "unit": "years"
+        },
+        "infant_mortality": {
+          "value": 3.1,
+          "year": 2023,
+          "unit": "per 1,000 live births"
+        },
+        "out_of_pocket_health": {
+          "value": 15.84897614,
+          "year": 2023,
+          "unit": "% of health spending"
+        },
+        "education_spending_gdp": {
+          "value": 5.05916023254395,
+          "year": 2022,
+          "unit": "% of GDP"
+        },
+        "tertiary_enrollment": {
+          "value": 104.64835357666,
+          "year": 2023,
+          "unit": "%"
+        },
+        "gini_index": {
+          "value": 33.8,
+          "year": 2020,
+          "unit": "index (0=equal, 100=unequal)"
+        },
+        "income_share_bottom_20": {
+          "value": 7.3,
+          "year": 2020,
+          "unit": "%"
+        },
+        "broadband_per_100": {
+          "value": 36.6047,
+          "year": 2023,
+          "unit": "per 100 people"
+        },
+        "military_spending_gdp": {
+          "value": 1.86157133456052,
+          "year": 2023,
+          "unit": "% of GDP"
+        },
+        "rd_spending_gdp": {
+          "value": 1.85509,
+          "year": 2021,
+          "unit": "% of GDP"
+        }
+      },
+      "healthcareSystem": {
+        "type": "universal (Medicare)",
+        "covered": "100%"
+      }
+    },
+    "DEU": {
+      "name": "Germany",
+      "indicators": {
+        "life_expectancy": {
+          "value": 80.5414634146342,
+          "year": 2023,
+          "unit": "years"
+        },
+        "infant_mortality": {
+          "value": 3.1,
+          "year": 2023,
+          "unit": "per 1,000 live births"
+        },
+        "out_of_pocket_health": {
+          "value": 11.05290699,
+          "year": 2023,
+          "unit": "% of health spending"
+        },
+        "education_spending_gdp": {
+          "value": 5.23916006088257,
+          "year": 2022,
+          "unit": "% of GDP"
+        },
+        "tertiary_enrollment": {
+          "value": 78.5947494506836,
+          "year": 2023,
+          "unit": "%"
+        },
+        "gini_index": {
+          "value": 32.4,
+          "year": 2020,
+          "unit": "index (0=equal, 100=unequal)"
+        },
+        "poverty_rate": {
+          "value": 14.8,
+          "year": 2021,
+          "unit": "%"
+        },
+        "income_share_bottom_20": {
+          "value": 7.8,
+          "year": 2020,
+          "unit": "%"
+        },
+        "broadband_per_100": {
+          "value": 45.3805,
+          "year": 2023,
+          "unit": "per 100 people"
+        },
+        "military_spending_gdp": {
+          "value": 1.48796332620564,
+          "year": 2023,
+          "unit": "% of GDP"
+        },
+        "rd_spending_gdp": {
+          "value": 3.13236,
+          "year": 2022,
+          "unit": "% of GDP"
+        }
+      },
+      "healthcareSystem": {
+        "type": "universal (multi-payer)",
+        "covered": "100%"
+      }
+    },
+    "FRA": {
+      "name": "France",
+      "indicators": {
+        "life_expectancy": {
+          "value": 82.9292682926829,
+          "year": 2023,
+          "unit": "years"
+        },
+        "infant_mortality": {
+          "value": 3.4,
+          "year": 2023,
+          "unit": "per 1,000 live births"
+        },
+        "out_of_pocket_health": {
+          "value": 9.26032639,
+          "year": 2023,
+          "unit": "% of health spending"
+        },
+        "education_spending_gdp": {
+          "value": 5.32435989379883,
+          "year": 2022,
+          "unit": "% of GDP"
+        },
+        "tertiary_enrollment": {
+          "value": 70.4536437988281,
+          "year": 2023,
+          "unit": "%"
+        },
+        "gini_index": {
+          "value": 31.8,
+          "year": 2023,
+          "unit": "index (0=equal, 100=unequal)"
+        },
+        "poverty_rate": {
+          "value": 15.6,
+          "year": 2021,
+          "unit": "%"
+        },
+        "income_share_bottom_20": {
+          "value": 7.7,
+          "year": 2023,
+          "unit": "%"
+        },
+        "broadband_per_100": {
+          "value": 48.6688,
+          "year": 2023,
+          "unit": "per 100 people"
+        },
+        "military_spending_gdp": {
+          "value": 1.95099683800051,
+          "year": 2023,
+          "unit": "% of GDP"
+        },
+        "rd_spending_gdp": {
+          "value": 2.23312,
+          "year": 2022,
+          "unit": "% of GDP"
+        }
+      },
+      "healthcareSystem": {
+        "type": "universal (statutory)",
+        "covered": "100%"
+      }
+    },
+    "GBR": {
+      "name": "United Kingdom",
+      "indicators": {
+        "life_expectancy": {
+          "value": 81.2380975609756,
+          "year": 2023,
+          "unit": "years"
+        },
+        "infant_mortality": {
+          "value": 4,
+          "year": 2023,
+          "unit": "per 1,000 live births"
+        },
+        "out_of_pocket_health": {
+          "value": 14.6293354,
+          "year": 2023,
+          "unit": "% of health spending"
+        },
+        "education_spending_gdp": {
+          "value": 5.90682983398438,
+          "year": 2021,
+          "unit": "% of GDP"
+        },
+        "tertiary_enrollment": {
+          "value": 80.4987716674805,
+          "year": 2023,
+          "unit": "%"
+        },
+        "gini_index": {
+          "value": 32.4,
+          "year": 2021,
+          "unit": "index (0=equal, 100=unequal)"
+        },
+        "poverty_rate": {
+          "value": 18.6,
+          "year": 2017,
+          "unit": "%"
+        },
+        "income_share_bottom_20": {
+          "value": 7.7,
+          "year": 2021,
+          "unit": "%"
+        },
+        "broadband_per_100": {
+          "value": 41.4368,
+          "year": 2023,
+          "unit": "per 100 people"
+        },
+        "military_spending_gdp": {
+          "value": 2.23063973904322,
+          "year": 2023,
+          "unit": "% of GDP"
+        },
+        "rd_spending_gdp": {
+          "value": 2.89711,
+          "year": 2021,
+          "unit": "% of GDP"
+        }
+      },
+      "healthcareSystem": {
+        "type": "universal (NHS)",
+        "covered": "100%"
+      }
+    },
+    "JPN": {
+      "name": "Japan",
+      "indicators": {
+        "life_expectancy": {
+          "value": 84.0412195121951,
+          "year": 2023,
+          "unit": "years"
+        },
+        "infant_mortality": {
+          "value": 1.8,
+          "year": 2023,
+          "unit": "per 1,000 live births"
+        },
+        "out_of_pocket_health": {
+          "value": 12.23568153,
+          "year": 2023,
+          "unit": "% of health spending"
+        },
+        "education_spending_gdp": {
+          "value": 3.33563995361328,
+          "year": 2021,
+          "unit": "% of GDP"
+        },
+        "tertiary_enrollment": {
+          "value": 64.8912200927734,
+          "year": 2023,
+          "unit": "%"
+        },
+        "gini_index": {
+          "value": 32.3,
+          "year": 2020,
+          "unit": "index (0=equal, 100=unequal)"
+        },
+        "income_share_bottom_20": {
+          "value": 6.9,
+          "year": 2020,
+          "unit": "%"
+        },
+        "broadband_per_100": {
+          "value": 38.6312,
+          "year": 2023,
+          "unit": "per 100 people"
+        },
+        "military_spending_gdp": {
+          "value": 1.13954641785041,
+          "year": 2023,
+          "unit": "% of GDP"
+        },
+        "rd_spending_gdp": {
+          "value": 3.40537,
+          "year": 2022,
+          "unit": "% of GDP"
+        }
+      },
+      "healthcareSystem": {
+        "type": "universal (NHI)",
+        "covered": "100%"
+      }
+    },
+    "KOR": {
+      "name": "South Korea",
+      "indicators": {
+        "life_expectancy": {
+          "value": 83.4292682926829,
+          "year": 2023,
+          "unit": "years"
+        },
+        "infant_mortality": {
+          "value": 2.3,
+          "year": 2023,
+          "unit": "per 1,000 live births"
+        },
+        "out_of_pocket_health": {
+          "value": 31.75381851,
+          "year": 2023,
+          "unit": "% of health spending"
+        },
+        "education_spending_gdp": {
+          "value": 5.81446981430054,
+          "year": 2022,
+          "unit": "% of GDP"
+        },
+        "tertiary_enrollment": {
+          "value": 106.709167480469,
+          "year": 2023,
+          "unit": "%"
+        },
+        "gini_index": {
+          "value": 32.9,
+          "year": 2021,
+          "unit": "index (0=equal, 100=unequal)"
+        },
+        "income_share_bottom_20": {
+          "value": 7.5,
+          "year": 2021,
+          "unit": "%"
+        },
+        "broadband_per_100": {
+          "value": 46.5676,
+          "year": 2023,
+          "unit": "per 100 people"
+        },
+        "military_spending_gdp": {
+          "value": 2.59925771052554,
+          "year": 2023,
+          "unit": "% of GDP"
+        },
+        "rd_spending_gdp": {
+          "value": 5.21081,
+          "year": 2022,
+          "unit": "% of GDP"
+        }
+      },
+      "healthcareSystem": {
+        "type": "universal (NHI)",
+        "covered": "100%"
+      }
+    },
+    "USA": {
+      "name": "United States",
+      "indicators": {
+        "life_expectancy": {
+          "value": 78.3853658536585,
+          "year": 2023,
+          "unit": "years"
+        },
+        "infant_mortality": {
+          "value": 5.5,
+          "year": 2023,
+          "unit": "per 1,000 live births"
+        },
+        "out_of_pocket_health": {
+          "value": 10.92723846,
+          "year": 2023,
+          "unit": "% of health spending"
+        },
+        "education_spending_gdp": {
+          "value": 5.42038011550903,
+          "year": 2021,
+          "unit": "% of GDP"
+        },
+        "tertiary_enrollment": {
+          "value": 79.361930847168,
+          "year": 2022,
+          "unit": "%"
+        },
+        "gini_index": {
+          "value": 41.8,
+          "year": 2023,
+          "unit": "index (0=equal, 100=unequal)"
+        },
+        "income_share_bottom_20": {
+          "value": 5.1,
+          "year": 2023,
+          "unit": "%"
+        },
+        "broadband_per_100": {
+          "value": 38.1475,
+          "year": 2023,
+          "unit": "per 100 people"
+        },
+        "military_spending_gdp": {
+          "value": 3.304441637598,
+          "year": 2023,
+          "unit": "% of GDP"
+        },
+        "rd_spending_gdp": {
+          "value": 3.58623,
+          "year": 2022,
+          "unit": "% of GDP"
+        }
+      },
+      "healthcareSystem": {
+        "type": "mixed private/public",
+        "covered": "~92% (27M uninsured)"
+      }
+    }
+  },
+  "callouts": {
+    "healthcare": {
+      "GBR": {
+        "text": "**Healthcare Spending vs. Outcomes**\n\nThe United Kingdom spends 18.6% of its budget on healthcare and achieves a life expectancy of 81.2 years with 4 infant deaths per 1,000 live births, while the US spends 25.9% of its budget and achieves 78.4 years life expectancy with 5.5 infant deaths per 1,000 live births. The UK provides universal coverage to 67 million people; the US leaves 27 million uninsured while spending $1.39 for every $1.00 the UK spends per capita on healthcare.",
+        "indicatorValuesAtEnrichment": {
+          "life_expectancy_usa": 78.3853658536585,
+          "life_expectancy_country": 81.2380975609756,
+          "infant_mortality_usa": 5.5,
+          "infant_mortality_country": 4,
+          "out_of_pocket_health_usa": 10.92723846,
+          "out_of_pocket_health_country": 14.6293354
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "DEU": {
+        "text": "Germany spends 15.6% of its budget on healthcare and achieves a life expectancy of 80.5 years with 3.1 infant deaths per 1,000 births, while the US spends 25.9% of its budget and achieves 78.4 years life expectancy with 5.5 infant deaths per 1,000 births.",
+        "indicatorValuesAtEnrichment": {
+          "life_expectancy_usa": 78.3853658536585,
+          "life_expectancy_country": 80.5414634146342,
+          "infant_mortality_usa": 5.5,
+          "infant_mortality_country": 3.1,
+          "out_of_pocket_health_usa": 10.92723846,
+          "out_of_pocket_health_country": 11.05290699
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "AUS": {
+        "text": "Australia achieves a life expectancy of 83.1 years and infant mortality of 3.1 per 1,000 births while spending 19.0% of its budget on healthcare, compared to the US spending 25.9% of its budget to achieve 78.4 years life expectancy and 5.5 per 1,000 infant mortality.",
+        "indicatorValuesAtEnrichment": {
+          "life_expectancy_usa": 78.3853658536585,
+          "life_expectancy_country": 83.0512195121951,
+          "infant_mortality_usa": 5.5,
+          "infant_mortality_country": 3.1,
+          "out_of_pocket_health_usa": 10.92723846,
+          "out_of_pocket_health_country": 15.84897614
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "JPN": {
+        "text": "Japan achieves a life expectancy of 84.0 years and an infant mortality rate of 1.8 per 1,000 live births while spending 20.1% of its budget on healthcare, compared to the US spending 25.9% of its budget to achieve 78.4 years life expectancy and 5.5 per 1,000 infant mortality.",
+        "indicatorValuesAtEnrichment": {
+          "life_expectancy_usa": 78.3853658536585,
+          "life_expectancy_country": 84.0412195121951,
+          "infant_mortality_usa": 5.5,
+          "infant_mortality_country": 1.8,
+          "out_of_pocket_health_usa": 10.92723846,
+          "out_of_pocket_health_country": 12.23568153
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "KOR": {
+        "text": "South Korea spends 14.8% of its budget on healthcare and achieves a life expectancy of 83.4 years with 2.3 infant deaths per 1,000 births, while the US spends 25.9% of its budget and achieves 78.4 years life expectancy with 5.5 infant deaths per 1,000 births.",
+        "indicatorValuesAtEnrichment": {
+          "life_expectancy_usa": 78.3853658536585,
+          "life_expectancy_country": 83.4292682926829,
+          "infant_mortality_usa": 5.5,
+          "infant_mortality_country": 2.3,
+          "out_of_pocket_health_usa": 10.92723846,
+          "out_of_pocket_health_country": 31.75381851
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "FRA": {
+        "text": "**France spends 10.4 percentage points less of its budget on healthcare while achieving a life expectancy 4.5 years higher and infant mortality 38% lower than the US.** The US dedicates 25.9% of its budget to healthcare with 27 million uninsured, compared to France's 15.5% with universal coverage.",
+        "indicatorValuesAtEnrichment": {
+          "life_expectancy_usa": 78.3853658536585,
+          "life_expectancy_country": 82.9292682926829,
+          "infant_mortality_usa": 5.5,
+          "infant_mortality_country": 3.4,
+          "out_of_pocket_health_usa": 10.92723846,
+          "out_of_pocket_health_country": 9.26032639
+        },
+        "enrichedAt": "2026-03-16"
+      }
+    },
+    "education": {
+      "GBR": {
+        "text": "The United Kingdom allocates 11.5% of its budget to education compared to the US at 3.8%, yet both countries achieve nearly identical tertiary enrollment rates of approximately 80%.",
+        "indicatorValuesAtEnrichment": {
+          "education_spending_gdp_usa": 5.42038011550903,
+          "education_spending_gdp_country": 5.90682983398438,
+          "tertiary_enrollment_usa": 79.361930847168,
+          "tertiary_enrollment_country": 80.4987716674805
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "DEU": {
+        "text": "# Education Spending Callout\n\nGermany allocates 11.3% of its budget to education compared to the US at 3.8%, yet both countries spend nearly identical shares of GDP on education (Germany 5.24%, US 5.42%) and achieve comparable tertiary enrollment rates (Germany 78.6%, US 79.4%).",
+        "indicatorValuesAtEnrichment": {
+          "education_spending_gdp_usa": 5.42038011550903,
+          "education_spending_gdp_country": 5.23916006088257,
+          "tertiary_enrollment_usa": 79.361930847168,
+          "tertiary_enrollment_country": 78.5947494506836
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "AUS": {
+        "text": "Australia allocates 16.4% of its budget to education compared to the US at 3.8%, yet spends a slightly lower percentage of GDP on education (5.1% vs 5.4%). Australia achieves 104.6% tertiary enrollment compared to the US at 79.4%, indicating higher participation in higher education despite proportionally similar GDP investment.",
+        "indicatorValuesAtEnrichment": {
+          "education_spending_gdp_usa": 5.42038011550903,
+          "education_spending_gdp_country": 5.05916023254395,
+          "tertiary_enrollment_usa": 79.361930847168,
+          "tertiary_enrollment_country": 104.64835357666
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "JPN": {
+        "text": "# Education Spending Callout\n\nJapan allocates 9.0% of its budget to education compared to the US at 3.8%, yet spends 3.3% of GDP on education versus the US's 5.4%—achieving comparable tertiary enrollment rates (64.9% vs 79.4%) with significantly lower budget prioritization.",
+        "indicatorValuesAtEnrichment": {
+          "education_spending_gdp_usa": 5.42038011550903,
+          "education_spending_gdp_country": 3.33563995361328,
+          "tertiary_enrollment_usa": 79.361930847168,
+          "tertiary_enrollment_country": 64.8912200927734
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "KOR": {
+        "text": "# Education Spending Comparison\n\nSouth Korea allocates 16.9% of its budget to education and achieves 106.7% tertiary enrollment, while the US dedicates 3.8% of its budget yet reaches 79.4% tertiary enrollment despite spending a similar share of GDP (5.8% vs. 5.4%).",
+        "indicatorValuesAtEnrichment": {
+          "education_spending_gdp_usa": 5.42038011550903,
+          "education_spending_gdp_country": 5.81446981430054,
+          "tertiary_enrollment_usa": 79.361930847168,
+          "tertiary_enrollment_country": 106.709167480469
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "FRA": {
+        "text": "France allocates 11.4% of its budget to education while the US allocates 3.8%, yet both countries spend nearly identical shares of GDP on education (France 5.3%, US 5.4%). The US achieves higher tertiary enrollment at 79.4% compared to France's 70.5%, despite directing a significantly smaller portion of its budget toward education.",
+        "indicatorValuesAtEnrichment": {
+          "education_spending_gdp_usa": 5.42038011550903,
+          "education_spending_gdp_country": 5.32435989379883,
+          "tertiary_enrollment_usa": 79.361930847168,
+          "tertiary_enrollment_country": 70.4536437988281
+        },
+        "enrichedAt": "2026-03-16"
+      }
+    },
+    "income-security": {
+      "GBR": {
+        "text": "# Income Security Spending\n\nThe United Kingdom spends 13.1% of its budget on income security and achieves a Gini coefficient of 32.4, while the US spends 9.4% and has a Gini coefficient of 41.8—a 9.3-point gap in income inequality. The UK's bottom 20% earn 7.7% of national income compared to 5.1% in the US.",
+        "indicatorValuesAtEnrichment": {
+          "gini_index_usa": 41.8,
+          "gini_index_country": 32.4,
+          "income_share_bottom_20_usa": 5.1,
+          "income_share_bottom_20_country": 7.7
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "DEU": {
+        "text": "# Income Security Spending\n\nGermany spends 16.2% of its budget on income security and achieves a Gini coefficient of 32.4, while the US spends 9.4% and has a Gini coefficient of 41.8. The bottom 20% of earners in Germany capture 7.8% of national income compared to 5.1% in the US.",
+        "indicatorValuesAtEnrichment": {
+          "gini_index_usa": 41.8,
+          "gini_index_country": 32.4,
+          "income_share_bottom_20_usa": 5.1,
+          "income_share_bottom_20_country": 7.8
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "AUS": {
+        "text": "# Income Security Spending\n\nAustralia spends 10.6% of its budget on income security compared to the US at 9.4%, yet achieves a Gini coefficient of 33.8 versus the US at 41.8, with the bottom 20% earning 7.3% of income in Australia versus 5.1% in the US.",
+        "indicatorValuesAtEnrichment": {
+          "gini_index_usa": 41.8,
+          "gini_index_country": 33.8,
+          "income_share_bottom_20_usa": 5.1,
+          "income_share_bottom_20_country": 7.3
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "JPN": {
+        "text": "# Income Security Spending\n\nJapan spends 16.0% of its budget on income security and achieves a Gini coefficient of 32.3, while the US spends 9.4% and has a Gini coefficient of 41.8. The bottom 20% of earners in Japan capture 6.9% of national income compared to 5.1% in the US.",
+        "indicatorValuesAtEnrichment": {
+          "gini_index_usa": 41.8,
+          "gini_index_country": 32.3,
+          "income_share_bottom_20_usa": 5.1,
+          "income_share_bottom_20_country": 6.9
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "KOR": {
+        "text": "# Income Security Spending\n\nSouth Korea spends 10.5% of its budget on income security and achieves a Gini index of 32.9, while the US spends 9.4% and has a Gini index of 41.8—meaning South Korea's bottom 20% earn 7.5% of national income compared to 5.1% in the US.",
+        "indicatorValuesAtEnrichment": {
+          "gini_index_usa": 41.8,
+          "gini_index_country": 32.9,
+          "income_share_bottom_20_usa": 5.1,
+          "income_share_bottom_20_country": 7.5
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "FRA": {
+        "text": "# Income Security Spending\n\nFrance allocates 16.4% of its budget to income security compared to the US at 9.4%, yet achieves a Gini coefficient of 31.8 versus the US at 41.8, with the bottom 20% earning 7.7% of income versus 5.1% in the US.",
+        "indicatorValuesAtEnrichment": {
+          "gini_index_usa": 41.8,
+          "gini_index_country": 31.8,
+          "income_share_bottom_20_usa": 5.1,
+          "income_share_bottom_20_country": 7.7
+        },
+        "enrichedAt": "2026-03-16"
+      }
+    },
+    "social-security": {},
+    "infrastructure": {
+      "GBR": {
+        "text": "The United Kingdom allocates 10.8% of its budget to infrastructure while the US allocates 2.5%, yet the US achieves 38.15 broadband subscriptions per 100 people compared to the UK's 41.44 per 100 people.",
+        "indicatorValuesAtEnrichment": {
+          "broadband_per_100_usa": 38.1475,
+          "broadband_per_100_country": 41.4368
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "DEU": {
+        "text": "Germany allocates 11.2% of its budget to infrastructure and achieves 45.38 broadband subscriptions per 100 people, compared to the US at 2.5% of budget spending and 38.15 subscriptions per 100 people.",
+        "indicatorValuesAtEnrichment": {
+          "broadband_per_100_usa": 38.1475,
+          "broadband_per_100_country": 45.3805
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "AUS": {
+        "text": "Australia allocates 12.7% of its budget to infrastructure compared to the US at 2.5%, yet both countries achieve similar broadband penetration rates of approximately 37 per 100 people.",
+        "indicatorValuesAtEnrichment": {
+          "broadband_per_100_usa": 38.1475,
+          "broadband_per_100_country": 36.6047
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "JPN": {
+        "text": "Japan allocates 11.7% of its budget to infrastructure compared to the US at 2.5%, yet both countries achieve nearly identical broadband penetration rates of approximately 38.6 and 38.1 per 100 people respectively.",
+        "indicatorValuesAtEnrichment": {
+          "broadband_per_100_usa": 38.1475,
+          "broadband_per_100_country": 38.6312
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "KOR": {
+        "text": "# Infrastructure Spending Callout\n\nSouth Korea allocates 14.6% of its budget to infrastructure and achieves 46.6 broadband subscriptions per 100 people, compared to the US spending 2.5% of its budget while reaching 38.1 subscriptions per 100 people.",
+        "indicatorValuesAtEnrichment": {
+          "broadband_per_100_usa": 38.1475,
+          "broadband_per_100_country": 46.5676
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "FRA": {
+        "text": "France allocates 11.6% of its budget to infrastructure and achieves 48.7 broadband subscriptions per 100 people, compared to the US spending 2.5% of its budget while achieving 38.1 subscriptions per 100 people.",
+        "indicatorValuesAtEnrichment": {
+          "broadband_per_100_usa": 38.1475,
+          "broadband_per_100_country": 48.6688
+        },
+        "enrichedAt": "2026-03-16"
+      }
+    },
+    "defense": {
+      "GBR": {
+        "text": "# Defense Spending\n\nThe United Kingdom spends 2.23% of GDP on defense while maintaining NATO's second-largest military, compared to the US spending 3.30% of GDP.",
+        "indicatorValuesAtEnrichment": {
+          "military_spending_gdp_usa": 3.304441637598,
+          "military_spending_gdp_country": 2.23063973904322
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "DEU": {
+        "text": "# Defense Spending\n\nGermany spends 1.49% of GDP on defense while achieving NATO's 2% capability threshold, compared to the US spending 3.30% of GDP. The US defense budget is approximately 2.2 times larger as a share of its economy than Germany's.",
+        "indicatorValuesAtEnrichment": {
+          "military_spending_gdp_usa": 3.304441637598,
+          "military_spending_gdp_country": 1.48796332620564
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "AUS": {
+        "text": "# Defense Spending\n\nAustralia spends 5.8% of its budget on defense compared to the US at 12.8%, yet maintains a military that represents 1.86% of GDP versus the US at 3.30% of GDP.",
+        "indicatorValuesAtEnrichment": {
+          "military_spending_gdp_usa": 3.304441637598,
+          "military_spending_gdp_country": 1.86157133456052
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "JPN": {
+        "text": "# Defense Spending\n\nJapan spends 2.8% of its federal budget on defense while achieving a military capability that ranks among the world's top five, compared to the US spending 12.8% of its budget. Japan's defense spending represents 1.14% of GDP versus the US at 3.30% of GDP.",
+        "indicatorValuesAtEnrichment": {
+          "military_spending_gdp_usa": 3.304441637598,
+          "military_spending_gdp_country": 1.13954641785041
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "KOR": {
+        "text": "South Korea spends 2.6% of GDP on defense while maintaining the world's sixth-largest military and a technologically advanced force; the US spends 3.3% of GDP on defense.",
+        "indicatorValuesAtEnrichment": {
+          "military_spending_gdp_usa": 3.304441637598,
+          "military_spending_gdp_country": 2.59925771052554
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "FRA": {
+        "text": "# Defense Spending\n\nFrance spends 1.95% of GDP on defense while the US spends 3.30% of GDP—yet both are NATO members meeting security commitments with France allocating 3.2% of its budget versus the US at 12.8%.",
+        "indicatorValuesAtEnrichment": {
+          "military_spending_gdp_usa": 3.304441637598,
+          "military_spending_gdp_country": 1.95099683800051
+        },
+        "enrichedAt": "2026-03-16"
+      }
+    },
+    "science": {
+      "GBR": {
+        "text": "# Science & R&D Spending\n\nThe United Kingdom allocates 1.5% of its budget to science and R&D while spending 2.9% of GDP on research, compared to the US budget allocation of 1.1% with research spending at 3.6% of GDP.\n\n---\n\n*Note: This callout presents the data as provided, though it's worth noting these metrics measure different things (budget percentage vs. GDP percentage), which can make direct comparison complex. If you'd like a callout that focuses on a single comparable metric, I'd recommend clarifying which indicator should be the primary comparison point.*",
+        "indicatorValuesAtEnrichment": {
+          "rd_spending_gdp_usa": 3.58623,
+          "rd_spending_gdp_country": 2.89711
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "DEU": {
+        "text": "# Science & R&D Spending\n\nGermany allocates 1.2% of its budget to science and R&D while spending 3.13% of GDP on research, compared to the US budget allocation of 1.1% despite higher R&D spending at 3.59% of GDP.",
+        "indicatorValuesAtEnrichment": {
+          "rd_spending_gdp_usa": 3.58623,
+          "rd_spending_gdp_country": 3.13236
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "AUS": {
+        "text": "# Science & R&D Spending\n\nAustralia allocates 2.3% of its budget to science and R&D compared to the US at 1.1%, yet the US invests 3.59% of GDP toward R&D while Australia invests 1.86% of GDP. The US achieves higher R&D intensity relative to its economy despite a lower budget allocation percentage.",
+        "indicatorValuesAtEnrichment": {
+          "rd_spending_gdp_usa": 3.58623,
+          "rd_spending_gdp_country": 1.85509
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "JPN": {
+        "text": "# Science & R&D Spending\n\nJapan allocates 2.8% of its budget to science and R&D compared to the US at 1.1%, yet both countries invest roughly equivalent shares of GDP (Japan 3.41%, US 3.59%), indicating the US achieves similar R&D intensity through different budget prioritization.",
+        "indicatorValuesAtEnrichment": {
+          "rd_spending_gdp_usa": 3.58623,
+          "rd_spending_gdp_country": 3.40537
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "KOR": {
+        "text": "# Science & R&D Spending\n\nSouth Korea invests 5.21% of GDP in R&D while spending 2.7% of its budget on science, compared to the US at 3.59% of GDP and 1.1% of budget allocation. South Korea's higher R&D intensity as a share of GDP has contributed to it ranking among the top three countries globally in patent filings per capita and semiconductor manufacturing capacity.",
+        "indicatorValuesAtEnrichment": {
+          "rd_spending_gdp_usa": 3.58623,
+          "rd_spending_gdp_country": 5.21081
+        },
+        "enrichedAt": "2026-03-16"
+      },
+      "FRA": {
+        "text": "France allocates 1.8% of its budget to science and R&D while spending 2.23% of GDP on research, compared to the US allocation of 1.1% of budget despite investing 3.59% of GDP in R&D.",
+        "indicatorValuesAtEnrichment": {
+          "rd_spending_gdp_usa": 3.58623,
+          "rd_spending_gdp_country": 2.23312
+        },
+        "enrichedAt": "2026-03-16"
+      }
+    }
+  }
 }

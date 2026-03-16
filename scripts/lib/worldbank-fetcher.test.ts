@@ -49,12 +49,12 @@ describe("fetchIndicator", () => {
     globalThis.fetch = originalFetch;
   });
 
-  it("returns the most recent non-null value per country", async () => {
+  it("returns the most recent non-null value per country (ISO-2 → ISO-3)", async () => {
     const body = makeWbResponse([
-      { countryId: "GBR", date: "2022", value: 81.0 },
-      { countryId: "GBR", date: "2021", value: 80.5 },
-      { countryId: "USA", date: "2022", value: null },
-      { countryId: "USA", date: "2021", value: 77.5 },
+      { countryId: "GB", date: "2022", value: 81.0 },
+      { countryId: "GB", date: "2021", value: 80.5 },
+      { countryId: "US", date: "2022", value: null },
+      { countryId: "US", date: "2021", value: 77.5 },
     ]);
     globalThis.fetch = mockFetchOk(body);
 
@@ -66,8 +66,8 @@ describe("fetchIndicator", () => {
 
   it("skips countries with all null values", async () => {
     const body = makeWbResponse([
-      { countryId: "GBR", date: "2022", value: null },
-      { countryId: "GBR", date: "2021", value: null },
+      { countryId: "GB", date: "2022", value: null },
+      { countryId: "GB", date: "2021", value: null },
     ]);
     globalThis.fetch = mockFetchOk(body);
 
@@ -108,9 +108,9 @@ describe("fetchIndicator", () => {
 
   it("picks the latest year when multiple non-null values exist", async () => {
     const body = makeWbResponse([
-      { countryId: "GBR", date: "2020", value: 79.0 },
-      { countryId: "GBR", date: "2023", value: 82.0 },
-      { countryId: "GBR", date: "2021", value: 80.0 },
+      { countryId: "GB", date: "2020", value: 79.0 },
+      { countryId: "GB", date: "2023", value: 82.0 },
+      { countryId: "GB", date: "2021", value: 80.0 },
     ]);
     globalThis.fetch = mockFetchOk(body);
 
@@ -137,7 +137,7 @@ describe("fetchAllIndicators", () => {
     globalThis.fetch = vi.fn().mockImplementation(() => {
       callCount++;
       const body = makeWbResponse([
-        { countryId: "GBR", date: "2022", value: 42.0 + callCount },
+        { countryId: "GB", date: "2022", value: 42.0 + callCount },
       ]);
       return Promise.resolve({
         ok: true,
@@ -149,9 +149,7 @@ describe("fetchAllIndicators", () => {
 
     expect(result.has("GBR")).toBe(true);
     const gbr = result.get("GBR")!;
-    // Should have an entry for each indicator
     expect(Object.keys(gbr).length).toBe(INDICATORS.length);
-    // Each entry should have value, year, unit
     for (const ind of INDICATORS) {
       expect(gbr[ind.key]).toBeDefined();
       expect(gbr[ind.key].unit).toBe(ind.unit);
@@ -166,7 +164,7 @@ describe("fetchAllIndicators", () => {
       // Only return data for the first indicator
       const entries =
         callCount === 1
-          ? [{ countryId: "GBR", date: "2022", value: 81.0 }]
+          ? [{ countryId: "GB", date: "2022", value: 81.0 }]
           : [];
       const body = makeWbResponse(entries);
       return Promise.resolve({
