@@ -12,10 +12,25 @@ export default function TaxForm({ onSubmit }: TaxFormProps) {
   const [income, setIncome] = useState("");
   const [filingStatus, setFilingStatus] = useState<FilingStatus>("single");
   const [zipCode, setZipCode] = useState("");
+  const [incomeError, setIncomeError] = useState("");
+  const [zipError, setZipError] = useState("");
 
   const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value.replace(/[^0-9]/g, "");
     setIncome(raw);
+    if (incomeError) setIncomeError("");
+  };
+
+  const handleIncomeBlur = () => {
+    if (!income || Number(income) <= 0) {
+      setIncomeError("Enter your annual income");
+    }
+  };
+
+  const handleZipBlur = () => {
+    if (zipCode.length > 0 && zipCode.length < 5) {
+      setZipError("Enter a valid 5-digit ZIP code");
+    }
   };
 
   const formattedIncome = income
@@ -55,10 +70,18 @@ export default function TaxForm({ onSubmit }: TaxFormProps) {
             inputMode="numeric"
             value={formattedIncome}
             onChange={handleIncomeChange}
+            onBlur={handleIncomeBlur}
             placeholder="75,000"
-            className="w-full pl-8 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white text-lg font-amount placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+            aria-invalid={!!incomeError}
+            aria-describedby={incomeError ? "income-error" : undefined}
+            className={`w-full pl-8 pr-4 py-3 bg-white/5 border rounded-xl text-white text-lg font-amount placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all ${
+              incomeError ? "border-red-400/50" : "border-white/10"
+            }`}
           />
         </div>
+        {incomeError && (
+          <p id="income-error" className="text-xs text-red-400 mt-1">{incomeError}</p>
+        )}
       </div>
 
       {/* Filing Status */}
@@ -100,11 +123,22 @@ export default function TaxForm({ onSubmit }: TaxFormProps) {
           type="text"
           inputMode="numeric"
           value={zipCode}
-          onChange={(e) => setZipCode(e.target.value.replace(/[^0-9]/g, "").slice(0, 5))}
+          onChange={(e) => {
+            setZipCode(e.target.value.replace(/[^0-9]/g, "").slice(0, 5));
+            if (zipError) setZipError("");
+          }}
+          onBlur={handleZipBlur}
           placeholder="5 digits"
           maxLength={5}
-          className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white text-lg font-amount placeholder:text-slate-600 placeholder:font-sans focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+          aria-invalid={!!zipError}
+          aria-describedby={zipError ? "zip-error" : undefined}
+          className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white text-lg font-amount placeholder:text-slate-600 placeholder:font-sans focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all ${
+            zipError ? "border-red-400/50" : "border-white/10"
+          }`}
         />
+        {zipError && (
+          <p id="zip-error" className="text-xs text-red-400 mt-1">{zipError}</p>
+        )}
       </div>
 
       {/* Submit */}
