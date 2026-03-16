@@ -271,7 +271,7 @@ export default function InternationalComparison({
                     </div>
                     {/* Cross-cutting insight */}
                     <p className="text-xs text-slate-400 mt-2 leading-relaxed italic">
-                      {ALL_COUNTRIES_INSIGHTS[0]}
+                      {ALL_COUNTRIES_INSIGHTS.join(" ")}
                     </p>
                   </div>
 
