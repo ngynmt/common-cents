@@ -15,6 +15,8 @@ import * as path from "path";
 import { fetchCofogData } from "./lib/oecd-fetcher";
 import { mapCofogToCategories } from "./lib/cofog-mapper";
 import { validateIntlData, type IntlCountryData } from "./lib/intl-validator";
+import { fetchAllIndicators } from "./lib/worldbank-fetcher";
+import type { InternationalOutcomes, CountryOutcomes } from "../src/data/international-outcomes";
 
 // ---------------------------------------------------------------------------
 // Country registry
@@ -29,8 +31,21 @@ const COUNTRIES: Record<string, string> = {
   FRA: "France",
 };
 
+const ALL_COUNTRY_CODES = ["USA", ...Object.keys(COUNTRIES)];
+
+const HEALTHCARE_SYSTEMS: Record<string, { type: string; covered: string }> = {
+  USA: { type: "mixed private/public", covered: "~92% (27M uninsured)" },
+  GBR: { type: "universal (NHS)", covered: "100%" },
+  DEU: { type: "universal (multi-payer)", covered: "100%" },
+  AUS: { type: "universal (Medicare)", covered: "100%" },
+  JPN: { type: "universal (NHI)", covered: "100%" },
+  KOR: { type: "universal (NHI)", covered: "100%" },
+  FRA: { type: "universal (statutory)", covered: "100%" },
+};
+
 const DEFAULT_YEAR = 2023;
 const OUTPUT_PATH = path.resolve(__dirname, "../src/data/international.json");
+const OUTCOMES_OUTPUT_PATH = path.resolve(__dirname, "../src/data/international-outcomes.json");
 
 // ---------------------------------------------------------------------------
 // CLI arg parsing
@@ -41,6 +56,7 @@ interface Args {
   countries: string[];
   summary: boolean;
   validate: boolean;
+  skipOutcomes: boolean;
 }
 
 function parseArgs(): Args {
@@ -49,6 +65,7 @@ function parseArgs(): Args {
   let countries = Object.keys(COUNTRIES);
   let summary = false;
   let validate = false;
+  let skipOutcomes = false;
 
   for (let i = 0; i < args.length; i++) {
     if (args[i] === "--year" && args[i + 1]) {
@@ -73,10 +90,12 @@ function parseArgs(): Args {
       summary = true;
     } else if (args[i] === "--validate") {
       validate = true;
+    } else if (args[i] === "--skip-outcomes") {
+      skipOutcomes = true;
     }
   }
 
-  return { year, countries, summary, validate };
+  return { year, countries, summary, validate, skipOutcomes };
 }
 
 // ---------------------------------------------------------------------------
@@ -157,7 +176,7 @@ function printSummary(
 // ---------------------------------------------------------------------------
 
 async function main() {
-  const { year, countries, summary, validate } = parseArgs();
+  const { year, countries, summary, validate, skipOutcomes } = parseArgs();
 
   if (validate) {
     await runValidation();
@@ -235,6 +254,56 @@ async function main() {
     console.log(
       "\n⚠ Some countries had validation warnings — review the output above."
     );
+  }
+
+  // --- World Bank Outcome Indicators ---
+  if (!skipOutcomes) {
+    console.log("\nFetching World Bank outcome indicators...\n");
+
+    try {
+      const indicatorData = await fetchAllIndicators(ALL_COUNTRY_CODES);
+
+      const countryNames: Record<string, string> = {
+        USA: "United States",
+        ...COUNTRIES,
+      };
+
+      const outcomesCountries: Record<string, CountryOutcomes> = {};
+      for (const [code, indicators] of indicatorData) {
+        outcomesCountries[code] = {
+          name: countryNames[code] ?? code,
+          indicators,
+          ...(HEALTHCARE_SYSTEMS[code] ? { healthcareSystem: HEALTHCARE_SYSTEMS[code] } : {}),
+        };
+      }
+
+      // Load existing outcomes to preserve callouts (written by enrich-data.ts)
+      let existingCallouts: Record<string, Record<string, unknown>> = {};
+      try {
+        const existing = JSON.parse(fs.readFileSync(OUTCOMES_OUTPUT_PATH, "utf-8"));
+        existingCallouts = existing.callouts ?? {};
+      } catch { /* file doesn't exist yet */ }
+
+      const outcomesOutput: InternationalOutcomes = {
+        lastUpdated: new Date().toISOString().split("T")[0],
+        source: "World Bank Open Data + Claude editorial",
+        primaryYear: year,
+        countries: outcomesCountries,
+        callouts: existingCallouts as InternationalOutcomes["callouts"],
+      };
+
+      fs.writeFileSync(OUTCOMES_OUTPUT_PATH, JSON.stringify(outcomesOutput, null, 2) + "\n");
+      console.log(`  Generated: ${OUTCOMES_OUTPUT_PATH}`);
+      console.log(`  Countries with indicators: ${Object.keys(outcomesCountries).length}`);
+
+      for (const [code, data] of Object.entries(outcomesCountries)) {
+        const count = Object.keys(data.indicators).length;
+        console.log(`    ${code} (${data.name}): ${count} indicators`);
+      }
+    } catch (err) {
+      console.error(`\nWorld Bank fetch failed: ${(err as Error).message}`);
+      console.error("Continuing without outcome data.");
+    }
   }
 }
 
