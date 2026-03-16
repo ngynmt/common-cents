@@ -68,7 +68,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         onClick={onBack}
-        className="text-sm text-gray-400 hover:text-white transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
+        className="text-sm text-slate-400 hover:text-white transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
       >
         ← Change inputs
       </motion.button>
@@ -81,7 +81,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
         className="text-center space-y-2"
       >
         <h2 className="text-2xl font-bold text-white">Your Federal Tax Receipt</h2>
-        <div className="flex items-center justify-center gap-6 text-sm text-gray-400 flex-wrap">
+        <div className="flex items-center justify-center gap-6 text-sm text-slate-400 flex-wrap">
           <span>
             Income: <span className="text-white font-medium">{formatCurrency(taxEstimate.grossIncome)}</span>
           </span>
@@ -98,7 +98,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
             </InfoTooltip>
           </span>
         </div>
-        <p className="text-xs text-gray-400 max-w-lg mx-auto">
+        <p className="text-xs text-slate-400 max-w-lg mx-auto">
           This is an estimate based on standard deduction and FY {currentYear} tax brackets.
           Your actual taxes may differ based on deductions, credits, and other factors.
         </p>
@@ -117,7 +117,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
             className={`text-xs px-4 py-2 rounded-full border transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
               isComparing
                 ? "bg-indigo-500/20 border-indigo-500/30 text-indigo-400"
-                : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:border-white/20"
+                : "bg-white/5 border-white/10 text-slate-400 hover:text-white hover:border-white/20"
             }`}
           >
             {isComparing ? `Comparing with FY ${priorYear} ✕` : `Compare with FY ${priorYear}`}
@@ -136,17 +136,17 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
           >
             <div className="grid grid-cols-2 gap-3 max-w-lg mx-auto">
               <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
-                <div className="text-[10px] text-gray-500 uppercase tracking-wider">FY {priorYear}</div>
-                <div className="text-lg font-bold text-gray-400">{formatCurrency(comparison.estimate.totalFederalTax)}</div>
-                <div className="text-[10px] text-gray-500">Effective: {formatPercent(comparison.estimate.effectiveRate)}</div>
+                <div className="text-[10px] text-slate-400 uppercase tracking-wider">FY {priorYear}</div>
+                <div className="text-lg font-bold text-slate-400">{formatCurrency(comparison.estimate.totalFederalTax)}</div>
+                <div className="text-[10px] text-slate-400">Effective: {formatPercent(comparison.estimate.effectiveRate)}</div>
               </div>
               <div className="text-center p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20">
                 <div className="text-[10px] text-indigo-400 uppercase tracking-wider">FY {currentYear}</div>
                 <div className="text-lg font-bold text-white">{formatCurrency(taxEstimate.totalFederalTax)}</div>
-                <div className="text-[10px] text-gray-400">Effective: {formatPercent(taxEstimate.effectiveRate)}</div>
+                <div className="text-[10px] text-slate-400">Effective: {formatPercent(taxEstimate.effectiveRate)}</div>
               </div>
             </div>
-            <p className="text-center text-[10px] text-gray-500 mt-2">
+            <p className="text-center text-[10px] text-slate-400 mt-2">
               Same income ({formatCurrency(taxEstimate.grossIncome)}), different tax year brackets and spending allocations
             </p>
           </motion.div>
@@ -166,7 +166,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
           { label: "Medicare", value: taxEstimate.medicareTax, prev: comparison?.estimate.medicareTax },
         ].map((item) => (
           <div key={item.label} className="text-center p-3 rounded-xl bg-white/5">
-            <div className="text-xs text-gray-400">{item.label}</div>
+            <div className="text-xs text-slate-400">{item.label}</div>
             <div className="text-sm font-semibold text-white">
               {formatCurrency(item.value)}
               {isComparing && item.prev !== undefined && (
@@ -198,7 +198,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
           {/* Receipt header */}
           <div className="px-4 py-3 border-b border-white/10">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-gray-300 uppercase tracking-wider">
+              <h3 className="text-sm font-semibold text-slate-300 uppercase tracking-wider">
                 Spending Breakdown
               </h3>
               <span className="text-sm font-bold text-white">
@@ -230,7 +230,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
           {/* Receipt footer */}
           <div className="px-4 py-3 border-t border-white/10 bg-white/5">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-semibold text-gray-300">TOTAL</span>
+              <span className="text-sm font-semibold text-slate-300">TOTAL</span>
               <span className="text-sm font-bold text-white">
                 {formatCurrency(taxEstimate.totalFederalTax)}
               </span>
@@ -239,7 +239,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
 
           {/* Contact reps button — inside receipt card */}
           {representatives && representatives.length > 0 && (
-            <div className="px-4 py-3 border-t border-white/5">
+            <div className="px-4 py-3 border-t border-white/8">
               <button
                 onClick={() => { trackRepsModalOpened(); setShowRepsModal(true); }}
                 className="w-full py-2.5 rounded-xl bg-indigo-500 text-white shadow-lg shadow-indigo-500/25 hover:bg-indigo-400 transition-colors font-medium cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -278,7 +278,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
           transition={{ delay: 0.8 }}
           className="text-center p-4 rounded-xl bg-indigo-500/10 border border-indigo-500/20"
         >
-          <p className="text-sm text-gray-300">
+          <p className="text-sm text-slate-300">
             Want to see how your representatives voted on these spending decisions?
           </p>
           <button

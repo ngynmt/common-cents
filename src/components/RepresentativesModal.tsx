@@ -99,7 +99,7 @@ export default function RepresentativesModal({
             transition={{ duration: 0.25 }}
             className="fixed inset-x-4 top-[10%] bottom-[10%] sm:inset-x-auto sm:left-1/2 sm:-translate-x-1/2 sm:w-full sm:max-w-lg z-50 flex flex-col outline-none"
           >
-            <div className="bg-gray-900 border border-white/10 rounded-2xl overflow-hidden flex flex-col max-h-full">
+            <div className="bg-slate-900 border border-white/10 rounded-2xl overflow-hidden flex flex-col max-h-full">
               {/* Header */}
               <div className="px-5 py-4 border-b border-white/10 flex items-center justify-between shrink-0">
                 <h2 id="reps-modal-title" className="text-lg font-semibold text-white">
@@ -108,7 +108,7 @@ export default function RepresentativesModal({
                 <button
                   onClick={onClose}
                   aria-label="Close dialog"
-                  className="text-gray-400 hover:text-white transition-colors text-xl leading-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
+                  className="text-slate-400 hover:text-white transition-colors text-xl leading-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
                 >
                   &times;
                 </button>
@@ -116,7 +116,7 @@ export default function RepresentativesModal({
 
               {/* Body */}
               <div className="p-5 space-y-3 overflow-y-auto flex-1">
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-slate-400">
                   Based on your ZIP code. Contact your representatives about any
                   spending issue that matters to you.
                 </p>
@@ -133,7 +133,7 @@ export default function RepresentativesModal({
 
               {/* Footer */}
               <div className="px-5 py-3 border-t border-white/10 shrink-0">
-                <p className="text-[10px] text-gray-500 text-center">
+                <p className="text-[10px] text-slate-400 text-center">
                   Representative data provided by Geocodio and Congress.gov. Campaign finance data from FEC.gov. Contact info may occasionally be outdated.
                 </p>
               </div>

@@ -72,7 +72,7 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
   return (
     <div className="space-y-2">
       {/* Headline */}
-      <div className="text-xs text-gray-400 inline-flex items-center gap-1">
+      <div className="text-xs text-slate-400 inline-flex items-center gap-1">
         {finance.cycle} cycle · <span className="text-white font-medium">{formatCompact(finance.totalRaised)} total raised</span>
         <InfoTooltip width="w-60">
           A cycle is the 2-year election period (e.g., &ldquo;2024&rdquo; covers Jan 2023 &ndash; Dec 2024). &ldquo;Total raised&rdquo; includes all contributions to this candidate&apos;s principal campaign committee during that cycle. Source: FEC.gov.
@@ -90,7 +90,7 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
       )}
       {hasOutsideSpending && (
         <div className="space-y-1">
-          <div className="text-[10px] text-gray-500 font-medium uppercase tracking-wider">
+          <div className="text-[10px] text-slate-400 font-medium uppercase tracking-wider">
             Outside spending (Super PACs){finance.outsideSpendingCycle && finance.outsideSpendingCycle !== finance.cycle ? ` · ${finance.outsideSpendingCycle} cycle` : ""}
           </div>
           <div ref={outsideRef} className="w-full h-[150px]" role="img" aria-label={`Outside spending: ${outsideData.map((d) => `${d.fullName}: ${formatCompact(d.total)} ${d.support ? "supporting" : "opposing"}`).join(", ")}`}>
@@ -148,7 +148,7 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
               </BarChart>
             )}
           </div>
-          <div className="flex items-center gap-3 text-[10px] text-gray-500">
+          <div className="flex items-center gap-3 text-[10px] text-slate-400">
             <span className="flex items-center gap-1">
               <span className="inline-block w-2 h-2 rounded-full bg-green-500/70" /> Supporting
             </span>
@@ -162,7 +162,7 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
       {/* Donor employers — secondary */}
       {hasEmployers && (
         <div className="space-y-1">
-          <div className="text-[10px] text-gray-500 font-medium uppercase tracking-wider">
+          <div className="text-[10px] text-slate-400 font-medium uppercase tracking-wider">
             Top donor employers
           </div>
           <div ref={employerRef} className="w-full h-[150px]" role="img" aria-label={`Top donor employers: ${employerData.map((d) => `${d.fullName}: ${formatCompact(d.total)}`).join(", ")}`}>
@@ -218,7 +218,7 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
         </div>
       )}
 
-      <p className="text-[10px] text-gray-500 inline-flex items-center gap-1">
+      <p className="text-[10px] text-slate-400 inline-flex items-center gap-1">
         Personal donations from employees, not corporate <span aria-hidden="true">·</span> Source: FEC.gov
         <InfoTooltip width="w-60">
           These are donations from individual employees who listed this company as their employer on FEC filings. They are personal contributions, not corporate spending. Companies cannot donate directly to candidates. Totals aggregate all individual donations from employees of the same employer.
@@ -306,7 +306,7 @@ function DonorContracts({ employers, repName }: { employers: { employer: string;
               )}
 
               {!loading && data === null && (
-                <p className="text-[10px] text-gray-500 py-2">
+                <p className="text-[10px] text-slate-400 py-2">
                   No federal contracts found for these donor employers.
                 </p>
               )}
@@ -320,7 +320,7 @@ function DonorContracts({ employers, repName }: { employers: { employer: string;
 
                 return (
                   <div className="p-2.5 rounded-lg bg-amber-500/5 border border-amber-500/10 space-y-1">
-                    <p className="text-[10px] text-gray-300">
+                    <p className="text-[10px] text-slate-300">
                       <span className="text-amber-400 font-medium">{employersWithContracts}</span> of{" "}
                       {repName}&apos;s top donor employers also receive federal contracts.
                       Their employees donated{" "}
@@ -329,7 +329,7 @@ function DonorContracts({ employers, repName }: { employers: { employer: string;
                       <span className="text-white font-medium">{formatCompact(totalContractValue)}</span>{" "}
                       in government contracts.
                     </p>
-                    <p className="text-[9px] text-gray-500">
+                    <p className="text-[9px] text-slate-400">
                       This does not imply wrongdoing — employee donations are personal, not corporate.
                       But the connection is worth knowing about.
                     </p>
@@ -353,11 +353,11 @@ function DonorContracts({ employers, repName }: { employers: { employer: string;
                       className="pl-2 border-l-2 border-white/10 flex items-start justify-between gap-2"
                     >
                       <div className="min-w-0">
-                        <p className="text-[10px] text-gray-400 line-clamp-1">
+                        <p className="text-[10px] text-slate-400 line-clamp-1">
                           {c.description}
                         </p>
                         <div className="flex items-center gap-1.5 mt-0.5">
-                          <span className="text-[9px] text-gray-500">{c.agency}</span>
+                          <span className="text-[9px] text-slate-400">{c.agency}</span>
                           <span className="px-1.5 py-0.5 rounded-full text-[9px] bg-indigo-500/20 text-indigo-400">
                             {c.categoryLabel}
                           </span>
@@ -378,7 +378,7 @@ function DonorContracts({ employers, repName }: { employers: { employer: string;
               ))}
 
               {!loading && data && (
-                <p className="text-[9px] text-gray-600 pt-1 border-t border-white/5 inline-flex items-center gap-1 flex-wrap">
+                <p className="text-[9px] text-gray-600 pt-1 border-t border-white/8 inline-flex items-center gap-1 flex-wrap">
                   Contract values are total award amounts, not annual spending
                   <InfoTooltip width="w-56">
                     Federal contracts are often multi-year awards. A $500M contract might be spent over 5-10 years, so the annual cost is much lower than the headline number. These are total obligated amounts, not payments made in a single year.
@@ -388,7 +388,7 @@ function DonorContracts({ employers, repName }: { employers: { employer: string;
                     href="https://www.usaspending.gov"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-500 hover:text-gray-400 underline"
+                    className="text-slate-400 hover:text-slate-400 underline"
                   >
                     USASpending.gov<span className="sr-only"> (opens in new tab)</span>
                   </a>

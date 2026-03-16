@@ -22,7 +22,7 @@ function StatusBadge({ status }: { status: Legislation["status"] }) {
     passed_house: "bg-blue-500/20 text-blue-400",
     passed_senate: "bg-blue-500/20 text-blue-400",
     in_committee: "bg-yellow-500/20 text-yellow-400",
-    introduced: "bg-gray-500/20 text-gray-400",
+    introduced: "bg-gray-500/20 text-slate-400",
   };
 
   const labels: Record<string, string> = {
@@ -55,7 +55,7 @@ export default function ReceiptLine({
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.3, delay: index * 0.05 }}
-      className="border-b border-white/5 last:border-b-0"
+      className="border-b border-white/8 last:border-b-0"
     >
       {/* Main line item */}
       <button
@@ -90,7 +90,7 @@ export default function ReceiptLine({
               {item.amount > previousAmount ? "+" : ""}{formatCurrency(item.amount - previousAmount)}
             </div>
           ) : (
-            <div className="text-xs text-gray-400">
+            <div className="text-xs text-slate-400">
               {formatPercent(item.percentage / 100)}
             </div>
           )}
@@ -100,7 +100,7 @@ export default function ReceiptLine({
         <motion.span
           animate={{ rotate: isExpanded ? 180 : 0 }}
           transition={{ duration: 0.2 }}
-          className="text-gray-400 shrink-0 text-lg"
+          className="text-slate-400 shrink-0 text-lg"
           aria-hidden="true"
         >
           ▾
@@ -119,13 +119,13 @@ export default function ReceiptLine({
           >
             <div className="px-4 pt-2 pb-4 space-y-4">
               {/* Description */}
-              <p className="text-sm text-gray-400 pl-10">
+              <p className="text-sm text-slate-400 pl-10">
                 {item.category.description}
               </p>
 
               {/* Subcategories */}
               <div className="pl-10 space-y-1">
-                <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 inline-flex items-center gap-1.5">
+                <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 inline-flex items-center gap-1.5">
                   Breakdown
                   <InfoTooltip position="below">
                     Each subcategory shows how much of your tax contribution to {item.category.name} goes to that program. Amounts are calculated by applying the federal budget&apos;s percentage breakdown to your personal tax payment. Percentages are relative to this category, not your total taxes.
@@ -137,11 +137,11 @@ export default function ReceiptLine({
                     className="flex items-center justify-between py-1.5 px-3 rounded-lg hover:bg-white/5 transition-colors"
                   >
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm text-gray-300 truncate">
+                      <div className="text-sm text-slate-300 truncate">
                         {sub.subcategory.name}
                       </div>
                       {sub.subcategory.agencies && (
-                        <div className="text-xs text-gray-500 truncate">
+                        <div className="text-xs text-slate-400 truncate">
                           {sub.subcategory.agencies.join(", ")}
                         </div>
                       )}
@@ -150,7 +150,7 @@ export default function ReceiptLine({
                       <div className="text-sm text-white font-medium">
                         {formatCurrency(sub.amount)}
                       </div>
-                      <div className="text-xs text-gray-500">
+                      <div className="text-xs text-slate-400">
                         {formatPercent(sub.percentage / 100)}
                       </div>
                     </div>
@@ -181,7 +181,7 @@ export default function ReceiptLine({
               {/* Recent Legislation */}
               {item.category.legislation.length > 0 && (
                 <div className="pl-10 space-y-2">
-                  <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
                     Recent Legislation
                   </h4>
                   {item.category.legislation.map((bill, i) => (
@@ -200,11 +200,11 @@ export default function ReceiptLine({
                         </a>
                         <StatusBadge status={bill.status} />
                       </div>
-                      <p className="text-xs text-gray-400">{bill.summary}</p>
-                      <p className="text-xs text-gray-500">
-                        <span className="text-gray-400">Impact:</span> {bill.impact}
+                      <p className="text-xs text-slate-400">{bill.summary}</p>
+                      <p className="text-xs text-slate-400">
+                        <span className="text-slate-400">Impact:</span> {bill.impact}
                       </p>
-                      <div className="text-xs text-gray-500">
+                      <div className="text-xs text-slate-400">
                         Sponsors: {bill.sponsors.join(", ")}
                       </div>
                     </div>

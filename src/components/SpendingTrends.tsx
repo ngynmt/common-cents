@@ -94,7 +94,7 @@ export default function SpendingTrends() {
   if (fetchError) {
     return (
       <div className="rounded-xl bg-white/[0.03] border border-white/10 px-4 py-3 flex items-center justify-between">
-        <span className="text-xs text-gray-500">Unable to load spending trends.</span>
+        <span className="text-xs text-slate-400">Unable to load spending trends.</span>
         <button
           onClick={fetchTrends}
           className="text-xs text-indigo-400 hover:text-indigo-300 underline cursor-pointer focus:outline-none"
@@ -127,7 +127,7 @@ export default function SpendingTrends() {
             </InfoTooltip>
           </span>
           {recordDate && (
-            <span className="text-[10px] text-gray-500">
+            <span className="text-[10px] text-slate-400">
               as of {formatMonth(recordDate)}
             </span>
           )}
@@ -135,7 +135,7 @@ export default function SpendingTrends() {
         <motion.span
           animate={{ rotate: expanded ? 180 : 0 }}
           transition={{ duration: 0.2 }}
-          className="text-gray-500 text-lg"
+          className="text-slate-400 text-lg"
           aria-hidden="true"
         >
           ▾
@@ -155,7 +155,7 @@ export default function SpendingTrends() {
               {/* Outlay anomalies */}
               {anomalies.length > 0 && (
                 <div className="space-y-1.5">
-                  <div className="text-[10px] text-gray-500 uppercase tracking-wider">
+                  <div className="text-[10px] text-slate-400 uppercase tracking-wider">
                     Spending
                   </div>
                   {anomalies.map((t) => (
@@ -167,7 +167,7 @@ export default function SpendingTrends() {
               {/* Receipt anomalies */}
               {receiptAnomalies.length > 0 && (
                 <div className="space-y-1.5">
-                  <div className="text-[10px] text-gray-500 uppercase tracking-wider">
+                  <div className="text-[10px] text-slate-400 uppercase tracking-wider">
                     Revenue (taxes &amp; tariffs)
                   </div>
                   {receiptAnomalies.map((t) => (
@@ -176,7 +176,7 @@ export default function SpendingTrends() {
                 </div>
               )}
 
-              <p className="text-[9px] text-gray-600 pt-1 border-t border-white/5">
+              <p className="text-[9px] text-gray-600 pt-1 border-t border-white/8">
                 Fiscal year-to-date vs. same period last year. Only showing changes above {ANOMALY_THRESHOLD}%.{" "}
                 Explanations are AI-generated and may not reflect all factors.
               </p>
@@ -219,9 +219,9 @@ function TrendRow({ trend }: { trend: SpendingTrend }) {
   return (
     <div className="space-y-0.5">
       <div className="flex items-center justify-between text-[10px]">
-        <span className="text-gray-300">{label}</span>
+        <span className="text-slate-300">{label}</span>
         <div className="flex items-center gap-2 shrink-0 ml-2">
-          <span className="text-[9px] text-gray-500">
+          <span className="text-[9px] text-slate-400">
             {formatCompact(trend.currentFytd)} vs {formatCompact(trend.priorFytd)}
           </span>
           <span
@@ -245,7 +245,7 @@ function TrendRow({ trend }: { trend: SpendingTrend }) {
         </p>
       )}
       {!consumerNote && enrichedTrends[trend.classification]?.whyItMatters && (
-        <p className="text-[9px] text-gray-400 mt-0.5">
+        <p className="text-[9px] text-slate-400 mt-0.5">
           {enrichedTrends[trend.classification].whyItMatters}
         </p>
       )}

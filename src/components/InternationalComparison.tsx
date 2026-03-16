@@ -102,7 +102,7 @@ export default function InternationalComparison({
               <div className="flex items-center gap-2">
                 <label
                   htmlFor="compare-country"
-                  className="text-xs text-gray-500"
+                  className="text-xs text-slate-400"
                 >
                   Compare with:
                 </label>
@@ -110,7 +110,7 @@ export default function InternationalComparison({
                   id="compare-country"
                   value={selectedCountry ?? ""}
                   onChange={(e) => handleCountrySelect(e.target.value)}
-                  className="text-xs px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 text-gray-300 cursor-pointer hover:border-white/20 transition-colors appearance-none pr-7 focus:outline-none focus:border-sky-500/40"
+                  className="text-xs px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 text-slate-300 cursor-pointer hover:border-white/20 transition-colors appearance-none pr-7 focus:outline-none focus:border-sky-500/40"
                   style={{
                     backgroundImage:
                       "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M3 5l3 3 3-3'/%3E%3C/svg%3E\")",
@@ -135,7 +135,7 @@ export default function InternationalComparison({
                     className={`px-3 py-1.5 transition-colors cursor-pointer ${
                       mode === "same-amount"
                         ? "bg-white/10 text-white"
-                        : "text-gray-500 hover:text-gray-300"
+                        : "text-slate-400 hover:text-slate-300"
                     }`}
                   >
                     Same amount
@@ -145,7 +145,7 @@ export default function InternationalComparison({
                     className={`px-3 py-1.5 transition-colors cursor-pointer border-l border-white/10 ${
                       mode === "estimated-tax"
                         ? "bg-sky-500/20 text-sky-400"
-                        : "text-gray-500 hover:text-gray-300"
+                        : "text-slate-400 hover:text-slate-300"
                     }`}
                   >
                     Estimated tax
@@ -167,13 +167,13 @@ export default function InternationalComparison({
                   >
                     <div className="mt-3 grid grid-cols-2 gap-3 max-w-md mx-auto">
                       <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
-                        <div className="text-[10px] text-gray-500 uppercase tracking-wider">
+                        <div className="text-[10px] text-slate-400 uppercase tracking-wider">
                           US taxes
                         </div>
                         <div className="text-lg font-bold text-white">
                           {formatCurrency(totalFederalTax)}
                         </div>
-                        <div className="text-[10px] text-gray-500">
+                        <div className="text-[10px] text-slate-400">
                           Effective:{" "}
                           {formatPercent(totalFederalTax / grossIncome)}
                         </div>
@@ -191,7 +191,7 @@ export default function InternationalComparison({
                         </div>
                       </div>
                     </div>
-                    <p className="text-center text-[10px] text-gray-500 mt-1.5">
+                    <p className="text-center text-[10px] text-slate-400 mt-1.5">
                       Estimated income tax + social contributions on{" "}
                       {formatCurrency(grossIncome)} income
                     </p>
@@ -213,22 +213,22 @@ export default function InternationalComparison({
                   {/* Header */}
                   <div className="px-4 py-3 border-b border-white/10">
                     <div className="flex items-center justify-between mb-2">
-                      <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                      <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
                         {mode === "estimated-tax"
                           ? "What your taxes would look like in other countries"
                           : "US spending ratio vs. other countries"}
                       </h4>
-                      <span className="text-[10px] text-gray-500">
+                      <span className="text-[10px] text-slate-400">
                         OECD {allComparisons[0].dataYear} data
                       </span>
                     </div>
                     {/* Legend */}
                     <div className="flex flex-wrap gap-x-3 gap-y-1">
-                      <span className="flex items-center gap-1 text-[10px] text-gray-400">
+                      <span className="flex items-center gap-1 text-[10px] text-slate-400">
                         <span className="w-2 h-2 rounded-full bg-white/40" />
                         US
                         {mode === "estimated-tax" && (
-                          <span className="text-gray-500 ml-0.5">
+                          <span className="text-slate-400 ml-0.5">
                             {formatCurrency(totalFederalTax)}
                           </span>
                         )}
@@ -236,7 +236,7 @@ export default function InternationalComparison({
                       {allComparisons.map((c) => (
                         <span
                           key={c.country.code}
-                          className="flex items-center gap-1 text-[10px] text-gray-400"
+                          className="flex items-center gap-1 text-[10px] text-slate-400"
                         >
                           <span
                             className="w-2 h-2 rounded-full"
@@ -248,7 +248,7 @@ export default function InternationalComparison({
                           {COUNTRY_SHORT_LABELS[c.country.code] ??
                             c.country.code}
                           {mode === "estimated-tax" && (
-                            <span className="text-gray-500 ml-0.5">
+                            <span className="text-slate-400 ml-0.5">
                               {formatCurrency(c.countryTotalAmount)}
                             </span>
                           )}
@@ -291,12 +291,12 @@ export default function InternationalComparison({
 
                   {/* Footer */}
                   <div className="px-4 py-3 border-t border-white/10 bg-white/5">
-                    <div className="text-xs font-semibold text-gray-300 mb-1.5">
+                    <div className="text-xs font-semibold text-slate-300 mb-1.5">
                       TOTAL
                     </div>
                     <div className="space-y-0.5">
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] text-gray-500 w-7 shrink-0">
+                        <span className="text-[10px] text-slate-400 w-7 shrink-0">
                           US
                         </span>
                         <span className="text-xs font-bold text-white">
@@ -340,12 +340,12 @@ export default function InternationalComparison({
                 >
                   {/* Header */}
                   <div className="px-4 py-3 border-b border-white/10 flex items-center justify-between">
-                    <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                    <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
                       {mode === "estimated-tax"
                         ? `What your taxes would look like in ${comparison.country.name}`
                         : `US spending ratio vs. ${comparison.country.name}`}
                     </h4>
-                    <span className="text-[10px] text-gray-500">
+                    <span className="text-[10px] text-slate-400">
                       OECD {comparison.dataYear} data
                     </span>
                   </div>
@@ -369,12 +369,12 @@ export default function InternationalComparison({
 
                   {/* Footer */}
                   <div className="px-4 py-3 border-t border-white/10 bg-white/5">
-                    <div className="text-xs font-semibold text-gray-300 mb-1.5">
+                    <div className="text-xs font-semibold text-slate-300 mb-1.5">
                       TOTAL
                     </div>
                     <div className="space-y-1">
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] text-gray-500 w-7 shrink-0">
+                        <span className="text-[10px] text-slate-400 w-7 shrink-0">
                           US
                         </span>
                         <span className="text-xs font-bold text-white">
@@ -396,7 +396,7 @@ export default function InternationalComparison({
                         )}
                     </div>
                     {comparison.unmappedPct > 0 && (
-                      <p className="text-[10px] text-gray-500 mt-1">
+                      <p className="text-[10px] text-slate-400 mt-1">
                         {comparison.unmappedPct.toFixed(1)}% of US spending has
                         no direct equivalent in{" "}
                         {comparison.country.name}&apos;s budget classification
@@ -409,7 +409,7 @@ export default function InternationalComparison({
 
             {/* Source attribution */}
             {(comparison || (isAllMode && allComparisons.length > 0)) && (
-              <p className="text-center text-[10px] text-gray-500 mt-2">
+              <p className="text-center text-[10px] text-slate-400 mt-2">
                 {isAllMode ? (
                   mode === "estimated-tax" ? (
                     <span className="inline-flex items-center gap-1">
@@ -454,7 +454,7 @@ export default function InternationalComparison({
                   href="https://stats.oecd.org/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-gray-300 underline focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
+                  className="text-slate-400 hover:text-slate-300 underline focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
                 >
                   OECD COFOG<span className="sr-only-inline"> (opens in new tab)</span>
                 </a>
@@ -495,9 +495,9 @@ function ComparisonRow({
   const shortLabel = COUNTRY_SHORT_LABELS[countryCode] ?? countryCode;
 
   return (
-    <div className="px-4 py-2.5 border-b border-white/5 last:border-b-0 group hover:bg-white/[0.02] transition-colors">
+    <div className="px-4 py-2.5 border-b border-white/8 last:border-b-0 group hover:bg-white/[0.02] transition-colors">
       {/* Category name */}
-      <div className="text-xs text-gray-300 mb-1.5 flex items-center gap-1.5">
+      <div className="text-xs text-slate-300 mb-1.5 flex items-center gap-1.5">
         <span
           className="w-2 h-2 rounded-full shrink-0"
           style={{ backgroundColor: item.color }}
@@ -509,7 +509,7 @@ function ComparisonRow({
       <div className="space-y-1">
         {/* US bar */}
         <div className="flex items-center gap-2">
-          <span className="text-[10px] text-gray-500 w-7 shrink-0">US</span>
+          <span className="text-[10px] text-slate-400 w-7 shrink-0">US</span>
           <div className="flex-1 h-3 bg-white/5 rounded-full overflow-hidden">
             <motion.div
               className="h-full rounded-full"
@@ -519,9 +519,9 @@ function ComparisonRow({
               transition={{ duration: 0.5, ease: "easeOut" }}
             />
           </div>
-          <span className="w-24 text-right text-[10px] text-gray-400 tabular-nums shrink-0 whitespace-nowrap">
+          <span className="w-24 text-right text-[10px] text-slate-400 tabular-nums shrink-0 whitespace-nowrap">
             {formatCurrency(item.usAmount)}{" "}
-            <span className="text-gray-500">({item.usPct.toFixed(1)}%)</span>
+            <span className="text-slate-400">({item.usPct.toFixed(1)}%)</span>
           </span>
         </div>
 
@@ -537,13 +537,13 @@ function ComparisonRow({
             <>
               <div className="flex-1 h-3 bg-white/5 rounded-full overflow-hidden relative">
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-[9px] text-gray-500">
+                  <span className="text-[9px] text-slate-400">
                     No equivalent
                   </span>
                 </div>
               </div>
               <span
-                className="w-24 text-right text-[10px] text-gray-500 shrink-0 whitespace-nowrap"
+                className="w-24 text-right text-[10px] text-slate-400 shrink-0 whitespace-nowrap"
                 title={`${item.categoryName} doesn't have a direct equivalent in ${countryName}'s budget classification`}
               >
                 —
@@ -602,9 +602,9 @@ function AllCountriesRow({
   const usWidth = maxAmount > 0 ? (usAmount / maxAmount) * 100 : 0;
 
   return (
-    <div className="px-4 py-2 border-b border-white/5 last:border-b-0 group hover:bg-white/[0.02] transition-colors">
+    <div className="px-4 py-2 border-b border-white/8 last:border-b-0 group hover:bg-white/[0.02] transition-colors">
       {/* Category name */}
-      <div className="text-xs text-gray-300 mb-1 flex items-center gap-1.5">
+      <div className="text-xs text-slate-300 mb-1 flex items-center gap-1.5">
         <span
           className="w-2 h-2 rounded-full shrink-0"
           style={{ backgroundColor: color }}
@@ -616,7 +616,7 @@ function AllCountriesRow({
       <div className="space-y-0.5">
         {/* US bar */}
         <div className="flex items-center gap-2">
-          <span className="text-[9px] text-gray-500 w-7 shrink-0">US</span>
+          <span className="text-[9px] text-slate-400 w-7 shrink-0">US</span>
           <div className="flex-1 h-2 bg-white/5 rounded-full overflow-hidden">
             <motion.div
               className="h-full rounded-full bg-white/40"
@@ -625,9 +625,9 @@ function AllCountriesRow({
               transition={{ duration: 0.5, ease: "easeOut" }}
             />
           </div>
-          <span className="w-24 text-right text-[10px] text-gray-400 tabular-nums shrink-0 whitespace-nowrap">
+          <span className="w-24 text-right text-[10px] text-slate-400 tabular-nums shrink-0 whitespace-nowrap">
             {formatCurrency(usAmount)}{" "}
-            <span className="text-gray-500">{usPct.toFixed(0)}%</span>
+            <span className="text-slate-400">{usPct.toFixed(0)}%</span>
           </span>
         </div>
 
@@ -648,7 +648,7 @@ function AllCountriesRow({
               {cd.isUnmapped ? (
                 <>
                   <div className="flex-1 h-2 bg-white/5 rounded-full" />
-                  <span className="w-24 text-right text-[10px] text-gray-500 shrink-0 whitespace-nowrap">
+                  <span className="w-24 text-right text-[10px] text-slate-400 shrink-0 whitespace-nowrap">
                     —
                   </span>
                 </>

@@ -56,7 +56,7 @@ function ContractCard({
               {CATEGORY_LABELS[contract.categoryId] || contract.categoryId}
             </span>
           </div>
-          <p className="text-xs text-gray-400 mt-1 line-clamp-2">
+          <p className="text-xs text-slate-400 mt-1 line-clamp-2">
             {enrichedContracts[contract.id]?.summary || contract.description || "Federal contract award"}
           </p>
         </div>
@@ -72,19 +72,19 @@ function ContractCard({
             </InfoTooltip>
           </div>
           {contract.annualizedAmount && (
-            <div className="text-[9px] text-gray-500">
+            <div className="text-[9px] text-slate-400">
               ~{formatCurrency(calculatePersonalCost(contract.annualizedAmount, personalCostTax))}/yr
             </div>
           )}
         </div>
       </div>
-      <div className="flex items-center justify-between text-[10px] text-gray-500">
+      <div className="flex items-center justify-between text-[10px] text-slate-400">
         <span>{contract.awardingAgency}</span>
         <a
           href={contract.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-gray-400 hover:text-gray-300 underline"
+          className="text-slate-400 hover:text-slate-300 underline"
         >
           USASpending.gov<span className="sr-only"> (opens in new tab)</span>
         </a>
@@ -117,12 +117,12 @@ function EnactedBillCard({
               Enacted
             </span>
             {bill.publicLawNumber && (
-              <span className="text-[10px] text-gray-500">
+              <span className="text-[10px] text-slate-400">
                 {bill.publicLawNumber}
               </span>
             )}
           </div>
-          <p className="text-xs text-gray-400 mt-1 line-clamp-2">
+          <p className="text-xs text-slate-400 mt-1 line-clamp-2">
             {bill.summary || bill.title}
           </p>
         </div>
@@ -137,14 +137,14 @@ function EnactedBillCard({
           </div>
         )}
       </div>
-      <div className="flex items-center justify-between text-[10px] text-gray-500">
+      <div className="flex items-center justify-between text-[10px] text-slate-400">
         <span>{bill.enactedDate || bill.lastActionDate}</span>
         {bill.congressUrl && (
           <a
             href={bill.congressUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-400 hover:text-gray-300 underline"
+            className="text-slate-400 hover:text-slate-300 underline"
           >
             Congress.gov<span className="sr-only"> (opens in new tab)</span>
           </a>
@@ -296,7 +296,7 @@ export default function RecentExpenditures({ totalFederalTax }: RecentExpenditur
 
   if (error || (contracts.length === 0 && enactedBills.length === 0)) {
     return (
-      <div className="text-center py-8 text-gray-500 text-sm space-y-2">
+      <div className="text-center py-8 text-slate-400 text-sm space-y-2">
         <p>
           {error
             ? "Unable to fetch recent spending data."
@@ -350,7 +350,7 @@ export default function RecentExpenditures({ totalFederalTax }: RecentExpenditur
       {/* Sort + filter controls */}
       <div className="flex items-center justify-between flex-wrap gap-2">
         <div className="flex items-center gap-1">
-          <span className="text-xs text-gray-400 mr-1">Sort by</span>
+          <span className="text-xs text-slate-400 mr-1">Sort by</span>
           {([
             { key: "amount" as SortMode, label: "Amount" },
             { key: "date" as SortMode, label: "Recent" },
@@ -361,7 +361,7 @@ export default function RecentExpenditures({ totalFederalTax }: RecentExpenditur
               className={`text-xs px-2.5 py-1 rounded-full transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
                 sortMode === option.key
                   ? "bg-white/10 text-white"
-                  : "text-gray-400 hover:text-gray-300"
+                  : "text-slate-400 hover:text-slate-300"
               }`}
             >
               {option.label}
@@ -370,14 +370,14 @@ export default function RecentExpenditures({ totalFederalTax }: RecentExpenditur
         </div>
 
         <div className="flex items-center gap-2">
-          <label htmlFor="category-filter" className="text-xs text-gray-400">
+          <label htmlFor="category-filter" className="text-xs text-slate-400">
             Category
           </label>
           <select
             id="category-filter"
             value={filterCategory || ""}
             onChange={(e) => setFilterCategory(e.target.value || null)}
-            className="text-xs bg-white/5 border border-white/10 rounded-lg px-2 py-1 text-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+            className="text-xs bg-white/5 border border-white/10 rounded-lg px-2 py-1 text-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer"
           >
             <option value="">All</option>
             {availableCategories.map((catId) => (
@@ -420,7 +420,7 @@ export default function RecentExpenditures({ totalFederalTax }: RecentExpenditur
           <button
             onClick={loadMore}
             disabled={loadingMore || rateLimited}
-            className="text-xs px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-300 hover:bg-white/10 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="text-xs px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {rateLimited
               ? "Too many requests — try again shortly"
@@ -431,16 +431,16 @@ export default function RecentExpenditures({ totalFederalTax }: RecentExpenditur
         </div>
       )}
 
-      <p className="text-center text-[10px] text-gray-500 mt-2">
-        <a href="https://www.usaspending.gov" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">
+      <p className="text-center text-[10px] text-slate-400 mt-2">
+        <a href="https://www.usaspending.gov" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-300 underline">
           USASpending.gov<span className="sr-only"> (opens in new tab)</span>
         </a>
         {" · "}
-        <a href="https://www.congress.gov" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">
+        <a href="https://www.congress.gov" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-300 underline">
           Congress.gov<span className="sr-only"> (opens in new tab)</span>
         </a>
         {" · "}
-        <a href="https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">
+        <a href="https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-300 underline">
           Treasury MTS<span className="sr-only"> (opens in new tab)</span>
         </a>
         {" · "}Some descriptions are AI-summarized

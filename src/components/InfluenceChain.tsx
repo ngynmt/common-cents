@@ -91,7 +91,7 @@ export default function InfluenceChain({ contractorName }: InfluenceChainProps) 
               )}
 
               {!loading && data === null && (
-                <p className="text-[10px] text-gray-500">
+                <p className="text-[10px] text-slate-400">
                   No campaign contribution data found for this contractor.
                 </p>
               )}
@@ -99,14 +99,14 @@ export default function InfluenceChain({ contractorName }: InfluenceChainProps) 
               {!loading && data && (
                 <>
                   {/* Summary */}
-                  <div className="text-[10px] text-gray-400">
+                  <div className="text-[10px] text-slate-400">
                     <span className="text-white font-medium">{data.contractorName}</span>
                     {" "}employees donated{" "}
                     <span className="text-indigo-400 font-medium">
                       {formatCompact(data.totalDonations)}
                     </span>
                     {" "}to members of Congress
-                    <span className="text-gray-500"> ({data.cycle} cycle)</span>
+                    <span className="text-slate-400"> ({data.cycle} cycle)</span>
                   </div>
 
                   {/* Flow arrow */}
@@ -123,7 +123,7 @@ export default function InfluenceChain({ contractorName }: InfluenceChainProps) 
                         className="flex items-center justify-between text-[10px]"
                       >
                         <div className="flex items-center gap-1.5 min-w-0">
-                          <span className={`font-medium ${partyColors[r.recipientParty] || "text-gray-400"}`}>
+                          <span className={`font-medium ${partyColors[r.recipientParty] || "text-slate-400"}`}>
                             {r.recipientName}
                           </span>
                           {r.recipientState && (
@@ -132,7 +132,7 @@ export default function InfluenceChain({ contractorName }: InfluenceChainProps) 
                             </span>
                           )}
                         </div>
-                        <span className="text-gray-400 font-medium shrink-0 ml-2">
+                        <span className="text-slate-400 font-medium shrink-0 ml-2">
                           {formatCompact(r.total)}
                         </span>
                       </div>
@@ -140,13 +140,13 @@ export default function InfluenceChain({ contractorName }: InfluenceChainProps) 
                   </div>
 
                   {/* Source */}
-                  <p className="text-[9px] text-gray-600 pt-1 border-t border-white/5">
+                  <p className="text-[9px] text-gray-600 pt-1 border-t border-white/8">
                     Source:{" "}
                     <a
                       href="https://www.fec.gov"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-500 hover:text-gray-400 underline"
+                      className="text-slate-400 hover:text-slate-400 underline"
                     >
                       FEC<span className="sr-only"> (opens in new tab)</span>
                     </a>

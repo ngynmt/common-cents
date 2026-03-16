@@ -145,7 +145,7 @@ export default function BillInfluenceChain({
               )}
 
               {!loading && data === null && (
-                <div className="text-[10px] text-gray-500">
+                <div className="text-[10px] text-slate-400">
                   {fetchError ? (
                     <div className="flex items-center gap-2">
                       <span>Failed to load influence data.</span>
@@ -230,7 +230,7 @@ export default function BillInfluenceChain({
                       {/* Lobbying section */}
                       {lobbying && lobbying.filings.length > 0 && (
                         <>
-                          <div className="text-[10px] text-gray-400">
+                          <div className="text-[10px] text-slate-400">
                             <span className="text-amber-400 font-medium">
                               {lobbying.totalFilings}
                             </span>{" "}
@@ -251,7 +251,7 @@ export default function BillInfluenceChain({
                           </div>
 
                           <div>
-                            <div className="text-[10px] text-gray-500 mb-1">
+                            <div className="text-[10px] text-slate-400 mb-1">
                               Top organizations lobbying on this bill
                             </div>
                             <div className="space-y-0.5">
@@ -272,7 +272,7 @@ export default function BillInfluenceChain({
                                     className="flex items-center justify-between text-[10px]"
                                   >
                                     <div className="flex items-center gap-1.5 min-w-0">
-                                      <span className="text-gray-300 truncate">
+                                      <span className="text-slate-300 truncate">
                                         {f.client}
                                       </span>
                                       {f.client !== f.registrant && (
@@ -281,7 +281,7 @@ export default function BillInfluenceChain({
                                         </span>
                                       )}
                                     </div>
-                                    <span className="text-gray-400 font-medium ml-2 shrink-0">
+                                    <span className="text-slate-400 font-medium ml-2 shrink-0">
                                       {formatCompact(f.amount)}
                                     </span>
                                   </div>
@@ -292,7 +292,7 @@ export default function BillInfluenceChain({
                           {/* Revolving door */}
                           {revolvingDoor.length > 0 && (
                             <div>
-                              <div className="text-[10px] text-gray-500 mb-1">
+                              <div className="text-[10px] text-slate-400 mb-1">
                                 Lobbyists with prior government roles
                               </div>
                               <div className="space-y-0.5">
@@ -301,7 +301,7 @@ export default function BillInfluenceChain({
                                     key={`${l.name}-${i}`}
                                     className="text-[10px]"
                                   >
-                                    <span className="text-gray-300">
+                                    <span className="text-slate-300">
                                       {l.name}
                                     </span>
                                     <span className="text-gray-600">
@@ -317,7 +317,7 @@ export default function BillInfluenceChain({
                           {/* Overlap alert */}
                           {overlappingOrgs.length > 0 && (
                             <div className="p-2.5 rounded-lg bg-amber-500/5 border border-amber-500/10 space-y-1">
-                              <p className="text-[10px] text-gray-300">
+                              <p className="text-[10px] text-slate-300">
                                 <span className="text-amber-400 font-medium">
                                   {overlappingOrgs.length}
                                 </span>{" "}
@@ -332,7 +332,7 @@ export default function BillInfluenceChain({
                                     : `${overlappingOrgs.length > 1 ? "have" : "has"} employees who donated to`}{" "}
                                 {champion.name}.
                               </p>
-                              <p className="text-[9px] text-gray-500">
+                              <p className="text-[9px] text-slate-400">
                                 Lobbying is legal advocacy — but the overlap
                                 between lobbying spending and campaign donations
                                 is worth noting.
@@ -345,7 +345,7 @@ export default function BillInfluenceChain({
                       {/* Champion funding summary */}
                       {hasFinance && (
                         <>
-                          <div className="text-[10px] text-gray-400">
+                          <div className="text-[10px] text-slate-400">
                             <span className="text-white font-medium">
                               {champion.title} {champion.name}
                             </span>{" "}
@@ -360,7 +360,7 @@ export default function BillInfluenceChain({
                           {finance.outsideSpending &&
                             finance.outsideSpending.length > 0 && (
                               <div>
-                                <div className="text-[10px] text-gray-500 mb-1">
+                                <div className="text-[10px] text-slate-400 mb-1">
                                   Outside spending (Super PACs)
                                   {finance.outsideSpendingCycle &&
                                   finance.outsideSpendingCycle !== finance.cycle
@@ -383,11 +383,11 @@ export default function BillInfluenceChain({
                                                 : "bg-red-500/70"
                                             }`}
                                           />
-                                          <span className="text-gray-300 truncate">
+                                          <span className="text-slate-300 truncate">
                                             {s.name}
                                           </span>
                                         </div>
-                                        <span className="text-gray-400 font-medium ml-2 shrink-0">
+                                        <span className="text-slate-400 font-medium ml-2 shrink-0">
                                           {formatCompact(s.total)}
                                         </span>
                                       </div>
@@ -408,7 +408,7 @@ export default function BillInfluenceChain({
 
                           {/* Top donor employers */}
                           <div>
-                            <div className="text-[10px] text-gray-500 mb-1">
+                            <div className="text-[10px] text-slate-400 mb-1">
                               Top donor employers
                             </div>
                             <div className="space-y-0.5">
@@ -417,10 +417,10 @@ export default function BillInfluenceChain({
                                   key={e.employer}
                                   className="flex items-center justify-between text-[10px]"
                                 >
-                                  <span className="text-gray-300">
+                                  <span className="text-slate-300">
                                     {e.employer}
                                   </span>
-                                  <span className="text-gray-400 font-medium ml-2 shrink-0">
+                                  <span className="text-slate-400 font-medium ml-2 shrink-0">
                                     {formatCompact(e.total)}
                                   </span>
                                 </div>
@@ -439,7 +439,7 @@ export default function BillInfluenceChain({
                               </div>
 
                               <div className="p-2.5 rounded-lg bg-amber-500/5 border border-amber-500/10 space-y-1">
-                                <p className="text-[10px] text-gray-300">
+                                <p className="text-[10px] text-slate-300">
                                   <span className="text-amber-400 font-medium">
                                     {employersWithContracts}
                                   </span>{" "}
@@ -455,7 +455,7 @@ export default function BillInfluenceChain({
                                   </span>{" "}
                                   to this bill&apos;s sponsor.
                                 </p>
-                                <p className="text-[9px] text-gray-500">
+                                <p className="text-[9px] text-slate-400">
                                   Employee donations are personal, not corporate
                                   — but the connection is worth knowing about.
                                 </p>
@@ -479,7 +479,7 @@ export default function BillInfluenceChain({
                                       key={c.awardId}
                                       className="pl-2 border-l-2 border-white/10 flex items-start justify-between gap-2"
                                     >
-                                      <p className="text-[10px] text-gray-400 line-clamp-1 min-w-0">
+                                      <p className="text-[10px] text-slate-400 line-clamp-1 min-w-0">
                                         {c.description}
                                       </p>
                                       <a
@@ -503,7 +503,7 @@ export default function BillInfluenceChain({
                           )}
 
                           {employersWithContracts === 0 && (
-                            <p className="text-[10px] text-gray-500">
+                            <p className="text-[10px] text-slate-400">
                               None of {champion.name}&apos;s top donor employers
                               were found to hold major federal contracts.
                             </p>
@@ -512,13 +512,13 @@ export default function BillInfluenceChain({
                       )}
 
                       {/* Source */}
-                      <p className="text-[9px] text-gray-600 pt-1 border-t border-white/5">
+                      <p className="text-[9px] text-gray-600 pt-1 border-t border-white/8">
                         Source:{" "}
                         <a
                           href="https://lda.senate.gov/"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-gray-500 hover:text-gray-400 underline"
+                          className="text-slate-400 hover:text-slate-400 underline"
                         >
                           Senate LDA
                           <span className="sr-only"> (opens in new tab)</span>
@@ -528,7 +528,7 @@ export default function BillInfluenceChain({
                           href="https://www.fec.gov"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-gray-500 hover:text-gray-400 underline"
+                          className="text-slate-400 hover:text-slate-400 underline"
                         >
                           FEC
                           <span className="sr-only"> (opens in new tab)</span>
@@ -538,7 +538,7 @@ export default function BillInfluenceChain({
                           href="https://www.usaspending.gov"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-gray-500 hover:text-gray-400 underline"
+                          className="text-slate-400 hover:text-slate-400 underline"
                         >
                           USASpending.gov
                           <span className="sr-only"> (opens in new tab)</span>

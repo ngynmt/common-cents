@@ -55,8 +55,8 @@ function VoteBadge({ vote }: { vote: VoteRecord["vote"] }) {
   const styles: Record<string, string> = {
     yes: "bg-green-500/20 text-green-400",
     no: "bg-red-500/20 text-red-400",
-    abstain: "bg-gray-500/20 text-gray-400",
-    not_voting: "bg-gray-500/20 text-gray-400",
+    abstain: "bg-gray-500/20 text-slate-400",
+    not_voting: "bg-gray-500/20 text-slate-400",
   };
   const labels: Record<string, string> = {
     yes: "YES",
@@ -110,7 +110,7 @@ export default function RepresentativeCard({ rep, votes, compact, finance }: Rep
             <span className="text-sm font-semibold text-white">{rep.name}</span>
             <PartyBadge party={rep.party} />
           </div>
-          <div className="text-xs text-gray-500">{chamberLabel}</div>
+          <div className="text-xs text-slate-400">{chamberLabel}</div>
         </div>
         <div className="text-right shrink-0">
           {isUpThisYear ? (
@@ -118,11 +118,11 @@ export default function RepresentativeCard({ rep, votes, compact, finance }: Rep
               Up for re-election this year
             </span>
           ) : isUpNextYear ? (
-            <span className="text-[10px] text-gray-500">
+            <span className="text-[10px] text-slate-400">
               Re-election: {rep.nextElection}
             </span>
           ) : (
-            <span className="text-[10px] text-gray-500">
+            <span className="text-[10px] text-slate-400">
               Re-election: {rep.nextElection}
             </span>
           )}
@@ -131,7 +131,7 @@ export default function RepresentativeCard({ rep, votes, compact, finance }: Rep
 
       {/* Campaign finance */}
       {finance && (finance.totalRaised > 0 || finance.topEmployers.length > 0) && (
-        <div className="pt-1 border-t border-white/5">
+        <div className="pt-1 border-t border-white/8">
           <FinanceChart finance={finance} />
         </div>
       )}
@@ -152,13 +152,13 @@ export default function RepresentativeCard({ rep, votes, compact, finance }: Rep
             return (
               <div key={i} className="space-y-0.5">
                 <div className="flex items-center justify-between gap-2">
-                  <span className="text-xs text-gray-400 flex-1 truncate">
+                  <span className="text-xs text-slate-400 flex-1 truncate">
                     {vote.legislationTitle}
                   </span>
                   <VoteBadge vote={vote.vote} />
                 </div>
                 {effectText && (
-                  <p className="text-[10px] text-gray-400 pl-0.5">
+                  <p className="text-[10px] text-slate-400 pl-0.5">
                     {effectText}
                   </p>
                 )}
@@ -181,7 +181,7 @@ export default function RepresentativeCard({ rep, votes, compact, finance }: Rep
             href={rep.contactFormUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs px-3 py-1.5 rounded-lg bg-white/5 text-gray-300 hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="text-xs px-3 py-1.5 rounded-lg bg-white/5 text-slate-300 hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             Email<span className="sr-only-inline"> {rep.name} (opens in new tab)</span>
           </a>
@@ -189,7 +189,7 @@ export default function RepresentativeCard({ rep, votes, compact, finance }: Rep
             href={rep.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs px-3 py-1.5 rounded-lg bg-white/5 text-gray-300 hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="text-xs px-3 py-1.5 rounded-lg bg-white/5 text-slate-300 hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             Website<span className="sr-only-inline"> for {rep.name} (opens in new tab)</span>
           </a>

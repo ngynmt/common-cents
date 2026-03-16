@@ -55,7 +55,7 @@ function StatusPill({ status }: { status: PendingBill["status"] }) {
     passed_house: "bg-blue-500/20 text-blue-400",
     passed_senate: "bg-blue-500/20 text-blue-400",
     in_committee: "bg-yellow-500/20 text-yellow-400",
-    introduced: "bg-gray-500/20 text-gray-400",
+    introduced: "bg-gray-500/20 text-slate-400",
     floor_vote_scheduled: "bg-orange-500/20 text-orange-400",
     enacted: "bg-green-500/20 text-green-400",
   };
@@ -101,7 +101,7 @@ function ImpactBar({
   return (
     <div className="space-y-1">
       <div className="flex items-center gap-2">
-        <span className="text-[10px] text-gray-500 w-14 shrink-0">Now</span>
+        <span className="text-[10px] text-slate-400 w-14 shrink-0">Now</span>
         <div className="flex-1 h-4 bg-white/5 rounded-full overflow-hidden">
           <motion.div
             initial={{ width: 0 }}
@@ -117,7 +117,7 @@ function ImpactBar({
         </div>
       </div>
       <div className="flex items-center gap-2">
-        <span className="text-[10px] text-gray-500 w-14 shrink-0">If passed</span>
+        <span className="text-[10px] text-slate-400 w-14 shrink-0">If passed</span>
         <div className="flex-1 h-4 bg-white/5 rounded-full overflow-hidden">
           <motion.div
             initial={{ width: `${currentWidth}%` }}
@@ -272,7 +272,7 @@ export default function BillsPanel({
                             <div className={`text-xs font-bold ${isIncrease ? "text-red-400" : "text-green-400"}`}>
                               {isIncrease ? "+" : ""}{formatCurrency(impact)}
                             </div>
-                            <div className="text-[10px] text-gray-500">/year</div>
+                            <div className="text-[10px] text-slate-400">/year</div>
                           </div>
                         );
                       })()}
@@ -291,11 +291,11 @@ export default function BillsPanel({
                           )}
                         </div>
                         <div className="flex items-center gap-2 mt-1">
-                          <span className="text-[10px] text-gray-500 font-mono">
+                          <span className="text-[10px] text-slate-400 font-mono">
                             {bill.billNumber}
                           </span>
                           <span className="text-[10px] text-gray-600" aria-hidden="true">&middot;</span>
-                          <span className="text-[10px] text-gray-500">
+                          <span className="text-[10px] text-slate-400">
                             Enacted {bill.enactedDate}
                           </span>
                           <span className="text-[10px] text-gray-600" aria-hidden="true">&middot;</span>
@@ -310,7 +310,7 @@ export default function BillsPanel({
                       <motion.span
                         animate={{ rotate: isExpanded ? 180 : 0 }}
                         transition={{ duration: 0.2 }}
-                        className="text-gray-500 shrink-0 mt-1 text-lg"
+                        className="text-slate-400 shrink-0 mt-1 text-lg"
                         aria-hidden="true"
                       >
                         &#9662;
@@ -328,12 +328,12 @@ export default function BillsPanel({
                         transition={{ duration: 0.3 }}
                         className="overflow-hidden"
                       >
-                        <div className="px-3 pb-3 space-y-3 border-t border-white/5 pt-3">
-                          <p className="text-xs text-gray-400">{bill.summary}</p>
+                        <div className="px-3 pb-3 space-y-3 border-t border-white/8 pt-3">
+                          <p className="text-xs text-slate-400">{bill.summary}</p>
 
                           {/* Multi-category spending impacts */}
                           <div className="space-y-2">
-                            <h4 className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
+                            <h4 className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
                               Spending Impacts (Annual)
                             </h4>
                             {bill.spendingImpacts.map((impact, i) => {
@@ -348,7 +348,7 @@ export default function BillsPanel({
                                         className="w-2 h-2 rounded-full shrink-0"
                                         style={{ backgroundColor: catColor }}
                                       />
-                                      <span className="text-xs text-gray-300 capitalize">
+                                      <span className="text-xs text-slate-300 capitalize">
                                         {impact.categoryId.replace(/-/g, " ")}
                                       </span>
                                     </div>
@@ -361,7 +361,7 @@ export default function BillsPanel({
                                       </span>
                                     </div>
                                   </div>
-                                  <p className="text-[11px] text-gray-500">{impact.description}</p>
+                                  <p className="text-[11px] text-slate-400">{impact.description}</p>
                                 </div>
                               );
                             })}
@@ -371,7 +371,7 @@ export default function BillsPanel({
                           <div className="space-y-2">
                             <div className="p-2.5 rounded-lg bg-white/5 border border-white/10">
                               <div className="flex items-center justify-between">
-                                <span className="text-xs text-gray-400">Net spending change</span>
+                                <span className="text-xs text-slate-400">Net spending change</span>
                                 <span className="text-xs font-bold text-green-400">
                                   {formatCurrency(bill.totalAnnualImpact)}B/year
                                 </span>
@@ -382,7 +382,7 @@ export default function BillsPanel({
                                 <h4 className="text-[11px] font-semibold text-red-300 uppercase tracking-wider">
                                   But wait — what about the deficit?
                                 </h4>
-                                <p className="text-[11px] text-gray-300 leading-relaxed">
+                                <p className="text-[11px] text-slate-300 leading-relaxed">
                                   The spending cuts above save <span className="text-green-400 font-semibold">${Math.abs(bill.totalAnnualImpact)}B/year</span>.
                                   However, this law also extends the 2017 tax cuts (TCJA), which reduces federal tax
                                   revenue by roughly <span className="text-red-400 font-semibold">$450B/year</span>.
@@ -391,11 +391,11 @@ export default function BillsPanel({
                                 </p>
                                 <div className="space-y-1.5 p-2.5 rounded-lg bg-black/20">
                                   <div className="flex items-center justify-between text-[11px]">
-                                    <span className="text-gray-400">Spending cuts</span>
+                                    <span className="text-slate-400">Spending cuts</span>
                                     <span className="text-green-400 font-semibold">-${Math.abs(bill.totalAnnualImpact)}B/year</span>
                                   </div>
                                   <div className="flex items-center justify-between text-[11px]">
-                                    <span className="text-gray-400">Tax revenue lost</span>
+                                    <span className="text-slate-400">Tax revenue lost</span>
                                     <span className="text-red-400 font-semibold">-$450B/year</span>
                                   </div>
                                   <div className="border-t border-white/10 pt-1.5 flex items-center justify-between text-xs">
@@ -418,7 +418,7 @@ export default function BillsPanel({
                                     </span>
                                   </div>
                                 </div>
-                                <p className="text-[10px] text-gray-500">
+                                <p className="text-[10px] text-slate-400">
                                   Source: CBO projects $3.4 trillion added to deficits over 10 years.
                                 </p>
                               </div>
@@ -451,7 +451,7 @@ export default function BillsPanel({
                           <BillInfluenceChain champion={bill.champion} billNumber={bill.billNumber} />
 
                           {/* Take action */}
-                          <div className="space-y-2 pt-2 border-t border-white/5">
+                          <div className="space-y-2 pt-2 border-t border-white/8">
                             {(() => {
                               const billEngagement = engagement[bill.id];
                               const supportCount = billEngagement?.support || 0;
@@ -464,7 +464,7 @@ export default function BillsPanel({
                               return (
                                 <>
                                   <div className="flex items-center gap-2 flex-wrap">
-                                    <span className="text-xs text-gray-500">What do you think?</span>
+                                    <span className="text-xs text-slate-400">What do you think?</span>
                                     <button
                                       onClick={() => {
                                         const newStance = stance[bill.id] === "support" ? undefined! : "support";
@@ -478,7 +478,7 @@ export default function BillsPanel({
                                       className={`text-xs px-3 py-1.5 rounded-full transition-all cursor-pointer ${
                                         billStance === "support"
                                           ? "bg-green-500/20 text-green-400 border border-green-500/30"
-                                          : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10"
+                                          : "bg-white/5 text-slate-400 border border-white/10 hover:bg-white/10"
                                       }`}
                                     >
                                       I support this
@@ -496,7 +496,7 @@ export default function BillsPanel({
                                       className={`text-xs px-3 py-1.5 rounded-full transition-all cursor-pointer ${
                                         billStance === "oppose"
                                           ? "bg-red-500/20 text-red-400 border border-red-500/30"
-                                          : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10"
+                                          : "bg-white/5 text-slate-400 border border-white/10 hover:bg-white/10"
                                       }`}
                                     >
                                       I oppose this
@@ -519,7 +519,7 @@ export default function BillsPanel({
                                           className="h-full bg-red-500/60"
                                         />
                                       </div>
-                                      <div className="flex items-center justify-between text-[10px] text-gray-500">
+                                      <div className="flex items-center justify-between text-[10px] text-slate-400">
                                         <span>
                                           <span className="text-green-400">{supportPct}%</span> support
                                           {" · "}
@@ -537,7 +537,7 @@ export default function BillsPanel({
                                       className="overflow-hidden space-y-2"
                                     >
                                       <div className="flex items-center justify-between">
-                                        <p className="text-xs text-gray-400">
+                                        <p className="text-xs text-slate-400">
                                           Tell your rep how you feel about{" "}
                                           <span className="text-white">{bill.shortTitle}</span>:
                                         </p>
@@ -561,7 +561,7 @@ export default function BillsPanel({
                                             className={`text-xs px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
                                               contactRep === `${bill.id}::${rep.id}`
                                                 ? "bg-indigo-500/20 text-indigo-400 border border-indigo-500/30"
-                                                : "bg-white/5 text-gray-300 border border-white/10 hover:bg-white/10"
+                                                : "bg-white/5 text-slate-300 border border-white/10 hover:bg-white/10"
                                             }`}
                                           >
                                             {rep.name}
@@ -588,15 +588,15 @@ export default function BillsPanel({
                                               >
                                                 <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-2">
                                                   <div className="flex items-center justify-between">
-                                                    <h5 className="text-xs font-semibold text-gray-400">Suggested Script</h5>
+                                                    <h5 className="text-xs font-semibold text-slate-400">Suggested Script</h5>
                                                     <button
                                                       onClick={() => navigator.clipboard.writeText(script)}
-                                                      className="text-xs px-2 py-1 rounded bg-white/5 text-gray-400 hover:bg-white/10 transition-colors cursor-pointer"
+                                                      className="text-xs px-2 py-1 rounded bg-white/5 text-slate-400 hover:bg-white/10 transition-colors cursor-pointer"
                                                     >
                                                       Copy
                                                     </button>
                                                   </div>
-                                                  <p className="text-xs text-gray-300 leading-relaxed italic">
+                                                  <p className="text-xs text-slate-300 leading-relaxed italic">
                                                     &ldquo;{script}&rdquo;
                                                   </p>
                                                   <div className="flex items-center gap-2">
@@ -659,7 +659,7 @@ export default function BillsPanel({
 
       {/* Sort controls */}
       <div className="flex items-center gap-1 mb-3">
-        <span className="text-xs text-gray-400 mr-1">Sort by</span>
+        <span className="text-xs text-slate-400 mr-1">Sort by</span>
         {(
           [
             { key: "impact" as SortMode, label: "Impact" },
@@ -673,7 +673,7 @@ export default function BillsPanel({
             className={`text-xs px-2.5 py-1 rounded-full transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
               sortMode === option.key
                 ? "bg-white/10 text-white"
-                : "text-gray-400 hover:text-gray-300"
+                : "text-slate-400 hover:text-slate-300"
             }`}
           >
             {option.label}
@@ -688,7 +688,7 @@ export default function BillsPanel({
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-sm text-gray-500 py-4 text-center"
+              className="text-sm text-slate-400 py-4 text-center"
             >
               No pending bills for this category.
             </motion.p>
@@ -737,7 +737,7 @@ export default function BillsPanel({
                         {isIncrease ? "+" : ""}
                         {formatCurrency(userImpact)}
                       </div>
-                      <div className="text-[10px] text-gray-500">/year</div>
+                      <div className="text-[10px] text-slate-400">/year</div>
                     </div>
 
                     {/* Bill info */}
@@ -750,7 +750,7 @@ export default function BillsPanel({
                         <LikelihoodDot likelihood={bill.passageLikelihood} />
                       </div>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className="text-[10px] text-gray-500 font-mono">
+                        <span className="text-[10px] text-slate-400 font-mono">
                           {bill.billNumber}
                         </span>
                         <span className="text-[10px] text-gray-600" aria-hidden="true">·</span>
@@ -772,7 +772,7 @@ export default function BillsPanel({
                     <motion.span
                       animate={{ rotate: isExpanded ? 180 : 0 }}
                       transition={{ duration: 0.2 }}
-                      className="text-gray-500 shrink-0 mt-1 text-lg"
+                      className="text-slate-400 shrink-0 mt-1 text-lg"
                       aria-hidden="true"
                     >
                       ▾
@@ -790,9 +790,9 @@ export default function BillsPanel({
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <div className="px-3 pb-3 space-y-3 border-t border-white/5 pt-3">
+                      <div className="px-3 pb-3 space-y-3 border-t border-white/8 pt-3">
                         {/* Summary */}
-                        <p className="text-xs text-gray-400">{bill.summary}</p>
+                        <p className="text-xs text-slate-400">{bill.summary}</p>
 
                         {/* Impact visualization */}
                         <ImpactBar
@@ -805,15 +805,15 @@ export default function BillsPanel({
                         {bill.spendingImpacts.map((impact, i) => (
                           <div
                             key={i}
-                            className="p-2.5 rounded-lg bg-white/5 text-xs text-gray-300"
+                            className="p-2.5 rounded-lg bg-white/5 text-xs text-slate-300"
                           >
-                            <span className="text-gray-500">CBO Estimate: </span>
+                            <span className="text-slate-400">CBO Estimate: </span>
                             {impact.description}
                           </div>
                         ))}
 
                         {/* Metadata */}
-                        <div className="flex items-center gap-4 text-xs text-gray-500">
+                        <div className="flex items-center gap-4 text-xs text-slate-400">
                           <span>{bill.cosponsors} cosponsors</span>
                           <span>Last action: {bill.lastActionDate}</span>
                         </div>
@@ -842,7 +842,7 @@ export default function BillsPanel({
                         <BillInfluenceChain champion={bill.champion} billNumber={bill.billNumber} />
 
                         {/* Take action — support/oppose with engagement counters */}
-                        <div className="space-y-2 pt-2 border-t border-white/5">
+                        <div className="space-y-2 pt-2 border-t border-white/8">
                           {(() => {
                             const billEngagement = engagement[bill.id];
                             const supportCount = billEngagement?.support || 0;
@@ -855,7 +855,7 @@ export default function BillsPanel({
                             return (
                               <>
                                 <div className="flex items-center gap-2 flex-wrap">
-                                  <span className="text-xs text-gray-500">
+                                  <span className="text-xs text-slate-400">
                                     What do you think?
                                   </span>
                                   <button
@@ -871,7 +871,7 @@ export default function BillsPanel({
                                     className={`text-xs px-3 py-1.5 rounded-full transition-all cursor-pointer ${
                                       billStance === "support"
                                         ? "bg-green-500/20 text-green-400 border border-green-500/30"
-                                        : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10"
+                                        : "bg-white/5 text-slate-400 border border-white/10 hover:bg-white/10"
                                     }`}
                                   >
                                     I support this
@@ -889,7 +889,7 @@ export default function BillsPanel({
                                     className={`text-xs px-3 py-1.5 rounded-full transition-all cursor-pointer ${
                                       billStance === "oppose"
                                         ? "bg-red-500/20 text-red-400 border border-red-500/30"
-                                        : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10"
+                                        : "bg-white/5 text-slate-400 border border-white/10 hover:bg-white/10"
                                     }`}
                                   >
                                     I oppose this
@@ -913,7 +913,7 @@ export default function BillsPanel({
                                         className="h-full bg-red-500/60"
                                       />
                                     </div>
-                                    <div className="flex items-center justify-between text-[10px] text-gray-500">
+                                    <div className="flex items-center justify-between text-[10px] text-slate-400">
                                       <span>
                                         <span className="text-green-400">{supportPct}%</span> support
                                         {" · "}
@@ -935,7 +935,7 @@ export default function BillsPanel({
                                         className="overflow-hidden space-y-2"
                                       >
                                         <div className="flex items-center justify-between">
-                                          <p className="text-xs text-gray-400">
+                                          <p className="text-xs text-slate-400">
                                             Contact your representative about{" "}
                                             <span className="text-white">{bill.shortTitle}</span>:
                                           </p>
@@ -959,7 +959,7 @@ export default function BillsPanel({
                                               className={`text-xs px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
                                                 contactRep === `${bill.id}::${rep.id}`
                                                   ? "bg-indigo-500/20 text-indigo-400 border border-indigo-500/30"
-                                                  : "bg-white/5 text-gray-300 border border-white/10 hover:bg-white/10"
+                                                  : "bg-white/5 text-slate-300 border border-white/10 hover:bg-white/10"
                                               }`}
                                             >
                                               {rep.name}
@@ -987,19 +987,19 @@ export default function BillsPanel({
                                                 >
                                                   <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-2">
                                                     <div className="flex items-center justify-between">
-                                                      <h5 className="text-xs font-semibold text-gray-400">
+                                                      <h5 className="text-xs font-semibold text-slate-400">
                                                         Suggested Script
                                                       </h5>
                                                       <button
                                                         onClick={() =>
                                                           navigator.clipboard.writeText(script)
                                                         }
-                                                        className="text-xs px-2 py-1 rounded bg-white/5 text-gray-400 hover:bg-white/10 transition-colors cursor-pointer"
+                                                        className="text-xs px-2 py-1 rounded bg-white/5 text-slate-400 hover:bg-white/10 transition-colors cursor-pointer"
                                                       >
                                                         Copy
                                                       </button>
                                                     </div>
-                                                    <p className="text-xs text-gray-300 leading-relaxed italic">
+                                                    <p className="text-xs text-slate-300 leading-relaxed italic">
                                                       &ldquo;{script}&rdquo;
                                                     </p>
                                                     <div className="flex items-center gap-2">

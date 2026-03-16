@@ -180,7 +180,7 @@ function HomeContent() {
   const showReceipt = taxEstimate !== null;
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white">
+    <div className="min-h-screen bg-slate-950 text-white">
       {/* Skip to main content link */}
       <a
         href="#main-content"
@@ -190,7 +190,7 @@ function HomeContent() {
       </a>
 
       {/* Header */}
-      <header className="border-b border-white/5">
+      <header className="border-b border-white/8">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <button
@@ -202,7 +202,7 @@ function HomeContent() {
               </span>
             </button>
           </div>
-          <span className="text-xs text-gray-400">
+          <span className="text-xs text-slate-400">
             FY {SUPPORTED_TAX_YEARS[SUPPORTED_TAX_YEARS.length - 1]} Estimates
           </span>
         </div>
@@ -229,7 +229,7 @@ function HomeContent() {
                   </span>{" "}
                   go?
                 </h1>
-                <p className="text-gray-400 text-lg">
+                <p className="text-slate-400 text-lg">
                   Get a personalized receipt for your federal taxes. See exactly
                   how your money is spent — and who decides.
                 </p>
@@ -238,7 +238,7 @@ function HomeContent() {
               <TaxForm onSubmit={handleFormSubmit} />
 
               {/* Trust indicators */}
-              <div className="flex items-center gap-6 text-xs text-gray-400">
+              <div className="flex items-center gap-6 text-xs text-slate-400">
                 <span>No data stored</span>
                 <span aria-hidden="true">•</span>
                 <span>Calculated in your browser</span>
@@ -271,28 +271,28 @@ function HomeContent() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-white/5 mt-20">
-        <div className="max-w-6xl mx-auto px-4 py-6 text-center text-xs text-gray-400 space-y-3">
+      <footer className="border-t border-white/8 mt-20">
+        <div className="max-w-6xl mx-auto px-4 py-6 text-center text-xs text-slate-400 space-y-3">
           <p>
             Tax estimates are approximations based on standard deduction and{" "}
-            <a href="https://www.irs.gov/taxtopics/tc751" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-gray-200 underline">IRS<span className="sr-only"> (opens in new tab)</span></a>
+            <a href="https://www.irs.gov/taxtopics/tc751" target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-gray-200 underline">IRS<span className="sr-only"> (opens in new tab)</span></a>
             {" "}brackets. Some descriptions are AI-generated summaries of government filings.
           </p>
           <p className="text-[10px] text-gray-500">
             Sources:{" "}
-            <a href="https://www.whitehouse.gov/omb/budget/historical-tables/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">OMB<span className="sr-only"> (opens in new tab)</span></a>
+            <a href="https://www.whitehouse.gov/omb/budget/historical-tables/" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-300 underline">OMB<span className="sr-only"> (opens in new tab)</span></a>
             {" · "}
-            <a href="https://www.cbo.gov/cost-estimates" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">CBO<span className="sr-only"> (opens in new tab)</span></a>
+            <a href="https://www.cbo.gov/cost-estimates" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-300 underline">CBO<span className="sr-only"> (opens in new tab)</span></a>
             {" · "}
-            <a href="https://www.congress.gov/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">Congress.gov<span className="sr-only"> (opens in new tab)</span></a>
+            <a href="https://www.congress.gov/" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-300 underline">Congress.gov<span className="sr-only"> (opens in new tab)</span></a>
             {" · "}
-            <a href="https://www.usaspending.gov" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">USASpending.gov<span className="sr-only"> (opens in new tab)</span></a>
+            <a href="https://www.usaspending.gov" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-300 underline">USASpending.gov<span className="sr-only"> (opens in new tab)</span></a>
             {" · "}
-            <a href="https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">Treasury MTS<span className="sr-only"> (opens in new tab)</span></a>
+            <a href="https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-300 underline">Treasury MTS<span className="sr-only"> (opens in new tab)</span></a>
             {" · "}
-            <a href="https://www.fec.gov" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">FEC<span className="sr-only"> (opens in new tab)</span></a>
+            <a href="https://www.fec.gov" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-300 underline">FEC<span className="sr-only"> (opens in new tab)</span></a>
             {" · "}
-            <a href="https://lda.senate.gov/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-300 underline">Senate LDA<span className="sr-only"> (opens in new tab)</span></a>
+            <a href="https://lda.senate.gov/" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-300 underline">Senate LDA<span className="sr-only"> (opens in new tab)</span></a>
           </p>
           <p>
             Common Cents is not affiliated with any government agency or political organization.
@@ -302,7 +302,7 @@ function HomeContent() {
               href="https://docs.google.com/forms/d/e/1FAIpQLScpU812Yifx_E9eu3MtKZzVxp6Kwar9Cbr7ucFR6CdXW6pPSw/viewform?usp=publish-editor"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/5 text-gray-300 hover:bg-white/10 transition-colors text-xs font-medium"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/5 text-slate-300 hover:bg-white/10 transition-colors text-xs font-medium"
             >
               Share feedback
             </a>
