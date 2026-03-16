@@ -160,6 +160,13 @@ function drawCategoryList(
 export function renderShareCard(options: ShareCardOptions): HTMLCanvasElement {
   const { spending, effectiveRate, taxYear, mode } = options;
 
+  if (spending.length === 0) {
+    const empty = document.createElement("canvas");
+    empty.width = SIZE;
+    empty.height = SIZE;
+    return empty;
+  }
+
   const canvas = document.createElement("canvas");
   canvas.width = SIZE;
   canvas.height = SIZE;
@@ -231,8 +238,8 @@ export function renderShareCard(options: ShareCardOptions): HTMLCanvasElement {
   ctx.textAlign = "center";
   const cta =
     mode === "classified"
-      ? "Declassify yours at commoncents.app"
-      : "See yours at commoncents.app";
+      ? "Declassify yours at makecommoncents.org"
+      : "See yours at makecommoncents.org";
   ctx.fillText(cta, SIZE / 2, SIZE - 60);
 
   return canvas;

@@ -2,7 +2,6 @@
 
 import { useState, useMemo, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import Image from "next/image";
 import type { PersonalSpendingCategory } from "@/lib/spending";
 import { renderShareCard, mapSpendingToCard } from "@/lib/share-card";
 
@@ -42,7 +41,6 @@ export default function ShareSheet({
     }
   }, [isOpen, mode, spending, effectiveRate, taxYear]);
 
-  // Clear blob errors when the canvas regenerates successfully
   const error = renderError ?? blobError;
 
   // Lock body scroll
@@ -75,6 +73,7 @@ export default function ShareSheet({
         setBlobError("Couldn't generate image. Try again.");
         return;
       }
+      setBlobError(null);
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
@@ -91,6 +90,7 @@ export default function ShareSheet({
         setBlobError("Couldn't generate image. Try again.");
         return;
       }
+      setBlobError(null);
       const file = new File([blob], "common-cents-receipt.png", {
         type: "image/png",
       });
@@ -211,13 +211,11 @@ export default function ShareSheet({
                 {/* Preview */}
                 {previewUrl && (
                   <div className="rounded-lg overflow-hidden border border-white/10">
-                    <Image
+                    {/* eslint-disable-next-line @next/next/no-img-element -- data URL from canvas, next/image adds no value */}
+                    <img
                       src={previewUrl}
                       alt="Preview of share card showing top federal spending categories"
-                      width={1080}
-                      height={1080}
                       className="w-full aspect-square"
-                      unoptimized
                     />
                   </div>
                 )}
