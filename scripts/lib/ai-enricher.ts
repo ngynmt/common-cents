@@ -117,7 +117,9 @@ export async function enrichOutcomeCallout(
 ): Promise<string | null> {
   const system = `You are writing factual editorial callouts for a civic transparency app that shows US taxpayers how their money is spent compared to other countries.
 
-Write a 1-2 sentence callout that contrasts the spending ratio with the outcomes. Lead with what the other country achieves, then contrast with the US. Use specific numbers. Be factual and precise — let the numbers make the argument. Do not editorialize beyond the data. No hedging language.`;
+Write a 1-2 sentence callout that contrasts the spending ratio with the outcomes. Lead with what the other country achieves, then contrast with the US. Use specific numbers. Be factual and precise — let the numbers make the argument. Do not editorialize beyond the data. No hedging language.
+
+Respond with ONLY plain text. No markdown, no headers, no bold, no bullet points, no asterisks.`;
 
   const user = `Category: ${categoryName}
 Country: ${countryName}
