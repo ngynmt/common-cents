@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Representative, VoteRecord } from "@/data/representatives";
 import type { CampaignFinanceSummary } from "@/data/campaign-finance";
@@ -12,6 +12,7 @@ interface RepresentativesModalProps {
   representatives: Representative[];
   votes: VoteRecord[];
   financeData?: Record<string, CampaignFinanceSummary | null>;
+  onZipSubmit?: (zip: string) => void;
 }
 
 export default function RepresentativesModal({
@@ -20,15 +21,24 @@ export default function RepresentativesModal({
   representatives,
   votes,
   financeData,
+  onZipSubmit,
 }: RepresentativesModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
+  const [zipInput, setZipInput] = useState("");
+  const [zipSubmitted, setZipSubmitted] = useState(false);
+  const hasReps = representatives.length > 0;
+  const zipLoading = zipSubmitted && !hasReps;
 
   // Lock body scroll when modal is open to prevent backdrop gap on mobile
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
-      return () => { document.body.style.overflow = ""; };
+      document.documentElement.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = "";
+        document.documentElement.style.overflow = "";
+      };
     }
   }, [isOpen]);
 
@@ -69,6 +79,12 @@ export default function RepresentativesModal({
     [onClose]
   );
 
+  const handleZipSubmit = useCallback(() => {
+    if (!onZipSubmit || zipInput.length < 5) return;
+    setZipSubmitted(true);
+    onZipSubmit(zipInput);
+  }, [onZipSubmit, zipInput]);
+
   const getRepVotes = (repId: string) =>
     votes.filter((v) => v.representativeId === repId);
 
@@ -102,7 +118,7 @@ export default function RepresentativesModal({
             <div className="bg-slate-900 border border-white/10 rounded-2xl overflow-hidden flex flex-col max-h-full">
               {/* Header */}
               <div className="px-5 py-4 border-b border-white/10 flex items-center justify-between shrink-0">
-                <h2 id="reps-modal-title" className="text-lg font-semibold font-serif text-white">
+                <h2 id="reps-modal-title" className="text-lg font-semibold text-white">
                   Your Representatives
                 </h2>
                 <button
@@ -116,27 +132,67 @@ export default function RepresentativesModal({
 
               {/* Body */}
               <div className="p-5 space-y-3 overflow-y-auto flex-1">
-                <p className="text-xs text-slate-400">
-                  Based on your ZIP code. Contact your representatives about any
-                  spending issue that matters to you.
-                </p>
+                {hasReps ? (
+                  <>
+                    <p className="text-xs text-slate-400">
+                      Based on your ZIP code. Contact your representatives about any
+                      spending issue that matters to you.
+                    </p>
 
-                {representatives.map((rep) => (
-                  <RepresentativeCard
-                    key={rep.id}
-                    rep={rep}
-                    votes={getRepVotes(rep.id)}
-                    finance={financeData?.[rep.id]}
-                  />
-                ))}
+                    {representatives.map((rep) => (
+                      <RepresentativeCard
+                        key={rep.id}
+                        rep={rep}
+                        votes={getRepVotes(rep.id)}
+                        finance={financeData?.[rep.id]}
+                      />
+                    ))}
+                  </>
+                ) : (
+                  <div className="flex flex-col items-center justify-center py-8 space-y-4">
+                    <div className="text-4xl" aria-hidden="true">🏛️</div>
+                    <p className="text-sm text-slate-300 text-center max-w-xs">
+                      Enter your ZIP code to see how your representatives voted on spending decisions.
+                    </p>
+                    <form
+                      onSubmit={(e) => { e.preventDefault(); handleZipSubmit(); }}
+                      className="flex items-center gap-2"
+                    >
+                      <input
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        maxLength={5}
+                        placeholder="ZIP code"
+                        value={zipInput}
+                        onChange={(e) => setZipInput(e.target.value.replace(/\D/g, ""))}
+                        className="w-28 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm text-center placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        autoFocus
+                      />
+                      <button
+                        type="submit"
+                        disabled={zipInput.length < 5 || zipLoading}
+                        className="px-4 py-2 rounded-lg bg-indigo-500 text-white text-sm font-medium hover:bg-indigo-400 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      >
+                        {zipLoading ? "Looking up…" : "Look up"}
+                      </button>
+                    </form>
+                    <p className="text-[10px] text-slate-500 text-center">
+                      We use your ZIP to find your House and Senate representatives.
+                      Nothing is stored.
+                    </p>
+                  </div>
+                )}
               </div>
 
               {/* Footer */}
-              <div className="px-5 py-3 border-t border-white/10 shrink-0">
-                <p className="text-[10px] text-slate-400 text-center">
-                  Representative data provided by Geocodio and Congress.gov. Campaign finance data from FEC.gov. Contact info may occasionally be outdated.
-                </p>
-              </div>
+              {hasReps && (
+                <div className="px-5 py-3 border-t border-white/10 shrink-0">
+                  <p className="text-[10px] text-slate-400 text-center">
+                    Representative data provided by Geocodio and Congress.gov. Campaign finance data from FEC.gov. Contact info may occasionally be outdated.
+                  </p>
+                </div>
+              )}
             </div>
           </motion.div>
         </>

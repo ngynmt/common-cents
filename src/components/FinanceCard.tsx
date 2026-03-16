@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell, LabelList } from "recharts";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { CampaignFinanceSummary } from "@/data/campaign-finance";
 import { formatCurrency } from "@/lib/tax";
@@ -12,62 +11,23 @@ interface FinanceChartProps {
   finance: CampaignFinanceSummary;
 }
 
-const EMPLOYER_BAR_COLOR = "#60a5fa"; // blue-400 — neutral across parties
-const CHART_HEIGHT = 150;
-
 function formatCompact(n: number): string {
   if (n >= 1_000_000) return `$${(n / 1_000_000).toFixed(1)}M`;
   if (n >= 1_000) return `$${(n / 1_000).toFixed(0)}K`;
   return formatCurrency(n);
 }
 
-function truncate(s: string | null | undefined, max: number): string {
-  if (!s) return "Unknown";
-  return s.length > max ? s.slice(0, max - 1) + "…" : s;
-}
-
-/** Observe an element's width so charts render correctly inside animated containers. */
-function useContainerWidth(): [React.RefCallback<HTMLDivElement>, number] {
-  const [el, setEl] = useState<HTMLDivElement | null>(null);
-  const [width, setWidth] = useState(0);
-
-  useEffect(() => {
-    if (!el) return;
-    const ro = new ResizeObserver((entries) => {
-      const w = entries[0]?.contentRect.width ?? 0;
-      if (w > 0) setWidth(w);
-    });
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, [el]);
-
-  return [setEl, width];
-}
-
 export default function FinanceChart({ finance }: FinanceChartProps) {
-  const outsideSpending = finance.outsideSpending; // null = fetch failed, [] = confirmed none
+  const outsideSpending = finance.outsideSpending;
   const hasOutsideSpending = outsideSpending !== null && outsideSpending.length > 0;
   const confirmedNoOutsideSpending = outsideSpending !== null && outsideSpending.length === 0;
   const hasEmployers = finance.topEmployers.length > 0;
 
-  const [outsideRef, outsideWidth] = useContainerWidth();
-  const [employerRef, employerWidth] = useContainerWidth();
+  const outsideData = (outsideSpending ?? []).slice(0, 5);
+  const outsideMax = outsideData.reduce((m, d) => Math.max(m, d.total), 0);
 
-  // Outside spending chart data — top 5, color-coded by support/oppose
-  const outsideData = (outsideSpending ?? []).slice(0, 5).map((d) => ({
-    name: truncate(d.name, 28),
-    fullName: d.name,
-    total: d.total,
-    support: d.support,
-  }));
-
-  // Employer chart data — top 5
-  const employerData = finance.topEmployers.slice(0, 5).map((d) => ({
-    name: truncate(d.employer, 25),
-    fullName: d.employer,
-    total: d.total,
-    count: d.count,
-  }));
+  const employerData = finance.topEmployers.slice(0, 5);
+  const employerMax = employerData.reduce((m, d) => Math.max(m, d.total), 0);
 
   return (
     <div className="space-y-2">
@@ -79,7 +39,7 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
         </InfoTooltip>
       </div>
 
-      {/* Outside spending (PACs / Super PACs) — primary */}
+      {/* Outside spending (PACs / Super PACs) */}
       {confirmedNoOutsideSpending && (
         <div className="py-2 px-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
           <p className="text-xs text-emerald-400 font-medium">No outside spending</p>
@@ -89,64 +49,28 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
         </div>
       )}
       {hasOutsideSpending && (
-        <div className="space-y-1">
-          <div className="text-xs font-serif text-slate-400 font-medium uppercase tracking-wider">
+        <div className="space-y-1.5">
+          <div className="text-xs text-slate-400 font-medium uppercase tracking-wider">
             Outside spending (Super PACs){finance.outsideSpendingCycle && finance.outsideSpendingCycle !== finance.cycle ? ` · ${finance.outsideSpendingCycle} cycle` : ""}
           </div>
-          <div ref={outsideRef} className="w-full h-[150px]" role="img" aria-label={`Outside spending: ${outsideData.map((d) => `${d.fullName}: ${formatCompact(d.total)} ${d.support ? "supporting" : "opposing"}`).join(", ")}`}>
-            {outsideWidth > 0 && (
-              <BarChart
-                data={outsideData}
-                layout="vertical"
-                width={outsideWidth}
-                height={CHART_HEIGHT}
-                margin={{ top: 0, right: 55, left: 0, bottom: 0 }}
-              >
-                <XAxis type="number" hide />
-                <YAxis
-                  type="category"
-                  dataKey="name"
-                  width={130}
-                  tick={{ fill: "#94a3b8", fontSize: 10 }}
-                  axisLine={false}
-                  tickLine={false}
-                />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "#1e293b",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    borderRadius: "8px",
-                    fontSize: "12px",
-                  }}
-                  labelStyle={{ color: "#fff" }}
-                  itemStyle={{ color: "#94a3b8" }}
-                  formatter={(value, _name, props) => {
-                    const v = typeof value === "number" ? value : 0;
-                    const p = props?.payload as { support?: boolean; fullName?: string } | undefined;
-                    const label = p?.support ? "Supporting" : "Opposing";
-                    return [
-                      `${formatCurrency(v)} spent ${label.toLowerCase()}`,
-                      p?.fullName ?? "",
-                    ];
-                  }}
-                />
-                <Bar dataKey="total" radius={[0, 4, 4, 0]} barSize={14}>
-                  {outsideData.map((d, i) => (
-                    <Cell
-                      key={i}
-                      fill={d.support ? "#22c55e" : "#ef4444"}
-                      fillOpacity={0.7}
-                    />
-                  ))}
-                  <LabelList
-                    dataKey="total"
-                    position="right"
-                    formatter={(v) => formatCompact(Number(v))}
-                    style={{ fill: "#9ca3af", fontSize: 10, fontFamily: "Courier New, monospace" }}
+          <div
+            className="space-y-1"
+            role="list"
+            aria-label={`Outside spending: ${outsideData.map((d) => `${d.name}: ${formatCompact(d.total)} ${d.support ? "supporting" : "opposing"}`).join(", ")}`}
+          >
+            {outsideData.map((d) => (
+              <div key={d.name} className="flex items-center gap-2" role="listitem">
+                <span className={`inline-block w-1.5 h-1.5 rounded-full shrink-0 ${d.support ? "bg-green-500/70" : "bg-red-500/70"}`} />
+                <span className="text-[10px] text-slate-300 min-w-0 truncate flex-1">{d.name}</span>
+                <div className="w-20 h-1.5 bg-white/5 rounded-full overflow-hidden shrink-0">
+                  <div
+                    className={`h-full rounded-full ${d.support ? "bg-green-500/60" : "bg-red-500/60"}`}
+                    style={{ width: outsideMax > 0 ? `${(d.total / outsideMax) * 100}%` : "0%" }}
                   />
-                </Bar>
-              </BarChart>
-            )}
+                </div>
+                <span className="font-amount text-[10px] text-slate-400 shrink-0 w-14 text-right">{formatCompact(d.total)}</span>
+              </div>
+            ))}
           </div>
           <div className="flex items-center gap-3 text-[10px] text-slate-400">
             <span className="flex items-center gap-1">
@@ -159,61 +83,29 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
         </div>
       )}
 
-      {/* Donor employers — secondary */}
+      {/* Donor employers */}
       {hasEmployers && (
-        <div className="space-y-1">
-          <div className="text-xs font-serif text-slate-400 font-medium uppercase tracking-wider">
+        <div className="space-y-1.5">
+          <div className="text-xs text-slate-400 font-medium uppercase tracking-wider">
             Top donor employers
           </div>
-          <div ref={employerRef} className="w-full h-[150px]" role="img" aria-label={`Top donor employers: ${employerData.map((d) => `${d.fullName}: ${formatCompact(d.total)}`).join(", ")}`}>
-            {employerWidth > 0 && (
-              <BarChart
-                data={employerData}
-                layout="vertical"
-                width={employerWidth}
-                height={CHART_HEIGHT}
-                margin={{ top: 0, right: 55, left: 0, bottom: 0 }}
-              >
-                <XAxis type="number" hide />
-                <YAxis
-                  type="category"
-                  dataKey="name"
-                  width={130}
-                  tick={{ fill: "#94a3b8", fontSize: 10 }}
-                  axisLine={false}
-                  tickLine={false}
-                />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "#1e293b",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    borderRadius: "8px",
-                    fontSize: "12px",
-                  }}
-                  labelStyle={{ color: "#fff" }}
-                  itemStyle={{ color: "#94a3b8" }}
-                  formatter={(value, _name, props) => {
-                    const v = typeof value === "number" ? value : 0;
-                    const p = props?.payload as { count?: number; fullName?: string } | undefined;
-                    return [
-                      `${formatCurrency(v)} from ${p?.count ?? 0} employees`,
-                      p?.fullName ?? "",
-                    ];
-                  }}
-                />
-                <Bar dataKey="total" radius={[0, 4, 4, 0]} barSize={14}>
-                  {employerData.map((_, i) => (
-                    <Cell key={i} fill={EMPLOYER_BAR_COLOR} fillOpacity={0.6} />
-                  ))}
-                  <LabelList
-                    dataKey="total"
-                    position="right"
-                    formatter={(v) => formatCompact(Number(v))}
-                    style={{ fill: "#9ca3af", fontSize: 10, fontFamily: "Courier New, monospace" }}
+          <div
+            className="space-y-1"
+            role="list"
+            aria-label={`Top donor employers: ${employerData.map((d) => `${d.employer}: ${formatCompact(d.total)}`).join(", ")}`}
+          >
+            {employerData.map((d) => (
+              <div key={d.employer} className="flex items-center gap-2" role="listitem">
+                <span className="text-[10px] text-slate-300 min-w-0 truncate flex-1">{d.employer}</span>
+                <div className="w-20 h-1.5 bg-white/5 rounded-full overflow-hidden shrink-0">
+                  <div
+                    className="h-full rounded-full bg-blue-400/60"
+                    style={{ width: employerMax > 0 ? `${(d.total / employerMax) * 100}%` : "0%" }}
                   />
-                </Bar>
-              </BarChart>
-            )}
+                </div>
+                <span className="font-amount text-[10px] text-slate-400 shrink-0 w-14 text-right">{formatCompact(d.total)}</span>
+              </div>
+            ))}
           </div>
         </div>
       )}
@@ -259,7 +151,6 @@ function DonorContracts({ employers, repName }: { employers: { employer: string;
         return;
       }
       const json = await res.json();
-      // Only keep employers that actually have contracts
       const results: DonorContractsResult[] = (json.results ?? []).filter(
         (r: DonorContractsResult) => r.contracts.length > 0,
       );

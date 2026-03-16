@@ -239,7 +239,7 @@ export default function BillsPanel({
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-3">
             <span className="text-base" aria-hidden="true">&#9878;</span>
-            <h3 className="text-sm font-semibold font-serif text-white">Landmark Laws (Last 2 Years)</h3>
+            <h3 className="text-sm font-semibold text-white">Landmark Laws (Last 2 Years)</h3>
           </div>
           <div className="space-y-2">
             {filteredLandmarkBills.map((bill) => {
@@ -384,24 +384,24 @@ export default function BillsPanel({
                                   But wait — what about the deficit?
                                 </h4>
                                 <p className="text-[11px] text-slate-300 leading-relaxed">
-                                  The spending cuts above save <span className="text-green-400 font-semibold">${Math.abs(bill.totalAnnualImpact)}B/year</span>.
+                                  The spending cuts above save <span className="text-green-400 font-semibold font-amount">${Math.abs(bill.totalAnnualImpact)}B/year</span>.
                                   However, this law also extends the 2017 tax cuts (TCJA), which reduces federal tax
-                                  revenue by roughly <span className="text-red-400 font-semibold">$450B/year</span>.
+                                  revenue by roughly <span className="text-red-400 font-semibold font-amount">$450B/year</span>.
                                   The revenue loss is about <span className="text-white font-semibold">4.5x larger</span> than
                                   the spending savings.
                                 </p>
                                 <div className="space-y-1.5 p-2.5 rounded-lg bg-black/20">
                                   <div className="flex items-center justify-between text-[11px]">
                                     <span className="text-slate-400">Spending cuts</span>
-                                    <span className="text-green-400 font-semibold">-${Math.abs(bill.totalAnnualImpact)}B/year</span>
+                                    <span className="text-green-400 font-semibold font-amount">-${Math.abs(bill.totalAnnualImpact)}B/year</span>
                                   </div>
                                   <div className="flex items-center justify-between text-[11px]">
                                     <span className="text-slate-400">Tax revenue lost</span>
-                                    <span className="text-red-400 font-semibold">-$450B/year</span>
+                                    <span className="text-red-400 font-semibold font-amount">-$450B/year</span>
                                   </div>
                                   <div className="border-t border-white/10 pt-1.5 flex items-center justify-between text-xs">
                                     <span className="text-red-300 font-semibold">Net added to deficit</span>
-                                    <span className="text-red-400 font-bold">+${bill.deficitImpact}B/year</span>
+                                    <span className="text-red-400 font-bold font-amount">+${bill.deficitImpact}B/year</span>
                                   </div>
                                   <div className="border-t border-white/10 pt-1.5 flex items-center justify-between text-xs">
                                     <span className="text-[11px] text-red-300/70 inline-flex items-center gap-1">
@@ -647,7 +647,7 @@ export default function BillsPanel({
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
           </span>
-          <h3 className="text-sm font-semibold font-serif text-white inline-flex items-center gap-1.5">
+          <h3 className="text-sm font-semibold text-white inline-flex items-center gap-1.5">
             {activeCategoryId
               ? `Bills Impacting ${activeCategoryName}`
               : "Upcoming Bills That Could Change Your Receipt"}

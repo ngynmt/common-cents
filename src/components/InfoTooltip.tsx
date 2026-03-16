@@ -1,19 +1,31 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
+import { createPortal } from "react-dom";
 
 interface InfoTooltipProps {
   children: React.ReactNode;
+  /** Tailwind width class (default: "w-56") */
   width?: string;
   position?: "above" | "below" | "auto";
 }
 
+// Map Tailwind width classes to pixel values for fixed positioning
+const WIDTH_MAP: Record<string, number> = {
+  "w-56": 224,
+  "w-60": 240,
+  "w-64": 256,
+};
+
+interface TooltipStyle {
+  top: number;
+  left: number;
+}
+
 export default function InfoTooltip({ children, width = "w-56", position = "auto" }: InfoTooltipProps) {
+  const maxWidth = WIDTH_MAP[width] ?? 224;
   const [isVisible, setIsVisible] = useState(false);
-  const [resolvedPosition, setResolvedPosition] = useState<"above" | "below">(
-    position === "auto" ? "above" : position,
-  );
-  const [horizontalShift, setHorizontalShift] = useState(0);
+  const [style, setStyle] = useState<TooltipStyle>({ top: 0, left: 0 });
   const triggerRef = useRef<HTMLSpanElement>(null);
   const tooltipRef = useRef<HTMLSpanElement>(null);
 
@@ -22,51 +34,43 @@ export default function InfoTooltip({ children, width = "w-56", position = "auto
 
     const triggerRect = triggerRef.current.getBoundingClientRect();
     const tooltipRect = tooltipRef.current.getBoundingClientRect();
+    const padding = 8;
+    const gap = 6; // space between trigger and tooltip
 
     // Vertical: decide above or below
-    if (position === "auto" || position === "above") {
+    let vertical: "above" | "below";
+    if (position === "auto") {
       const spaceAbove = triggerRect.top;
-
-      if (position === "auto") {
-        setResolvedPosition(spaceAbove >= tooltipRect.height + 8 ? "above" : "below");
-      } else if (spaceAbove < tooltipRect.height + 8) {
-        setResolvedPosition("below"); // flip if preferred direction clips
-      }
+      vertical = spaceAbove >= tooltipRect.height + gap ? "above" : "below";
     } else {
-      const spaceBelow = window.innerHeight - triggerRect.bottom;
-      if (spaceBelow < tooltipRect.height + 8) {
-        setResolvedPosition("above");
-      }
+      const spacePreferred =
+        position === "above" ? triggerRect.top : window.innerHeight - triggerRect.bottom;
+      vertical = spacePreferred >= tooltipRect.height + gap ? position : (position === "above" ? "below" : "above");
     }
+    setResolvedPosition(vertical);
 
-    // Horizontal: shift if clipping edges
-    const tooltipLeft = triggerRect.left + triggerRect.width / 2 - tooltipRect.width / 2;
-    const tooltipRight = tooltipLeft + tooltipRect.width;
-    const padding = 8;
+    // Calculate top
+    const top =
+      vertical === "above"
+        ? triggerRect.top - tooltipRect.height - gap
+        : triggerRect.bottom + gap;
 
-    if (tooltipLeft < padding) {
-      setHorizontalShift(padding - tooltipLeft);
-    } else if (tooltipRight > window.innerWidth - padding) {
-      setHorizontalShift(window.innerWidth - padding - tooltipRight);
-    } else {
-      setHorizontalShift(0);
-    }
+    // Calculate left — center on trigger, then clamp to viewport
+    const tooltipWidth = Math.min(tooltipRect.width, window.innerWidth - padding * 2);
+    let left = triggerRect.left + triggerRect.width / 2 - tooltipWidth / 2;
+    left = Math.max(padding, Math.min(left, window.innerWidth - tooltipWidth - padding));
+
+    setStyle({ top, left });
   }, [position]);
 
   const show = useCallback(() => {
     setIsVisible(true);
-    // Use rAF so the tooltip is rendered (opacity-0 but not display:none) before measuring
     requestAnimationFrame(calculatePosition);
   }, [calculatePosition]);
 
   const hide = useCallback(() => {
     setIsVisible(false);
   }, []);
-
-  const positionClasses =
-    resolvedPosition === "above"
-      ? "bottom-full mb-1.5"
-      : "top-full mt-1.5";
 
   return (
     <span
@@ -78,25 +82,29 @@ export default function InfoTooltip({ children, width = "w-56", position = "auto
     >
       <span
         ref={triggerRef}
-        className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-white/10 text-[9px] text-slate-400 cursor-help font-serif italic font-bold leading-none lowercase"
+        className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-white/10 text-[9px] text-slate-400 cursor-help italic font-bold leading-none lowercase"
         tabIndex={0}
         role="note"
         aria-label="More info"
       >
         i
       </span>
-      <span
-        ref={tooltipRef}
-        className={`absolute ${positionClasses} ${width} p-2.5 rounded-lg bg-slate-900 border border-white/10 shadow-xl text-[10px] text-slate-300 leading-relaxed text-left font-normal normal-case tracking-normal z-[100] transition-opacity duration-150 ${
-          isVisible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        }`}
-        style={{
-          left: "50%",
-          transform: `translateX(calc(-50% + ${horizontalShift}px))`,
-        }}
-      >
-        {children}
-      </span>
+      {typeof document !== "undefined" && createPortal(
+        <span
+          ref={tooltipRef}
+          className={`fixed p-2.5 rounded-lg bg-slate-900 border border-white/10 shadow-xl text-[10px] text-slate-300 leading-relaxed text-left font-normal normal-case tracking-normal z-[100] transition-opacity duration-150 ${
+            isVisible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          }`}
+          style={{
+            top: style.top,
+            left: style.left,
+            maxWidth: Math.min(maxWidth, typeof window !== "undefined" ? window.innerWidth - 16 : maxWidth),
+          }}
+        >
+          {children}
+        </span>,
+        document.body,
+      )}
     </span>
   );
 }

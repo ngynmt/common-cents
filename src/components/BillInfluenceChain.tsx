@@ -368,31 +368,37 @@ export default function BillInfluenceChain({
                                     ? ` · ${finance.outsideSpendingCycle} cycle`
                                     : ""}
                                 </div>
-                                <div className="space-y-0.5">
-                                  {finance.outsideSpending
-                                    .slice(0, 5)
-                                    .map((s) => (
+                                <div className="space-y-1">
+                                  {(() => {
+                                    const items = finance.outsideSpending!.slice(0, 5);
+                                    const max = items.reduce((m, d) => Math.max(m, d.total), 0);
+                                    return items.map((s) => (
                                       <div
                                         key={`${s.name}-${s.support}`}
-                                        className="flex items-center justify-between text-xs"
+                                        className="flex items-center gap-2 text-[10px]"
                                       >
-                                        <div className="flex items-center gap-1.5 min-w-0">
-                                          <span
-                                            className={`inline-block w-1.5 h-1.5 rounded-full shrink-0 ${
-                                              s.support
-                                                ? "bg-green-500/70"
-                                                : "bg-red-500/70"
-                                            }`}
+                                        <span
+                                          className={`inline-block w-1.5 h-1.5 rounded-full shrink-0 ${
+                                            s.support
+                                              ? "bg-green-500/70"
+                                              : "bg-red-500/70"
+                                          }`}
+                                        />
+                                        <span className="text-slate-300 truncate flex-1 min-w-0">
+                                          {s.name}
+                                        </span>
+                                        <div className="w-16 h-1.5 bg-white/5 rounded-full overflow-hidden shrink-0">
+                                          <div
+                                            className={`h-full rounded-full ${s.support ? "bg-green-500/60" : "bg-red-500/60"}`}
+                                            style={{ width: max > 0 ? `${(s.total / max) * 100}%` : "0%" }}
                                           />
-                                          <span className="text-slate-300 truncate">
-                                            {s.name}
-                                          </span>
                                         </div>
-                                        <span className="text-slate-400 font-medium font-amount ml-2 shrink-0">
+                                        <span className="text-slate-400 font-medium font-amount shrink-0 w-12 text-right">
                                           {formatCompact(s.total)}
                                         </span>
                                       </div>
-                                    ))}
+                                    ));
+                                  })()}
                                 </div>
                                 <div className="flex items-center gap-3 text-[9px] text-slate-500 mt-1">
                                   <span className="flex items-center gap-1">
@@ -412,20 +418,29 @@ export default function BillInfluenceChain({
                             <div className="text-xs text-slate-400 mb-1">
                               Top donor employers
                             </div>
-                            <div className="space-y-0.5">
-                              {topEmployers.map((e) => (
-                                <div
-                                  key={e.employer}
-                                  className="flex items-center justify-between text-xs"
-                                >
-                                  <span className="text-slate-300">
-                                    {e.employer}
-                                  </span>
-                                  <span className="text-slate-400 font-medium font-amount ml-2 shrink-0">
-                                    {formatCompact(e.total)}
-                                  </span>
-                                </div>
-                              ))}
+                            <div className="space-y-1">
+                              {(() => {
+                                const max = topEmployers.reduce((m, d) => Math.max(m, d.total), 0);
+                                return topEmployers.map((e) => (
+                                  <div
+                                    key={e.employer}
+                                    className="flex items-center gap-2 text-[10px]"
+                                  >
+                                    <span className="text-slate-300 truncate flex-1 min-w-0">
+                                      {e.employer}
+                                    </span>
+                                    <div className="w-16 h-1.5 bg-white/5 rounded-full overflow-hidden shrink-0">
+                                      <div
+                                        className="h-full rounded-full bg-blue-400/60"
+                                        style={{ width: max > 0 ? `${(e.total / max) * 100}%` : "0%" }}
+                                      />
+                                    </div>
+                                    <span className="text-slate-400 font-medium font-amount shrink-0 w-12 text-right">
+                                      {formatCompact(e.total)}
+                                    </span>
+                                  </div>
+                                ));
+                              })()}
                             </div>
                           </div>
 

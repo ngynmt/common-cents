@@ -107,7 +107,7 @@ export default function RepresentativeCard({ rep, votes, compact, finance }: Rep
       <div className="flex items-center justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-sm font-semibold font-serif text-white">{rep.name}</span>
+            <span className="text-sm font-semibold text-white">{rep.name}</span>
             <PartyBadge party={rep.party} />
           </div>
           <div className="text-xs text-slate-400">{chamberLabel}</div>

@@ -214,7 +214,7 @@ export default function InternationalComparison({
                   {/* Header */}
                   <div className="px-4 py-3 border-b border-white/10">
                     <div className="flex items-center justify-between mb-2">
-                      <h4 className="text-xs font-serif font-semibold text-slate-400 uppercase tracking-wider">
+                      <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
                         {mode === "estimated-tax"
                           ? "What your taxes would look like in other countries"
                           : "US spending ratio vs. other countries"}
@@ -341,7 +341,7 @@ export default function InternationalComparison({
                 >
                   {/* Header */}
                   <div className="px-4 py-3 border-b border-white/10 flex items-center justify-between">
-                    <h4 className="text-xs font-serif font-semibold text-slate-400 uppercase tracking-wider">
+                    <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
                       {mode === "estimated-tax"
                         ? `What your taxes would look like in ${comparison.country.name}`
                         : `US spending ratio vs. ${comparison.country.name}`}
@@ -538,7 +538,7 @@ function ComparisonRow({
             <>
               <div className="flex-1 h-3 bg-white/5 rounded-full overflow-hidden relative">
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="font-serif italic text-[9px] text-slate-500">
+                  <span className="italic text-[9px] text-slate-500">
                     No equivalent
                   </span>
                 </div>

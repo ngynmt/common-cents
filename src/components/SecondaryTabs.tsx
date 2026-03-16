@@ -17,6 +17,8 @@ const TABS: { id: TabId; label: string }[] = [
   { id: "compare", label: "Global Compare" },
 ];
 
+export type { TabId };
+
 interface SecondaryTabsProps {
   activeCategoryId: string | null;
   activeCategoryName: string | null;
@@ -27,7 +29,8 @@ interface SecondaryTabsProps {
   filingStatus: FilingStatus;
   compareCountry: string | null;
   onCompareCountryChange: (code: string | null) => void;
-  initialTab?: TabId;
+  activeTab?: TabId;
+  onTabChange?: (tab: TabId) => void;
 }
 
 export default function SecondaryTabs({
@@ -40,9 +43,12 @@ export default function SecondaryTabs({
   filingStatus,
   compareCountry,
   onCompareCountryChange,
-  initialTab = "bills",
+  activeTab: controlledTab,
+  onTabChange,
 }: SecondaryTabsProps) {
-  const [activeTab, setActiveTab] = useState<TabId>(initialTab);
+  const [internalTab, setInternalTab] = useState<TabId>("bills");
+  const activeTab = controlledTab ?? internalTab;
+  const setActiveTab = onTabChange ?? setInternalTab;
 
   return (
     <div>

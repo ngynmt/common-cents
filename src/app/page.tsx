@@ -5,17 +5,31 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import TaxForm from "@/components/TaxForm";
 import TaxReceipt from "@/components/TaxReceipt";
-import { estimateFederalTax, SUPPORTED_TAX_YEARS, type FilingStatus, type TaxEstimate } from "@/lib/tax";
+import {
+  estimateFederalTax,
+  SUPPORTED_TAX_YEARS,
+  type FilingStatus,
+  type TaxEstimate,
+} from "@/lib/tax";
 import { type Representative, type VoteRecord } from "@/data/representatives";
 import type { CampaignFinanceSummary } from "@/data/campaign-finance";
-import { trackPageView, trackReceiptGenerated, trackRepLookedUp } from "@/lib/analytics";
+import {
+  trackPageView,
+  trackReceiptGenerated,
+  trackRepLookedUp,
+} from "@/lib/analytics";
 
 const FETCH_TIMEOUT_MS = 8000;
 
-function fetchWithTimeout(url: string, timeoutMs = FETCH_TIMEOUT_MS): Promise<Response> {
+function fetchWithTimeout(
+  url: string,
+  timeoutMs = FETCH_TIMEOUT_MS,
+): Promise<Response> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
-  return fetch(url, { signal: controller.signal }).finally(() => clearTimeout(timer));
+  return fetch(url, { signal: controller.signal }).finally(() =>
+    clearTimeout(timer),
+  );
 }
 
 async function fetchVotes(reps: Representative[]): Promise<VoteRecord[]> {
@@ -35,7 +49,8 @@ async function fetchVotes(reps: Representative[]): Promise<VoteRecord[]> {
 
   try {
     const params = new URLSearchParams();
-    if (bioguideIds.length > 0) params.set("bioguideIds", bioguideIds.join(","));
+    if (bioguideIds.length > 0)
+      params.set("bioguideIds", bioguideIds.join(","));
     if (lisIds.length > 0) params.set("lisIds", lisIds.join(","));
 
     const res = await fetchWithTimeout(`/api/votes?${params.toString()}`);
@@ -51,7 +66,9 @@ async function fetchVotes(reps: Representative[]): Promise<VoteRecord[]> {
           const lisId = v.representativeId.slice(4);
           const mapped = lisToId.get(lisId);
           if (!mapped) {
-            console.warn(`[votes] Could not map lis_id "${lisId}" to a bioguide ID — skipping vote`);
+            console.warn(
+              `[votes] Could not map lis_id "${lisId}" to a bioguide ID — skipping vote`,
+            );
             return null;
           }
           return { ...v, representativeId: mapped };
@@ -65,11 +82,15 @@ async function fetchVotes(reps: Representative[]): Promise<VoteRecord[]> {
   }
 }
 
-async function fetchRepresentatives(zipCode: string): Promise<Representative[] | null> {
+async function fetchRepresentatives(
+  zipCode: string,
+): Promise<Representative[] | null> {
   if (!zipCode || zipCode.length < 5) return null;
 
   try {
-    const res = await fetchWithTimeout(`/api/representatives?zip=${encodeURIComponent(zipCode)}`);
+    const res = await fetchWithTimeout(
+      `/api/representatives?zip=${encodeURIComponent(zipCode)}`,
+    );
     const data = await res.json();
     if (data.fallback || !data.representatives) return null;
     return data.representatives;
@@ -79,44 +100,64 @@ async function fetchRepresentatives(zipCode: string): Promise<Representative[] |
   }
 }
 
-const VALID_FILING_STATUSES: FilingStatus[] = ["single", "married", "head_of_household"];
+const VALID_FILING_STATUSES: FilingStatus[] = [
+  "single",
+  "married",
+  "head_of_household",
+];
 
 function HomeContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const [taxEstimate, setTaxEstimate] = useState<TaxEstimate | null>(null);
-  const [representatives, setRepresentatives] = useState<Representative[] | null>(null);
+  const [representatives, setRepresentatives] = useState<
+    Representative[] | null
+  >(null);
   const [votes, setVotes] = useState<VoteRecord[]>([]);
-  const [financeData, setFinanceData] = useState<Record<string, CampaignFinanceSummary | null>>({});
-  const [compareCountry, setCompareCountry] = useState<string | null>(() => searchParams.get("compare"));
+  const [financeData, setFinanceData] = useState<
+    Record<string, CampaignFinanceSummary | null>
+  >({});
+  const [compareCountry, setCompareCountry] = useState<string | null>(() =>
+    searchParams.get("compare"),
+  );
   const [initialized, setInitialized] = useState(false);
 
-  const processInputs = useCallback(async (income: number, filingStatus: FilingStatus, zipCode: string) => {
-    const estimate = estimateFederalTax(income, filingStatus);
-    setTaxEstimate(estimate);
+  const processInputs = useCallback(
+    async (income: number, filingStatus: FilingStatus, zipCode: string) => {
+      const estimate = estimateFederalTax(income, filingStatus);
+      setTaxEstimate(estimate);
 
-    const reps = await fetchRepresentatives(zipCode);
-    setRepresentatives(reps);
-    if (reps && reps.length > 0) {
-      trackRepLookedUp(reps[0].state);
-      const liveVotes = await fetchVotes(reps);
-      setVotes(liveVotes);
+      const reps = await fetchRepresentatives(zipCode);
+      setRepresentatives(reps);
+      if (reps && reps.length > 0) {
+        trackRepLookedUp(reps[0].state);
+        const liveVotes = await fetchVotes(reps);
+        setVotes(liveVotes);
 
-      // Fetch campaign finance data (non-blocking, longer timeout since FEC API is slow)
-      const ids = reps.map((r) => r.id).join(",");
-      const repNames = reps.map((r) => encodeURIComponent(r.name)).join(",");
-      const repStates = reps.map((r) => r.state).join(",");
-      const repChambers = reps.map((r) => r.chamber).join(",");
-      fetchWithTimeout(`/api/campaign-finance?bioguideIds=${ids}&names=${repNames}&states=${repStates}&chambers=${repChambers}`, 20000)
-        .then((res) => res.json())
-        .then((json) => { if (json.data) setFinanceData(json.data); })
-        .catch((err) => console.error("[finance] Failed to fetch campaign finance:", err));
-    } else {
-      setVotes([]);
-      setFinanceData({});
-    }
-  }, []);
+        // Fetch campaign finance data (non-blocking, longer timeout since FEC API is slow)
+        const ids = reps.map((r) => r.id).join(",");
+        const repNames = reps.map((r) => encodeURIComponent(r.name)).join(",");
+        const repStates = reps.map((r) => r.state).join(",");
+        const repChambers = reps.map((r) => r.chamber).join(",");
+        fetchWithTimeout(
+          `/api/campaign-finance?bioguideIds=${ids}&names=${repNames}&states=${repStates}&chambers=${repChambers}`,
+          20000,
+        )
+          .then((res) => res.json())
+          .then((json) => {
+            if (json.data) setFinanceData(json.data);
+          })
+          .catch((err) =>
+            console.error("[finance] Failed to fetch campaign finance:", err),
+          );
+      } else {
+        setVotes([]);
+        setFinanceData({});
+      }
+    },
+    [],
+  );
 
   // On mount, check URL params for saved state
   /* eslint-disable react-hooks/set-state-in-effect -- intentional: restore state from URL on mount */
@@ -165,6 +206,37 @@ function HomeContent() {
     router.replace(`?${params.toString()}`, { scroll: false });
   };
 
+  const handleZipSubmit = useCallback(async (zip: string) => {
+    const reps = await fetchRepresentatives(zip);
+    setRepresentatives(reps);
+    if (reps && reps.length > 0) {
+      trackRepLookedUp(reps[0].state);
+      const liveVotes = await fetchVotes(reps);
+      setVotes(liveVotes);
+
+      const ids = reps.map((r) => r.id).join(",");
+      const repNames = reps.map((r) => encodeURIComponent(r.name)).join(",");
+      const repStates = reps.map((r) => r.state).join(",");
+      const repChambers = reps.map((r) => r.chamber).join(",");
+      fetchWithTimeout(
+        `/api/campaign-finance?bioguideIds=${ids}&names=${repNames}&states=${repStates}&chambers=${repChambers}`,
+        20000,
+      )
+        .then((res) => res.json())
+        .then((json) => {
+          if (json.data) setFinanceData(json.data);
+        })
+        .catch((err) =>
+          console.error("[finance] Failed to fetch campaign finance:", err),
+        );
+
+      // Update URL with ZIP
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("zip", zip);
+      router.replace(`?${params.toString()}`, { scroll: false });
+    }
+  }, [searchParams, router]);
+
   const handleBack = () => {
     setTaxEstimate(null);
     setRepresentatives(null);
@@ -202,14 +274,18 @@ function HomeContent() {
               </span>
             </button>
           </div>
-          <span className="text-xs text-slate-500 uppercase tracking-[3px]">
+          <span className="text-xs text-slate-500 uppercase tracking-[1.5px] sm:tracking-[3px]">
             FY {SUPPORTED_TAX_YEARS[SUPPORTED_TAX_YEARS.length - 1]} Estimates
           </span>
         </div>
       </header>
 
       {/* Main content */}
-      <main id="main-content" className="max-w-6xl mx-auto px-4 py-12" aria-live="polite">
+      <main
+        id="main-content"
+        className="max-w-6xl mx-auto px-4 py-12"
+        aria-live="polite"
+      >
         <AnimatePresence mode="wait">
           {!showReceipt && (
             <motion.div
@@ -230,7 +306,7 @@ function HomeContent() {
                   go?
                 </h1>
                 <div className="w-10 h-0.5 bg-gradient-to-r from-indigo-400 to-purple-400 mx-auto" />
-                <p className="text-slate-400 text-lg font-serif italic">
+                <p className="text-slate-400 text-lg italic">
                   Get a personalized receipt for your federal taxes. See exactly
                   how your money is spent — and who decides.
                 </p>
@@ -244,7 +320,14 @@ function HomeContent() {
                 <span aria-hidden="true">·</span>
                 <span>Calculated in your browser</span>
                 <span aria-hidden="true">·</span>
-                <a href="https://github.com/ngynmt/common-cents" target="_blank" rel="noopener noreferrer" className="underline decoration-slate-500 underline-offset-2 hover:decoration-slate-300 transition-colors">100% open source</a>
+                <a
+                  href="https://github.com/ngynmt/common-cents"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline decoration-slate-500 underline-offset-2 hover:decoration-slate-300 transition-colors"
+                >
+                  100% open source
+                </a>
               </div>
             </motion.div>
           )}
@@ -262,6 +345,7 @@ function HomeContent() {
                 representatives={representatives}
                 votes={votes}
                 onBack={handleBack}
+                onZipSubmit={handleZipSubmit}
                 financeData={financeData}
                 compareCountry={compareCountry}
                 onCompareCountryChange={handleCompareCountryChange}
@@ -274,29 +358,88 @@ function HomeContent() {
       {/* Footer */}
       <footer className="border-t border-white/8 mt-20">
         <div className="max-w-6xl mx-auto px-4 py-6 text-center text-xs text-slate-400 space-y-3">
-          <p className="font-serif italic">
+          <p>
             Tax estimates are approximations based on standard deduction and{" "}
-            <a href="https://www.irs.gov/taxtopics/tc751" target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-slate-200 underline">IRS<span className="sr-only"> (opens in new tab)</span></a>
-            {" "}brackets. Some descriptions are AI-generated summaries of government filings.
+            <a
+              href="https://www.irs.gov/taxtopics/tc751"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-300 hover:text-slate-200 underline"
+            >
+              IRS<span className="sr-only"> (opens in new tab)</span>
+            </a>{" "}
+            brackets. Some descriptions are AI-generated summaries of government
+            filings.
           </p>
           <p className="text-[10px] text-gray-500">
             Sources:{" "}
-            <a href="https://www.whitehouse.gov/omb/budget/historical-tables/" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-300 underline">OMB<span className="sr-only"> (opens in new tab)</span></a>
+            <a
+              href="https://www.whitehouse.gov/omb/budget/historical-tables/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-400 hover:text-slate-300 underline"
+            >
+              OMB<span className="sr-only"> (opens in new tab)</span>
+            </a>
             {" · "}
-            <a href="https://www.cbo.gov/cost-estimates" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-300 underline">CBO<span className="sr-only"> (opens in new tab)</span></a>
+            <a
+              href="https://www.cbo.gov/cost-estimates"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-400 hover:text-slate-300 underline"
+            >
+              CBO<span className="sr-only"> (opens in new tab)</span>
+            </a>
             {" · "}
-            <a href="https://www.congress.gov/" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-300 underline">Congress.gov<span className="sr-only"> (opens in new tab)</span></a>
+            <a
+              href="https://www.congress.gov/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-400 hover:text-slate-300 underline"
+            >
+              Congress.gov<span className="sr-only"> (opens in new tab)</span>
+            </a>
             {" · "}
-            <a href="https://www.usaspending.gov" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-300 underline">USASpending.gov<span className="sr-only"> (opens in new tab)</span></a>
+            <a
+              href="https://www.usaspending.gov"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-400 hover:text-slate-300 underline"
+            >
+              USASpending.gov
+              <span className="sr-only"> (opens in new tab)</span>
+            </a>
             {" · "}
-            <a href="https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-300 underline">Treasury MTS<span className="sr-only"> (opens in new tab)</span></a>
+            <a
+              href="https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-400 hover:text-slate-300 underline"
+            >
+              Treasury MTS<span className="sr-only"> (opens in new tab)</span>
+            </a>
             {" · "}
-            <a href="https://www.fec.gov" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-300 underline">FEC<span className="sr-only"> (opens in new tab)</span></a>
+            <a
+              href="https://www.fec.gov"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-400 hover:text-slate-300 underline"
+            >
+              FEC<span className="sr-only"> (opens in new tab)</span>
+            </a>
             {" · "}
-            <a href="https://lda.senate.gov/" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-300 underline">Senate LDA<span className="sr-only"> (opens in new tab)</span></a>
+            <a
+              href="https://lda.senate.gov/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-400 hover:text-slate-300 underline"
+            >
+              Senate LDA<span className="sr-only"> (opens in new tab)</span>
+            </a>
           </p>
-          <p className="font-serif italic text-slate-500">
-            Common Cents is not affiliated with any government agency or political organization.
+          <p className="italic text-slate-500">
+            Common Cents is not affiliated with any government agency or
+            political organization.
           </p>
           <div className="flex items-center justify-center gap-3 flex-wrap">
             <a

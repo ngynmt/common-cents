@@ -76,13 +76,13 @@ export default function ReceiptLine({
         {/* Icon */}
         <span className="text-lg shrink-0">{item.category.icon}</span>
 
-        {/* Category name */}
-        <span className="text-sm font-medium text-white text-left flex-1 min-w-0 truncate">
-          {item.category.name}
+        {/* Category name + dotted leader wrapper */}
+        <span className="flex-1 min-w-0 flex items-center gap-2">
+          <span className="text-sm font-medium text-white truncate">
+            {item.category.name}
+          </span>
+          <span className="flex-1 border-b border-dotted border-white/10 self-end mb-1 hidden sm:block shrink-0 min-w-4" aria-hidden="true" />
         </span>
-
-        {/* Dotted leader */}
-        <span className="flex-1 border-b border-dotted border-white/10 mx-2 self-end mb-1" aria-hidden="true" />
 
         {/* Amount & percentage */}
         <div className="text-right shrink-0">
