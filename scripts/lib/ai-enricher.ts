@@ -103,6 +103,33 @@ Why did this change? What does it mean for taxpayers?`;
   return callClaude(system, user, apiKey);
 }
 
+/**
+ * Generates an editorial callout comparing a country's outcomes to the US.
+ * Returns null on failure.
+ */
+export async function enrichOutcomeCallout(
+  categoryName: string,
+  countryName: string,
+  usRatio: number,
+  countryRatio: number,
+  formattedIndicators: string,
+  apiKey: string,
+): Promise<string | null> {
+  const system = `You are writing factual editorial callouts for a civic transparency app that shows US taxpayers how their money is spent compared to other countries.
+
+Write a 1-2 sentence callout that contrasts the spending ratio with the outcomes. Lead with what the other country achieves, then contrast with the US. Use specific numbers. Be factual and precise — let the numbers make the argument. Do not editorialize beyond the data. No hedging language.`;
+
+  const user = `Category: ${categoryName}
+Country: ${countryName}
+US spending ratio: ${(usRatio * 100).toFixed(1)}% of budget
+${countryName} spending ratio: ${(countryRatio * 100).toFixed(1)}% of budget
+
+Indicators:
+${formattedIndicators}`;
+
+  return callClaude(system, user, apiKey);
+}
+
 /** Small delay to avoid hammering the API */
 export function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
