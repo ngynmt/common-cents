@@ -80,13 +80,13 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
         transition={{ duration: 0.5 }}
         className="text-center space-y-2"
       >
-        <h2 className="text-2xl font-bold text-white">Your Federal Tax Receipt</h2>
+        <h2 className="text-2xl font-bold text-white font-serif">Your Federal Tax Receipt</h2>
         <div className="flex items-center justify-center gap-6 text-sm text-slate-400 flex-wrap">
           <span>
-            Income: <span className="text-white font-medium">{formatCurrency(taxEstimate.grossIncome)}</span>
+            Income: <span className="text-white font-medium font-amount">{formatCurrency(taxEstimate.grossIncome)}</span>
           </span>
           <span>
-            Est. Federal Tax: <span className="text-white font-medium">{formatCurrency(taxEstimate.totalFederalTax)}</span>
+            Est. Federal Tax: <span className="text-white font-medium font-amount">{formatCurrency(taxEstimate.totalFederalTax)}</span>
             {isComparing && (
               <DeltaBadge current={taxEstimate.totalFederalTax} previous={comparison.estimate.totalFederalTax} />
             )}
@@ -98,9 +98,12 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
             </InfoTooltip>
           </span>
         </div>
-        <p className="text-xs text-slate-400 max-w-lg mx-auto">
+        <p className="text-xs text-slate-400 max-w-lg mx-auto font-serif italic">
           This is an estimate based on standard deduction and FY {currentYear} tax brackets.
           Your actual taxes may differ based on deductions, credits, and other factors.
+        </p>
+        <p className="text-xs text-slate-500 uppercase tracking-[1.5px]">
+          Fiscal Year {currentYear} · {taxEstimate.filingStatus === "single" ? "Single Filer" : taxEstimate.filingStatus === "married" ? "Married Filing Jointly" : "Head of Household"}
         </p>
       </motion.div>
 
@@ -168,7 +171,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
           <div key={item.label} className="text-center p-3 rounded-xl bg-white/5">
             <div className="text-xs text-slate-400">{item.label}</div>
             <div className="text-sm font-semibold text-white">
-              {formatCurrency(item.value)}
+              <span className="font-amount">{formatCurrency(item.value)}</span>
               {isComparing && item.prev !== undefined && (
                 <DeltaBadge current={item.value} previous={item.prev} />
               )}
@@ -196,19 +199,19 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
           className="bg-white/[0.03] backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden"
         >
           {/* Receipt header */}
-          <div className="px-4 py-3 border-b border-white/10">
+          <div className="px-4 py-3 border-b-2 border-white/10">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-slate-300 uppercase tracking-wider">
+              <h3 className="text-sm font-semibold text-slate-300 uppercase tracking-wider font-serif">
                 Spending Breakdown
               </h3>
-              <span className="text-sm font-bold text-white">
+              <span className="text-sm font-bold text-white font-amount">
                 {formatCurrency(taxEstimate.totalFederalTax)}
               </span>
             </div>
           </div>
 
           {/* Receipt lines */}
-          <div className="max-h-[600px] overflow-y-auto">
+          <div className="lg:max-h-[600px] lg:overflow-y-auto">
             {spending.map((item, index) => {
               const prevItem = comparison?.spending.find(
                 (s) => s.category.id === item.category.id,
@@ -228,10 +231,10 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
           </div>
 
           {/* Receipt footer */}
-          <div className="px-4 py-3 border-t border-white/10 bg-white/5">
+          <div className="px-4 py-3 border-t-[3px] border-double border-white/15 bg-white/5">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-semibold text-slate-300">TOTAL</span>
-              <span className="text-sm font-bold text-white">
+              <span className="text-sm font-semibold text-slate-400 uppercase tracking-[1.5px]">TOTAL</span>
+              <span className="text-base font-bold text-white font-amount">
                 {formatCurrency(taxEstimate.totalFederalTax)}
               </span>
             </div>
