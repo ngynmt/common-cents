@@ -52,5 +52,4 @@ jobs:
 
           gh issue create --repo "$repo" \
             --title "Update tax brackets for ${next_year}" \
-            --body "$body" \
-            --label "maintenance"
+            --body "$body"
