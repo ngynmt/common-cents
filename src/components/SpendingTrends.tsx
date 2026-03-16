@@ -20,7 +20,7 @@ function formatCompact(n: number): string {
 
 function formatMonth(dateStr: string): string {
   const d = new Date(dateStr + "T00:00:00");
-  return d.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+  return d.toLocaleDateString("en-US", { month: "short", year: "numeric" });
 }
 
 export default function SpendingTrends() {
@@ -115,22 +115,22 @@ export default function SpendingTrends() {
         onClick={() => setExpanded(!expanded)}
         className="w-full px-4 py-3 flex items-center justify-between cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-inset hover:bg-white/[0.02] transition-colors rounded-xl"
       >
-        <div className="flex items-center gap-2">
-          <span className="relative flex h-2 w-2" aria-hidden="true">
+        <div className="flex items-start gap-2">
+          <span className="relative flex h-2 w-2 mt-1 shrink-0" aria-hidden="true">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
           </span>
-          <span className="text-xs font-semibold text-white inline-flex items-center gap-1.5">
+          <span className="text-xs font-semibold text-white text-left inline-flex items-start gap-1.5 flex-wrap">
             Notable Spending Changes vs. Last Year
             <InfoTooltip width="w-64">
               These are fiscal year-to-date comparisons from the Monthly Treasury Statement — not full-year totals. They compare spending so far this fiscal year (starting Oct 1) to the same period last year. Only changes above {ANOMALY_THRESHOLD}% are shown to highlight the most significant shifts. Source: U.S. Treasury Fiscal Data.
             </InfoTooltip>
+            {recordDate && (
+              <span className="text-xs text-slate-400 font-normal">
+                as of {formatMonth(recordDate)}
+              </span>
+            )}
           </span>
-          {recordDate && (
-            <span className="text-xs text-slate-400">
-              as of {formatMonth(recordDate)}
-            </span>
-          )}
         </div>
         <motion.span
           animate={{ rotate: expanded ? 180 : 0 }}
@@ -155,7 +155,7 @@ export default function SpendingTrends() {
               {/* Outlay anomalies */}
               {anomalies.length > 0 && (
                 <div className="space-y-1.5">
-                  <div className="text-xs font-serif text-slate-400 uppercase tracking-wider">
+                  <div className="text-xs text-slate-400 uppercase tracking-wider">
                     Spending
                   </div>
                   {anomalies.map((t) => (
@@ -167,7 +167,7 @@ export default function SpendingTrends() {
               {/* Receipt anomalies */}
               {receiptAnomalies.length > 0 && (
                 <div className="space-y-1.5">
-                  <div className="text-xs font-serif text-slate-400 uppercase tracking-wider">
+                  <div className="text-xs text-slate-400 uppercase tracking-wider">
                     Revenue (taxes &amp; tariffs)
                   </div>
                   {receiptAnomalies.map((t) => (

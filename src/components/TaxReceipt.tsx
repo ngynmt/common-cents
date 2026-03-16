@@ -269,7 +269,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
           </div>
 
           {/* Contact reps button — always visible */}
-          <div className="px-4 py-3 border-t border-white/8">
+          <div className="px-4 py-3">
             <button
               onClick={() => { trackRepsModalOpened(); setShowRepsModal(true); }}
               className="w-full py-2.5 rounded-xl bg-indigo-500 text-white shadow-lg shadow-indigo-500/25 hover:bg-indigo-400 transition-colors font-medium cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500"
