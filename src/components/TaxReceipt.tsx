@@ -139,17 +139,17 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
           >
             <div className="grid grid-cols-2 gap-3 max-w-lg mx-auto">
               <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
-                <div className="text-[10px] text-slate-400 uppercase tracking-wider">FY {priorYear}</div>
+                <div className="text-xs text-slate-400 uppercase tracking-wider">FY {priorYear}</div>
                 <div className="text-lg font-bold text-slate-400">{formatCurrency(comparison.estimate.totalFederalTax)}</div>
-                <div className="text-[10px] text-slate-400">Effective: {formatPercent(comparison.estimate.effectiveRate)}</div>
+                <div className="text-xs text-slate-400">Effective: {formatPercent(comparison.estimate.effectiveRate)}</div>
               </div>
               <div className="text-center p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20">
-                <div className="text-[10px] text-indigo-400 uppercase tracking-wider">FY {currentYear}</div>
+                <div className="text-xs text-indigo-400 uppercase tracking-wider">FY {currentYear}</div>
                 <div className="text-lg font-bold text-white">{formatCurrency(taxEstimate.totalFederalTax)}</div>
-                <div className="text-[10px] text-slate-400">Effective: {formatPercent(taxEstimate.effectiveRate)}</div>
+                <div className="text-xs text-slate-400">Effective: {formatPercent(taxEstimate.effectiveRate)}</div>
               </div>
             </div>
-            <p className="text-center text-[10px] text-slate-400 mt-2">
+            <p className="text-center text-xs text-slate-400 mt-2">
               Same income ({formatCurrency(taxEstimate.grossIncome)}), different tax year brackets and spending allocations
             </p>
           </motion.div>
@@ -317,7 +317,7 @@ function DeltaBadge({ current, previous }: { current: number; previous: number }
   const isUp = delta > 0;
   return (
     <span
-      className={`ml-1.5 text-[10px] font-medium ${
+      className={`ml-1.5 text-[10px] font-medium font-amount ${
         isUp ? "text-red-400" : "text-green-400"
       }`}
     >

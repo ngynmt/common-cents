@@ -101,7 +101,7 @@ function ImpactBar({
   return (
     <div className="space-y-1">
       <div className="flex items-center gap-2">
-        <span className="text-[10px] text-slate-400 w-14 shrink-0">Now</span>
+        <span className="text-xs text-slate-400 w-14 shrink-0">Now</span>
         <div className="flex-1 h-4 bg-white/5 rounded-full overflow-hidden">
           <motion.div
             initial={{ width: 0 }}
@@ -117,7 +117,7 @@ function ImpactBar({
         </div>
       </div>
       <div className="flex items-center gap-2">
-        <span className="text-[10px] text-slate-400 w-14 shrink-0">If passed</span>
+        <span className="text-xs text-slate-400 w-14 shrink-0">If passed</span>
         <div className="flex-1 h-4 bg-white/5 rounded-full overflow-hidden">
           <motion.div
             initial={{ width: `${currentWidth}%` }}

@@ -127,7 +127,7 @@ export default function SpendingTrends() {
             </InfoTooltip>
           </span>
           {recordDate && (
-            <span className="text-[10px] text-slate-400">
+            <span className="text-xs text-slate-400">
               as of {formatMonth(recordDate)}
             </span>
           )}
@@ -155,7 +155,7 @@ export default function SpendingTrends() {
               {/* Outlay anomalies */}
               {anomalies.length > 0 && (
                 <div className="space-y-1.5">
-                  <div className="text-[10px] font-serif text-slate-400 uppercase tracking-wider">
+                  <div className="text-xs font-serif text-slate-400 uppercase tracking-wider">
                     Spending
                   </div>
                   {anomalies.map((t) => (
@@ -167,7 +167,7 @@ export default function SpendingTrends() {
               {/* Receipt anomalies */}
               {receiptAnomalies.length > 0 && (
                 <div className="space-y-1.5">
-                  <div className="text-[10px] font-serif text-slate-400 uppercase tracking-wider">
+                  <div className="text-xs font-serif text-slate-400 uppercase tracking-wider">
                     Revenue (taxes &amp; tariffs)
                   </div>
                   {receiptAnomalies.map((t) => (
@@ -218,7 +218,7 @@ function TrendRow({ trend }: { trend: SpendingTrend }) {
 
   return (
     <div className="space-y-0.5">
-      <div className="flex items-center justify-between text-[10px]">
+      <div className="flex items-center justify-between text-xs">
         <span className="text-slate-300">{label}</span>
         <div className="flex items-center gap-2 shrink-0 ml-2">
           <span className="font-amount text-[9px] text-slate-400">
