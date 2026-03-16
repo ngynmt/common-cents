@@ -107,19 +107,19 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
                   type="category"
                   dataKey="name"
                   width={130}
-                  tick={{ fill: "#9ca3af", fontSize: 10 }}
+                  tick={{ fill: "#94a3b8", fontSize: 10 }}
                   axisLine={false}
                   tickLine={false}
                 />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "#1f2937",
+                    backgroundColor: "#1e293b",
                     border: "1px solid rgba(255,255,255,0.1)",
                     borderRadius: "8px",
                     fontSize: "12px",
                   }}
                   labelStyle={{ color: "#fff" }}
-                  itemStyle={{ color: "#9ca3af" }}
+                  itemStyle={{ color: "#94a3b8" }}
                   formatter={(value, _name, props) => {
                     const v = typeof value === "number" ? value : 0;
                     const p = props?.payload as { support?: boolean; fullName?: string } | undefined;
@@ -179,19 +179,19 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
                   type="category"
                   dataKey="name"
                   width={130}
-                  tick={{ fill: "#9ca3af", fontSize: 10 }}
+                  tick={{ fill: "#94a3b8", fontSize: 10 }}
                   axisLine={false}
                   tickLine={false}
                 />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "#1f2937",
+                    backgroundColor: "#1e293b",
                     border: "1px solid rgba(255,255,255,0.1)",
                     borderRadius: "8px",
                     fontSize: "12px",
                   }}
                   labelStyle={{ color: "#fff" }}
-                  itemStyle={{ color: "#9ca3af" }}
+                  itemStyle={{ color: "#94a3b8" }}
                   formatter={(value, _name, props) => {
                     const v = typeof value === "number" ? value : 0;
                     const p = props?.payload as { count?: number; fullName?: string } | undefined;

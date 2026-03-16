@@ -57,7 +57,7 @@ export default function TaxForm({ onSubmit }: TaxFormProps) {
     >
       {/* Income */}
       <div className="space-y-2">
-        <label htmlFor="income" className="block text-xs font-medium text-slate-500 uppercase tracking-[1.5px]">
+        <label htmlFor="income" className="block text-xs font-medium text-slate-400 uppercase tracking-[1.5px]">
           Annual Gross Income
         </label>
         <div className="relative">
@@ -86,7 +86,7 @@ export default function TaxForm({ onSubmit }: TaxFormProps) {
 
       {/* Filing Status */}
       <div className="space-y-2">
-        <label id="filing-status-label" className="block text-xs font-medium text-slate-500 uppercase tracking-[1.5px]">
+        <label id="filing-status-label" className="block text-xs font-medium text-slate-400 uppercase tracking-[1.5px]">
           Filing Status
         </label>
         <div className="grid grid-cols-3 gap-2" role="radiogroup" aria-labelledby="filing-status-label">
@@ -115,7 +115,7 @@ export default function TaxForm({ onSubmit }: TaxFormProps) {
 
       {/* ZIP Code */}
       <div className="space-y-2">
-        <label htmlFor="zipCode" className="block text-xs font-medium text-slate-500 uppercase tracking-[1.5px]">
+        <label htmlFor="zipCode" className="block text-xs font-medium text-slate-400 uppercase tracking-[1.5px]">
           ZIP Code <span className="text-slate-500 normal-case tracking-normal italic">(optional — for representative lookup)</span>
         </label>
         <input

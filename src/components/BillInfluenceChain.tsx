@@ -532,7 +532,7 @@ export default function BillInfluenceChain({
                       )}
 
                       {/* Source */}
-                      <p className="text-[9px] text-gray-500 pt-1 border-t border-white/8">
+                      <p className="text-[9px] text-slate-500 pt-1 border-t border-white/8">
                         Source:{" "}
                         <a
                           href="https://lda.senate.gov/"

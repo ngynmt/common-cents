@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { TRANSITION_DEFAULT } from "@/lib/constants";
 import {
   useInternationalComparison,
   useAllCountriesComparison,
@@ -516,7 +517,7 @@ function ComparisonRow({
               style={{ backgroundColor: item.color, opacity: 0.7 }}
               initial={{ width: 0 }}
               animate={{ width: `${usWidth}%` }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
+              transition={TRANSITION_DEFAULT}
             />
           </div>
           <span className="font-amount w-24 text-right text-[10px] text-slate-400 tabular-nums shrink-0 whitespace-nowrap">
@@ -556,7 +557,7 @@ function ComparisonRow({
                   className="h-full rounded-full bg-sky-500/60"
                   initial={{ width: 0 }}
                   animate={{ width: `${countryWidth}%` }}
-                  transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+                  transition={{ ...TRANSITION_DEFAULT, delay: 0.1 }}
                 />
               </div>
               <span className="font-amount w-24 text-right text-[10px] text-sky-400/80 tabular-nums shrink-0 whitespace-nowrap">
@@ -622,7 +623,7 @@ function AllCountriesRow({
               className="h-full rounded-full bg-white/40"
               initial={{ width: 0 }}
               animate={{ width: `${usWidth}%` }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
+              transition={TRANSITION_DEFAULT}
             />
           </div>
           <span className="font-amount w-24 text-right text-[10px] text-slate-400 tabular-nums shrink-0 whitespace-nowrap">
@@ -660,11 +661,7 @@ function AllCountriesRow({
                       style={{ backgroundColor: countryColor, opacity: 0.6 }}
                       initial={{ width: 0 }}
                       animate={{ width: `${width}%` }}
-                      transition={{
-                        duration: 0.5,
-                        ease: "easeOut",
-                        delay: 0.05,
-                      }}
+                      transition={{ ...TRANSITION_DEFAULT, delay: 0.05 }}
                     />
                   </div>
                   <span
