@@ -106,7 +106,7 @@ export default function InfluenceChain({ contractorName }: InfluenceChainProps) 
                       {formatCompact(data.totalDonations)}
                     </span>
                     {" "}to members of Congress
-                    <span className="text-slate-400"> ({data.cycle} cycle)</span>
+                    <span className="text-text-secondary"> ({data.cycle} cycle)</span>
                   </div>
 
                   {/* Flow arrow */}
@@ -123,7 +123,7 @@ export default function InfluenceChain({ contractorName }: InfluenceChainProps) 
                         className="flex items-center justify-between text-xs"
                       >
                         <div className="flex items-center gap-1.5 min-w-0">
-                          <span className={`font-medium ${partyColors[r.recipientParty] || "text-slate-400"}`}>
+                          <span className={`font-medium ${partyColors[r.recipientParty] || "text-text-secondary"}`}>
                             {r.recipientName}
                           </span>
                           {r.recipientState && (

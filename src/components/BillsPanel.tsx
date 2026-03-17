@@ -57,7 +57,7 @@ function StatusPill({ status }: { status: PendingBill["status"] }) {
     passed_house: "bg-blue-500/20 text-blue-400",
     passed_senate: "bg-blue-500/20 text-blue-400",
     in_committee: "bg-yellow-500/20 text-yellow-400",
-    introduced: "bg-slate-500/20 text-slate-400",
+    introduced: "bg-slate-500/20 text-text-secondary",
     floor_vote_scheduled: "bg-orange-500/20 text-orange-400",
     enacted: "bg-green-500/20 text-green-400",
   };

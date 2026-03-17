@@ -25,7 +25,7 @@ function StatusBadge({ status }: { status: Legislation["status"] }) {
     passed_house: "bg-blue-500/20 text-blue-400",
     passed_senate: "bg-blue-500/20 text-blue-400",
     in_committee: "bg-yellow-500/20 text-yellow-400",
-    introduced: "bg-slate-500/20 text-slate-400",
+    introduced: "bg-slate-500/20 text-text-secondary",
   };
 
   const labels: Record<string, string> = {
