@@ -91,7 +91,7 @@ export default function InfoTooltip({ children, width = "w-56", position = "auto
       {typeof document !== "undefined" && createPortal(
         <span
           ref={tooltipRef}
-          className={`fixed p-2.5 rounded-lg bg-surface-card border border-border shadow-xl text-[10px] text-text-secondary leading-relaxed text-left font-normal normal-case tracking-normal z-[100] transition-opacity duration-150 ${
+          className={`fixed p-2.5 rounded-lg bg-surface border border-border shadow-xl text-[10px] text-text-secondary leading-relaxed text-left font-normal normal-case tracking-normal z-[100] transition-opacity duration-150 ${
             isVisible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
           }`}
           style={{
