@@ -31,6 +31,7 @@ interface SecondaryTabsProps {
   onCompareCountryChange: (code: string | null) => void;
   activeTab?: TabId;
   onTabChange?: (tab: TabId) => void;
+  onResetFilter?: () => void;
 }
 
 export default function SecondaryTabs({
@@ -45,6 +46,7 @@ export default function SecondaryTabs({
   onCompareCountryChange,
   activeTab: controlledTab,
   onTabChange,
+  onResetFilter,
 }: SecondaryTabsProps) {
   const [internalTab, setInternalTab] = useState<TabId>("bills");
   const activeTab = controlledTab ?? internalTab;
@@ -61,7 +63,7 @@ export default function SecondaryTabs({
             className={`px-4 py-2 rounded-xl text-sm font-medium transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 whitespace-nowrap ${
               activeTab === tab.id
                 ? "bg-indigo-500 text-white shadow-lg shadow-indigo-500/25"
-                : "bg-white/5 text-slate-300 border border-white/10 hover:bg-white/10"
+                : "bg-surface-elevated text-text-secondary border border-border hover:bg-surface-card"
             }`}
           >
             {tab.label}
@@ -84,6 +86,7 @@ export default function SecondaryTabs({
               activeCategoryName={activeCategoryName}
               totalFederalTax={totalFederalTax}
               representatives={representatives}
+              onResetFilter={onResetFilter}
             />
           </motion.div>
         )}
