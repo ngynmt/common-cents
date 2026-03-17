@@ -152,7 +152,7 @@ export default function InternationalComparison({
                     onClick={() => setMode("same-amount")}
                     className={`px-3 py-1.5 transition-colors cursor-pointer inline-flex items-center gap-1 ${
                       mode === "same-amount"
-                        ? "bg-white/10 text-text-primary"
+                        ? "bg-surface-elevated text-text-primary"
                         : "text-text-secondary hover:text-text-secondary"
                     }`}
                   >
@@ -252,7 +252,7 @@ export default function InternationalComparison({
                     {/* Legend */}
                     <div className="flex flex-wrap gap-x-3 gap-y-1">
                       <span className="flex items-center gap-1 text-[10px] text-text-secondary">
-                        <span className="w-2 h-2 rounded-full bg-white/40" />
+                        <span className="w-2 h-2 rounded-full bg-text-muted" />
                         US
                         {mode === "estimated-tax" && (
                           <span className="font-amount text-text-secondary ml-0.5">
@@ -518,7 +518,7 @@ function ComparisonRow({
   const shortLabel = COUNTRY_SHORT_LABELS[countryCode] ?? countryCode;
 
   return (
-    <div className="px-4 py-2.5 border-b border-border-subtle last:border-b-0 group hover:bg-white/[0.02] transition-colors">
+    <div className="px-4 py-2.5 border-b border-border-subtle last:border-b-0 group hover:bg-surface-elevated transition-colors">
       {/* Category name */}
       <div className="text-xs text-text-secondary mb-1.5 flex items-center gap-1.5">
         <span
@@ -632,7 +632,7 @@ function AllCountriesRow({
   const usWidth = maxAmount > 0 ? (usAmount / maxAmount) * 100 : 0;
 
   return (
-    <div className="px-4 py-2 border-b border-border-subtle last:border-b-0 group hover:bg-white/[0.02] transition-colors">
+    <div className="px-4 py-2 border-b border-border-subtle last:border-b-0 group hover:bg-surface-elevated transition-colors">
       {/* Category name */}
       <div className="text-xs text-text-secondary mb-1 flex items-center gap-1.5">
         <span
@@ -649,7 +649,7 @@ function AllCountriesRow({
           <span className="text-[9px] text-text-secondary w-7 shrink-0">US</span>
           <div className="flex-1 h-2 bg-surface-elevated rounded-full overflow-hidden">
             <motion.div
-              className="h-full rounded-full bg-white/40"
+              className="h-full rounded-full bg-text-muted"
               initial={{ width: 0 }}
               animate={{ width: `${usWidth}%` }}
               transition={TRANSITION_DEFAULT}

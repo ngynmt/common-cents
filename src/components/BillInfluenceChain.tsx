@@ -139,9 +139,9 @@ export default function BillInfluenceChain({
             <div className="mt-2 p-3 rounded-lg bg-surface-elevated border border-border space-y-3">
               {loading && (
                 <div className="space-y-2">
-                  <div className="h-3 w-48 bg-white/10 rounded animate-pulse" />
-                  <div className="h-3 w-36 bg-white/10 rounded animate-pulse" />
-                  <div className="h-3 w-52 bg-white/10 rounded animate-pulse" />
+                  <div className="h-3 w-48 bg-surface-card rounded animate-pulse" />
+                  <div className="h-3 w-36 bg-surface-card rounded animate-pulse" />
+                  <div className="h-3 w-52 bg-surface-card rounded animate-pulse" />
                 </div>
               )}
 

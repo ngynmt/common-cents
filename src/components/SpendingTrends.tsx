@@ -113,7 +113,7 @@ export default function SpendingTrends() {
     <div className="rounded-xl bg-surface-card border border-border">
       <button
         onClick={() => setExpanded(!expanded)}
-        className="w-full px-4 py-3 flex items-center justify-between cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-inset hover:bg-white/[0.02] transition-colors rounded-xl"
+        className="w-full px-4 py-3 flex items-center justify-between cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-inset hover:bg-surface-elevated transition-colors rounded-xl"
       >
         <div className="flex items-start gap-2">
           <span className="relative flex h-2 w-2 mt-1 shrink-0" aria-hidden="true">
