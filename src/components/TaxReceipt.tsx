@@ -91,7 +91,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         onClick={onBack}
-        className="text-sm text-slate-400 hover:text-white transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
+        className="text-sm text-text-secondary hover:text-text-primary transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
       >
         ← Change inputs
       </motion.button>
@@ -103,28 +103,28 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
         transition={{ ...TRANSITION_DEFAULT, duration: 0.5 }}
         className="text-center space-y-2"
       >
-        <h2 className="text-2xl font-bold text-white font-serif">Your Federal Tax Receipt</h2>
-        <div className="flex items-center justify-center gap-6 text-sm text-slate-400 flex-wrap">
+        <h2 className="text-2xl font-bold text-text-primary font-serif">Your Federal Tax Receipt</h2>
+        <div className="flex items-center justify-center gap-6 text-sm text-text-secondary flex-wrap">
           <span>
-            Income: <span className="text-white font-medium font-amount">{formatCurrency(taxEstimate.grossIncome)}</span>
+            Income: <span className="text-text-primary font-medium font-amount">{formatCurrency(taxEstimate.grossIncome)}</span>
           </span>
           <span>
-            Est. Federal Tax: <span className="text-white font-medium font-amount">{formatCurrency(taxEstimate.totalFederalTax)}</span>
+            Est. Federal Tax: <span className="text-text-primary font-medium font-amount">{formatCurrency(taxEstimate.totalFederalTax)}</span>
             {isComparing && (
               <DeltaBadge current={taxEstimate.totalFederalTax} previous={comparison.estimate.totalFederalTax} />
             )}
           </span>
           <span className="inline-flex items-center gap-1">
-            Effective Rate: <span className="text-white font-medium">{formatPercent(taxEstimate.effectiveRate)}</span>
+            Effective Rate: <span className="text-text-primary font-medium">{formatPercent(taxEstimate.effectiveRate)}</span>
             <InfoTooltip>
               Your effective rate is your total federal tax divided by your gross income ({formatCurrency(taxEstimate.totalFederalTax)} &divide; {formatCurrency(taxEstimate.grossIncome)}). This is different from your marginal rate (tax bracket), which only applies to income above each bracket&apos;s threshold. Your effective rate is always lower because the first dollars you earn are taxed at lower rates.
             </InfoTooltip>
           </span>
         </div>
-        <p className="text-[10px] text-slate-500 uppercase tracking-[1.5px]">
+        <p className="text-[10px] text-text-muted uppercase tracking-[1.5px]">
           Fiscal Year {currentYear} · {taxEstimate.filingStatus === "single" ? "Single Filer" : taxEstimate.filingStatus === "married" ? "Married Filing Jointly" : "Head of Household"}
         </p>
-        <p className="text-xs text-slate-400 max-w-lg mx-auto italic">
+        <p className="text-xs text-text-secondary max-w-lg mx-auto italic">
           This is an estimate based on standard deduction and FY {currentYear} tax brackets.
           Your actual taxes may differ based on deductions, credits, and other factors.
         </p>
@@ -143,7 +143,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
             className={`text-xs px-4 py-2 rounded-full border transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
               isComparing
                 ? "bg-indigo-500/20 border-indigo-500/30 text-indigo-400"
-                : "bg-white/5 border-white/10 text-slate-400 hover:text-white hover:border-white/20"
+                : "bg-surface-elevated border-border text-text-secondary hover:text-text-primary hover:border-white/20"
             }`}
           >
             {isComparing ? `Comparing with FY ${priorYear} ✕` : `Compare with FY ${priorYear}`}
@@ -161,18 +161,18 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
             className="overflow-hidden"
           >
             <div className="grid grid-cols-2 gap-3 max-w-lg mx-auto">
-              <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
-                <div className="text-xs text-slate-400 uppercase tracking-wider">FY {priorYear}</div>
-                <div className="text-lg font-bold text-slate-400 font-amount">{formatCurrency(comparison.estimate.totalFederalTax)}</div>
-                <div className="text-xs text-slate-400">Effective: {formatPercent(comparison.estimate.effectiveRate)}</div>
+              <div className="text-center p-3 rounded-xl bg-surface-elevated border border-border">
+                <div className="text-xs text-text-secondary uppercase tracking-wider">FY {priorYear}</div>
+                <div className="text-lg font-bold text-text-secondary font-amount">{formatCurrency(comparison.estimate.totalFederalTax)}</div>
+                <div className="text-xs text-text-secondary">Effective: {formatPercent(comparison.estimate.effectiveRate)}</div>
               </div>
               <div className="text-center p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20">
                 <div className="text-xs text-indigo-400 uppercase tracking-wider">FY {currentYear}</div>
-                <div className="text-lg font-bold text-white font-amount">{formatCurrency(taxEstimate.totalFederalTax)}</div>
-                <div className="text-xs text-slate-400">Effective: {formatPercent(taxEstimate.effectiveRate)}</div>
+                <div className="text-lg font-bold text-text-primary font-amount">{formatCurrency(taxEstimate.totalFederalTax)}</div>
+                <div className="text-xs text-text-secondary">Effective: {formatPercent(taxEstimate.effectiveRate)}</div>
               </div>
             </div>
-            <p className="text-center text-xs text-slate-400 mt-2">
+            <p className="text-center text-xs text-text-secondary mt-2">
               Same income ({formatCurrency(taxEstimate.grossIncome)}), different tax year brackets and spending allocations
             </p>
           </motion.div>
@@ -191,9 +191,9 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
           { label: "Social Security", value: taxEstimate.socialSecurityTax, prev: comparison?.estimate.socialSecurityTax },
           { label: "Medicare", value: taxEstimate.medicareTax, prev: comparison?.estimate.medicareTax },
         ].map((item) => (
-          <div key={item.label} className="text-center p-3 rounded-xl bg-white/5">
-            <div className="text-xs text-slate-400">{item.label}</div>
-            <div className="text-sm font-semibold text-white">
+          <div key={item.label} className="text-center p-3 rounded-xl bg-surface-elevated">
+            <div className="text-xs text-text-secondary">{item.label}</div>
+            <div className="text-sm font-semibold text-text-primary">
               <span className="font-amount">{formatCurrency(item.value)}</span>
               {isComparing && item.prev !== undefined && (
                 <DeltaBadge current={item.value} previous={item.prev} />
@@ -219,16 +219,16 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ ...TRANSITION_DEFAULT, duration: 0.5, delay: 0.3 }}
-          className="bg-white/[0.03] backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden"
+          className="bg-surface-card backdrop-blur-sm rounded-2xl border border-border overflow-hidden"
         >
           {/* Receipt header */}
-          <div className="px-4 py-3 border-b-2 border-white/10 flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-slate-300 uppercase tracking-wider">
+          <div className="px-4 py-3 border-b-2 border-border flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-text-secondary uppercase tracking-wider">
               Spending Breakdown
             </h3>
             <button
               onClick={() => setShowShareSheet(true)}
-              className="text-slate-400 hover:text-white transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-lg p-1"
+              className="text-text-secondary hover:text-text-primary transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-lg p-1"
               aria-label="Share the breakdown"
               title="Share the breakdown"
             >
@@ -259,10 +259,10 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
           </div>
 
           {/* Receipt footer */}
-          <div className="px-4 py-3 border-t-[3px] border-double border-white/15 bg-white/5">
+          <div className="px-4 py-3 border-t-[3px] border-double border-border bg-surface-elevated">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-semibold text-slate-400 uppercase tracking-[1.5px]">TOTAL</span>
-              <span className="text-base font-bold text-white font-amount">
+              <span className="text-sm font-semibold text-text-secondary uppercase tracking-[1.5px]">TOTAL</span>
+              <span className="text-base font-bold text-text-primary font-amount">
                 {formatCurrency(taxEstimate.totalFederalTax)}
               </span>
             </div>
@@ -285,13 +285,13 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4 }}
-        className="flex items-center justify-center gap-x-2 gap-y-1 flex-wrap text-xs text-slate-400"
+        className="flex items-center justify-center gap-x-2 gap-y-1 flex-wrap text-xs text-text-secondary"
       >
-        <span>Your effective rate: <span className="text-white font-medium">{formatPercent(taxEstimate.effectiveRate)}</span></span>
+        <span>Your effective rate: <span className="text-text-primary font-medium">{formatPercent(taxEstimate.effectiveRate)}</span></span>
         <span aria-hidden="true" className="leading-none">·</span>
         {intlCallout.map((c, i) => (
           <span key={c.label} className="inline-flex items-center gap-2">
-            <span>{c.label}: <span className="text-white font-medium">{formatPercent(c.rate)}</span></span>
+            <span>{c.label}: <span className="text-text-primary font-medium">{formatPercent(c.rate)}</span></span>
             {i < intlCallout.length - 1 && <span aria-hidden="true" className="leading-none">·</span>}
           </span>
         ))}
@@ -330,6 +330,10 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
           onCompareCountryChange={onCompareCountryChange ?? (() => {})}
           activeTab={secondaryTab}
           onTabChange={setSecondaryTab}
+          onResetFilter={() => {
+            setActiveCategoryId(null);
+            setExpandedCategory(null);
+          }}
         />
       </div>
 

@@ -59,15 +59,15 @@ export default function ReceiptLine({
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ ...TRANSITION_DEFAULT, delay: index * STAGGER_DELAY }}
-      className="border-b border-white/8 last:border-b-0"
+      className="border-b border-border-subtle last:border-b-0"
     >
       {/* Main line item */}
       <button
         onClick={onToggle}
         aria-expanded={isExpanded}
         aria-label={`${item.category.name}: ${formatCurrency(item.amount)}, ${formatPercent(item.percentage / 100)} of your taxes`}
-        className={`w-full px-4 py-3 flex items-center gap-3 transition-all hover:bg-white/5 cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-inset ${
-          isActive ? "bg-white/5" : ""
+        className={`w-full px-4 py-3 flex items-center gap-3 transition-all hover:bg-surface-elevated cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-inset ${
+          isActive ? "bg-surface-elevated" : ""
         }`}
       >
         {/* Color indicator */}
@@ -81,15 +81,15 @@ export default function ReceiptLine({
 
         {/* Category name + dotted leader wrapper */}
         <span className="flex-1 min-w-0 flex items-center gap-2">
-          <span className="text-sm font-medium text-white truncate">
+          <span className="text-sm font-medium text-text-primary truncate">
             {item.category.name}
           </span>
-          <span className="flex-1 border-b border-dotted border-white/10 self-end mb-1 hidden sm:block shrink-0 min-w-4" aria-hidden="true" />
+          <span className="flex-1 border-b border-dotted border-border self-end mb-1 hidden sm:block shrink-0 min-w-4" aria-hidden="true" />
         </span>
 
         {/* Amount & percentage */}
         <div className="text-right shrink-0">
-          <div className="text-sm font-semibold text-white font-amount">
+          <div className="text-sm font-semibold text-text-primary font-amount">
             {formatCurrency(item.amount)}
           </div>
           {previousAmount !== undefined && Math.abs(item.amount - previousAmount) >= 1 ? (
@@ -97,7 +97,7 @@ export default function ReceiptLine({
               {item.amount > previousAmount ? "+" : ""}{formatCurrency(item.amount - previousAmount)}
             </div>
           ) : (
-            <div className="text-xs text-slate-400">
+            <div className="text-xs text-text-secondary">
               {formatPercent(item.percentage / 100)}
             </div>
           )}
@@ -107,7 +107,7 @@ export default function ReceiptLine({
         <motion.span
           animate={{ rotate: isExpanded ? 180 : 0 }}
           transition={{ duration: 0.2 }}
-          className="text-slate-400 shrink-0 text-lg"
+          className="text-text-secondary shrink-0 text-lg"
           aria-hidden="true"
         >
           ▾
@@ -126,13 +126,13 @@ export default function ReceiptLine({
           >
             <div className="px-4 pt-2 pb-4 space-y-4">
               {/* Description */}
-              <p className="text-sm text-slate-400 pl-10">
+              <p className="text-sm text-text-secondary pl-10">
                 {item.category.description}
               </p>
 
               {/* Subcategories */}
               <div className="pl-10 space-y-1">
-                <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 inline-flex items-center gap-1.5">
+                <h4 className="text-xs font-semibold text-text-secondary uppercase tracking-wider mb-2 inline-flex items-center gap-1.5">
                   Breakdown
                   <InfoTooltip position="below">
                     Each subcategory shows how much of your tax contribution to {item.category.name} goes to that program. Amounts are calculated by applying the federal budget&apos;s percentage breakdown to your personal tax payment. Percentages are relative to this category, not your total taxes.
@@ -141,23 +141,23 @@ export default function ReceiptLine({
                 {subcategories.map((sub, i) => (
                   <div
                     key={i}
-                    className="flex items-center justify-between py-1.5 px-3 rounded-lg hover:bg-white/5 transition-colors"
+                    className="flex items-center justify-between py-1.5 px-3 rounded-lg hover:bg-surface-elevated transition-colors"
                   >
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm text-slate-300 truncate">
+                      <div className="text-sm text-text-secondary truncate">
                         {sub.subcategory.name}
                       </div>
                       {sub.subcategory.agencies && (
-                        <div className="text-xs text-slate-400 truncate">
+                        <div className="text-xs text-text-secondary truncate">
                           {sub.subcategory.agencies.join(", ")}
                         </div>
                       )}
                     </div>
                     <div className="text-right shrink-0 ml-4">
-                      <div className="text-sm text-white font-medium font-amount">
+                      <div className="text-sm text-text-primary font-medium font-amount">
                         {formatCurrency(sub.amount)}
                       </div>
-                      <div className="text-xs text-slate-400">
+                      <div className="text-xs text-text-secondary">
                         {formatPercent(sub.percentage / 100)}
                       </div>
                     </div>
@@ -167,7 +167,7 @@ export default function ReceiptLine({
 
               {/* Bar visualization for subcategories */}
               <div className="pl-10">
-                <div className="flex h-3 rounded-full overflow-hidden bg-white/5">
+                <div className="flex h-3 rounded-full overflow-hidden bg-surface-elevated">
                   {subcategories.map((sub, i) => (
                     <motion.div
                       key={i}
@@ -188,13 +188,13 @@ export default function ReceiptLine({
               {/* Recent Legislation */}
               {item.category.legislation.length > 0 && (
                 <div className="pl-10 space-y-2">
-                  <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                  <h4 className="text-xs font-semibold text-text-secondary uppercase tracking-wider">
                     Recent Legislation
                   </h4>
                   {item.category.legislation.map((bill, i) => (
                     <div
                       key={i}
-                      className="p-3 rounded-lg bg-white/5 space-y-2"
+                      className="p-3 rounded-lg bg-surface-elevated space-y-2"
                     >
                       <div className="flex items-start justify-between gap-2">
                         <a
@@ -207,11 +207,11 @@ export default function ReceiptLine({
                         </a>
                         <StatusBadge status={bill.status} />
                       </div>
-                      <p className="text-xs text-slate-400">{bill.summary}</p>
-                      <p className="text-xs text-slate-400">
-                        <span className="text-slate-400">Impact:</span> {bill.impact}
+                      <p className="text-xs text-text-secondary">{bill.summary}</p>
+                      <p className="text-xs text-text-secondary">
+                        <span className="text-text-secondary">Impact:</span> {bill.impact}
                       </p>
-                      <div className="text-xs text-slate-400">
+                      <div className="text-xs text-text-secondary">
                         Sponsors: {bill.sponsors.join(", ")}
                       </div>
                     </div>

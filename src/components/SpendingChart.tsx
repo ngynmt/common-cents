@@ -89,8 +89,8 @@ export default function SpendingChart({
   if (spending.length === 0) {
     return (
       <div className="w-full h-[400px] flex items-center justify-center">
-        <div className="w-[280px] h-[280px] rounded-full border-[20px] border-white/5 animate-pulse flex items-center justify-center">
-          <span className="text-sm text-slate-500">Loading...</span>
+        <div className="w-[280px] h-[280px] rounded-full border-[20px] border-border-subtle animate-pulse flex items-center justify-center">
+          <span className="text-sm text-text-muted">Loading...</span>
         </div>
       </div>
     );
@@ -114,12 +114,12 @@ export default function SpendingChart({
         <div className="text-center">
           {activeItem ? (
             <>
-              <div className="text-sm font-semibold text-white">{activeItem.name}</div>
-              <div className="text-lg font-bold text-white font-amount">{formatCurrency(activeItem.value)}</div>
-              <div className="text-xs text-slate-400">{formatPercent(activeItem.percentage / 100)}</div>
+              <div className="text-sm font-semibold text-text-primary">{activeItem.name}</div>
+              <div className="text-lg font-bold text-text-primary font-amount">{formatCurrency(activeItem.value)}</div>
+              <div className="text-xs text-text-secondary">{formatPercent(activeItem.percentage / 100)}</div>
             </>
           ) : (
-            <div className="text-xs text-slate-400">Hover, click, or<br />use arrow keys</div>
+            <div className="text-xs text-text-secondary">Hover, click, or<br />use arrow keys</div>
           )}
         </div>
       </div>
