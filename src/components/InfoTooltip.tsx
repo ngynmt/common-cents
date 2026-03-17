@@ -81,7 +81,7 @@ export default function InfoTooltip({ children, width = "w-56", position = "auto
     >
       <span
         ref={triggerRef}
-        className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-white/10 text-[9px] text-slate-400 cursor-help italic font-bold leading-none lowercase"
+        className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-white/10 text-[9px] text-text-secondary cursor-help italic font-bold leading-none lowercase"
         tabIndex={0}
         role="note"
         aria-label="More info"
@@ -91,7 +91,7 @@ export default function InfoTooltip({ children, width = "w-56", position = "auto
       {typeof document !== "undefined" && createPortal(
         <span
           ref={tooltipRef}
-          className={`fixed p-2.5 rounded-lg bg-slate-900 border border-white/10 shadow-xl text-[10px] text-slate-300 leading-relaxed text-left font-normal normal-case tracking-normal z-[100] transition-opacity duration-150 ${
+          className={`fixed p-2.5 rounded-lg bg-surface-card border border-border shadow-xl text-[10px] text-text-secondary leading-relaxed text-left font-normal normal-case tracking-normal z-[100] transition-opacity duration-150 ${
             isVisible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
           }`}
           style={{

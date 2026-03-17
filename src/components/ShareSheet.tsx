@@ -165,19 +165,19 @@ export default function ShareSheet({
             transition={{ duration: prefersReducedMotion ? 0 : 0.25 }}
             className="fixed inset-x-4 bottom-4 top-auto sm:inset-x-auto sm:left-1/2 sm:-translate-x-1/2 sm:w-full sm:max-w-sm sm:bottom-8 z-50 outline-none"
           >
-            <div className="bg-slate-900 border border-white/10 rounded-2xl overflow-hidden flex flex-col max-h-[80vh]">
+            <div className="bg-surface border border-border rounded-2xl overflow-hidden flex flex-col max-h-[80vh]">
               {/* Header */}
-              <div className="px-4 py-3 border-b border-white/10 flex items-center justify-between shrink-0">
+              <div className="px-4 py-3 border-b border-border flex items-center justify-between shrink-0">
                 <h2
                   id="share-sheet-title"
-                  className="text-sm font-semibold text-white"
+                  className="text-sm font-semibold text-text-primary"
                 >
                   Share Your Breakdown
                 </h2>
                 <button
                   onClick={onClose}
                   aria-label="Close"
-                  className="text-slate-400 hover:text-white transition-colors text-xl leading-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
+                  className="text-text-secondary hover:text-text-primary transition-colors text-xl leading-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
                 >
                   &times;
                 </button>
@@ -189,7 +189,7 @@ export default function ShareSheet({
                 <div
                   role="radiogroup"
                   aria-label="Card style"
-                  className="flex rounded-lg bg-white/5 p-1"
+                  className="flex rounded-lg bg-surface-elevated p-1"
                 >
                   {(["share", "classified"] as const).map((m) => (
                     <button
@@ -200,7 +200,7 @@ export default function ShareSheet({
                       className={`flex-1 py-1.5 rounded-md text-xs font-medium transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
                         mode === m
                           ? "bg-indigo-500/20 text-indigo-400"
-                          : "text-slate-400 hover:text-white"
+                          : "text-text-secondary hover:text-text-primary"
                       }`}
                     >
                       {m === "share" ? "Share" : "Classified"}
@@ -210,7 +210,7 @@ export default function ShareSheet({
 
                 {/* Preview */}
                 {previewUrl && (
-                  <div className="rounded-lg overflow-hidden border border-white/10">
+                  <div className="rounded-lg overflow-hidden border border-border">
                     {/* eslint-disable-next-line @next/next/no-img-element -- data URL from canvas, next/image adds no value */}
                     <img
                       src={previewUrl}
@@ -246,7 +246,7 @@ export default function ShareSheet({
                   <button
                     onClick={handleDownload}
                     disabled={!canvas}
-                    className="flex-1 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm font-medium hover:bg-white/10 transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="flex-1 py-2.5 rounded-xl bg-surface-card border border-border text-text-primary text-sm font-medium hover:bg-surface-elevated transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   >
                     Download Image
                   </button>

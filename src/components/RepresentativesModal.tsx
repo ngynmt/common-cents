@@ -115,16 +115,16 @@ export default function RepresentativesModal({
             transition={{ duration: 0.25 }}
             className="fixed inset-x-4 top-[10%] bottom-[10%] sm:inset-x-auto sm:left-1/2 sm:-translate-x-1/2 sm:w-full sm:max-w-lg z-50 flex flex-col outline-none"
           >
-            <div className="bg-slate-900 border border-white/10 rounded-2xl overflow-hidden flex flex-col max-h-full">
+            <div className="bg-surface border border-border rounded-2xl overflow-hidden flex flex-col max-h-full">
               {/* Header */}
-              <div className="px-5 py-4 border-b border-white/10 flex items-center justify-between shrink-0">
-                <h2 id="reps-modal-title" className="text-lg font-semibold text-white">
+              <div className="px-5 py-4 border-b border-border flex items-center justify-between shrink-0">
+                <h2 id="reps-modal-title" className="text-lg font-semibold text-text-primary">
                   Your Representatives
                 </h2>
                 <button
                   onClick={onClose}
                   aria-label="Close dialog"
-                  className="text-slate-400 hover:text-white transition-colors text-xl leading-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
+                  className="text-text-secondary hover:text-text-primary transition-colors text-xl leading-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
                 >
                   &times;
                 </button>
@@ -134,7 +134,7 @@ export default function RepresentativesModal({
               <div className="p-5 space-y-3 overflow-y-auto flex-1">
                 {hasReps ? (
                   <>
-                    <p className="text-xs text-slate-400">
+                    <p className="text-xs text-text-secondary">
                       Based on your ZIP code. Contact your representatives about any
                       spending issue that matters to you.
                     </p>
@@ -151,7 +151,7 @@ export default function RepresentativesModal({
                 ) : (
                   <div className="flex flex-col items-center justify-center py-8 space-y-4">
                     <div className="text-4xl" aria-hidden="true">🏛️</div>
-                    <p className="text-sm text-slate-300 text-center max-w-xs">
+                    <p className="text-sm text-text-secondary text-center max-w-xs">
                       Enter your ZIP code to see how your representatives voted on spending decisions.
                     </p>
                     <form
@@ -166,7 +166,7 @@ export default function RepresentativesModal({
                         placeholder="ZIP code"
                         value={zipInput}
                         onChange={(e) => setZipInput(e.target.value.replace(/\D/g, ""))}
-                        className="w-28 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm text-center placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        className="w-28 px-3 py-2 rounded-lg bg-surface-elevated border border-border text-text-primary text-sm text-center placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                         autoFocus
                       />
                       <button
@@ -177,7 +177,7 @@ export default function RepresentativesModal({
                         {zipLoading ? "Looking up…" : "Look up"}
                       </button>
                     </form>
-                    <p className="text-[10px] text-slate-500 text-center">
+                    <p className="text-[10px] text-text-muted text-center">
                       We use your ZIP to find your House and Senate representatives.
                       Nothing is stored.
                     </p>
@@ -187,8 +187,8 @@ export default function RepresentativesModal({
 
               {/* Footer */}
               {hasReps && (
-                <div className="px-5 py-3 border-t border-white/10 shrink-0">
-                  <p className="text-[10px] text-slate-400 text-center">
+                <div className="px-5 py-3 border-t border-border shrink-0">
+                  <p className="text-[10px] text-text-secondary text-center">
                     Representative data provided by Geocodio and Congress.gov. Campaign finance data from FEC.gov. Contact info may occasionally be outdated.
                   </p>
                 </div>

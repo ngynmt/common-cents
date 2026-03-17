@@ -32,8 +32,8 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
   return (
     <div className="space-y-2">
       {/* Headline */}
-      <div className="text-xs text-slate-400 inline-flex items-center gap-1">
-        {finance.cycle} cycle · <span className="text-white font-medium">{formatCompact(finance.totalRaised)} total raised</span>
+      <div className="text-xs text-text-secondary inline-flex items-center gap-1">
+        {finance.cycle} cycle · <span className="text-text-primary font-medium">{formatCompact(finance.totalRaised)} total raised</span>
         <InfoTooltip width="w-60">
           A cycle is the 2-year election period (e.g., &ldquo;2024&rdquo; covers Jan 2023 &ndash; Dec 2024). &ldquo;Total raised&rdquo; includes all contributions to this candidate&apos;s principal campaign committee during that cycle. Source: FEC.gov.
         </InfoTooltip>
@@ -50,7 +50,7 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
       )}
       {hasOutsideSpending && (
         <div className="space-y-1.5">
-          <div className="text-xs text-slate-400 font-medium uppercase tracking-wider">
+          <div className="text-xs text-text-secondary font-medium uppercase tracking-wider">
             Outside spending (Super PACs){finance.outsideSpendingCycle && finance.outsideSpendingCycle !== finance.cycle ? ` · ${finance.outsideSpendingCycle} cycle` : ""}
           </div>
           <div
@@ -61,18 +61,18 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
             {outsideData.map((d) => (
               <div key={d.name} className="flex items-center gap-2" role="listitem">
                 <span className={`inline-block w-1.5 h-1.5 rounded-full shrink-0 ${d.support ? "bg-green-500/70" : "bg-red-500/70"}`} />
-                <span className="text-[10px] text-slate-300 min-w-0 truncate flex-1">{d.name}</span>
-                <div className="w-20 h-1.5 bg-white/5 rounded-full overflow-hidden shrink-0">
+                <span className="text-[10px] text-text-secondary min-w-0 truncate flex-1">{d.name}</span>
+                <div className="w-20 h-1.5 bg-surface-elevated rounded-full overflow-hidden shrink-0">
                   <div
                     className={`h-full rounded-full ${d.support ? "bg-green-500/60" : "bg-red-500/60"}`}
                     style={{ width: outsideMax > 0 ? `${(d.total / outsideMax) * 100}%` : "0%" }}
                   />
                 </div>
-                <span className="font-amount text-[10px] text-slate-400 shrink-0 w-14 text-right">{formatCompact(d.total)}</span>
+                <span className="font-amount text-[10px] text-text-secondary shrink-0 w-14 text-right">{formatCompact(d.total)}</span>
               </div>
             ))}
           </div>
-          <div className="flex items-center gap-3 text-[10px] text-slate-400">
+          <div className="flex items-center gap-3 text-[10px] text-text-secondary">
             <span className="flex items-center gap-1">
               <span className="inline-block w-2 h-2 rounded-full bg-green-500/70" /> Supporting
             </span>
@@ -86,7 +86,7 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
       {/* Donor employers */}
       {hasEmployers && (
         <div className="space-y-1.5">
-          <div className="text-xs text-slate-400 font-medium uppercase tracking-wider">
+          <div className="text-xs text-text-secondary font-medium uppercase tracking-wider">
             Top donor employers
           </div>
           <div
@@ -96,21 +96,21 @@ export default function FinanceChart({ finance }: FinanceChartProps) {
           >
             {employerData.map((d) => (
               <div key={d.employer} className="flex items-center gap-2" role="listitem">
-                <span className="text-[10px] text-slate-300 min-w-0 truncate flex-1">{d.employer}</span>
-                <div className="w-20 h-1.5 bg-white/5 rounded-full overflow-hidden shrink-0">
+                <span className="text-[10px] text-text-secondary min-w-0 truncate flex-1">{d.employer}</span>
+                <div className="w-20 h-1.5 bg-surface-elevated rounded-full overflow-hidden shrink-0">
                   <div
                     className="h-full rounded-full bg-blue-400/60"
                     style={{ width: employerMax > 0 ? `${(d.total / employerMax) * 100}%` : "0%" }}
                   />
                 </div>
-                <span className="font-amount text-[10px] text-slate-400 shrink-0 w-14 text-right">{formatCompact(d.total)}</span>
+                <span className="font-amount text-[10px] text-text-secondary shrink-0 w-14 text-right">{formatCompact(d.total)}</span>
               </div>
             ))}
           </div>
         </div>
       )}
 
-      <p className="text-[10px] text-slate-400 inline-flex items-center gap-1">
+      <p className="text-[10px] text-text-secondary inline-flex items-center gap-1">
         Personal donations from employees, not corporate <span aria-hidden="true">·</span> Source: FEC.gov
         <InfoTooltip width="w-60">
           These are donations from individual employees who listed this company as their employer on FEC filings. They are personal contributions, not corporate spending. Companies cannot donate directly to candidates. Totals aggregate all individual donations from employees of the same employer.
@@ -191,13 +191,13 @@ function DonorContracts({ employers, repName }: { employers: { employer: string;
             <div className="mt-2 space-y-3">
               {loading && (
                 <div className="space-y-2">
-                  <div className="h-12 bg-white/5 rounded-lg animate-pulse" />
-                  <div className="h-12 bg-white/5 rounded-lg animate-pulse" />
+                  <div className="h-12 bg-surface-elevated rounded-lg animate-pulse" />
+                  <div className="h-12 bg-surface-elevated rounded-lg animate-pulse" />
                 </div>
               )}
 
               {!loading && data === null && (
-                <p className="text-[10px] text-slate-400 py-2">
+                <p className="text-[10px] text-text-secondary py-2">
                   No federal contracts found for these donor employers.
                 </p>
               )}
@@ -211,16 +211,16 @@ function DonorContracts({ employers, repName }: { employers: { employer: string;
 
                 return (
                   <div className="p-2.5 rounded-lg bg-amber-500/5 border border-amber-500/10 space-y-1">
-                    <p className="text-[10px] text-slate-300">
+                    <p className="text-[10px] text-text-secondary">
                       <span className="text-amber-400 font-medium">{employersWithContracts}</span> of{" "}
                       {repName}&apos;s top donor employers also receive federal contracts.
                       Their employees donated{" "}
-                      <span className="font-amount text-white font-medium">{formatCompact(totalDonated)}</span>{" "}
+                      <span className="font-amount text-text-primary font-medium">{formatCompact(totalDonated)}</span>{" "}
                       to this representative while holding{" "}
-                      <span className="font-amount text-white font-medium">{formatCompact(totalContractValue)}</span>{" "}
+                      <span className="font-amount text-text-primary font-medium">{formatCompact(totalContractValue)}</span>{" "}
                       in government contracts.
                     </p>
-                    <p className="text-[9px] text-slate-400">
+                    <p className="text-[9px] text-text-secondary">
                       This does not imply wrongdoing — employee donations are personal, not corporate.
                       But the connection is worth knowing about.
                     </p>
@@ -231,7 +231,7 @@ function DonorContracts({ employers, repName }: { employers: { employer: string;
               {!loading && data && data.map((employer) => (
                 <div key={employer.employer} className="space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-medium text-white">
+                    <span className="text-[10px] font-medium text-text-primary">
                       {employer.employer}
                     </span>
                     <span className="font-amount text-[10px] text-indigo-400 font-medium">
@@ -245,7 +245,7 @@ function DonorContracts({ employers, repName }: { employers: { employer: string;
               ))}
 
               {!loading && data && (
-                <p className="text-[9px] text-slate-500 pt-1 border-t border-white/8 inline-flex items-center gap-1 flex-wrap">
+                <p className="text-[9px] text-text-muted pt-1 border-t border-border-subtle inline-flex items-center gap-1 flex-wrap">
                   Contract values are total award amounts, not annual spending
                   <InfoTooltip width="w-56">
                     Federal contracts are often multi-year awards. A $500M contract might be spent over 5-10 years, so the annual cost is much lower than the headline number. These are total obligated amounts, not payments made in a single year.
@@ -255,7 +255,7 @@ function DonorContracts({ employers, repName }: { employers: { employer: string;
                     href="https://www.usaspending.gov"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-slate-400 hover:text-slate-400 underline"
+                    className="text-text-secondary hover:text-text-secondary underline"
                   >
                     USASpending.gov<span className="sr-only"> (opens in new tab)</span>
                   </a>
@@ -276,9 +276,9 @@ function ContractRow({ contract: c }: { contract: import("@/app/api/contractor-c
   const isLong = c.description.length > DESCRIPTION_THRESHOLD;
 
   return (
-    <div className="pl-2 border-l-2 border-white/10 flex items-start justify-between gap-2">
+    <div className="pl-2 border-l-2 border-border flex items-start justify-between gap-2">
       <div className="min-w-0">
-        <p className={`text-[10px] text-slate-400 ${!showMore && isLong ? "line-clamp-1" : ""}`}>
+        <p className={`text-[10px] text-text-secondary ${!showMore && isLong ? "line-clamp-1" : ""}`}>
           {c.description}
         </p>
         {isLong && (
@@ -290,7 +290,7 @@ function ContractRow({ contract: c }: { contract: import("@/app/api/contractor-c
           </button>
         )}
         <div className="flex items-center gap-1.5 mt-0.5">
-          <span className="text-[9px] text-slate-400">{c.agency}</span>
+          <span className="text-[9px] text-text-secondary">{c.agency}</span>
           <span className="px-1.5 py-0.5 rounded-full text-[9px] bg-indigo-500/20 text-indigo-400">
             {c.categoryLabel}
           </span>
@@ -300,7 +300,7 @@ function ContractRow({ contract: c }: { contract: import("@/app/api/contractor-c
         href={c.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="font-amount text-[10px] text-white font-medium shrink-0 hover:text-indigo-400 transition-colors"
+        className="font-amount text-[10px] text-text-primary font-medium shrink-0 hover:text-indigo-400 transition-colors"
       >
         {formatCompact(c.amount)}
         <span className="sr-only"> — view on USASpending.gov (opens in new tab)</span>

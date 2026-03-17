@@ -82,7 +82,7 @@ export default function InfluenceChain({ contractorName }: InfluenceChainProps) 
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            <div className="mt-2 p-3 rounded-lg bg-white/5 border border-white/10 space-y-2">
+            <div className="mt-2 p-3 rounded-lg bg-surface-elevated border border-border space-y-2">
               {loading && (
                 <div className="space-y-2">
                   <div className="h-3 w-48 bg-white/10 rounded animate-pulse" />
@@ -91,7 +91,7 @@ export default function InfluenceChain({ contractorName }: InfluenceChainProps) 
               )}
 
               {!loading && data === null && (
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-text-secondary">
                   No campaign contribution data found for this contractor.
                 </p>
               )}
@@ -99,8 +99,8 @@ export default function InfluenceChain({ contractorName }: InfluenceChainProps) 
               {!loading && data && (
                 <>
                   {/* Summary */}
-                  <div className="text-xs text-slate-400">
-                    <span className="text-white font-medium">{data.contractorName}</span>
+                  <div className="text-xs text-text-secondary">
+                    <span className="text-text-primary font-medium">{data.contractorName}</span>
                     {" "}employees donated{" "}
                     <span className="font-amount text-indigo-400 font-medium">
                       {formatCompact(data.totalDonations)}
@@ -110,7 +110,7 @@ export default function InfluenceChain({ contractorName }: InfluenceChainProps) 
                   </div>
 
                   {/* Flow arrow */}
-                  <div className="flex items-center gap-1 text-slate-500">
+                  <div className="flex items-center gap-1 text-text-muted">
                     <span className="text-xs">↓</span>
                     <span className="text-xs">Top recipients</span>
                   </div>
@@ -127,12 +127,12 @@ export default function InfluenceChain({ contractorName }: InfluenceChainProps) 
                             {r.recipientName}
                           </span>
                           {r.recipientState && (
-                            <span className="text-slate-500 shrink-0">
+                            <span className="text-text-muted shrink-0">
                               ({r.recipientParty}-{r.recipientState})
                             </span>
                           )}
                         </div>
-                        <span className="font-amount text-slate-400 font-medium shrink-0 ml-2">
+                        <span className="font-amount text-text-secondary font-medium shrink-0 ml-2">
                           {formatCompact(r.total)}
                         </span>
                       </div>
@@ -140,13 +140,13 @@ export default function InfluenceChain({ contractorName }: InfluenceChainProps) 
                   </div>
 
                   {/* Source */}
-                  <p className="text-[9px] text-slate-500 pt-1 border-t border-white/8">
+                  <p className="text-[9px] text-text-muted pt-1 border-t border-border-subtle">
                     Source:{" "}
                     <a
                       href="https://www.fec.gov"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-slate-400 hover:text-slate-400 underline"
+                      className="text-text-secondary hover:text-text-secondary underline"
                     >
                       FEC<span className="sr-only"> (opens in new tab)</span>
                     </a>

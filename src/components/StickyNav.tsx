@@ -154,7 +154,7 @@ export default function StickyNav({ activeSecondaryTab, onTabChange, hidden }: S
           className="fixed bottom-6 left-1/2 -translate-x-1/2 z-30 lg:hidden"
         >
           <div
-            className="flex items-center gap-1 px-2 py-1.5 rounded-full bg-slate-800/90 backdrop-blur-md border border-white/10 shadow-lg overflow-x-auto [&::-webkit-scrollbar]:hidden"
+            className="flex items-center gap-1 px-2 py-1.5 rounded-full bg-surface/90 backdrop-blur-md border border-border shadow-lg overflow-x-auto [&::-webkit-scrollbar]:hidden"
             style={{ scrollbarWidth: "none" }}
           >
             {NAV_ITEMS.map((item) => {
@@ -167,7 +167,7 @@ export default function StickyNav({ activeSecondaryTab, onTabChange, hidden }: S
                   className={`px-3 py-1.5 rounded-full text-[11px] font-medium whitespace-nowrap transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
                     isActive
                       ? "bg-indigo-500/30 text-indigo-400"
-                      : "text-slate-400 hover:text-white"
+                      : "text-text-secondary hover:text-text-primary"
                   }`}
                 >
                   {item.label}

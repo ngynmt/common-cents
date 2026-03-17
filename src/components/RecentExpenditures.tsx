@@ -48,19 +48,19 @@ function ContractCard({
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={TRANSITION_DEFAULT}
-      className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2"
+      className="p-4 rounded-xl bg-surface-elevated border border-border space-y-2"
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs font-semibold text-white truncate">
+            <span className="text-xs font-semibold text-text-primary truncate">
               {titleCase(contract.recipientName)}
             </span>
             <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-indigo-500/20 text-indigo-400 shrink-0">
               {CATEGORY_LABELS[contract.categoryId] || contract.categoryId}
             </span>
           </div>
-          <p className={`text-xs text-slate-400 mt-1${!descExpanded ? " line-clamp-3" : ""}`}>
+          <p className={`text-xs text-text-secondary mt-1${!descExpanded ? " line-clamp-3" : ""}`}>
             {description}
           </p>
           {description.length > 120 && (
@@ -73,7 +73,7 @@ function ContractCard({
           )}
         </div>
         <div className="text-right shrink-0">
-          <div className="text-sm font-bold text-white font-amount">
+          <div className="text-sm font-bold text-text-primary font-amount">
             {formatCompact(contract.amount)}
           </div>
           <div className="text-[10px] text-indigo-400 font-medium inline-flex items-center gap-1">
@@ -84,19 +84,19 @@ function ContractCard({
             </InfoTooltip>
           </div>
           {contract.annualizedAmount && (
-            <div className="text-[9px] text-slate-400 font-amount">
+            <div className="text-[9px] text-text-secondary font-amount">
               ~{formatCurrency(calculatePersonalCost(contract.annualizedAmount, personalCostTax))}/yr
             </div>
           )}
         </div>
       </div>
-      <div className="flex items-center justify-between text-[10px] text-slate-400">
+      <div className="flex items-center justify-between text-[10px] text-text-secondary">
         <span>{contract.awardingAgency}</span>
         <a
           href={contract.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-slate-400 hover:text-slate-300 underline"
+          className="text-text-secondary hover:text-text-primary underline"
         >
           USASpending.gov<span className="sr-only"> (opens in new tab)</span>
         </a>
@@ -121,24 +121,24 @@ function EnactedBillCard({
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={TRANSITION_DEFAULT}
-      className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2"
+      className="p-4 rounded-xl bg-surface-elevated border border-border space-y-2"
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs font-semibold text-white">
+            <span className="text-xs font-semibold text-text-primary">
               {bill.shortTitle}
             </span>
             <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-green-500/20 text-green-400 shrink-0">
               Enacted
             </span>
             {bill.publicLawNumber && (
-              <span className="text-xs text-slate-400">
+              <span className="text-xs text-text-secondary">
                 {bill.publicLawNumber}
               </span>
             )}
           </div>
-          <p className={`text-xs text-slate-400 mt-1${!descExpanded ? " line-clamp-3" : ""}`}>
+          <p className={`text-xs text-text-secondary mt-1${!descExpanded ? " line-clamp-3" : ""}`}>
             {description}
           </p>
           {description.length > 120 && (
@@ -152,7 +152,7 @@ function EnactedBillCard({
         </div>
         {bill.totalAnnualImpact !== 0 && (
           <div className="text-right shrink-0">
-            <div className="text-sm font-bold text-white font-amount">
+            <div className="text-sm font-bold text-text-primary font-amount">
               {formatCompact(Math.abs(bill.totalAnnualImpact) * 1e9)}/yr
             </div>
             <div className="text-[10px] text-indigo-400 font-medium">
@@ -161,14 +161,14 @@ function EnactedBillCard({
           </div>
         )}
       </div>
-      <div className="flex items-center justify-between text-[10px] text-slate-400">
+      <div className="flex items-center justify-between text-[10px] text-text-secondary">
         <span>{bill.enactedDate || bill.lastActionDate}</span>
         {bill.congressUrl && (
           <a
             href={bill.congressUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-slate-400 hover:text-slate-300 underline"
+            className="text-text-secondary hover:text-text-primary underline"
           >
             Congress.gov<span className="sr-only"> (opens in new tab)</span>
           </a>
@@ -311,7 +311,7 @@ export default function RecentExpenditures({ totalFederalTax }: RecentExpenditur
         {[1, 2, 3].map((i) => (
           <div
             key={i}
-            className="h-24 rounded-xl bg-white/5 border border-white/10 animate-pulse"
+            className="h-24 rounded-xl bg-surface-elevated border border-border animate-pulse"
           />
         ))}
       </div>
@@ -320,7 +320,7 @@ export default function RecentExpenditures({ totalFederalTax }: RecentExpenditur
 
   if (error || (contracts.length === 0 && enactedBills.length === 0)) {
     return (
-      <div className="text-center py-8 text-slate-400 text-sm space-y-2">
+      <div className="text-center py-8 text-text-secondary text-sm space-y-2">
         <p>
           {error
             ? "Unable to fetch recent spending data."
@@ -365,14 +365,14 @@ export default function RecentExpenditures({ totalFederalTax }: RecentExpenditur
 
   return (
     <div className="space-y-3">
-      <h3 className="text-sm font-semibold text-white">
+      <h3 className="text-sm font-semibold text-text-primary">
         How Your Tax Dollars Were Spent in the Last 6 Months
       </h3>
 
       {/* Sort + filter controls */}
       <div className="flex items-center justify-between flex-wrap gap-2">
         <div className="flex items-center gap-1">
-          <span className="text-xs text-slate-400 mr-1">Sort by</span>
+          <span className="text-xs text-text-secondary mr-1">Sort by</span>
           {([
             { key: "amount" as SortMode, label: "Amount" },
             { key: "date" as SortMode, label: "Recent" },
@@ -382,8 +382,8 @@ export default function RecentExpenditures({ totalFederalTax }: RecentExpenditur
               onClick={() => setSortMode(option.key)}
               className={`text-xs px-2.5 py-1 rounded-full transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
                 sortMode === option.key
-                  ? "bg-white/10 text-white"
-                  : "text-slate-400 hover:text-slate-300"
+                  ? "bg-surface-card text-text-primary"
+                  : "text-text-secondary hover:text-text-primary"
               }`}
             >
               {option.label}
@@ -392,14 +392,14 @@ export default function RecentExpenditures({ totalFederalTax }: RecentExpenditur
         </div>
 
         <div className="flex items-center gap-2">
-          <label htmlFor="category-filter" className="text-xs text-slate-400">
+          <label htmlFor="category-filter" className="text-xs text-text-secondary">
             Category
           </label>
           <select
             id="category-filter"
             value={filterCategory || ""}
             onChange={(e) => setFilterCategory(e.target.value || null)}
-            className="text-xs bg-white/5 border border-white/10 rounded-lg px-2 py-1 text-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+            className="text-xs bg-surface-elevated border border-border rounded-lg px-2 py-1 text-text-secondary focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer"
           >
             <option value="">All</option>
             {availableCategories.map((catId) => (
@@ -442,7 +442,7 @@ export default function RecentExpenditures({ totalFederalTax }: RecentExpenditur
           <button
             onClick={loadMore}
             disabled={loadingMore || rateLimited}
-            className="text-xs px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="text-xs px-4 py-2 rounded-xl bg-surface-card border border-border text-text-secondary hover:bg-surface-elevated transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {rateLimited
               ? "Too many requests — try again shortly"
@@ -453,16 +453,16 @@ export default function RecentExpenditures({ totalFederalTax }: RecentExpenditur
         </div>
       )}
 
-      <p className="text-center text-[10px] text-slate-400 mt-2">
-        <a href="https://www.usaspending.gov" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-300 underline">
+      <p className="text-center text-[10px] text-text-secondary mt-2">
+        <a href="https://www.usaspending.gov" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-text-primary underline">
           USASpending.gov<span className="sr-only"> (opens in new tab)</span>
         </a>
         {" · "}
-        <a href="https://www.congress.gov" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-300 underline">
+        <a href="https://www.congress.gov" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-text-primary underline">
           Congress.gov<span className="sr-only"> (opens in new tab)</span>
         </a>
         {" · "}
-        <a href="https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-300 underline">
+        <a href="https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-text-primary underline">
           Treasury MTS<span className="sr-only"> (opens in new tab)</span>
         </a>
         {" · "}Some descriptions are AI-summarized
