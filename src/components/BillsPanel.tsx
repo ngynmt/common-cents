@@ -382,7 +382,7 @@ export default function BillsPanel({
                             </div>
                             {bill.deficitImpact && (
                               <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 space-y-2.5">
-                                <h4 className="text-[11px] font-semibold text-red-300 uppercase tracking-wider">
+                                <h4 className="text-[11px] font-semibold text-red-500 uppercase tracking-wider">
                                   But wait — what about the deficit?
                                 </h4>
                                 <p className="text-[11px] text-text-secondary leading-relaxed">
@@ -392,7 +392,7 @@ export default function BillsPanel({
                                   The revenue loss is about <span className="text-text-primary font-semibold">4.5x larger</span> than
                                   the spending savings.
                                 </p>
-                                <div className="space-y-1.5 p-2.5 rounded-lg bg-black/20">
+                                <div className="space-y-1.5 p-2.5 rounded-lg bg-red-500/10 border border-red-500/10">
                                   <div className="flex items-center justify-between text-[11px]">
                                     <span className="text-text-secondary">Spending cuts</span>
                                     <span className="text-green-400 font-semibold font-amount">-${Math.abs(bill.totalAnnualImpact)}B/year</span>
@@ -402,16 +402,16 @@ export default function BillsPanel({
                                     <span className="text-red-400 font-semibold font-amount">-$450B/year</span>
                                   </div>
                                   <div className="border-t border-border pt-1.5 flex items-center justify-between text-xs">
-                                    <span className="text-red-300 font-semibold">Net added to deficit</span>
+                                    <span className="text-red-500 font-semibold">Net added to deficit</span>
                                     <span className="text-red-400 font-bold font-amount">+${bill.deficitImpact}B/year</span>
                                   </div>
                                   <div className="border-t border-border pt-1.5 flex items-center justify-between text-xs">
-                                    <span className="text-[11px] text-red-300/70 inline-flex items-center gap-1">
+                                    <span className="text-[11px] text-red-500/70 inline-flex items-center gap-1">
                                       Your share of added deficit
                                       <InfoTooltip width="w-64">
-                                        <span className="text-white font-semibold">How this is calculated:</span> (${bill.deficitImpact}B &divide; ${totalSpending.toLocaleString()}B total federal spending) &times; your {formatCurrency(totalFederalTax)} federal tax = <span className="text-red-400 font-semibold">{formatCurrency((bill.deficitImpact / totalSpending) * totalFederalTax)}</span>.
+                                        <span className="text-text-primary font-semibold">How this is calculated:</span> (${bill.deficitImpact}B &divide; ${totalSpending.toLocaleString()}B total federal spending) &times; your {formatCurrency(totalFederalTax)} federal tax = <span className="text-red-400 font-semibold">{formatCurrency((bill.deficitImpact / totalSpending) * totalFederalTax)}</span>.
                                         <br /><br />
-                                        <span className="text-white font-semibold">Why deficits matter to you:</span> The government borrows to cover the gap, adding to national debt. That debt costs ~$900B/year in interest alone — money that can&apos;t fund services. Over time, deficits lead to higher interest rates (affecting mortgages, loans), potential future tax increases or spending cuts, and inflationary pressure.
+                                        <span className="text-text-primary font-semibold">Why deficits matter to you:</span> The government borrows to cover the gap, adding to national debt. That debt costs ~$900B/year in interest alone — money that can&apos;t fund services. Over time, deficits lead to higher interest rates (affecting mortgages, loans), potential future tax increases or spending cuts, and inflationary pressure.
                                         <br /><br />
                                         This is an approximation — deficit isn&apos;t literally billed to you, but shows your proportional share.
                                       </InfoTooltip>

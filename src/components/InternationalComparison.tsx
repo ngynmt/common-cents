@@ -542,7 +542,7 @@ function ComparisonRow({
               transition={TRANSITION_DEFAULT}
             />
           </div>
-          <span className="font-amount w-24 text-right text-[10px] text-text-secondary tabular-nums shrink-0 whitespace-nowrap">
+          <span className="font-amount w-24 text-right text-[10px] text-text-primary font-semibold tabular-nums shrink-0 whitespace-nowrap">
             {formatCurrency(item.usAmount)}{" "}
             <span className="text-text-secondary">({item.usPct.toFixed(1)}%)</span>
           </span>
@@ -655,7 +655,7 @@ function AllCountriesRow({
               transition={TRANSITION_DEFAULT}
             />
           </div>
-          <span className="font-amount w-24 text-right text-[10px] text-text-secondary tabular-nums shrink-0 whitespace-nowrap">
+          <span className="font-amount w-24 text-right text-[10px] text-text-primary font-semibold tabular-nums shrink-0 whitespace-nowrap">
             {formatCurrency(usAmount)}{" "}
             <span className="text-text-secondary">{usPct.toFixed(0)}%</span>
           </span>

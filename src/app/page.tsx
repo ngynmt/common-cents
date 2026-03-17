@@ -8,7 +8,6 @@ import ThemeToggle from "@/components/ThemeToggle";
 import TaxReceipt from "@/components/TaxReceipt";
 import {
   estimateFederalTax,
-  SUPPORTED_TAX_YEARS,
   type FilingStatus,
   type TaxEstimate,
 } from "@/lib/tax";
@@ -279,9 +278,6 @@ function HomeContent() {
               </span>
             </button>
           </div>
-          <span className="text-xs text-text-muted uppercase tracking-[1.5px] sm:tracking-[3px]">
-            FY {SUPPORTED_TAX_YEARS[SUPPORTED_TAX_YEARS.length - 1]} Estimates
-          </span>
         </div>
       </header>
 

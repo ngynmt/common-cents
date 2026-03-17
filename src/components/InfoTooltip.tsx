@@ -81,7 +81,7 @@ export default function InfoTooltip({ children, width = "w-56", position = "auto
     >
       <span
         ref={triggerRef}
-        className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-surface-elevated text-[9px] text-text-secondary cursor-help italic font-bold leading-none lowercase"
+        className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-surface-elevated border border-border text-[9px] text-text-secondary cursor-help italic font-bold leading-none lowercase"
         tabIndex={0}
         role="note"
         aria-label="More info"
