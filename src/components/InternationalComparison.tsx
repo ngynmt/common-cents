@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTheme } from "next-themes";
 import { motion, AnimatePresence } from "framer-motion";
 import { TRANSITION_DEFAULT } from "@/lib/constants";
 import {
@@ -70,6 +71,7 @@ export default function InternationalComparison({
     initialCountry ?? "ALL"
   );
   const [mode, setMode] = useState<ComparisonMode>("same-amount");
+  const { resolvedTheme } = useTheme();
 
   const isAllMode = selectedCountry === "ALL";
   const countries = getAvailableCountries();
@@ -80,7 +82,8 @@ export default function InternationalComparison({
     isAllMode ? null : selectedCountry,
     mode,
     grossIncome,
-    filingStatus
+    filingStatus,
+    resolvedTheme ?? "dark"
   );
 
   const allComparisons = useAllCountriesComparison(
@@ -89,7 +92,8 @@ export default function InternationalComparison({
     isAllMode,
     mode,
     grossIncome,
-    filingStatus
+    filingStatus,
+    resolvedTheme ?? "dark"
   );
 
   const handleCountrySelect = (code: string | null) => {
@@ -146,23 +150,29 @@ export default function InternationalComparison({
                 <div className="flex items-center rounded-lg border border-white/10 overflow-hidden text-[11px]">
                   <button
                     onClick={() => setMode("same-amount")}
-                    className={`px-3 py-1.5 transition-colors cursor-pointer ${
+                    className={`px-3 py-1.5 transition-colors cursor-pointer inline-flex items-center gap-1 ${
                       mode === "same-amount"
                         ? "bg-white/10 text-white"
                         : "text-slate-400 hover:text-slate-300"
                     }`}
                   >
                     Same amount
+                    <InfoTooltip width="w-56">
+                      Takes your actual US tax payment and shows how it would be allocated if spent according to each country&apos;s budget priorities (OECD COFOG data). It answers: &ldquo;If my country spent like theirs, where would my money go?&rdquo;
+                    </InfoTooltip>
                   </button>
                   <button
                     onClick={() => setMode("estimated-tax")}
-                    className={`px-3 py-1.5 transition-colors cursor-pointer border-l border-white/10 ${
+                    className={`px-3 py-1.5 transition-colors cursor-pointer border-l border-white/10 inline-flex items-center gap-1 ${
                       mode === "estimated-tax"
                         ? "bg-sky-500/20 text-sky-400"
                         : "text-slate-400 hover:text-slate-300"
                     }`}
                   >
                     Estimated tax
+                    <InfoTooltip width="w-56">
+                      Calculates what you&apos;d roughly owe in each country on the same income, then distributes that amount across their budget categories using OECD spending ratios. Tax estimates use simplified brackets and may not reflect all deductions or credits.
+                    </InfoTooltip>
                   </button>
                 </div>
               )}
@@ -436,41 +446,29 @@ export default function InternationalComparison({
               <p className="text-center text-[10px] text-slate-400 mt-2">
                 {isAllMode ? (
                   mode === "estimated-tax" ? (
-                    <span className="inline-flex items-center gap-1">
+                    <>
                       Estimated taxes for {formatCurrency(grossIncome)} income,
                       distributed by each country&apos;s spending ratios
-                      <InfoTooltip width="w-60">
-                        Estimated tax mode calculates what you&apos;d roughly owe in each country on the same income, then distributes that amount across their budget categories using OECD spending ratios. Tax estimates use simplified brackets and may not reflect all deductions or credits.
-                      </InfoTooltip>
-                    </span>
+                    </>
                   ) : (
-                    <span className="inline-flex items-center gap-1">
+                    <>
                       Same tax amount ({formatCurrency(totalFederalTax)}),
                       distributed by each country&apos;s spending ratios
-                      <InfoTooltip width="w-60">
-                        Same amount mode takes your actual US tax payment and shows how it would be allocated if spent according to each country&apos;s budget priorities (OECD COFOG data). It answers: &ldquo;If my country spent like theirs, where would my money go?&rdquo;
-                      </InfoTooltip>
-                    </span>
+                    </>
                   )
                 ) : comparison ? (
                   mode === "estimated-tax" ? (
-                    <span className="inline-flex items-center gap-1">
+                    <>
                       Estimated taxes in {comparison.country.name} (
                       {formatCurrency(comparison.countryTotalAmount)}),
                       distributed by spending ratios
-                      <InfoTooltip width="w-60">
-                        Estimated tax mode calculates what you&apos;d roughly owe in {comparison.country.name} on the same income, then distributes that amount across their budget categories. Tax estimates use simplified brackets and may not reflect all deductions or credits.
-                      </InfoTooltip>
-                    </span>
+                    </>
                   ) : (
-                    <span className="inline-flex items-center gap-1">
+                    <>
                       Same tax amount (
                       {formatCurrency(comparison.usTotalAmount)}), distributed by
                       each country&apos;s spending ratios
-                      <InfoTooltip width="w-60">
-                        Same amount mode takes your actual US tax payment and shows how it would be allocated if spent according to {comparison.country.name}&apos;s budget priorities (OECD COFOG data).
-                      </InfoTooltip>
-                    </span>
+                    </>
                   )
                 ) : null}
                 <span aria-hidden="true">{" · "}</span>

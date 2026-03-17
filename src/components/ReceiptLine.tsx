@@ -7,6 +7,8 @@ import { calculateSubcategorySpending } from "@/lib/spending";
 import { formatCurrency, formatPercent } from "@/lib/tax";
 import type { Legislation } from "@/data/budget";
 import InfoTooltip from "./InfoTooltip";
+import { useTheme } from "next-themes";
+import { resolveThemeColor } from "@/lib/themeColor";
 
 interface ReceiptLineProps {
   item: PersonalSpendingCategory;
@@ -49,6 +51,7 @@ export default function ReceiptLine({
   isActive,
   previousAmount,
 }: ReceiptLineProps) {
+  const { resolvedTheme } = useTheme();
   const subcategories = calculateSubcategorySpending(item.amount, item.category);
 
   return (
@@ -70,7 +73,7 @@ export default function ReceiptLine({
         {/* Color indicator */}
         <div
           className="w-3 h-3 rounded-full shrink-0"
-          style={{ backgroundColor: item.category.color }}
+          style={{ backgroundColor: resolveThemeColor(item.category.color, resolvedTheme ?? "dark") }}
         />
 
         {/* Icon */}
@@ -173,7 +176,7 @@ export default function ReceiptLine({
                       transition={{ duration: 0.5, delay: i * 0.05 }}
                       className="h-full"
                       style={{
-                        backgroundColor: item.category.color,
+                        backgroundColor: resolveThemeColor(item.category.color, resolvedTheme ?? "dark"),
                         opacity: 1 - i * 0.12,
                       }}
                       title={`${sub.subcategory.name}: ${formatPercent(sub.percentage / 100)}`}

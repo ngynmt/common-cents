@@ -152,7 +152,7 @@ describe("renderShareCard", () => {
 
 describe("mapSpendingToCard", () => {
   const mockSpending = Array.from({ length: 9 }, (_, i) => ({
-    category: { name: `Cat ${i + 1}`, color: `#${i}${i}${i}` },
+    category: { name: `Cat ${i + 1}`, color: { dark: `#${i}${i}${i}`, light: `#${i}${i}${i}` } },
     percentage: i === 0 ? 30 : 70 / 8,
   }));
 

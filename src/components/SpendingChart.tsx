@@ -6,6 +6,8 @@ import { TRANSITION_DEFAULT } from "@/lib/constants";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import type { PersonalSpendingCategory } from "@/lib/spending";
 import { formatCurrency, formatPercent } from "@/lib/tax";
+import { useTheme } from "next-themes";
+import { resolveThemeColor } from "@/lib/themeColor";
 
 interface SpendingChartProps {
   spending: PersonalSpendingCategory[];
@@ -20,6 +22,7 @@ export default function SpendingChart({
 }: SpendingChartProps) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [, setKeyboardIndex] = useState<number | null>(null);
+  const { resolvedTheme } = useTheme();
 
   // Keyboard handler — declared before any early returns to satisfy Rules of Hooks.
   // Uses functional state updaters to avoid stale closure over chartData/keyboardIndex,
@@ -74,7 +77,7 @@ export default function SpendingChart({
   const chartData = spending.map((item) => ({
     name: item.category.name,
     value: item.amount,
-    color: item.category.color,
+    color: resolveThemeColor(item.category.color, resolvedTheme ?? "dark"),
     id: item.category.id,
     percentage: item.percentage,
   }));

@@ -6,6 +6,7 @@ import {
   type InternationalTaxEstimate,
 } from "@/lib/international-tax";
 import type { FilingStatus } from "@/lib/tax";
+import { resolveThemeColor } from "@/lib/themeColor";
 
 export interface CountryOption {
   code: string;
@@ -51,7 +52,7 @@ export function getAvailableCountries(): CountryOption[] {
 }
 
 type UsSpending = Array<{
-  category: { id: string; name: string; color: string };
+  category: { id: string; name: string; color: { dark: string; light: string } };
   amount: number;
   percentage: number;
 }>;
@@ -65,7 +66,8 @@ function computeComparison(
   countryCode: string,
   mode: ComparisonMode,
   grossIncome: number,
-  filingStatus: FilingStatus
+  filingStatus: FilingStatus,
+  theme: string
 ): InternationalComparison | null {
   const countryEntry = intlData.countries[
     countryCode as keyof typeof intlData.countries
@@ -103,7 +105,7 @@ function computeComparison(
     return {
       categoryId: s.category.id,
       categoryName: s.category.name,
-      color: s.category.color,
+      color: resolveThemeColor(s.category.color, theme),
       usAmount: s.amount,
       usPct: s.percentage,
       countryAmount: isUnmapped ? 0 : countryTotalAmount * ratio,
@@ -143,7 +145,8 @@ export function useInternationalComparison(
   countryCode: string | null,
   mode: ComparisonMode = "same-amount",
   grossIncome: number = 0,
-  filingStatus: FilingStatus = "single"
+  filingStatus: FilingStatus = "single",
+  theme: string = "dark"
 ): InternationalComparison | null {
   return useMemo(() => {
     if (!countryCode) return null;
@@ -153,9 +156,10 @@ export function useInternationalComparison(
       countryCode,
       mode,
       grossIncome,
-      filingStatus
+      filingStatus,
+      theme
     );
-  }, [usSpending, totalFederalTax, countryCode, mode, grossIncome, filingStatus]);
+  }, [usSpending, totalFederalTax, countryCode, mode, grossIncome, filingStatus, theme]);
 }
 
 /**
@@ -167,7 +171,8 @@ export function useAllCountriesComparison(
   enabled: boolean,
   mode: ComparisonMode = "same-amount",
   grossIncome: number = 0,
-  filingStatus: FilingStatus = "single"
+  filingStatus: FilingStatus = "single",
+  theme: string = "dark"
 ): InternationalComparison[] {
   return useMemo(() => {
     if (!enabled) return [];
@@ -180,10 +185,11 @@ export function useAllCountriesComparison(
         c.code,
         mode,
         grossIncome,
-        filingStatus
+        filingStatus,
+        theme
       );
       if (comparison) results.push(comparison);
     }
     return results;
-  }, [usSpending, totalFederalTax, enabled, mode, grossIncome, filingStatus]);
+  }, [usSpending, totalFederalTax, enabled, mode, grossIncome, filingStatus, theme]);
 }

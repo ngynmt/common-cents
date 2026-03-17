@@ -10,7 +10,7 @@ export interface ShareCardCategory {
  * Note: `effectiveRate` from TaxEstimate is a decimal (e.g., 0.22 = 22%).
  */
 export function mapSpendingToCard(
-  spending: { category: { name: string; color: string }; percentage: number }[],
+  spending: { category: { name: string; color: { dark: string; light: string } }; percentage: number }[],
 ): ShareCardCategory[] {
   const top5 = spending.slice(0, 5);
   const otherPct = spending.slice(5).reduce((sum, s) => sum + s.percentage, 0);
@@ -18,7 +18,7 @@ export function mapSpendingToCard(
     ...top5.map((s) => ({
       name: s.category.name,
       percentage: s.percentage,
-      color: s.category.color,
+      color: s.category.color.dark,
     })),
     ...(otherPct > 0
       ? [{ name: "Other", percentage: otherPct, color: "#475569" }]
