@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import TaxForm from "@/components/TaxForm";
+import ThemeToggle from "@/components/ThemeToggle";
 import TaxReceipt from "@/components/TaxReceipt";
 import {
   estimateFederalTax,
@@ -253,6 +254,10 @@ function HomeContent() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-white">
+      <div className="fixed top-4 right-4 z-50">
+        <ThemeToggle />
+      </div>
+
       {/* Skip to main content link */}
       <a
         href="#main-content"
