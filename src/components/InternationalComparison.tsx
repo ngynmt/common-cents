@@ -109,7 +109,7 @@ export default function InternationalComparison({
 
   return (
     <div>
-      <h3 className="text-sm font-semibold text-white mb-3 inline-flex items-center gap-1.5">
+      <h3 className="text-sm font-semibold text-text-primary mb-3 inline-flex items-center gap-1.5">
         Your Tax Breakdown vs. Other Countries
         <InfoTooltip width="w-60">
           US rate includes federal income tax, Social Security (6.2%), and Medicare (1.45%). Other countries&apos; rates include their equivalent income tax and social contributions. Rates are not perfectly comparable — countries structure taxes differently (e.g., VAT, employer-side contributions, regional taxes are excluded).
@@ -120,7 +120,7 @@ export default function InternationalComparison({
               <div className="flex items-center gap-2">
                 <label
                   htmlFor="compare-country"
-                  className="text-xs text-slate-400"
+                  className="text-xs text-text-secondary"
                 >
                   Compare with:
                 </label>
@@ -128,7 +128,7 @@ export default function InternationalComparison({
                   id="compare-country"
                   value={selectedCountry ?? ""}
                   onChange={(e) => handleCountrySelect(e.target.value)}
-                  className="text-xs px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 text-slate-300 cursor-pointer hover:border-white/20 transition-colors appearance-none pr-7 focus:outline-none focus:border-sky-500/40"
+                  className="text-xs px-3 py-1.5 rounded-lg border border-border bg-surface-elevated text-text-secondary cursor-pointer hover:border-white/20 transition-colors appearance-none pr-7 focus:outline-none focus:border-sky-500/40"
                   style={{
                     backgroundImage:
                       "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M3 5l3 3 3-3'/%3E%3C/svg%3E\")",
@@ -147,13 +147,13 @@ export default function InternationalComparison({
 
               {/* Mode toggle */}
               {showModeToggle && (
-                <div className="flex items-center rounded-lg border border-white/10 overflow-hidden text-[11px]">
+                <div className="flex items-center rounded-lg border border-border overflow-hidden text-[11px]">
                   <button
                     onClick={() => setMode("same-amount")}
                     className={`px-3 py-1.5 transition-colors cursor-pointer inline-flex items-center gap-1 ${
                       mode === "same-amount"
-                        ? "bg-white/10 text-white"
-                        : "text-slate-400 hover:text-slate-300"
+                        ? "bg-white/10 text-text-primary"
+                        : "text-text-secondary hover:text-text-secondary"
                     }`}
                   >
                     Same amount
@@ -163,10 +163,10 @@ export default function InternationalComparison({
                   </button>
                   <button
                     onClick={() => setMode("estimated-tax")}
-                    className={`px-3 py-1.5 transition-colors cursor-pointer border-l border-white/10 inline-flex items-center gap-1 ${
+                    className={`px-3 py-1.5 transition-colors cursor-pointer border-l border-border inline-flex items-center gap-1 ${
                       mode === "estimated-tax"
                         ? "bg-sky-500/20 text-sky-400"
-                        : "text-slate-400 hover:text-slate-300"
+                        : "text-text-secondary hover:text-text-secondary"
                     }`}
                   >
                     Estimated tax
@@ -190,14 +190,14 @@ export default function InternationalComparison({
                     className="overflow-hidden"
                   >
                     <div className="mt-3 grid grid-cols-2 gap-3 max-w-md mx-auto">
-                      <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
-                        <div className="text-[10px] text-slate-400 uppercase tracking-wider">
+                      <div className="text-center p-3 rounded-xl bg-surface-elevated border border-border">
+                        <div className="text-[10px] text-text-secondary uppercase tracking-wider">
                           US taxes
                         </div>
-                        <div className="font-amount text-lg font-bold text-white">
+                        <div className="font-amount text-lg font-bold text-text-primary">
                           {formatCurrency(totalFederalTax)}
                         </div>
-                        <div className="text-[10px] text-slate-400">
+                        <div className="text-[10px] text-text-secondary">
                           Effective:{" "}
                           {formatPercent(totalFederalTax / grossIncome)}
                         </div>
@@ -215,7 +215,7 @@ export default function InternationalComparison({
                         </div>
                       </div>
                     </div>
-                    <p className="text-center text-[10px] text-slate-400 mt-1.5">
+                    <p className="text-center text-[10px] text-text-secondary mt-1.5">
                       Estimated income tax + social contributions on{" "}
                       {formatCurrency(grossIncome)} income
                     </p>
@@ -232,17 +232,17 @@ export default function InternationalComparison({
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.25 }}
-                  className="mt-4 rounded-xl bg-white/[0.03] border border-white/10 overflow-hidden"
+                  className="mt-4 rounded-xl bg-surface-card border border-border overflow-hidden"
                 >
                   {/* Header */}
-                  <div className="px-4 py-3 border-b border-white/10">
+                  <div className="px-4 py-3 border-b border-border">
                     <div className="flex items-center justify-between mb-2">
-                      <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                      <h4 className="text-xs font-semibold text-text-secondary uppercase tracking-wider">
                         {mode === "estimated-tax"
                           ? "What your taxes would look like in other countries"
                           : "US spending ratio vs. other countries"}
                       </h4>
-                      <span className="text-[10px] text-slate-400 inline-flex items-center gap-1">
+                      <span className="text-[10px] text-text-secondary inline-flex items-center gap-1">
                         OECD {allComparisons[0].dataYear} data
                         <InfoTooltip width="w-56">
                           OECD spending data typically lags 1-2 years. {allComparisons[0].dataYear} is the most recent year with complete data for all countries shown.
@@ -251,11 +251,11 @@ export default function InternationalComparison({
                     </div>
                     {/* Legend */}
                     <div className="flex flex-wrap gap-x-3 gap-y-1">
-                      <span className="flex items-center gap-1 text-[10px] text-slate-400">
+                      <span className="flex items-center gap-1 text-[10px] text-text-secondary">
                         <span className="w-2 h-2 rounded-full bg-white/40" />
                         US
                         {mode === "estimated-tax" && (
-                          <span className="font-amount text-slate-400 ml-0.5">
+                          <span className="font-amount text-text-secondary ml-0.5">
                             {formatCurrency(totalFederalTax)}
                           </span>
                         )}
@@ -263,7 +263,7 @@ export default function InternationalComparison({
                       {allComparisons.map((c) => (
                         <span
                           key={c.country.code}
-                          className="flex items-center gap-1 text-[10px] text-slate-400"
+                          className="flex items-center gap-1 text-[10px] text-text-secondary"
                         >
                           <span
                             className="w-2 h-2 rounded-full"
@@ -275,7 +275,7 @@ export default function InternationalComparison({
                           {COUNTRY_SHORT_LABELS[c.country.code] ??
                             c.country.code}
                           {mode === "estimated-tax" && (
-                            <span className="font-amount text-slate-400 ml-0.5">
+                            <span className="font-amount text-text-secondary ml-0.5">
                               {formatCurrency(c.countryTotalAmount)}
                             </span>
                           )}
@@ -283,7 +283,7 @@ export default function InternationalComparison({
                       ))}
                     </div>
                     {/* Cross-cutting insight */}
-                    <p className="text-xs text-slate-400 mt-2 leading-relaxed italic">
+                    <p className="text-xs text-text-secondary mt-2 leading-relaxed italic">
                       {ALL_COUNTRIES_INSIGHTS.join(" ")}
                     </p>
                   </div>
@@ -321,16 +321,16 @@ export default function InternationalComparison({
                   </div>
 
                   {/* Footer */}
-                  <div className="px-4 py-3 border-t border-white/10 bg-white/5">
-                    <div className="text-xs font-semibold text-slate-300 mb-1.5">
+                  <div className="px-4 py-3 border-t border-border bg-surface-elevated">
+                    <div className="text-xs font-semibold text-text-secondary mb-1.5">
                       TOTAL
                     </div>
                     <div className="space-y-0.5">
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] text-slate-400 w-7 shrink-0">
+                        <span className="text-[10px] text-text-secondary w-7 shrink-0">
                           US
                         </span>
-                        <span className="font-amount text-xs font-bold text-white">
+                        <span className="font-amount text-xs font-bold text-text-primary">
                           {formatCurrency(totalFederalTax)}
                         </span>
                       </div>
@@ -367,16 +367,16 @@ export default function InternationalComparison({
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.25 }}
-                  className="mt-4 rounded-xl bg-white/[0.03] border border-white/10 overflow-hidden"
+                  className="mt-4 rounded-xl bg-surface-card border border-border overflow-hidden"
                 >
                   {/* Header */}
-                  <div className="px-4 py-3 border-b border-white/10 flex items-center justify-between">
-                    <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                  <div className="px-4 py-3 border-b border-border flex items-center justify-between">
+                    <h4 className="text-xs font-semibold text-text-secondary uppercase tracking-wider">
                       {mode === "estimated-tax"
                         ? `What your taxes would look like in ${comparison.country.name}`
                         : `US spending ratio vs. ${comparison.country.name}`}
                     </h4>
-                    <span className="text-[10px] text-slate-400 inline-flex items-center gap-1">
+                    <span className="text-[10px] text-text-secondary inline-flex items-center gap-1">
                       OECD {comparison.dataYear} data
                       <InfoTooltip width="w-56">
                         OECD spending data typically lags 1-2 years. {comparison.dataYear} is the most recent year with complete data for all countries shown.
@@ -402,16 +402,16 @@ export default function InternationalComparison({
                   </div>
 
                   {/* Footer */}
-                  <div className="px-4 py-3 border-t border-white/10 bg-white/5">
-                    <div className="text-xs font-semibold text-slate-300 mb-1.5">
+                  <div className="px-4 py-3 border-t border-border bg-surface-elevated">
+                    <div className="text-xs font-semibold text-text-secondary mb-1.5">
                       TOTAL
                     </div>
                     <div className="space-y-1">
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] text-slate-400 w-7 shrink-0">
+                        <span className="text-[10px] text-text-secondary w-7 shrink-0">
                           US
                         </span>
-                        <span className="font-amount text-xs font-bold text-white">
+                        <span className="font-amount text-xs font-bold text-text-primary">
                           {formatCurrency(comparison.usTotalAmount)}
                         </span>
                       </div>
@@ -430,7 +430,7 @@ export default function InternationalComparison({
                         )}
                     </div>
                     {comparison.unmappedPct > 0 && (
-                      <p className="text-[10px] text-slate-400 mt-1">
+                      <p className="text-[10px] text-text-secondary mt-1">
                         {comparison.unmappedPct.toFixed(1)}% of US spending has
                         no direct equivalent in{" "}
                         {comparison.country.name}&apos;s budget classification
@@ -443,7 +443,7 @@ export default function InternationalComparison({
 
             {/* Source attribution */}
             {(comparison || (isAllMode && allComparisons.length > 0)) && (
-              <p className="text-center text-[10px] text-slate-400 mt-2">
+              <p className="text-center text-[10px] text-text-secondary mt-2">
                 {isAllMode ? (
                   mode === "estimated-tax" ? (
                     <>
@@ -476,7 +476,7 @@ export default function InternationalComparison({
                   href="https://stats.oecd.org/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-slate-400 hover:text-slate-300 underline focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
+                  className="text-text-secondary hover:text-text-secondary underline focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
                 >
                   OECD COFOG<span className="sr-only-inline"> (opens in new tab)</span>
                 </a>
@@ -518,9 +518,9 @@ function ComparisonRow({
   const shortLabel = COUNTRY_SHORT_LABELS[countryCode] ?? countryCode;
 
   return (
-    <div className="px-4 py-2.5 border-b border-white/8 last:border-b-0 group hover:bg-white/[0.02] transition-colors">
+    <div className="px-4 py-2.5 border-b border-border-subtle last:border-b-0 group hover:bg-white/[0.02] transition-colors">
       {/* Category name */}
-      <div className="text-xs text-slate-300 mb-1.5 flex items-center gap-1.5">
+      <div className="text-xs text-text-secondary mb-1.5 flex items-center gap-1.5">
         <span
           className="w-2 h-2 rounded-full shrink-0"
           style={{ backgroundColor: item.color }}
@@ -532,8 +532,8 @@ function ComparisonRow({
       <div className="space-y-1">
         {/* US bar */}
         <div className="flex items-center gap-2">
-          <span className="text-[10px] text-slate-400 w-7 shrink-0">US</span>
-          <div className="flex-1 h-3 bg-white/5 rounded-full overflow-hidden">
+          <span className="text-[10px] text-text-secondary w-7 shrink-0">US</span>
+          <div className="flex-1 h-3 bg-surface-elevated rounded-full overflow-hidden">
             <motion.div
               className="h-full rounded-full"
               style={{ backgroundColor: item.color, opacity: 0.7 }}
@@ -542,9 +542,9 @@ function ComparisonRow({
               transition={TRANSITION_DEFAULT}
             />
           </div>
-          <span className="font-amount w-24 text-right text-[10px] text-slate-400 tabular-nums shrink-0 whitespace-nowrap">
+          <span className="font-amount w-24 text-right text-[10px] text-text-secondary tabular-nums shrink-0 whitespace-nowrap">
             {formatCurrency(item.usAmount)}{" "}
-            <span className="text-slate-400">({item.usPct.toFixed(1)}%)</span>
+            <span className="text-text-secondary">({item.usPct.toFixed(1)}%)</span>
           </span>
         </div>
 
@@ -558,15 +558,15 @@ function ComparisonRow({
           </span>
           {item.isUnmapped ? (
             <>
-              <div className="flex-1 h-3 bg-white/5 rounded-full overflow-hidden relative">
+              <div className="flex-1 h-3 bg-surface-elevated rounded-full overflow-hidden relative">
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="italic text-[9px] text-slate-500">
+                  <span className="italic text-[9px] text-text-muted">
                     No equivalent
                   </span>
                 </div>
               </div>
               <span
-                className="w-24 text-right text-[10px] text-slate-400 shrink-0 whitespace-nowrap"
+                className="w-24 text-right text-[10px] text-text-secondary shrink-0 whitespace-nowrap"
                 title={`${item.categoryName} doesn't have a direct equivalent in ${countryName}'s budget classification`}
               >
                 —
@@ -574,7 +574,7 @@ function ComparisonRow({
             </>
           ) : (
             <>
-              <div className="flex-1 h-3 bg-white/5 rounded-full overflow-hidden">
+              <div className="flex-1 h-3 bg-surface-elevated rounded-full overflow-hidden">
                 <motion.div
                   className="h-full rounded-full bg-sky-500/60"
                   initial={{ width: 0 }}
@@ -595,7 +595,7 @@ function ComparisonRow({
 
       {/* Editorial callout */}
       {outcomes.callouts?.[item.categoryId]?.[countryCode]?.text && (
-        <p className="text-xs text-slate-400 mt-1.5 leading-relaxed italic">
+        <p className="text-xs text-text-secondary mt-1.5 leading-relaxed italic">
           {outcomes.callouts[item.categoryId][countryCode].text}
         </p>
       )}
@@ -632,9 +632,9 @@ function AllCountriesRow({
   const usWidth = maxAmount > 0 ? (usAmount / maxAmount) * 100 : 0;
 
   return (
-    <div className="px-4 py-2 border-b border-white/8 last:border-b-0 group hover:bg-white/[0.02] transition-colors">
+    <div className="px-4 py-2 border-b border-border-subtle last:border-b-0 group hover:bg-white/[0.02] transition-colors">
       {/* Category name */}
-      <div className="text-xs text-slate-300 mb-1 flex items-center gap-1.5">
+      <div className="text-xs text-text-secondary mb-1 flex items-center gap-1.5">
         <span
           className="w-2 h-2 rounded-full shrink-0"
           style={{ backgroundColor: color }}
@@ -646,8 +646,8 @@ function AllCountriesRow({
       <div className="space-y-0.5">
         {/* US bar */}
         <div className="flex items-center gap-2">
-          <span className="text-[9px] text-slate-400 w-7 shrink-0">US</span>
-          <div className="flex-1 h-2 bg-white/5 rounded-full overflow-hidden">
+          <span className="text-[9px] text-text-secondary w-7 shrink-0">US</span>
+          <div className="flex-1 h-2 bg-surface-elevated rounded-full overflow-hidden">
             <motion.div
               className="h-full rounded-full bg-white/40"
               initial={{ width: 0 }}
@@ -655,9 +655,9 @@ function AllCountriesRow({
               transition={TRANSITION_DEFAULT}
             />
           </div>
-          <span className="font-amount w-24 text-right text-[10px] text-slate-400 tabular-nums shrink-0 whitespace-nowrap">
+          <span className="font-amount w-24 text-right text-[10px] text-text-secondary tabular-nums shrink-0 whitespace-nowrap">
             {formatCurrency(usAmount)}{" "}
-            <span className="text-slate-400">{usPct.toFixed(0)}%</span>
+            <span className="text-text-secondary">{usPct.toFixed(0)}%</span>
           </span>
         </div>
 
@@ -677,14 +677,14 @@ function AllCountriesRow({
               </span>
               {cd.isUnmapped ? (
                 <>
-                  <div className="flex-1 h-2 bg-white/5 rounded-full" />
-                  <span className="w-24 text-right text-[10px] text-slate-400 shrink-0 whitespace-nowrap">
+                  <div className="flex-1 h-2 bg-surface-elevated rounded-full" />
+                  <span className="w-24 text-right text-[10px] text-text-secondary shrink-0 whitespace-nowrap">
                     —
                   </span>
                 </>
               ) : (
                 <>
-                  <div className="flex-1 h-2 bg-white/5 rounded-full overflow-hidden">
+                  <div className="flex-1 h-2 bg-surface-elevated rounded-full overflow-hidden">
                     <motion.div
                       className="h-full rounded-full"
                       style={{ backgroundColor: countryColor, opacity: 0.6 }}

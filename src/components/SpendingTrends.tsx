@@ -87,14 +87,14 @@ export default function SpendingTrends() {
 
   if (loading) {
     return (
-      <div className="h-16 rounded-xl bg-white/5 border border-white/10 animate-pulse" />
+      <div className="h-16 rounded-xl bg-surface-elevated border border-border animate-pulse" />
     );
   }
 
   if (fetchError) {
     return (
-      <div className="rounded-xl bg-white/[0.03] border border-white/10 px-4 py-3 flex items-center justify-between">
-        <span className="text-xs text-slate-400">Unable to load spending trends.</span>
+      <div className="rounded-xl bg-surface-card border border-border px-4 py-3 flex items-center justify-between">
+        <span className="text-xs text-text-secondary">Unable to load spending trends.</span>
         <button
           onClick={fetchTrends}
           className="text-xs text-indigo-400 hover:text-indigo-300 underline cursor-pointer focus:outline-none"
@@ -110,7 +110,7 @@ export default function SpendingTrends() {
   }
 
   return (
-    <div className="rounded-xl bg-white/[0.03] border border-white/10">
+    <div className="rounded-xl bg-surface-card border border-border">
       <button
         onClick={() => setExpanded(!expanded)}
         className="w-full px-4 py-3 flex items-center justify-between cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-inset hover:bg-white/[0.02] transition-colors rounded-xl"
@@ -120,13 +120,13 @@ export default function SpendingTrends() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
           </span>
-          <span className="text-xs font-semibold text-white text-left inline-flex items-start gap-1.5 flex-wrap">
+          <span className="text-xs font-semibold text-text-primary text-left inline-flex items-start gap-1.5 flex-wrap">
             Notable Spending Changes vs. Last Year
             <InfoTooltip width="w-64">
               These are fiscal year-to-date comparisons from the Monthly Treasury Statement — not full-year totals. They compare spending so far this fiscal year (starting Oct 1) to the same period last year. Only changes above {ANOMALY_THRESHOLD}% are shown to highlight the most significant shifts. Source: U.S. Treasury Fiscal Data.
             </InfoTooltip>
             {recordDate && (
-              <span className="text-xs text-slate-400 font-normal">
+              <span className="text-xs text-text-secondary font-normal">
                 as of {formatMonth(recordDate)}
               </span>
             )}
@@ -135,7 +135,7 @@ export default function SpendingTrends() {
         <motion.span
           animate={{ rotate: expanded ? 180 : 0 }}
           transition={{ duration: 0.2 }}
-          className="text-slate-400 text-lg"
+          className="text-text-secondary text-lg"
           aria-hidden="true"
         >
           ▾
@@ -155,7 +155,7 @@ export default function SpendingTrends() {
               {/* Outlay anomalies */}
               {anomalies.length > 0 && (
                 <div className="space-y-1.5">
-                  <div className="text-xs text-slate-400 uppercase tracking-wider">
+                  <div className="text-xs text-text-secondary uppercase tracking-wider">
                     Spending
                   </div>
                   {anomalies.map((t) => (
@@ -167,7 +167,7 @@ export default function SpendingTrends() {
               {/* Receipt anomalies */}
               {receiptAnomalies.length > 0 && (
                 <div className="space-y-1.5">
-                  <div className="text-xs text-slate-400 uppercase tracking-wider">
+                  <div className="text-xs text-text-secondary uppercase tracking-wider">
                     Revenue (taxes &amp; tariffs)
                   </div>
                   {receiptAnomalies.map((t) => (
@@ -176,7 +176,7 @@ export default function SpendingTrends() {
                 </div>
               )}
 
-              <p className="text-[9px] text-slate-500 pt-1 border-t border-white/8">
+              <p className="text-[9px] text-text-muted pt-1 border-t border-border-subtle">
                 Fiscal year-to-date vs. same period last year. Only showing changes above {ANOMALY_THRESHOLD}%.{" "}
                 Explanations are AI-generated and may not reflect all factors.
               </p>
@@ -219,9 +219,9 @@ function TrendRow({ trend }: { trend: SpendingTrend }) {
   return (
     <div className="space-y-0.5">
       <div className="flex items-center justify-between text-xs">
-        <span className="text-slate-300">{label}</span>
+        <span className="text-text-secondary">{label}</span>
         <div className="flex items-center gap-2 shrink-0 ml-2">
-          <span className="font-amount text-[9px] text-slate-400">
+          <span className="font-amount text-[9px] text-text-secondary">
             {formatCompact(trend.currentFytd)} vs {formatCompact(trend.priorFytd)}
           </span>
           <span
@@ -231,7 +231,7 @@ function TrendRow({ trend }: { trend: SpendingTrend }) {
           </span>
         </div>
       </div>
-      <div className="h-1 bg-white/5 rounded-full overflow-hidden">
+      <div className="h-1 bg-surface-elevated rounded-full overflow-hidden">
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${barWidth}%` }}
@@ -245,7 +245,7 @@ function TrendRow({ trend }: { trend: SpendingTrend }) {
         </p>
       )}
       {!consumerNote && enrichedTrends[trend.classification]?.whyItMatters && (
-        <p className="text-[9px] text-slate-400 mt-0.5">
+        <p className="text-[9px] text-text-secondary mt-0.5">
           {enrichedTrends[trend.classification].whyItMatters}
         </p>
       )}
