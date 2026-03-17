@@ -1055,6 +1055,18 @@ export default function BillsPanel({
           })}
         </AnimatePresence>
       </div>
+
+      {/* Persistent reset filter button when a category filter is active */}
+      {activeCategoryId && onResetFilter && (
+        <div className="pt-2 text-center border-t border-border-subtle">
+          <button
+            onClick={onResetFilter}
+            className="text-xs text-sky-400 hover:text-sky-300 transition-colors cursor-pointer"
+          >
+            Reset filter
+          </button>
+        </div>
+      )}
     </motion.div>
   );
 }
