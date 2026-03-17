@@ -20,7 +20,7 @@ export interface BudgetCategory {
   id: string;
   name: string;
   amount: number; // billions (sum of subcategories)
-  color: string;
+  color: { dark: string; light: string };
   icon: string;
   description: string;
   subcategories: BudgetSubcategory[];
@@ -109,7 +109,7 @@ const budgetData2024: BudgetCategory[] = [
     id: "social-security",
     name: "Social Security",
     amount: 1461,
-    color: "#6366f1", // indigo
+    color: { dark: "#6366f1", light: "#4f46e5" }, // indigo
     icon: "🏦",
     description:
       "Social Security provides retirement, disability, and survivor benefits to eligible Americans. It is the single largest federal program.",
@@ -155,7 +155,7 @@ const budgetData2024: BudgetCategory[] = [
     id: "healthcare",
     name: "Healthcare",
     amount: 1731,
-    color: "#ec4899", // pink
+    color: { dark: "#ec4899", light: "#db2777" }, // pink
     icon: "🏥",
     description:
       "Federal healthcare spending covers Medicare, Medicaid, CHIP, ACA marketplace subsidies, and veterans' health care.",
@@ -218,7 +218,7 @@ const budgetData2024: BudgetCategory[] = [
     id: "defense",
     name: "Defense",
     amount: 886,
-    color: "#ef4444", // red
+    color: { dark: "#ef4444", light: "#dc2626" }, // red
     icon: "🛡️",
     description:
       "National defense spending covers military operations, personnel, weapons systems, and related programs across the Department of Defense and other agencies.",
@@ -287,7 +287,7 @@ const budgetData2024: BudgetCategory[] = [
     id: "interest",
     name: "Interest on National Debt",
     amount: 892,
-    color: "#f59e0b", // amber
+    color: { dark: "#f59e0b", light: "#d97706" }, // amber
     icon: "💳",
     description:
       "Interest payments on the $34+ trillion national debt. This is the fastest-growing category of federal spending.",
@@ -323,7 +323,7 @@ const budgetData2024: BudgetCategory[] = [
     id: "income-security",
     name: "Income Security & Social Programs",
     amount: 671,
-    color: "#8b5cf6", // violet
+    color: { dark: "#8b5cf6", light: "#7c3aed" }, // violet
     icon: "🤝",
     description:
       "Programs that provide a safety net for Americans facing poverty, unemployment, food insecurity, and housing instability.",
@@ -393,7 +393,7 @@ const budgetData2024: BudgetCategory[] = [
     id: "veterans",
     name: "Veterans Benefits",
     amount: 175,
-    color: "#14b8a6", // teal
+    color: { dark: "#14b8a6", light: "#0d9488" }, // teal
     icon: "🎖️",
     description:
       "Non-healthcare benefits for veterans including disability compensation, education benefits, and pensions.",
@@ -444,7 +444,7 @@ const budgetData2024: BudgetCategory[] = [
     id: "education",
     name: "Education",
     amount: 274,
-    color: "#3b82f6", // blue
+    color: { dark: "#3b82f6", light: "#2563eb" }, // blue
     icon: "🎓",
     description:
       "Federal spending on education includes student financial aid, K-12 grants, Head Start, and research.",
@@ -502,7 +502,7 @@ const budgetData2024: BudgetCategory[] = [
     id: "infrastructure",
     name: "Infrastructure & Transportation",
     amount: 165,
-    color: "#f97316", // orange
+    color: { dark: "#f97316", light: "#ea580c" }, // orange
     icon: "🏗️",
     description:
       "Federal investment in roads, bridges, public transit, broadband, water systems, and energy infrastructure.",
@@ -574,7 +574,7 @@ const budgetData2024: BudgetCategory[] = [
     id: "immigration",
     name: "Immigration & Border Security",
     amount: 62,
-    color: "#10b981", // emerald
+    color: { dark: "#10b981", light: "#059669" }, // emerald
     icon: "🌐",
     description:
       "Federal spending on border security, immigration enforcement, immigration courts, and refugee resettlement.",
@@ -639,7 +639,7 @@ const budgetData2024: BudgetCategory[] = [
     id: "science",
     name: "Science, Energy & Environment",
     amount: 72,
-    color: "#22c55e", // green
+    color: { dark: "#22c55e", light: "#16a34a" }, // green
     icon: "🔬",
     description:
       "Federal investment in scientific research, space exploration, environmental protection, and clean energy.",
@@ -697,7 +697,7 @@ const budgetData2024: BudgetCategory[] = [
     id: "international",
     name: "International Affairs",
     amount: 73,
-    color: "#a855f7", // purple
+    color: { dark: "#a855f7", light: "#9333ea" }, // purple
     icon: "🌍",
     description:
       "Foreign aid, diplomatic operations, international development, and global health programs.",
@@ -748,7 +748,7 @@ const budgetData2024: BudgetCategory[] = [
     id: "justice",
     name: "Justice & Law Enforcement",
     amount: 78,
-    color: "#64748b", // slate
+    color: { dark: "#64748b", light: "#475569" }, // slate
     icon: "⚖️",
     description:
       "Federal spending on law enforcement, the federal court system, prisons, and justice programs.",
@@ -819,7 +819,7 @@ const budgetData2024: BudgetCategory[] = [
     id: "agriculture",
     name: "Agriculture",
     amount: 46,
-    color: "#84cc16", // lime
+    color: { dark: "#84cc16", light: "#65a30d" }, // lime
     icon: "🌾",
     description:
       "Federal farm subsidies, crop insurance, agricultural research, and rural development (excluding SNAP, which is in Social Programs).",
@@ -871,7 +871,7 @@ const budgetData2024: BudgetCategory[] = [
     id: "government",
     name: "General Government",
     amount: 164,
-    color: "#78716c", // stone
+    color: { dark: "#78716c", light: "#57534e" }, // stone
     icon: "🏛️",
     description:
       "Costs of running the federal government — Congress, the White House, IRS, GSA, and other administrative functions.",
