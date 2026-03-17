@@ -57,11 +57,11 @@ export default function TaxForm({ onSubmit }: TaxFormProps) {
     >
       {/* Income */}
       <div className="space-y-2">
-        <label htmlFor="income" className="block text-xs font-medium text-slate-400 uppercase tracking-[1.5px]">
+        <label htmlFor="income" className="block text-xs font-medium text-text-secondary uppercase tracking-[1.5px]">
           Annual Gross Income
         </label>
         <div className="relative">
-          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-lg">
+          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-lg">
             $
           </span>
           <input
@@ -74,8 +74,8 @@ export default function TaxForm({ onSubmit }: TaxFormProps) {
             placeholder="75,000"
             aria-invalid={!!incomeError}
             aria-describedby={incomeError ? "income-error" : undefined}
-            className={`w-full pl-8 pr-4 py-3 bg-white/5 border rounded-xl text-white text-lg font-amount placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all ${
-              incomeError ? "border-red-400/50" : "border-white/10"
+            className={`w-full pl-8 pr-4 py-3 bg-surface-elevated border rounded-xl text-text-primary text-lg font-amount placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all ${
+              incomeError ? "border-red-400/50" : "border-border"
             }`}
           />
         </div>
@@ -86,7 +86,7 @@ export default function TaxForm({ onSubmit }: TaxFormProps) {
 
       {/* Filing Status */}
       <div className="space-y-2">
-        <label id="filing-status-label" className="block text-xs font-medium text-slate-400 uppercase tracking-[1.5px]">
+        <label id="filing-status-label" className="block text-xs font-medium text-text-secondary uppercase tracking-[1.5px]">
           Filing Status
         </label>
         <div className="grid grid-cols-3 gap-2" role="radiogroup" aria-labelledby="filing-status-label">
@@ -104,7 +104,7 @@ export default function TaxForm({ onSubmit }: TaxFormProps) {
               className={`px-3 py-2.5 rounded-xl text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
                 filingStatus === option.value
                   ? "bg-indigo-500 text-white shadow-lg shadow-indigo-500/25"
-                  : "bg-white/5 text-slate-300 border border-white/10 hover:bg-white/10"
+                  : "bg-surface-elevated text-text-secondary border border-border hover:bg-surface-card"
               }`}
             >
               {option.label}
@@ -115,8 +115,8 @@ export default function TaxForm({ onSubmit }: TaxFormProps) {
 
       {/* ZIP Code */}
       <div className="space-y-2">
-        <label htmlFor="zipCode" className="block text-xs font-medium text-slate-400 uppercase tracking-[1.5px]">
-          ZIP Code <span className="text-slate-500 normal-case tracking-normal italic">(optional — for representative lookup)</span>
+        <label htmlFor="zipCode" className="block text-xs font-medium text-text-secondary uppercase tracking-[1.5px]">
+          ZIP Code <span className="text-text-muted normal-case tracking-normal italic">(optional — for representative lookup)</span>
         </label>
         <input
           id="zipCode"
@@ -132,8 +132,8 @@ export default function TaxForm({ onSubmit }: TaxFormProps) {
           maxLength={5}
           aria-invalid={!!zipError}
           aria-describedby={zipError ? "zip-error" : undefined}
-          className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white text-lg font-amount placeholder:text-slate-600 placeholder:font-sans focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all ${
-            zipError ? "border-red-400/50" : "border-white/10"
+          className={`w-full px-4 py-3 bg-surface-elevated border rounded-xl text-text-primary text-lg font-amount placeholder:text-text-muted placeholder:font-sans focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all ${
+            zipError ? "border-red-400/50" : "border-border"
           }`}
         />
         {zipError && (
@@ -150,7 +150,7 @@ export default function TaxForm({ onSubmit }: TaxFormProps) {
         className={`w-full py-4 rounded-xl text-lg font-semibold transition-all ${
           isValid
             ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg shadow-indigo-500/25 hover:shadow-xl hover:shadow-indigo-500/30 cursor-pointer"
-            : "bg-white/5 text-gray-500 cursor-not-allowed"
+            : "bg-surface-elevated text-text-muted cursor-not-allowed"
         }`}
       >
         See Where Your Money Goes
