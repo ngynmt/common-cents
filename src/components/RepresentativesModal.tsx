@@ -124,7 +124,7 @@ export default function RepresentativesModal({
                 <button
                   onClick={onClose}
                   aria-label="Close dialog"
-                  className="text-text-secondary hover:text-text-primary transition-colors text-xl leading-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
+                  className="text-text-secondary hover:text-text-primary transition-colors text-xl leading-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-inset rounded"
                 >
                   &times;
                 </button>
@@ -166,13 +166,13 @@ export default function RepresentativesModal({
                         placeholder="ZIP code"
                         value={zipInput}
                         onChange={(e) => setZipInput(e.target.value.replace(/\D/g, ""))}
-                        className="w-28 px-3 py-2 rounded-lg bg-surface-elevated border border-border text-text-primary text-sm text-center placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        className="w-28 px-3 py-2 rounded-lg bg-surface-elevated border border-border text-text-primary text-sm text-center placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-inset focus:border-transparent"
                         autoFocus
                       />
                       <button
                         type="submit"
                         disabled={zipInput.length < 5 || zipLoading}
-                        className="px-4 py-2 rounded-lg bg-indigo-500 text-white text-sm font-medium hover:bg-indigo-400 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="px-4 py-2 rounded-lg bg-indigo-500 text-white text-sm font-medium hover:bg-indigo-400 transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-inset"
                       >
                         {zipLoading ? "Looking up…" : "Look up"}
                       </button>

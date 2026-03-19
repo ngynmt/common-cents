@@ -696,14 +696,6 @@ export default function BillsPanel({
               <p className="text-sm text-text-secondary">
                 No pending bills for this category.
               </p>
-              {onResetFilter && (
-                <button
-                  onClick={onResetFilter}
-                  className="mt-2 text-xs text-sky-400 hover:text-sky-300 transition-colors cursor-pointer"
-                >
-                  Reset filter
-                </button>
-              )}
             </motion.div>
           )}
 

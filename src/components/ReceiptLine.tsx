@@ -66,7 +66,7 @@ export default function ReceiptLine({
         onClick={onToggle}
         aria-expanded={isExpanded}
         aria-label={`${item.category.name}: ${formatCurrency(item.amount)}, ${formatPercent(item.percentage / 100)} of your taxes`}
-        className={`w-full px-4 py-3 flex items-center gap-3 transition-all hover:bg-surface-elevated cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-inset ${
+        className={`w-full px-4 py-3 flex items-center gap-3 transition-all hover:bg-surface-elevated cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 focus-visible:ring-inset ${
           isActive ? "bg-surface-elevated" : ""
         }`}
       >

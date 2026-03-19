@@ -582,7 +582,7 @@ function ComparisonRow({
                   transition={{ ...TRANSITION_DEFAULT, delay: 0.1 }}
                 />
               </div>
-              <span className="font-amount w-24 text-right text-[10px] text-sky-400/80 tabular-nums shrink-0 whitespace-nowrap">
+              <span className="font-amount w-24 text-right text-[10px] text-sky-400/80 font-semibold tabular-nums shrink-0 whitespace-nowrap">
                 {formatCurrency(item.countryAmount)}{" "}
                 <span className="text-sky-400/40">
                   ({item.countryPct.toFixed(1)}%)
@@ -655,7 +655,7 @@ function AllCountriesRow({
               transition={TRANSITION_DEFAULT}
             />
           </div>
-          <span className="font-amount w-24 text-right text-[10px] text-text-primary font-semibold tabular-nums shrink-0 whitespace-nowrap">
+          <span className="font-amount w-24 text-right text-[10px] text-text-primary font-bold tabular-nums shrink-0 whitespace-nowrap">
             {formatCurrency(usAmount)}{" "}
             <span className="text-text-secondary">{usPct.toFixed(0)}%</span>
           </span>
@@ -694,7 +694,7 @@ function AllCountriesRow({
                     />
                   </div>
                   <span
-                    className="font-amount w-24 text-right text-[10px] tabular-nums shrink-0 whitespace-nowrap"
+                    className="font-amount w-24 text-right text-[10px] font-bold tabular-nums shrink-0 whitespace-nowrap"
                     style={{ color: countryColor, opacity: 0.8 }}
                   >
                     {formatCurrency(cd.amount)}{" "}

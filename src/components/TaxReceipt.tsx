@@ -228,7 +228,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
             </h3>
             <button
               onClick={() => setShowShareSheet(true)}
-              className="text-text-secondary hover:text-text-primary transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-lg p-1"
+              className="text-text-secondary hover:text-text-primary transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-inset rounded-lg p-1"
               aria-label="Share the breakdown"
               title="Share the breakdown"
             >
@@ -272,7 +272,7 @@ export default function TaxReceipt({ taxEstimate, representatives, votes, onBack
           <div className="px-4 py-3">
             <button
               onClick={() => { trackRepsModalOpened(); setShowRepsModal(true); }}
-              className="w-full py-2.5 rounded-xl bg-indigo-500 text-white shadow-lg shadow-indigo-500/25 hover:bg-indigo-400 transition-colors font-medium cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full py-2.5 rounded-xl bg-indigo-500 text-white shadow-lg shadow-indigo-500/25 hover:bg-indigo-400 transition-colors font-medium cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-inset"
             >
               See How Your Reps Voted
             </button>

@@ -177,7 +177,7 @@ export default function ShareSheet({
                 <button
                   onClick={onClose}
                   aria-label="Close"
-                  className="text-text-secondary hover:text-text-primary transition-colors text-xl leading-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
+                  className="text-text-secondary hover:text-text-primary transition-colors text-xl leading-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-inset rounded"
                 >
                   &times;
                 </button>
@@ -197,7 +197,7 @@ export default function ShareSheet({
                       role="radio"
                       aria-checked={mode === m}
                       onClick={() => setMode(m)}
-                      className={`flex-1 py-1.5 rounded-md text-xs font-medium transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
+                      className={`flex-1 py-1.5 rounded-md text-xs font-medium transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-inset ${
                         mode === m
                           ? "bg-indigo-500/20 text-indigo-400"
                           : "text-text-secondary hover:text-text-primary"
@@ -246,7 +246,7 @@ export default function ShareSheet({
                   <button
                     onClick={handleDownload}
                     disabled={!canvas}
-                    className="flex-1 py-2.5 rounded-xl bg-surface-card border border-border text-text-primary text-sm font-medium hover:bg-surface-elevated transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="flex-1 py-2.5 rounded-xl bg-surface-card border border-border text-text-primary text-sm font-medium hover:bg-surface-elevated transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-inset"
                   >
                     Download Image
                   </button>
@@ -254,7 +254,7 @@ export default function ShareSheet({
                     <button
                       onClick={handleShare}
                       disabled={!canvas}
-                      className="flex-1 py-2.5 rounded-xl bg-indigo-500 text-white text-sm font-medium hover:bg-indigo-400 transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-lg shadow-indigo-500/25"
+                      className="flex-1 py-2.5 rounded-xl bg-indigo-500 text-white text-sm font-medium hover:bg-indigo-400 transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-inset shadow-lg shadow-indigo-500/25"
                     >
                       Share
                     </button>
