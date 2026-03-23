@@ -327,6 +327,162 @@ export const pendingBills: PendingBill[] = [
     lastAction: "Referred to the Subcommittee on Railroads, Pipelines, and Hazardous Materials.",
     lastActionDate: "2025-02-27",
   },
+  {
+    id: "hr-7973-placeholder",
+    congress: 119,
+    title: "To end preventable maternal mortality, severe maternal morbidity, and maternal health disparities in the United States, and for other purposes.",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 7973",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/7973", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Rep. Underwood, Lauren [D-IL-14]",
+      party: "D",
+      chamber: "house",
+      state: "IL",
+      title: "Representative",
+    },
+    cosponsors: 201,
+    bipartisan: false,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/7973",
+    lastAction: "Referred to the Committee on Energy and Commerce, and in addition to the Committees on Education and Workforce, Veterans' Affairs, Natural Resources, and the Judiciary, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
+    lastActionDate: "2026-03-18",
+  },
+  {
+    id: "hr-7678-placeholder",
+    congress: 119,
+    title: "Gun Owner Registration Information Protection Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 7678",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/7678", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Rep. Gosar, Paul A. [R-AZ-9]",
+      party: "R",
+      chamber: "house",
+      state: "AZ",
+      title: "Representative",
+    },
+    cosponsors: 85,
+    bipartisan: false,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/7678",
+    lastAction: "Referred to the House Committee on the Judiciary.",
+    lastActionDate: "2026-02-25",
+  },
+  {
+    id: "hr-556-placeholder",
+    congress: 119,
+    title: "Protecting Access for Hunters and Anglers Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 556",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/556", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Rep. Wittman, Robert J. [R-VA-1]",
+      party: "R",
+      chamber: "house",
+      state: "VA",
+      title: "Representative",
+    },
+    cosponsors: 83,
+    bipartisan: false,
+    impactedCategories: ["agriculture"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/556",
+    lastAction: "Received in the Senate and Read twice and referred to the Committee on Environment and Public Works.",
+    lastActionDate: "2026-03-19",
+  },
+  {
+    id: "hr-5688-placeholder",
+    congress: 119,
+    title: "Non-Domiciled CDL Integrity Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 5688",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/5688", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Rep. Rouzer, David [R-NC-7]",
+      party: "R",
+      chamber: "house",
+      state: "NC",
+      title: "Representative",
+    },
+    cosponsors: 62,
+    bipartisan: false,
+    impactedCategories: ["infrastructure"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/5688",
+    lastAction: "Ordered to be Reported (Amended) by the Yeas and Nays: 35 - 26.",
+    lastActionDate: "2026-03-18",
+  },
+  {
+    id: "s-4139-placeholder",
+    congress: 119,
+    title: "A bill to require the Secretary of State, in coordination with the Secretary of Defense, to submit a report on emerging threats posed to Estonia, Latvia, and Lithuania, and for other purposes.",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 4139",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/4139", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Durbin, Richard J. [D-IL]",
+      party: "D",
+      chamber: "senate",
+      state: "IL",
+      title: "Senator",
+    },
+    cosponsors: 19,
+    bipartisan: true,
+    impactedCategories: ["international"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/4139",
+    lastAction: "Read twice and referred to the Committee on Foreign Relations. (text: CR S1207)",
+    lastActionDate: "2026-03-18",
+  },
+  {
+    id: "s-4123-placeholder",
+    congress: 119,
+    title: "End Special Treatment for Congress at Airports Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 4123",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/4123", // NEEDS EDIT
+    status: "passed_senate",
+    passageLikelihood: "high",
+    champion: {
+      name: "Sen. Cornyn, John [R-TX]",
+      party: "R",
+      chamber: "senate",
+      state: "TX",
+      title: "Senator",
+    },
+    cosponsors: 0,
+    bipartisan: false,
+    impactedCategories: ["infrastructure"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/4123",
+    lastAction: "Passed Senate with an amendment by Unanimous Consent. (text: CR S1356)",
+    lastActionDate: "2026-03-19",
+  },
 ];
 
 /**
