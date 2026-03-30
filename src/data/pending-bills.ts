@@ -327,6 +327,136 @@ export const pendingBills: PendingBill[] = [
     lastAction: "Referred to the Subcommittee on Railroads, Pipelines, and Hazardous Materials.",
     lastActionDate: "2025-02-27",
   },
+  {
+    id: "hr-1004-placeholder",
+    congress: 119,
+    title: "Love Lives On Act of 2025",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 1004",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/1004", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "high",
+    champion: {
+      name: "Rep. Hudson, Richard [R-NC-9]",
+      party: "R",
+      chamber: "house",
+      state: "NC",
+      title: "Representative",
+    },
+    cosponsors: 146,
+    bipartisan: true,
+    impactedCategories: ["veterans"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/1004",
+    lastAction: "Forwarded by Subcommittee to Full Committee by Voice Vote.",
+    lastActionDate: "2026-03-26",
+  },
+  {
+    id: "hr-7977-placeholder",
+    congress: 119,
+    title: "To provide relief from high energy bills, and for other purposes.",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 7977",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/7977", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Rep. Casten, Sean [D-IL-6]",
+      party: "D",
+      chamber: "house",
+      state: "IL",
+      title: "Representative",
+    },
+    cosponsors: 122,
+    bipartisan: false,
+    impactedCategories: ["science"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/7977",
+    lastAction: "Referred to the Committee on Energy and Commerce, and in addition to the Committees on Agriculture, Ways and Means, Natural Resources, Financial Services, Transportation and Infrastructure, Education and Workforce, Oversight and Government Reform, and Science, Space, and Technology, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
+    lastActionDate: "2026-03-18",
+  },
+  {
+    id: "hr-5688-placeholder",
+    congress: 119,
+    title: "Non-Domiciled CDL Integrity Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 5688",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/5688", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Rep. Rouzer, David [R-NC-7]",
+      party: "R",
+      chamber: "house",
+      state: "NC",
+      title: "Representative",
+    },
+    cosponsors: 69,
+    bipartisan: false,
+    impactedCategories: ["infrastructure"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/5688",
+    lastAction: "Ordered to be Reported (Amended) by the Yeas and Nays: 35 - 26.",
+    lastActionDate: "2026-03-18",
+  },
+  {
+    id: "hr-7917-placeholder",
+    congress: 119,
+    title: "Fair Wages for Home Care Workers Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 7917",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/7917", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Rep. Ocasio-Cortez, Alexandria [D-NY-14]",
+      party: "D",
+      chamber: "house",
+      state: "NY",
+      title: "Representative",
+    },
+    cosponsors: 63,
+    bipartisan: false,
+    impactedCategories: ["education"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/7917",
+    lastAction: "Referred to the House Committee on Education and Workforce.",
+    lastActionDate: "2026-03-12",
+  },
+  {
+    id: "hr-8153-placeholder",
+    congress: 119,
+    title: "To amend the Public Health Service Act with respect to maternal vaccination awareness and equity, and for other purposes.",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 8153",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/8153", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Rep. Sewell, Terri A. [D-AL-7]",
+      party: "D",
+      chamber: "house",
+      state: "AL",
+      title: "Representative",
+    },
+    cosponsors: 61,
+    bipartisan: false,
+    impactedCategories: ["healthcare"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/8153",
+    lastAction: "Referred to the House Committee on Energy and Commerce.",
+    lastActionDate: "2026-03-27",
+  },
 ];
 
 /**
