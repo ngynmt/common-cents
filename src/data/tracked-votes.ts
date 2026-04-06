@@ -96,4 +96,34 @@ export const trackedVotes: TrackedVote[] = [
     yesEffect: "Voted to suspend the debt ceiling and cap discretionary spending",
     noEffect: "Voted against suspending the debt ceiling",
   },
+  {
+    legislationTitle: "SUPPORT for Patients and Communities Reauthorization Act of 2025",
+    categoryId: "healthcare", // suggested via committee: Health, Education, Labor, and Pensions Committee
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 1, rollCall: 151 },
+    date: "2025-12-01",
+    yesEffect: "Voted to pass the SUPPORT for Patients and Communities Reauthorization Act of 2025", // draft — edit
+    noEffect: "Voted against the SUPPORT for Patients and Communities Reauthorization Act of 2025", // draft — edit
+  },
+  {
+    legislationTitle: "Epstein Files Transparency Act",
+    categoryId: "justice", // suggested via committee: Judiciary Committee
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 1, rollCall: 289 },
+    date: "2025-11-19",
+    yesEffect: "Voted to pass the Epstein Files Transparency Act", // draft — edit
+    noEffect: "Voted against the Epstein Files Transparency Act", // draft — edit
+  },
+  {
+    legislationTitle: "Providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Bureau of Land Management relating to \"Coastal Plain Oil and Gas Leasing Program Record of Decision\".",
+    categoryId: "unknown", // ⚠ low confidence — verify
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 1, rollCall: 632 },
+    date: "2025-12-11",
+    yesEffect: "Voted to pass the Providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Bureau of Land Management relating to \"Coastal Plain Oil and Gas Leasing Program Record of Decision\".", // draft — edit
+    noEffect: "Voted against the Providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Bureau of Land Management relating to \"Coastal Plain Oil and Gas Leasing Program Record of Decision\".", // draft — edit
+  },
 ];
