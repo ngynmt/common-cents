@@ -327,6 +327,58 @@ export const pendingBills: PendingBill[] = [
     lastAction: "Referred to the Subcommittee on Railroads, Pipelines, and Hazardous Materials.",
     lastActionDate: "2025-02-27",
   },
+  {
+    id: "hr-7973-placeholder",
+    congress: 119,
+    title: "Momnibus Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 7973",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/7973", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Rep. Underwood, Lauren [D-IL-14]",
+      party: "D",
+      chamber: "house",
+      state: "IL",
+      title: "Representative",
+    },
+    cosponsors: 203,
+    bipartisan: false,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/7973",
+    lastAction: "Referred to the Committee on Energy and Commerce, and in addition to the Committees on Education and Workforce, Veterans' Affairs, Natural Resources, and the Judiciary, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
+    lastActionDate: "2026-03-18",
+  },
+  {
+    id: "hr-1004-placeholder",
+    congress: 119,
+    title: "Love Lives On Act of 2025",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 1004",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/1004", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "high",
+    champion: {
+      name: "Rep. Hudson, Richard [R-NC-9]",
+      party: "R",
+      chamber: "house",
+      state: "NC",
+      title: "Representative",
+    },
+    cosponsors: 151,
+    bipartisan: true,
+    impactedCategories: ["veterans"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/1004",
+    lastAction: "Forwarded by Subcommittee to Full Committee by Voice Vote.",
+    lastActionDate: "2026-03-26",
+  },
 ];
 
 /**
