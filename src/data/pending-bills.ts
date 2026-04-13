@@ -327,6 +327,58 @@ export const pendingBills: PendingBill[] = [
     lastAction: "Referred to the Subcommittee on Railroads, Pipelines, and Hazardous Materials.",
     lastActionDate: "2025-02-27",
   },
+  {
+    id: "hr-7613-placeholder",
+    congress: 119,
+    title: "ALERT Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 7613",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/7613", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Rep. Graves, Sam [R-MO-6]",
+      party: "R",
+      chamber: "house",
+      state: "MO",
+      title: "Representative",
+    },
+    cosponsors: 87,
+    bipartisan: true,
+    impactedCategories: ["infrastructure"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/7613",
+    lastAction: "Placed on the Union Calendar, Calendar No. 528.",
+    lastActionDate: "2026-04-09",
+  },
+  {
+    id: "hjres-155-placeholder",
+    congress: 119,
+    title: "Providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Department of Education relating to \"William D. Ford Federal Direct Loan (Direct Loan) Program\".",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.J.Res. 155",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-joint-resolution/155", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Rep. Courtney, Joe [D-CT-2]",
+      party: "D",
+      chamber: "house",
+      state: "CT",
+      title: "Representative",
+    },
+    cosponsors: 56,
+    bipartisan: false,
+    impactedCategories: ["education"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-joint-resolution/155",
+    lastAction: "Referred to the House Committee on Education and Workforce.",
+    lastActionDate: "2026-04-09",
+  },
 ];
 
 /**
