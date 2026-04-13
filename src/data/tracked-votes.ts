@@ -96,4 +96,54 @@ export const trackedVotes: TrackedVote[] = [
     yesEffect: "Voted to suspend the debt ceiling and cap discretionary spending",
     noEffect: "Voted against suspending the debt ceiling",
   },
+  {
+    legislationTitle: "An act to provide for reconciliation pursuant to title II of H. Con. Res. 14.",
+    categoryId: "unknown", // ⚠ low confidence — verify
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 1, rollCall: 190 },
+    date: "2025-07-04",
+    yesEffect: "Voted to pass the An act to provide for reconciliation pursuant to title II of H. Con. Res. 14.", // draft — edit
+    noEffect: "Voted against the An act to provide for reconciliation pursuant to title II of H. Con. Res. 14.", // draft — edit
+  },
+  {
+    legislationTitle: "Continuing Appropriations, Agriculture, Legislative Branch, Military Construction and Veterans Affairs, and Extensions Act, 2026",
+    categoryId: "government", // suggested via committee: Appropriations Committee
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 1, rollCall: 285 },
+    date: "2025-11-12",
+    yesEffect: "Voted to pass the Continuing Appropriations, Agriculture, Legislative Branch, Military Construction and Veterans Affairs, and Extensions Act, 2026", // draft — edit
+    noEffect: "Voted against the Continuing Appropriations, Agriculture, Legislative Branch, Military Construction and Veterans Affairs, and Extensions Act, 2026", // draft — edit
+  },
+  {
+    legislationTitle: "Commerce, Justice, Science; Energy and Water Development; and Interior and Environment Appropriations Act, 2026",
+    categoryId: "government", // suggested via committee: Appropriations Committee
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 2, rollCall: 11 },
+    date: "2026-01-23",
+    yesEffect: "Voted to pass the Commerce, Justice, Science; Energy and Water Development; and Interior and Environment Appropriations Act, 2026", // draft — edit
+    noEffect: "Voted against the Commerce, Justice, Science; Energy and Water Development; and Interior and Environment Appropriations Act, 2026", // draft — edit
+  },
+  {
+    legislationTitle: "Consolidated Appropriations Act, 2026",
+    categoryId: "government", // suggested via committee: Appropriations Committee
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 2, rollCall: 53 },
+    date: "2026-02-03",
+    yesEffect: "Voted to pass the Consolidated Appropriations Act, 2026", // draft — edit
+    noEffect: "Voted against the Consolidated Appropriations Act, 2026", // draft — edit
+  },
+  {
+    legislationTitle: "Providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Bureau of Land Management relating to \"Buffalo Field Office Record of Decision and Approved Resource Management Plan Amendment\".",
+    categoryId: "unknown", // ⚠ low confidence — verify
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 1, rollCall: 623 },
+    date: "2025-12-11",
+    yesEffect: "Voted to pass the Providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Bureau of Land Management relating to \"Buffalo Field Office Record of Decision and Approved Resource Management Plan Amendment\".", // draft — edit
+    noEffect: "Voted against the Providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Bureau of Land Management relating to \"Buffalo Field Office Record of Decision and Approved Resource Management Plan Amendment\".", // draft — edit
+  },
 ];
