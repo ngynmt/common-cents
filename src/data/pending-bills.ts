@@ -327,6 +327,162 @@ export const pendingBills: PendingBill[] = [
     lastAction: "Referred to the Subcommittee on Railroads, Pipelines, and Hazardous Materials.",
     lastActionDate: "2025-02-27",
   },
+  {
+    id: "hr-7613-placeholder",
+    congress: 119,
+    title: "ALERT Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 7613",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/7613", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Rep. Graves, Sam [R-MO-6]",
+      party: "R",
+      chamber: "house",
+      state: "MO",
+      title: "Representative",
+    },
+    cosponsors: 87,
+    bipartisan: true,
+    impactedCategories: ["infrastructure"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/7613",
+    lastAction: "Received in the Senate and Read twice and referred to the Committee on Commerce, Science, and Transportation.",
+    lastActionDate: "2026-04-15",
+  },
+  {
+    id: "hr-8275-placeholder",
+    congress: 119,
+    title: "Commission on Presidential Capacity to Discharge the Powers and Duties of the Office Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 8275",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/8275", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Rep. Raskin, Jamie [D-MD-8]",
+      party: "D",
+      chamber: "house",
+      state: "MD",
+      title: "Representative",
+    },
+    cosponsors: 78,
+    bipartisan: false,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/8275",
+    lastAction: "Referred to the Committee on the Judiciary, and in addition to the Committee on Rules, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
+    lastActionDate: "2026-04-14",
+  },
+  {
+    id: "hjres-155-placeholder",
+    congress: 119,
+    title: "Providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Department of Education relating to \"William D. Ford Federal Direct Loan (Direct Loan) Program\".",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.J.Res. 155",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-joint-resolution/155", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Rep. Courtney, Joe [D-CT-2]",
+      party: "D",
+      chamber: "house",
+      state: "CT",
+      title: "Representative",
+    },
+    cosponsors: 64,
+    bipartisan: false,
+    impactedCategories: ["education"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-joint-resolution/155",
+    lastAction: "Referred to the House Committee on Education and Workforce.",
+    lastActionDate: "2026-04-09",
+  },
+  {
+    id: "s-545-placeholder",
+    congress: 119,
+    title: "Combating Illicit Xylazine Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 545",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/545", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "high",
+    champion: {
+      name: "Sen. Cortez Masto, Catherine [D-NV]",
+      party: "D",
+      chamber: "senate",
+      state: "NV",
+      title: "Senator",
+    },
+    cosponsors: 34,
+    bipartisan: true,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/545",
+    lastAction: "Placed on Senate Legislative Calendar under General Orders. Calendar No. 372.",
+    lastActionDate: "2026-04-15",
+  },
+  {
+    id: "s-4297-placeholder",
+    congress: 119,
+    title: "A bill to amend the Internal Revenue Code of 1986 to repeal the tax credit for contributions of individuals to scholarship granting organizations, and for other purposes.",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 4297",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/4297", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Kelly, Mark [D-AZ]",
+      party: "D",
+      chamber: "senate",
+      state: "AZ",
+      title: "Senator",
+    },
+    cosponsors: 31,
+    bipartisan: false,
+    impactedCategories: ["government"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/4297",
+    lastAction: "Read twice and referred to the Committee on Finance.",
+    lastActionDate: "2026-04-15",
+  },
+  {
+    id: "sjres-182-placeholder",
+    congress: 119,
+    title: "A joint resolution providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Department of Education relating to \"William D. Ford Federal Direct Loan (Direct Loan) Program\".",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S.J.Res. 182",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-joint-resolution/182", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Sen. Kaine, Tim [D-VA]",
+      party: "D",
+      chamber: "senate",
+      state: "VA",
+      title: "Senator",
+    },
+    cosponsors: 27,
+    bipartisan: false,
+    impactedCategories: ["healthcare"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-joint-resolution/182",
+    lastAction: "Read twice and referred to the Committee on Health, Education, Labor, and Pensions.",
+    lastActionDate: "2026-04-13",
+  },
 ];
 
 /**
