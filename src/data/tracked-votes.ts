@@ -96,4 +96,14 @@ export const trackedVotes: TrackedVote[] = [
     yesEffect: "Voted to suspend the debt ceiling and cap discretionary spending",
     noEffect: "Voted against suspending the debt ceiling",
   },
+  {
+    legislationTitle: "An act to provide for reconciliation pursuant to title II of H. Con. Res. 14.",
+    categoryId: "unknown", // ⚠ low confidence — verify
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 1, rollCall: 190 },
+    date: "2025-07-04",
+    yesEffect: "Voted to pass the An act to provide for reconciliation pursuant to title II of H. Con. Res. 14.", // draft — edit
+    noEffect: "Voted against the An act to provide for reconciliation pursuant to title II of H. Con. Res. 14.", // draft — edit
+  },
 ];
