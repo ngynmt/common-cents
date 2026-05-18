@@ -327,6 +327,58 @@ export const pendingBills: PendingBill[] = [
     lastAction: "Referred to the Subcommittee on Railroads, Pipelines, and Hazardous Materials.",
     lastActionDate: "2025-02-27",
   },
+  {
+    id: "hr-8802-placeholder",
+    congress: 119,
+    title: "To provide compensation to law enforcement officers who defended the United States Capitol during the events that occurred at or near the United States Capitol on January 6, 2021, and for other purposes.",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 8802",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/8802", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Rep. Raskin, Jamie [D-MD-8]",
+      party: "D",
+      chamber: "house",
+      state: "MD",
+      title: "Representative",
+    },
+    cosponsors: 50,
+    bipartisan: false,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/8802",
+    lastAction: "Referred to the House Committee on the Judiciary.",
+    lastActionDate: "2026-05-13",
+  },
+  {
+    id: "s-4487-placeholder",
+    congress: 119,
+    title: "Veterans’ Compensation Cost-of-Living Adjustment Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 4487",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/4487", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Moran, Jerry [R-KS]",
+      party: "R",
+      chamber: "senate",
+      state: "KS",
+      title: "Senator",
+    },
+    cosponsors: 15,
+    bipartisan: true,
+    impactedCategories: ["veterans"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/4487",
+    lastAction: "Read twice and referred to the Committee on Veterans' Affairs.",
+    lastActionDate: "2026-05-11",
+  },
 ];
 
 /**
