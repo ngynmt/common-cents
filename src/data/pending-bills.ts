@@ -327,6 +327,188 @@ export const pendingBills: PendingBill[] = [
     lastAction: "Referred to the Subcommittee on Railroads, Pipelines, and Hazardous Materials.",
     lastActionDate: "2025-02-27",
   },
+  {
+    id: "hr-1041-placeholder",
+    congress: 119,
+    title: "Veterans 2nd Amendment Protection Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 1041",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/1041", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Rep. Bost, Mike [R-IL-12]",
+      party: "R",
+      chamber: "house",
+      state: "IL",
+      title: "Representative",
+    },
+    cosponsors: 70,
+    bipartisan: false,
+    impactedCategories: ["veterans"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/1041",
+    lastAction: "The title of the measure was amended. Agreed to without objection.",
+    lastActionDate: "2026-05-21",
+  },
+  {
+    id: "sjres-182-placeholder",
+    congress: 119,
+    title: "A joint resolution providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Department of Education relating to \"William D. Ford Federal Direct Loan (Direct Loan) Program\".",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S.J.Res. 182",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-joint-resolution/182", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Kaine, Tim [D-VA]",
+      party: "D",
+      chamber: "senate",
+      state: "VA",
+      title: "Senator",
+    },
+    cosponsors: 33,
+    bipartisan: false,
+    impactedCategories: ["healthcare"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-joint-resolution/182",
+    lastAction: "Motion to proceed to consideration of measure rejected in Senate by Voice Vote. (CR S2407)",
+    lastActionDate: "2026-05-20",
+  },
+  {
+    id: "s-3966-placeholder",
+    congress: 119,
+    title: "TREY'S Law",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 3966",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/3966", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Cruz, Ted [R-TX]",
+      party: "R",
+      chamber: "senate",
+      state: "TX",
+      title: "Senator",
+    },
+    cosponsors: 21,
+    bipartisan: true,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/3966",
+    lastAction: "Held at the desk.",
+    lastActionDate: "2026-05-20",
+  },
+  {
+    id: "s-4618-placeholder",
+    congress: 119,
+    title: "A bill to effectively staff the high-need public elementary schools and secondary schools of the United States with school-based mental health services providers.",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 4618",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/4618", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Sen. Merkley, Jeff [D-OR]",
+      party: "D",
+      chamber: "senate",
+      state: "OR",
+      title: "Senator",
+    },
+    cosponsors: 18,
+    bipartisan: false,
+    impactedCategories: ["healthcare"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/4618",
+    lastAction: "Read twice and referred to the Committee on Health, Education, Labor, and Pensions.",
+    lastActionDate: "2026-05-21",
+  },
+  {
+    id: "s-4608-placeholder",
+    congress: 119,
+    title: "A bill to prohibit the imposition of the death penalty for any violation of Federal law, and for other purposes.",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 4608",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/4608", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Sen. Durbin, Richard J. [D-IL]",
+      party: "D",
+      chamber: "senate",
+      state: "IL",
+      title: "Senator",
+    },
+    cosponsors: 17,
+    bipartisan: false,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/4608",
+    lastAction: "Read twice and referred to the Committee on the Judiciary. (Sponsor introductory remarks on measure: CR S2417-2418; text: CR S2418)",
+    lastActionDate: "2026-05-20",
+  },
+  {
+    id: "s-736-placeholder",
+    congress: 119,
+    title: "Lieutenant Osvaldo Albarati Stopping Prison Contraband Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 736",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/736", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Grassley, Chuck [R-IA]",
+      party: "R",
+      chamber: "senate",
+      state: "IA",
+      title: "Senator",
+    },
+    cosponsors: 16,
+    bipartisan: true,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/736",
+    lastAction: "Placed on Senate Legislative Calendar under General Orders. Calendar No. 410.",
+    lastActionDate: "2026-05-19",
+  },
+  {
+    id: "s-1572-placeholder",
+    congress: 119,
+    title: "Federal Carjacking Enforcement Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 1572",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/1572", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Blackburn, Marsha [R-TN]",
+      party: "R",
+      chamber: "senate",
+      state: "TN",
+      title: "Senator",
+    },
+    cosponsors: 16,
+    bipartisan: true,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/1572",
+    lastAction: "Placed on Senate Legislative Calendar under General Orders. Calendar No. 404.",
+    lastActionDate: "2026-05-11",
+  },
 ];
 
 /**
