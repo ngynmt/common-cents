@@ -327,6 +327,110 @@ export const pendingBills: PendingBill[] = [
     lastAction: "Referred to the Subcommittee on Railroads, Pipelines, and Hazardous Materials.",
     lastActionDate: "2025-02-27",
   },
+  {
+    id: "hr-8798-placeholder",
+    congress: 119,
+    title: "Universal School Meals Program Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 8798",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/8798", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Rep. Omar, Ilhan [D-MN-5]",
+      party: "D",
+      chamber: "house",
+      state: "MN",
+      title: "Representative",
+    },
+    cosponsors: 89,
+    bipartisan: false,
+    impactedCategories: ["science"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/8798",
+    lastAction: "Referred to the Committee on Education and Workforce, and in addition to the Committees on Agriculture, and Science, Space, and Technology, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
+    lastActionDate: "2026-05-13",
+  },
+  {
+    id: "hr-8914-placeholder",
+    congress: 119,
+    title: "To amend section 1304 of title 31, United States Code to restrict payments for compromise settlements or awards.",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 8914",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/8914", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Rep. Raskin, Jamie [D-MD-8]",
+      party: "D",
+      chamber: "house",
+      state: "MD",
+      title: "Representative",
+    },
+    cosponsors: 73,
+    bipartisan: false,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/8914",
+    lastAction: "Referred to the House Committee on the Judiciary.",
+    lastActionDate: "2026-05-20",
+  },
+  {
+    id: "s-3966-placeholder",
+    congress: 119,
+    title: "TREY'S Law",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 3966",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/3966", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Cruz, Ted [R-TX]",
+      party: "R",
+      chamber: "senate",
+      state: "TX",
+      title: "Senator",
+    },
+    cosponsors: 20,
+    bipartisan: true,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/3966",
+    lastAction: "Held at the desk.",
+    lastActionDate: "2026-05-20",
+  },
+  {
+    id: "s-4518-placeholder",
+    congress: 119,
+    title: "Universal School Meals Program Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 4518",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/4518", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Sen. Sanders, Bernard [I-VT]",
+      party: "I",
+      chamber: "senate",
+      state: "VT",
+      title: "Senator",
+    },
+    cosponsors: 19,
+    bipartisan: false,
+    impactedCategories: ["agriculture"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/4518",
+    lastAction: "Read twice and referred to the Committee on Agriculture, Nutrition, and Forestry.",
+    lastActionDate: "2026-05-13",
+  },
 ];
 
 /**
