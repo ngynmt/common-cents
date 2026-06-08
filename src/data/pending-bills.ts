@@ -327,6 +327,84 @@ export const pendingBills: PendingBill[] = [
     lastAction: "Referred to the Subcommittee on Railroads, Pipelines, and Hazardous Materials.",
     lastActionDate: "2025-02-27",
   },
+  {
+    id: "hr-8914-placeholder",
+    congress: 119,
+    title: "No Taxpayer-Funded Settlement Slush Funds Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 8914",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/8914", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Rep. Raskin, Jamie [D-MD-8]",
+      party: "D",
+      chamber: "house",
+      state: "MD",
+      title: "Representative",
+    },
+    cosponsors: 80,
+    bipartisan: false,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/8914",
+    lastAction: "Referred to the House Committee on the Judiciary.",
+    lastActionDate: "2026-05-20",
+  },
+  {
+    id: "hr-9036-placeholder",
+    congress: 119,
+    title: "American High-Speed Rail Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 9036",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/9036", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Rep. Moulton, Seth [D-MA-6]",
+      party: "D",
+      chamber: "house",
+      state: "MA",
+      title: "Representative",
+    },
+    cosponsors: 50,
+    bipartisan: false,
+    impactedCategories: ["infrastructure"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/9036",
+    lastAction: "Referred to the Committee on Transportation and Infrastructure, and in addition to the Committee on Ways and Means, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
+    lastActionDate: "2026-05-26",
+  },
+  {
+    id: "s-1318-placeholder",
+    congress: 119,
+    title: "Fallen Servicemembers Religious Heritage Restoration Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 1318",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/1318", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Moran, Jerry [R-KS]",
+      party: "R",
+      chamber: "senate",
+      state: "KS",
+      title: "Senator",
+    },
+    cosponsors: 20,
+    bipartisan: true,
+    impactedCategories: ["veterans"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/1318",
+    lastAction: "Motion to proceed to consideration of the House message to accompany S. 1318 rejected in Senate by Yea-Nay Vote. 47 - 52. Record Vote Number: 164.",
+    lastActionDate: "2026-06-05",
+  },
 ];
 
 /**
