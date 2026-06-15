@@ -327,6 +327,214 @@ export const pendingBills: PendingBill[] = [
     lastAction: "Referred to the Subcommittee on Railroads, Pipelines, and Hazardous Materials.",
     lastActionDate: "2025-02-27",
   },
+  {
+    id: "hr-9250-placeholder",
+    congress: 119,
+    title: "To modernize and maintain the National Park Service, the United States Fish and Wildlife Service, the Bureau of Land Management, the Forest Service, and the Bureau of Indian Education in celebration of America's 250th anniversary.",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 9250",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/9250", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "high",
+    champion: {
+      name: "Rep. Westerman, Bruce [R-AR-4]",
+      party: "R",
+      chamber: "house",
+      state: "AR",
+      title: "Representative",
+    },
+    cosponsors: 103,
+    bipartisan: true,
+    impactedCategories: ["agriculture"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/9250",
+    lastAction: "Referred to the Committee on Natural Resources, and in addition to the Committee on Agriculture, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
+    lastActionDate: "2026-06-10",
+  },
+  {
+    id: "hr-9289-placeholder",
+    congress: 119,
+    title: "To amend the Internal Revenue Code of 1986 to repeal the tax credit for contributions of individuals to scholarship granting organizations, and for other purposes.",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 9289",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/9289", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Rep. Moore, Gwen [D-WI-4]",
+      party: "D",
+      chamber: "house",
+      state: "WI",
+      title: "Representative",
+    },
+    cosponsors: 75,
+    bipartisan: false,
+    impactedCategories: ["government"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/9289",
+    lastAction: "Referred to the House Committee on Ways and Means.",
+    lastActionDate: "2026-06-11",
+  },
+  {
+    id: "s-567-placeholder",
+    congress: 119,
+    title: "First Rhode Island Regiment Congressional Gold Medal Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 567",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/567", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "high",
+    champion: {
+      name: "Sen. Whitehouse, Sheldon [D-RI]",
+      party: "D",
+      chamber: "senate",
+      state: "RI",
+      title: "Senator",
+    },
+    cosponsors: 67,
+    bipartisan: true,
+    impactedCategories: ["government"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/567",
+    lastAction: "Message on Senate action sent to the House.",
+    lastActionDate: "2026-06-12",
+  },
+  {
+    id: "sjres-192-placeholder",
+    congress: 119,
+    title: "A joint resolution providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Centers for Medicare & Medicaid Services of the Department of Health and Human Services relating to \"Medicare Program; Implementation of Prior Authorization for Select Services for the Wasteful and Inappropriate Services Reduction (WISeR) Model\".",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S.J.Res. 192",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-joint-resolution/192", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Sen. Wyden, Ron [D-OR]",
+      party: "D",
+      chamber: "senate",
+      state: "OR",
+      title: "Senator",
+    },
+    cosponsors: 20,
+    bipartisan: false,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-joint-resolution/192",
+    lastAction: "Placed on Senate Legislative Calendar under General Orders. Calendar No. 431.",
+    lastActionDate: "2026-06-09",
+  },
+  {
+    id: "s-1318-placeholder",
+    congress: 119,
+    title: "Fallen Servicemembers Religious Heritage Restoration Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 1318",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/1318", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Moran, Jerry [R-KS]",
+      party: "R",
+      chamber: "senate",
+      state: "KS",
+      title: "Senator",
+    },
+    cosponsors: 20,
+    bipartisan: true,
+    impactedCategories: ["veterans"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/1318",
+    lastAction: "Motion to proceed to consideration of the House message to accompany S. 1318 rejected in Senate by Yea-Nay Vote. 47 - 52. Record Vote Number: 164.",
+    lastActionDate: "2026-06-05",
+  },
+  {
+    id: "s-825-placeholder",
+    congress: 119,
+    title: "Fighting Post-Traumatic Stress Disorder Act of 2025",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 825",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/825", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Grassley, Chuck [R-IA]",
+      party: "R",
+      chamber: "senate",
+      state: "IA",
+      title: "Senator",
+    },
+    cosponsors: 19,
+    bipartisan: true,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/825",
+    lastAction: "Message on Senate action sent to the House.",
+    lastActionDate: "2026-06-12",
+  },
+  {
+    id: "s-736-placeholder",
+    congress: 119,
+    title: "Lieutenant Osvaldo Albarati Stopping Prison Contraband Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 736",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/736", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Grassley, Chuck [R-IA]",
+      party: "R",
+      chamber: "senate",
+      state: "IA",
+      title: "Senator",
+    },
+    cosponsors: 17,
+    bipartisan: true,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/736",
+    lastAction: "Message on Senate action sent to the House.",
+    lastActionDate: "2026-06-12",
+  },
+  {
+    id: "s-3041-placeholder",
+    congress: 119,
+    title: "Tribal Warrant Fairness Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 3041",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/3041", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Cortez Masto, Catherine [D-NV]",
+      party: "D",
+      chamber: "senate",
+      state: "NV",
+      title: "Senator",
+    },
+    cosponsors: 15,
+    bipartisan: true,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/3041",
+    lastAction: "Message on Senate action sent to the House.",
+    lastActionDate: "2026-06-12",
+  },
 ];
 
 /**
