@@ -96,4 +96,34 @@ export const trackedVotes: TrackedVote[] = [
     yesEffect: "Voted to suspend the debt ceiling and cap discretionary spending",
     noEffect: "Voted against suspending the debt ceiling",
   },
+  {
+    legislationTitle: "ARTIST Act",
+    categoryId: "infrastructure", // suggested via committee: Commerce, Science, and Transportation Committee
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 2, rollCall: 193 },
+    date: "2026-06-12",
+    yesEffect: "Voted to pass the ARTIST Act", // draft — edit
+    noEffect: "Voted against the ARTIST Act", // draft — edit
+  },
+  {
+    legislationTitle: "An act to provide for reconciliation pursuant to title II of H. Con. Res. 14.",
+    categoryId: "unknown", // ⚠ low confidence — verify
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 1, rollCall: 190 },
+    date: "2025-07-04",
+    yesEffect: "Voted to pass the An act to provide for reconciliation pursuant to title II of H. Con. Res. 14.", // draft — edit
+    noEffect: "Voted against the An act to provide for reconciliation pursuant to title II of H. Con. Res. 14.", // draft — edit
+  },
+  {
+    legislationTitle: "Secure America Act",
+    categoryId: "unknown", // ⚠ low confidence — verify
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 2, rollCall: 214 },
+    date: "2026-06-10",
+    yesEffect: "Voted to pass the Secure America Act", // draft — edit
+    noEffect: "Voted against the Secure America Act", // draft — edit
+  },
 ];
