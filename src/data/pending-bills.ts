@@ -327,6 +327,136 @@ export const pendingBills: PendingBill[] = [
     lastAction: "Referred to the Subcommittee on Railroads, Pipelines, and Hazardous Materials.",
     lastActionDate: "2025-02-27",
   },
+  {
+    id: "hr-9250-placeholder",
+    congress: 119,
+    title: "To modernize and maintain the National Park Service, the United States Fish and Wildlife Service, the Bureau of Land Management, the Forest Service, and the Bureau of Indian Education in celebration of America's 250th anniversary.",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 9250",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/9250", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "high",
+    champion: {
+      name: "Rep. Westerman, Bruce [R-AR-4]",
+      party: "R",
+      chamber: "house",
+      state: "AR",
+      title: "Representative",
+    },
+    cosponsors: 121,
+    bipartisan: true,
+    impactedCategories: ["agriculture"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/9250",
+    lastAction: "Referred to the Committee on Natural Resources, and in addition to the Committee on Agriculture, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
+    lastActionDate: "2026-06-10",
+  },
+  {
+    id: "s-4671-placeholder",
+    congress: 119,
+    title: "Federal Firearms Licensee Protection Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 4671",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/4671", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Sen. Graham, Lindsey [R-SC]",
+      party: "R",
+      chamber: "senate",
+      state: "SC",
+      title: "Senator",
+    },
+    cosponsors: 24,
+    bipartisan: false,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/4671",
+    lastAction: "Read twice and referred to the Committee on the Judiciary.",
+    lastActionDate: "2026-06-03",
+  },
+  {
+    id: "sjres-192-placeholder",
+    congress: 119,
+    title: "A joint resolution providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Centers for Medicare & Medicaid Services of the Department of Health and Human Services relating to \"Medicare Program; Implementation of Prior Authorization for Select Services for the Wasteful and Inappropriate Services Reduction (WISeR) Model\".",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S.J.Res. 192",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-joint-resolution/192", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Sen. Wyden, Ron [D-OR]",
+      party: "D",
+      chamber: "senate",
+      state: "OR",
+      title: "Senator",
+    },
+    cosponsors: 20,
+    bipartisan: false,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-joint-resolution/192",
+    lastAction: "Placed on Senate Legislative Calendar under General Orders. Calendar No. 431.",
+    lastActionDate: "2026-06-09",
+  },
+  {
+    id: "s-4591-placeholder",
+    congress: 119,
+    title: "NO FAKES Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 4591",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/4591", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Coons, Christopher A. [D-DE]",
+      party: "D",
+      chamber: "senate",
+      state: "DE",
+      title: "Senator",
+    },
+    cosponsors: 15,
+    bipartisan: true,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/4591",
+    lastAction: "Committee on the Judiciary. Ordered to be reported with an amendment in the nature of a substitute favorably.",
+    lastActionDate: "2026-06-18",
+  },
+  {
+    id: "s-2585-placeholder",
+    congress: 119,
+    title: "MAP for Broadband Funding Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 2585",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/2585", // NEEDS EDIT
+    status: "passed_senate",
+    passageLikelihood: "high",
+    champion: {
+      name: "Sen. Fischer, Deb [R-NE]",
+      party: "R",
+      chamber: "senate",
+      state: "NE",
+      title: "Senator",
+    },
+    cosponsors: 1,
+    bipartisan: false,
+    impactedCategories: ["infrastructure"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/2585",
+    lastAction: "Passed Senate with an amendment by Voice Vote.",
+    lastActionDate: "2026-06-18",
+  },
 ];
 
 /**
