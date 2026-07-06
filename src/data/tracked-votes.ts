@@ -96,4 +96,14 @@ export const trackedVotes: TrackedVote[] = [
     yesEffect: "Voted to suspend the debt ceiling and cap discretionary spending",
     noEffect: "Voted against suspending the debt ceiling",
   },
+  {
+    legislationTitle: "Consolidated Appropriations Act, 2026",
+    categoryId: "government", // suggested via committee: Appropriations Committee
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 2, rollCall: 53 },
+    date: "2026-02-03",
+    yesEffect: "Voted to pass the Consolidated Appropriations Act, 2026", // draft — edit
+    noEffect: "Voted against the Consolidated Appropriations Act, 2026", // draft — edit
+  },
 ];
