@@ -327,6 +327,110 @@ export const pendingBills: PendingBill[] = [
     lastAction: "Referred to the Subcommittee on Railroads, Pipelines, and Hazardous Materials.",
     lastActionDate: "2025-02-27",
   },
+  {
+    id: "hr-9250-placeholder",
+    congress: 119,
+    title: "Great American Outdoors Act 250",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 9250",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/9250", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "high",
+    champion: {
+      name: "Rep. Westerman, Bruce [R-AR-4]",
+      party: "R",
+      chamber: "house",
+      state: "AR",
+      title: "Representative",
+    },
+    cosponsors: 189,
+    bipartisan: true,
+    impactedCategories: ["agriculture"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/9250",
+    lastAction: "Ordered to be Reported in the Nature of a Substitute (Amended) by Voice Vote.",
+    lastActionDate: "2026-06-24",
+  },
+  {
+    id: "s-4919-placeholder",
+    congress: 119,
+    title: "Wage Theft Prevention and Wage Recovery Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 4919",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/4919", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Sen. Murray, Patty [D-WA]",
+      party: "D",
+      chamber: "senate",
+      state: "WA",
+      title: "Senator",
+    },
+    cosponsors: 25,
+    bipartisan: false,
+    impactedCategories: ["healthcare"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/4919",
+    lastAction: "Read twice and referred to the Committee on Health, Education, Labor, and Pensions.",
+    lastActionDate: "2026-06-24",
+  },
+  {
+    id: "s-4814-placeholder",
+    congress: 119,
+    title: "A bill to require the Secretary of Homeland Security to designate Haiti for temporary protected status.",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 4814",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/4814", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Sen. Markey, Edward J. [D-MA]",
+      party: "D",
+      chamber: "senate",
+      state: "MA",
+      title: "Senator",
+    },
+    cosponsors: 19,
+    bipartisan: false,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/4814",
+    lastAction: "Read twice and referred to the Committee on the Judiciary.",
+    lastActionDate: "2026-06-17",
+  },
+  {
+    id: "s-4591-placeholder",
+    congress: 119,
+    title: "NO FAKES Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 4591",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/4591", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Coons, Christopher A. [D-DE]",
+      party: "D",
+      chamber: "senate",
+      state: "DE",
+      title: "Senator",
+    },
+    cosponsors: 15,
+    bipartisan: true,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/4591",
+    lastAction: "Placed on Senate Legislative Calendar under General Orders. Calendar No. 446.",
+    lastActionDate: "2026-06-24",
+  },
 ];
 
 /**
