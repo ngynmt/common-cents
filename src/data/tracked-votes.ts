@@ -96,4 +96,94 @@ export const trackedVotes: TrackedVote[] = [
     yesEffect: "Voted to suspend the debt ceiling and cap discretionary spending",
     noEffect: "Voted against suspending the debt ceiling",
   },
+  {
+    legislationTitle: "A joint resolution providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Bureau of Land Management relating to \"National Petroleum Reserve in Alaska Integrated Activity Plan Record of Decision\".",
+    categoryId: "unknown", // ⚠ low confidence — verify
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 1, rollCall: 296 },
+    date: "2025-12-05",
+    yesEffect: "Voted to pass the A joint resolution providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Bureau of Land Management relating to \"National Petroleum Reserve in Alaska Integrated Activity Plan Record of Decision\".", // draft — edit
+    noEffect: "Voted against the A joint resolution providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Bureau of Land Management relating to \"National Petroleum Reserve in Alaska Integrated Activity Plan Record of Decision\".", // draft — edit
+  },
+  {
+    legislationTitle: "A joint resolution providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Environmental Protection Agency relating to \"Review of Final Rule Reclassification of Major Sources as Area Sources Under Section 112 of the Clean Air Act\".",
+    categoryId: "unknown", // ⚠ low confidence — verify
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 1, rollCall: 143 },
+    date: "2025-06-20",
+    yesEffect: "Voted to pass the A joint resolution providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Environmental Protection Agency relating to \"Review of Final Rule Reclassification of Major Sources as Area Sources Under Section 112 of the Clean Air Act\".", // draft — edit
+    noEffect: "Voted against the A joint resolution providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Environmental Protection Agency relating to \"Review of Final Rule Reclassification of Major Sources as Area Sources Under Section 112 of the Clean Air Act\".", // draft — edit
+  },
+  {
+    legislationTitle: "A joint resolution disapproving the rule submitted by the Bureau of Consumer Financial Protection relating to \"Defining Larger Participants of a Market for General-Use Digital Consumer Payment Applications\".",
+    categoryId: "unknown", // ⚠ low confidence — verify
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 1, rollCall: 95 },
+    date: "2025-05-09",
+    yesEffect: "Voted to pass the A joint resolution disapproving the rule submitted by the Bureau of Consumer Financial Protection relating to \"Defining Larger Participants of a Market for General-Use Digital Consumer Payment Applications\".", // draft — edit
+    noEffect: "Voted against the A joint resolution disapproving the rule submitted by the Bureau of Consumer Financial Protection relating to \"Defining Larger Participants of a Market for General-Use Digital Consumer Payment Applications\".", // draft — edit
+  },
+  {
+    legislationTitle: "A joint resolution disapproving the rule submitted by the Bureau of Consumer Financial Protection relating to \"Overdraft Lending: Very Large Financial Institutions\".",
+    categoryId: "unknown", // ⚠ low confidence — verify
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 1, rollCall: 96 },
+    date: "2025-05-09",
+    yesEffect: "Voted to pass the A joint resolution disapproving the rule submitted by the Bureau of Consumer Financial Protection relating to \"Overdraft Lending: Very Large Financial Institutions\".", // draft — edit
+    noEffect: "Voted against the A joint resolution disapproving the rule submitted by the Bureau of Consumer Financial Protection relating to \"Overdraft Lending: Very Large Financial Institutions\".", // draft — edit
+  },
+  {
+    legislationTitle: "A joint resolution providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Office of the Comptroller of the Currency of the Department of the Treasury relating to the review of applications under the Bank Merger Act.",
+    categoryId: "unknown", // ⚠ low confidence — verify
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 1, rollCall: 137 },
+    date: "2025-06-20",
+    yesEffect: "Voted to pass the A joint resolution providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Office of the Comptroller of the Currency of the Department of the Treasury relating to the review of applications under the Bank Merger Act.", // draft — edit
+    noEffect: "Voted against the A joint resolution providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Office of the Comptroller of the Currency of the Department of the Treasury relating to the review of applications under the Bank Merger Act.", // draft — edit
+  },
+  {
+    legislationTitle: "A joint resolution providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Bureau of Ocean Energy Management relating to \"Protection of Marine Archaeological Resources\".",
+    categoryId: "unknown", // ⚠ low confidence — verify
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 1, rollCall: 61 },
+    date: "2025-03-14",
+    yesEffect: "Voted to pass the A joint resolution providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Bureau of Ocean Energy Management relating to \"Protection of Marine Archaeological Resources\".", // draft — edit
+    noEffect: "Voted against the A joint resolution providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Bureau of Ocean Energy Management relating to \"Protection of Marine Archaeological Resources\".", // draft — edit
+  },
+  {
+    legislationTitle: "SUPPORT for Patients and Communities Reauthorization Act of 2025",
+    categoryId: "healthcare", // suggested via committee: Health, Education, Labor, and Pensions Committee
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 1, rollCall: 151 },
+    date: "2025-12-01",
+    yesEffect: "Voted to pass the SUPPORT for Patients and Communities Reauthorization Act of 2025", // draft — edit
+    noEffect: "Voted against the SUPPORT for Patients and Communities Reauthorization Act of 2025", // draft — edit
+  },
+  {
+    legislationTitle: "Salem Maritime National Historical Park Redesignation and Boundary Study Act",
+    categoryId: "unknown", // ⚠ low confidence — verify
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 1, rollCall: 125 },
+    date: "2025-07-15",
+    yesEffect: "Voted to pass the Salem Maritime National Historical Park Redesignation and Boundary Study Act", // draft — edit
+    noEffect: "Voted against the Salem Maritime National Historical Park Redesignation and Boundary Study Act", // draft — edit
+  },
+  {
+    legislationTitle: "An act to provide for reconciliation pursuant to title II of H. Con. Res. 14.",
+    categoryId: "unknown", // ⚠ low confidence — verify
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 1, rollCall: 190 },
+    date: "2025-07-04",
+    yesEffect: "Voted to pass the An act to provide for reconciliation pursuant to title II of H. Con. Res. 14.", // draft — edit
+    noEffect: "Voted against the An act to provide for reconciliation pursuant to title II of H. Con. Res. 14.", // draft — edit
+  },
 ];
