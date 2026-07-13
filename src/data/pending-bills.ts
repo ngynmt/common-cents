@@ -327,6 +327,58 @@ export const pendingBills: PendingBill[] = [
     lastAction: "Referred to the Subcommittee on Railroads, Pipelines, and Hazardous Materials.",
     lastActionDate: "2025-02-27",
   },
+  {
+    id: "s-825-placeholder",
+    congress: 119,
+    title: "Fighting Post-Traumatic Stress Disorder Act of 2025",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 825",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/825", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Grassley, Chuck [R-IA]",
+      party: "R",
+      chamber: "senate",
+      state: "IA",
+      title: "Senator",
+    },
+    cosponsors: 19,
+    bipartisan: true,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/825",
+    lastAction: "Held at the desk.",
+    lastActionDate: "2026-06-15",
+  },
+  {
+    id: "s-736-placeholder",
+    congress: 119,
+    title: "Lieutenant Osvaldo Albarati Stopping Prison Contraband Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 736",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/736", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Grassley, Chuck [R-IA]",
+      party: "R",
+      chamber: "senate",
+      state: "IA",
+      title: "Senator",
+    },
+    cosponsors: 17,
+    bipartisan: true,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/736",
+    lastAction: "Held at the desk.",
+    lastActionDate: "2026-06-15",
+  },
 ];
 
 /**
