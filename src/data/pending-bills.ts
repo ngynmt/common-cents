@@ -327,6 +327,84 @@ export const pendingBills: PendingBill[] = [
     lastAction: "Referred to the Subcommittee on Railroads, Pipelines, and Hazardous Materials.",
     lastActionDate: "2025-02-27",
   },
+  {
+    id: "hr-9250-placeholder",
+    congress: 119,
+    title: "Great American Outdoors Act 250",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 9250",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/9250", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "high",
+    champion: {
+      name: "Rep. Westerman, Bruce [R-AR-4]",
+      party: "R",
+      chamber: "house",
+      state: "AR",
+      title: "Representative",
+    },
+    cosponsors: 217,
+    bipartisan: true,
+    impactedCategories: ["agriculture"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/9250",
+    lastAction: "Ordered to be Reported in the Nature of a Substitute (Amended) by Voice Vote.",
+    lastActionDate: "2026-06-24",
+  },
+  {
+    id: "hr-4288-placeholder",
+    congress: 119,
+    title: "To name the Department of Veterans Affairs community-based outpatient clinic in San Jose, California, as the \"Corporal Patrick D. Tillman VA Clinic\".",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 4288",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/4288", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Rep. Panetta, Jimmy [D-CA-19]",
+      party: "D",
+      chamber: "house",
+      state: "CA",
+      title: "Representative",
+    },
+    cosponsors: 52,
+    bipartisan: true,
+    impactedCategories: ["veterans"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/4288",
+    lastAction: "Received in the Senate and Read twice and referred to the Committee on Veterans' Affairs.",
+    lastActionDate: "2026-07-16",
+  },
+  {
+    id: "s-2120-placeholder",
+    congress: 119,
+    title: "Older Americans Act Reauthorization Act of 2025",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 2120",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/2120", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Cassidy, Bill [R-LA]",
+      party: "R",
+      chamber: "senate",
+      state: "LA",
+      title: "Senator",
+    },
+    cosponsors: 15,
+    bipartisan: true,
+    impactedCategories: ["healthcare"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/2120",
+    lastAction: "Held at the desk.",
+    lastActionDate: "2026-07-15",
+  },
 ];
 
 /**
