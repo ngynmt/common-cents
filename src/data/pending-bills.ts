@@ -327,6 +327,162 @@ export const pendingBills: PendingBill[] = [
     lastAction: "Referred to the Subcommittee on Railroads, Pipelines, and Hazardous Materials.",
     lastActionDate: "2025-02-27",
   },
+  {
+    id: "hr-9944-placeholder",
+    congress: 119,
+    title: "To authorize judicial review of temporary protected status terminations, and for other purposes.",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 9944",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/9944", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Rep. Wasserman Schultz, Debbie [D-FL-25]",
+      party: "D",
+      chamber: "house",
+      state: "FL",
+      title: "Representative",
+    },
+    cosponsors: 58,
+    bipartisan: false,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/9944",
+    lastAction: "Referred to the Committee on the Judiciary, and in addition to the Committee on Rules, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
+    lastActionDate: "2026-07-23",
+  },
+  {
+    id: "s-5108-placeholder",
+    congress: 119,
+    title: "A bill to protect and expand nationwide access to assisted reproductive technology, including in vitro fertilization.",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 5108",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/5108", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Duckworth, Tammy [D-IL]",
+      party: "D",
+      chamber: "senate",
+      state: "IL",
+      title: "Senator",
+    },
+    cosponsors: 46,
+    bipartisan: false,
+    impactedCategories: ["healthcare"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/5108",
+    lastAction: "Read twice and referred to the Committee on Health, Education, Labor, and Pensions.",
+    lastActionDate: "2026-07-23",
+  },
+  {
+    id: "s-4429-placeholder",
+    congress: 119,
+    title: "Connected Vehicle Security Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 4429",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/4429", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "high",
+    champion: {
+      name: "Sen. Moreno, Bernie [R-OH]",
+      party: "R",
+      chamber: "senate",
+      state: "OH",
+      title: "Senator",
+    },
+    cosponsors: 32,
+    bipartisan: true,
+    impactedCategories: ["infrastructure"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/4429",
+    lastAction: "Committee on Commerce, Science, and Transportation. Ordered to be reported with an amendment in the nature of a substitute favorably.",
+    lastActionDate: "2026-07-22",
+  },
+  {
+    id: "s-4952-placeholder",
+    congress: 119,
+    title: "Protecting American Taxpayers Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 4952",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/4952", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Sen. Ernst, Joni [R-IA]",
+      party: "R",
+      chamber: "senate",
+      state: "IA",
+      title: "Senator",
+    },
+    cosponsors: 27,
+    bipartisan: false,
+    impactedCategories: ["government"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/4952",
+    lastAction: "Read the second time. Placed on Senate Legislative Calendar under General Orders. Calendar No. 452.",
+    lastActionDate: "2026-07-14",
+  },
+  {
+    id: "s-494-placeholder",
+    congress: 119,
+    title: "National Plan for Epilepsy Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 494",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/494", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Schmitt, Eric [R-MO]",
+      party: "R",
+      chamber: "senate",
+      state: "MO",
+      title: "Senator",
+    },
+    cosponsors: 27,
+    bipartisan: true,
+    impactedCategories: ["healthcare"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/494",
+    lastAction: "Committee on Health, Education, Labor, and Pensions. Ordered to be reported with an amendment in the nature of a substitute favorably.",
+    lastActionDate: "2026-07-22",
+  },
+  {
+    id: "s-4472-placeholder",
+    congress: 119,
+    title: "Accelerating Access to Critical Therapies for ALS Reauthorization Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 4472",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/4472", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Murkowski, Lisa [R-AK]",
+      party: "R",
+      chamber: "senate",
+      state: "AK",
+      title: "Senator",
+    },
+    cosponsors: 15,
+    bipartisan: true,
+    impactedCategories: ["healthcare"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/4472",
+    lastAction: "Placed on Senate Legislative Calendar under General Orders. Calendar No. 461.",
+    lastActionDate: "2026-07-16",
+  },
 ];
 
 /**
