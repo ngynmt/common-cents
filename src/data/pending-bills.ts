@@ -327,6 +327,136 @@ export const pendingBills: PendingBill[] = [
     lastAction: "Referred to the Subcommittee on Railroads, Pipelines, and Hazardous Materials.",
     lastActionDate: "2025-02-27",
   },
+  {
+    id: "hr-1266-placeholder",
+    congress: 119,
+    title: "Combating Illicit Xylazine Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 1266",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/1266", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "high",
+    champion: {
+      name: "Rep. Panetta, Jimmy [D-CA-19]",
+      party: "D",
+      chamber: "house",
+      state: "CA",
+      title: "Representative",
+    },
+    cosponsors: 112,
+    bipartisan: true,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/1266",
+    lastAction: "Ordered to be Reported in the Nature of a Substitute by the Yeas and Nays: 48 - 0.",
+    lastActionDate: "2026-07-21",
+  },
+  {
+    id: "s-2511-placeholder",
+    congress: 119,
+    title: "College Transparency Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 2511",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/2511", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Cassidy, Bill [R-LA]",
+      party: "R",
+      chamber: "senate",
+      state: "LA",
+      title: "Senator",
+    },
+    cosponsors: 25,
+    bipartisan: true,
+    impactedCategories: ["healthcare"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/2511",
+    lastAction: "Committee on Health, Education, Labor, and Pensions. Ordered to be reported with an amendment in the nature of a substitute favorably.",
+    lastActionDate: "2026-07-30",
+  },
+  {
+    id: "sjres-199-placeholder",
+    congress: 119,
+    title: "A joint resolution providing for congressional disapproval under chapter 8 of title 5, United States Code, of the rule submitted by the Department of Health and Human Services relating to \"Restoring Flexibility in the Child Care and Development Fund (CCDF)\".",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S.J.Res. 199",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-joint-resolution/199", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Sen. Murray, Patty [D-WA]",
+      party: "D",
+      chamber: "senate",
+      state: "WA",
+      title: "Senator",
+    },
+    cosponsors: 17,
+    bipartisan: false,
+    impactedCategories: ["healthcare"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-joint-resolution/199",
+    lastAction: "Motion to proceed to consideration of measure rejected in Senate by Yea-Nay Vote. 47 - 52. Record Vote Number: 215.",
+    lastActionDate: "2026-07-30",
+  },
+  {
+    id: "s-5190-placeholder",
+    congress: 119,
+    title: "A bill to prohibit forced arbitration in work disputes, and for other purposes.",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 5190",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/5190", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Sen. Murray, Patty [D-WA]",
+      party: "D",
+      chamber: "senate",
+      state: "WA",
+      title: "Senator",
+    },
+    cosponsors: 16,
+    bipartisan: false,
+    impactedCategories: ["healthcare"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/5190",
+    lastAction: "Read twice and referred to the Committee on Health, Education, Labor, and Pensions.",
+    lastActionDate: "2026-07-30",
+  },
+  {
+    id: "s-5201-placeholder",
+    congress: 119,
+    title: "A bill to amend title 18, United States Code, to protect more victims of domestic violence by preventing their abusers from possessing or receiving firearms, and for other purposes.",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 5201",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/5201", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Sen. Blumenthal, Richard [D-CT]",
+      party: "D",
+      chamber: "senate",
+      state: "CT",
+      title: "Senator",
+    },
+    cosponsors: 15,
+    bipartisan: false,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/5201",
+    lastAction: "Read twice and referred to the Committee on the Judiciary.",
+    lastActionDate: "2026-07-30",
+  },
 ];
 
 /**
