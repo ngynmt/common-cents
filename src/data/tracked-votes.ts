@@ -96,4 +96,14 @@ export const trackedVotes: TrackedVote[] = [
     yesEffect: "Voted to suspend the debt ceiling and cap discretionary spending",
     noEffect: "Voted against suspending the debt ceiling",
   },
+  {
+    legislationTitle: "Emergency Conservation Program Improvement Act of 2025",
+    categoryId: "agriculture", // suggested via committee: Agriculture, Nutrition, and Forestry Committee
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 2, rollCall: 223 },
+    date: "2026-07-12",
+    yesEffect: "Voted to pass the Emergency Conservation Program Improvement Act of 2025", // draft — edit
+    noEffect: "Voted against the Emergency Conservation Program Improvement Act of 2025", // draft — edit
+  },
 ];
