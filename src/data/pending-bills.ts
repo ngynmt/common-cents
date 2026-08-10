@@ -327,6 +327,422 @@ export const pendingBills: PendingBill[] = [
     lastAction: "Referred to the Subcommittee on Railroads, Pipelines, and Hazardous Materials.",
     lastActionDate: "2025-02-27",
   },
+  {
+    id: "hr-2175-placeholder",
+    congress: 119,
+    title: "To designate the facility of the United States Postal Service located at 130 South Patterson Avenue in Santa Barbara, California, as the Brigadier General Frederick R. Lopez Post Office Building.",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 2175",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/2175", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Rep. Carbajal, Salud O. [D-CA-24]",
+      party: "D",
+      chamber: "house",
+      state: "CA",
+      title: "Representative",
+    },
+    cosponsors: 51,
+    bipartisan: true,
+    impactedCategories: ["immigration"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/2175",
+    lastAction: "Committee on Homeland Security and Governmental Affairs. Ordered to be reported without amendment favorably.",
+    lastActionDate: "2026-08-06",
+  },
+  {
+    id: "s-4189-placeholder",
+    congress: 119,
+    title: "INSULIN Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 4189",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/4189", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Shaheen, Jeanne [D-NH]",
+      party: "D",
+      chamber: "senate",
+      state: "NH",
+      title: "Senator",
+    },
+    cosponsors: 28,
+    bipartisan: true,
+    impactedCategories: ["healthcare"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/4189",
+    lastAction: "Placed on Senate Legislative Calendar under General Orders. Calendar No. 552.",
+    lastActionDate: "2026-08-07",
+  },
+  {
+    id: "s-2398-placeholder",
+    congress: 119,
+    title: "Kay Hagan Tick Reauthorization Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 2398",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/2398", // NEEDS EDIT
+    status: "passed_senate",
+    passageLikelihood: "high",
+    champion: {
+      name: "Sen. Collins, Susan M. [R-ME]",
+      party: "R",
+      chamber: "senate",
+      state: "ME",
+      title: "Senator",
+    },
+    cosponsors: 23,
+    bipartisan: true,
+    impactedCategories: ["healthcare"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/2398",
+    lastAction: "Passed Senate with an amendment by Voice Vote. (consideration: CR S4494-4495; text: CR S4494-4495)",
+    lastActionDate: "2026-08-06",
+  },
+  {
+    id: "s-3900-placeholder",
+    congress: 119,
+    title: "Iran Human Rights, Internet Freedom, and Accountability Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 3900",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/3900", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. McCormick, David [R-PA]",
+      party: "R",
+      chamber: "senate",
+      state: "PA",
+      title: "Senator",
+    },
+    cosponsors: 19,
+    bipartisan: true,
+    impactedCategories: ["international"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/3900",
+    lastAction: "Placed on Senate Legislative Calendar under General Orders. Calendar No. 504.",
+    lastActionDate: "2026-07-27",
+  },
+  {
+    id: "s-5201-placeholder",
+    congress: 119,
+    title: "A bill to amend title 18, United States Code, to protect more victims of domestic violence by preventing their abusers from possessing or receiving firearms, and for other purposes.",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 5201",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/5201", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Sen. Blumenthal, Richard [D-CT]",
+      party: "D",
+      chamber: "senate",
+      state: "CT",
+      title: "Senator",
+    },
+    cosponsors: 19,
+    bipartisan: false,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/5201",
+    lastAction: "Read twice and referred to the Committee on the Judiciary.",
+    lastActionDate: "2026-07-30",
+  },
+  {
+    id: "s-5341-placeholder",
+    congress: 119,
+    title: "A bill to require the Secretary of the department in which the Coast Guard is operating to delegate to the Commandant of the Coast Guard authority to enter into intergovernmental support agreements relating to installation-support services, and for other purposes.",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 5341",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/5341", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Murphy, Christopher [D-CT]",
+      party: "D",
+      chamber: "senate",
+      state: "CT",
+      title: "Senator",
+    },
+    cosponsors: 19,
+    bipartisan: true,
+    impactedCategories: ["infrastructure"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/5341",
+    lastAction: "Read twice and referred to the Committee on Commerce, Science, and Transportation.",
+    lastActionDate: "2026-08-06",
+  },
+  {
+    id: "s-5321-placeholder",
+    congress: 119,
+    title: "A bill to amend title XIX of the Social Security Act to require coverage of, and expand access to, home and community-based services under the Medicaid program, to award grants for the creation, recruitment, training and education, retention, and advancement of the direct care workforce and to award grants to support family caregivers, and for other purposes.",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 5321",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/5321", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Sen. Luján, Ben Ray [D-NM]",
+      party: "D",
+      chamber: "senate",
+      state: "NM",
+      title: "Senator",
+    },
+    cosponsors: 16,
+    bipartisan: false,
+    impactedCategories: ["healthcare"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/5321",
+    lastAction: "Read twice and referred to the Committee on Finance.",
+    lastActionDate: "2026-08-06",
+  },
+  {
+    id: "s-252-placeholder",
+    congress: 119,
+    title: "GOOD Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 252",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/252", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Sen. Johnson, Ron [R-WI]",
+      party: "R",
+      chamber: "senate",
+      state: "WI",
+      title: "Senator",
+    },
+    cosponsors: 15,
+    bipartisan: false,
+    impactedCategories: ["immigration"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/252",
+    lastAction: "Committee on Homeland Security and Governmental Affairs. Ordered to be reported with an amendment in the nature of a substitute favorably.",
+    lastActionDate: "2026-08-06",
+  },
+  {
+    id: "s-3897-placeholder",
+    congress: 119,
+    title: "Officer John Barnes and Chief Michael Ansbro Public Safety Officers' Benefit Program Expansion Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 3897",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/3897", // NEEDS EDIT
+    status: "passed_senate",
+    passageLikelihood: "high",
+    champion: {
+      name: "Sen. Gillibrand, Kirsten E. [D-NY]",
+      party: "D",
+      chamber: "senate",
+      state: "NY",
+      title: "Senator",
+    },
+    cosponsors: 14,
+    bipartisan: true,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/3897",
+    lastAction: "Passed Senate with an amendment by Unanimous Consent.",
+    lastActionDate: "2026-08-07",
+  },
+  {
+    id: "hr-5366-placeholder",
+    congress: 119,
+    title: "Doug LaMalfa Federal Disaster Tax Relief Certainty Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 5366",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/5366", // NEEDS EDIT
+    status: "passed_senate",
+    passageLikelihood: "high",
+    champion: {
+      name: "Rep. Steube, W. Gregory [R-FL-17]",
+      party: "R",
+      chamber: "house",
+      state: "FL",
+      title: "Representative",
+    },
+    cosponsors: 14,
+    bipartisan: true,
+    impactedCategories: ["government"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/5366",
+    lastAction: "Passed Senate without amendment by Unanimous Consent.",
+    lastActionDate: "2026-08-07",
+  },
+  {
+    id: "s-1838-placeholder",
+    congress: 119,
+    title: "DeOndra Dixon INCLUDE Project Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 1838",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/1838", // NEEDS EDIT
+    status: "passed_senate",
+    passageLikelihood: "high",
+    champion: {
+      name: "Sen. Hickenlooper, John W. [D-CO]",
+      party: "D",
+      chamber: "senate",
+      state: "CO",
+      title: "Senator",
+    },
+    cosponsors: 9,
+    bipartisan: true,
+    impactedCategories: ["healthcare"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/1838",
+    lastAction: "Passed Senate with an amendment by Voice Vote. (text of amendment in the nature of a substitute: CR S4495-4496)",
+    lastActionDate: "2026-08-06",
+  },
+  {
+    id: "s-4850-placeholder",
+    congress: 119,
+    title: "Diversity Jurisdiction Inflation Adjustment Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 4850",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/4850", // NEEDS EDIT
+    status: "passed_senate",
+    passageLikelihood: "high",
+    champion: {
+      name: "Sen. Kennedy, John [R-LA]",
+      party: "R",
+      chamber: "senate",
+      state: "LA",
+      title: "Senator",
+    },
+    cosponsors: 4,
+    bipartisan: true,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/4850",
+    lastAction: "Passed Senate without amendment by Unanimous Consent.",
+    lastActionDate: "2026-08-07",
+  },
+  {
+    id: "s-850-placeholder",
+    congress: 119,
+    title: "Northern Border Security Enhancement and Review Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 850",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/850", // NEEDS EDIT
+    status: "passed_senate",
+    passageLikelihood: "high",
+    champion: {
+      name: "Sen. Hassan, Margaret Wood [D-NH]",
+      party: "D",
+      chamber: "senate",
+      state: "NH",
+      title: "Senator",
+    },
+    cosponsors: 4,
+    bipartisan: true,
+    impactedCategories: ["immigration"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/850",
+    lastAction: "Passed Senate with amendments by Unanimous Consent. (text: CR S4481)",
+    lastActionDate: "2026-08-05",
+  },
+  {
+    id: "s-2542-placeholder",
+    congress: 119,
+    title: "Federal Building Threat Notification Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 2542",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/2542", // NEEDS EDIT
+    status: "passed_senate",
+    passageLikelihood: "high",
+    champion: {
+      name: "Sen. Peters, Gary C. [D-MI]",
+      party: "D",
+      chamber: "senate",
+      state: "MI",
+      title: "Senator",
+    },
+    cosponsors: 2,
+    bipartisan: false,
+    impactedCategories: ["immigration"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/2542",
+    lastAction: "Passed Senate with an amendment by Unanimous Consent.",
+    lastActionDate: "2026-08-07",
+  },
+  {
+    id: "s-434-placeholder",
+    congress: 119,
+    title: "Space Commerce Advisory Committee Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 434",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/434", // NEEDS EDIT
+    status: "passed_senate",
+    passageLikelihood: "high",
+    champion: {
+      name: "Sen. Peters, Gary C. [D-MI]",
+      party: "D",
+      chamber: "senate",
+      state: "MI",
+      title: "Senator",
+    },
+    cosponsors: 2,
+    bipartisan: false,
+    impactedCategories: ["infrastructure"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/434",
+    lastAction: "Passed Senate with an amendment by Unanimous Consent. (text: CR S4493-4494)",
+    lastActionDate: "2026-08-06",
+  },
+  {
+    id: "s-3266-placeholder",
+    congress: 119,
+    title: "USMMA Athletics Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 3266",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/3266", // NEEDS EDIT
+    status: "passed_senate",
+    passageLikelihood: "high",
+    champion: {
+      name: "Sen. Wicker, Roger F. [R-MS]",
+      party: "R",
+      chamber: "senate",
+      state: "MS",
+      title: "Senator",
+    },
+    cosponsors: 1,
+    bipartisan: false,
+    impactedCategories: ["infrastructure"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/3266",
+    lastAction: "Passed Senate with an amendment by Unanimous Consent. (consideration: CR S4492-4493; text: CR S4492-4493)",
+    lastActionDate: "2026-08-06",
+  },
 ];
 
 /**
