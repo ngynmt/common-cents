@@ -96,4 +96,14 @@ export const trackedVotes: TrackedVote[] = [
     yesEffect: "Voted to suspend the debt ceiling and cap discretionary spending",
     noEffect: "Voted against suspending the debt ceiling",
   },
+  {
+    legislationTitle: "Secure America Act",
+    categoryId: "unknown", // ⚠ low confidence — verify
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 2, rollCall: 214 },
+    date: "2026-06-10",
+    yesEffect: "Voted to pass the Secure America Act", // draft — edit
+    noEffect: "Voted against the Secure America Act", // draft — edit
+  },
 ];
