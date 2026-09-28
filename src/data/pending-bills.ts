@@ -327,6 +327,58 @@ export const pendingBills: PendingBill[] = [
     lastAction: "Referred to the Subcommittee on Railroads, Pipelines, and Hazardous Materials.",
     lastActionDate: "2025-02-27",
   },
+  {
+    id: "s-3257-placeholder",
+    congress: 119,
+    title: "John A. Hauser Mental Health in Aviation Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 3257",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/3257", // NEEDS EDIT
+    status: "passed_senate",
+    passageLikelihood: "high",
+    champion: {
+      name: "Sen. Hoeven, John [R-ND]",
+      party: "R",
+      chamber: "senate",
+      state: "ND",
+      title: "Senator",
+    },
+    cosponsors: 33,
+    bipartisan: true,
+    impactedCategories: ["infrastructure"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/3257",
+    lastAction: "Passed Senate with an amendment by Unanimous Consent. (text of amendment in the nature of a substitute: CR S5018-5019)",
+    lastActionDate: "2026-09-24",
+  },
+  {
+    id: "s-3258-placeholder",
+    congress: 119,
+    title: "Aviation Medication Transparency Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 3258",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/3258", // NEEDS EDIT
+    status: "passed_senate",
+    passageLikelihood: "high",
+    champion: {
+      name: "Sen. Duckworth, Tammy [D-IL]",
+      party: "D",
+      chamber: "senate",
+      state: "IL",
+      title: "Senator",
+    },
+    cosponsors: 14,
+    bipartisan: true,
+    impactedCategories: ["infrastructure"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/3258",
+    lastAction: "Passed Senate with an amendment by Unanimous Consent. (consideration: CR S5019; text: CR S5019)",
+    lastActionDate: "2026-09-24",
+  },
 ];
 
 /**
