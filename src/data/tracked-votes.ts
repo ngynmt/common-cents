@@ -96,4 +96,14 @@ export const trackedVotes: TrackedVote[] = [
     yesEffect: "Voted to suspend the debt ceiling and cap discretionary spending",
     noEffect: "Voted against suspending the debt ceiling",
   },
+  {
+    legislationTitle: "Tribal Trust Land Homeownership Act of 2025",
+    categoryId: "unknown", // ⚠ low confidence — verify
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 2, rollCall: 81 },
+    date: "2026-05-04",
+    yesEffect: "Voted to pass the Tribal Trust Land Homeownership Act of 2025", // draft — edit
+    noEffect: "Voted against the Tribal Trust Land Homeownership Act of 2025", // draft — edit
+  },
 ];
