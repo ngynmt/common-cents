@@ -327,6 +327,292 @@ export const pendingBills: PendingBill[] = [
     lastAction: "Referred to the Subcommittee on Railroads, Pipelines, and Hazardous Materials.",
     lastActionDate: "2025-02-27",
   },
+  {
+    id: "s-5539-placeholder",
+    congress: 119,
+    title: "Affordability is Access Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 5539",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/5539", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Murray, Patty [D-WA]",
+      party: "D",
+      chamber: "senate",
+      state: "WA",
+      title: "Senator",
+    },
+    cosponsors: 32,
+    bipartisan: false,
+    impactedCategories: ["healthcare"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/5539",
+    lastAction: "Read twice and referred to the Committee on Health, Education, Labor, and Pensions.",
+    lastActionDate: "2026-09-24",
+  },
+  {
+    id: "s-5546-placeholder",
+    congress: 119,
+    title: "Jeanette Acosta Invest in Women’s Health Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 5546",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/5546", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Sen. Murray, Patty [D-WA]",
+      party: "D",
+      chamber: "senate",
+      state: "WA",
+      title: "Senator",
+    },
+    cosponsors: 15,
+    bipartisan: false,
+    impactedCategories: ["healthcare"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/5546",
+    lastAction: "Read twice and referred to the Committee on Health, Education, Labor, and Pensions.",
+    lastActionDate: "2026-09-24",
+  },
+  {
+    id: "s-4009-placeholder",
+    congress: 119,
+    title: "Falun Gong and Victims of Forced Organ Harvesting Protection Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 4009",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/4009", // NEEDS EDIT
+    status: "passed_senate",
+    passageLikelihood: "high",
+    champion: {
+      name: "Sen. Cruz, Ted [R-TX]",
+      party: "R",
+      chamber: "senate",
+      state: "TX",
+      title: "Senator",
+    },
+    cosponsors: 11,
+    bipartisan: true,
+    impactedCategories: ["international"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/4009",
+    lastAction: "Passed Senate with an amendment by Unanimous Consent. (consideration: CR S5120-5121; text: CR S5120-5121)",
+    lastActionDate: "2026-09-28",
+  },
+  {
+    id: "s-4668-placeholder",
+    congress: 119,
+    title: "Protect College Sports Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 4668",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/4668", // NEEDS EDIT
+    status: "passed_senate",
+    passageLikelihood: "high",
+    champion: {
+      name: "Sen. Cruz, Ted [R-TX]",
+      party: "R",
+      chamber: "senate",
+      state: "TX",
+      title: "Senator",
+    },
+    cosponsors: 9,
+    bipartisan: true,
+    impactedCategories: ["infrastructure"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/4668",
+    lastAction: "Passed Senate with an amendment by Yea-Nay Vote. 77 - 22. Record Vote Number: 250. (text: CR S5044-5063)",
+    lastActionDate: "2026-09-28",
+  },
+  {
+    id: "hr-7730-placeholder",
+    congress: 119,
+    title: "Bankruptcy Threshold Adjustment Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 7730",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/7730", // NEEDS EDIT
+    status: "passed_senate",
+    passageLikelihood: "high",
+    champion: {
+      name: "Rep. Cline, Ben [R-VA-6]",
+      party: "R",
+      chamber: "house",
+      state: "VA",
+      title: "Representative",
+    },
+    cosponsors: 6,
+    bipartisan: true,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/7730",
+    lastAction: "Passed Senate without amendment by Unanimous Consent. (consideration: CR S5123)",
+    lastActionDate: "2026-09-28",
+  },
+  {
+    id: "s-3315-placeholder",
+    congress: 119,
+    title: "Health Care Cybersecurity and Resiliency Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 3315",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/3315", // NEEDS EDIT
+    status: "passed_senate",
+    passageLikelihood: "high",
+    champion: {
+      name: "Sen. Cassidy, Bill [R-LA]",
+      party: "R",
+      chamber: "senate",
+      state: "LA",
+      title: "Senator",
+    },
+    cosponsors: 5,
+    bipartisan: true,
+    impactedCategories: ["healthcare"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/3315",
+    lastAction: "Passed Senate with an amendment by Unanimous Consent. (text: CR S5234-5236)",
+    lastActionDate: "2026-09-30",
+  },
+  {
+    id: "s-3798-placeholder",
+    congress: 119,
+    title: "Safe Access to Cash Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 3798",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/3798", // NEEDS EDIT
+    status: "passed_senate",
+    passageLikelihood: "high",
+    champion: {
+      name: "Sen. Cruz, Ted [R-TX]",
+      party: "R",
+      chamber: "senate",
+      state: "TX",
+      title: "Senator",
+    },
+    cosponsors: 2,
+    bipartisan: true,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/3798",
+    lastAction: "Passed Senate with an amendment by Voice Vote. (consideration: CR S5207; text: CR S5207)",
+    lastActionDate: "2026-09-30",
+  },
+  {
+    id: "s-2273-placeholder",
+    congress: 119,
+    title: "Wyoming Education Trust Modernization Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 2273",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/2273", // NEEDS EDIT
+    status: "passed_senate",
+    passageLikelihood: "high",
+    champion: {
+      name: "Sen. Lummis, Cynthia M. [R-WY]",
+      party: "R",
+      chamber: "senate",
+      state: "WY",
+      title: "Senator",
+    },
+    cosponsors: 1,
+    bipartisan: false,
+    impactedCategories: ["education"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/2273",
+    lastAction: "Passed Senate without amendment by Unanimous Consent. (consideration: CR S5295; text: CR S5295)",
+    lastActionDate: "2026-09-30",
+  },
+  {
+    id: "s-2437-placeholder",
+    congress: 119,
+    title: "Snow Water Supply Forecasting Program Reauthorization Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 2437",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/2437", // NEEDS EDIT
+    status: "passed_senate",
+    passageLikelihood: "high",
+    champion: {
+      name: "Sen. Hickenlooper, John W. [D-CO]",
+      party: "D",
+      chamber: "senate",
+      state: "CO",
+      title: "Senator",
+    },
+    cosponsors: 1,
+    bipartisan: false,
+    impactedCategories: ["infrastructure"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/2437",
+    lastAction: "Passed Senate with an amendment by Unanimous Consent. (consideration: CR S5296-5297; text: CR S5296)",
+    lastActionDate: "2026-09-30",
+  },
+  {
+    id: "s-3219-placeholder",
+    congress: 119,
+    title: "Albuquerque Indian School Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 3219",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/3219", // NEEDS EDIT
+    status: "passed_senate",
+    passageLikelihood: "high",
+    champion: {
+      name: "Sen. Heinrich, Martin [D-NM]",
+      party: "D",
+      chamber: "senate",
+      state: "NM",
+      title: "Senator",
+    },
+    cosponsors: 1,
+    bipartisan: false,
+    impactedCategories: ["education"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/3219",
+    lastAction: "Passed Senate with an amendment by Unanimous Consent. (consideration: CR S5145-5146; text: CR S5145-5146)",
+    lastActionDate: "2026-09-29",
+  },
+  {
+    id: "s-1055-placeholder",
+    congress: 119,
+    title: "Indian Health Service Emergency Claims Parity Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 1055",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/1055", // NEEDS EDIT
+    status: "passed_senate",
+    passageLikelihood: "high",
+    champion: {
+      name: "Sen. Rounds, Mike [R-SD]",
+      party: "R",
+      chamber: "senate",
+      state: "SD",
+      title: "Senator",
+    },
+    cosponsors: 1,
+    bipartisan: false,
+    impactedCategories: ["healthcare"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/1055",
+    lastAction: "Passed Senate without amendment by Unanimous Consent. (consideration: CR S5298; text: CR S5298)",
+    lastActionDate: "2026-09-30",
+  },
 ];
 
 /**
