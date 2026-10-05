@@ -96,4 +96,14 @@ export const trackedVotes: TrackedVote[] = [
     yesEffect: "Voted to suspend the debt ceiling and cap discretionary spending",
     noEffect: "Voted against suspending the debt ceiling",
   },
+  {
+    legislationTitle: "21st Century ROAD to Housing Act",
+    categoryId: "veterans", // suggested via committee: Veterans' Affairs Committee
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 2, rollCall: 224 },
+    date: "2026-07-11",
+    yesEffect: "Voted to pass the 21st Century ROAD to Housing Act", // draft — edit
+    noEffect: "Voted against the 21st Century ROAD to Housing Act", // draft — edit
+  },
 ];
