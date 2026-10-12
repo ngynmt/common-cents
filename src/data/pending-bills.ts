@@ -327,6 +327,110 @@ export const pendingBills: PendingBill[] = [
     lastAction: "Referred to the Subcommittee on Railroads, Pipelines, and Hazardous Materials.",
     lastActionDate: "2025-02-27",
   },
+  {
+    id: "hr-10600-placeholder",
+    congress: 119,
+    title: "Abortion is Health Care Everywhere Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 10600",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/10600", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Rep. Schakowsky, Janice D. [D-IL-9]",
+      party: "D",
+      chamber: "house",
+      state: "IL",
+      title: "Representative",
+    },
+    cosponsors: 95,
+    bipartisan: false,
+    impactedCategories: ["international"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/10600",
+    lastAction: "Referred to the House Committee on Foreign Affairs.",
+    lastActionDate: "2026-09-24",
+  },
+  {
+    id: "hr-10642-placeholder",
+    congress: 119,
+    title: "Stop the Settlements Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 10642",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/10642", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Rep. Castro, Joaquin [D-TX-20]",
+      party: "D",
+      chamber: "house",
+      state: "TX",
+      title: "Representative",
+    },
+    cosponsors: 50,
+    bipartisan: false,
+    impactedCategories: ["justice"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/10642",
+    lastAction: "Referred to the Committee on Foreign Affairs, and in addition to the Committees on the Judiciary, Financial Services, and Ways and Means, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned.",
+    lastActionDate: "2026-10-01",
+  },
+  {
+    id: "s-5539-placeholder",
+    congress: 119,
+    title: "Affordability is Access Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 5539",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/5539", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Murray, Patty [D-WA]",
+      party: "D",
+      chamber: "senate",
+      state: "WA",
+      title: "Senator",
+    },
+    cosponsors: 32,
+    bipartisan: false,
+    impactedCategories: ["healthcare"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/5539",
+    lastAction: "Read twice and referred to the Committee on Health, Education, Labor, and Pensions.",
+    lastActionDate: "2026-09-24",
+  },
+  {
+    id: "s-5546-placeholder",
+    congress: 119,
+    title: "Jeanette Acosta Invest in Women’s Health Act of 2026",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 5546",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/5546", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "low",
+    champion: {
+      name: "Sen. Murray, Patty [D-WA]",
+      party: "D",
+      chamber: "senate",
+      state: "WA",
+      title: "Senator",
+    },
+    cosponsors: 15,
+    bipartisan: false,
+    impactedCategories: ["healthcare"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/5546",
+    lastAction: "Read twice and referred to the Committee on Health, Education, Labor, and Pensions.",
+    lastActionDate: "2026-09-24",
+  },
 ];
 
 /**
