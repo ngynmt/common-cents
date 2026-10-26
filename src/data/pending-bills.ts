@@ -327,6 +327,32 @@ export const pendingBills: PendingBill[] = [
     lastAction: "Referred to the Subcommittee on Railroads, Pipelines, and Hazardous Materials.",
     lastActionDate: "2025-02-27",
   },
+  {
+    id: "s-2398-placeholder",
+    congress: 119,
+    title: "Kay Hagan Tick Reauthorization Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "S. 2398",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/senate-bill/2398", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "medium",
+    champion: {
+      name: "Sen. Collins, Susan M. [R-ME]",
+      party: "R",
+      chamber: "senate",
+      state: "ME",
+      title: "Senator",
+    },
+    cosponsors: 23,
+    bipartisan: true,
+    impactedCategories: ["healthcare"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/senate-bill/2398",
+    lastAction: "Became Public Law No: 119-118.",
+    lastActionDate: "2026-09-30",
+  },
 ];
 
 /**
