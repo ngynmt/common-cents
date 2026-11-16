@@ -327,6 +327,32 @@ export const pendingBills: PendingBill[] = [
     lastAction: "Referred to the Subcommittee on Railroads, Pipelines, and Hazardous Materials.",
     lastActionDate: "2025-02-27",
   },
+  {
+    id: "hr-2102-placeholder",
+    congress: 119,
+    title: "Major Richard Star Act",
+    shortTitle: "NEEDS EDIT", // NEEDS EDIT
+    billNumber: "H.R. 2102",
+    summary: "NEEDS EDIT — see https://www.congress.gov/bill/119th-congress/house-bill/2102", // NEEDS EDIT
+    status: "introduced",
+    passageLikelihood: "high",
+    champion: {
+      name: "Rep. Bilirakis, Gus M. [R-FL-12]",
+      party: "R",
+      chamber: "house",
+      state: "FL",
+      title: "Representative",
+    },
+    cosponsors: 342,
+    bipartisan: true,
+    impactedCategories: ["defense"],
+    spendingImpacts: [], // NEEDS EDIT
+    totalAnnualImpact: 0, // NEEDS EDIT
+    cboScoreUrl: "",
+    congressUrl: "https://www.congress.gov/bill/119th-congress/house-bill/2102",
+    lastAction: "Received in the Senate and Read twice and referred to the Committee on Armed Services.",
+    lastActionDate: "2026-11-12",
+  },
 ];
 
 /**
