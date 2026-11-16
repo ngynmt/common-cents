@@ -96,4 +96,24 @@ export const trackedVotes: TrackedVote[] = [
     yesEffect: "Voted to suspend the debt ceiling and cap discretionary spending",
     noEffect: "Voted against suspending the debt ceiling",
   },
+  {
+    legislationTitle: "National Taxpayer Advocate Enhancement Act of 2025",
+    categoryId: "government", // ⚠ low confidence — verify
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 1, rollCall: 85 },
+    date: "2026-11-10",
+    yesEffect: "Voted to pass the National Taxpayer Advocate Enhancement Act of 2025", // draft — edit
+    noEffect: "Voted against the National Taxpayer Advocate Enhancement Act of 2025", // draft — edit
+  },
+  {
+    legislationTitle: "Secure America Act",
+    categoryId: "unknown", // ⚠ low confidence — verify
+    congress: 119,
+    houseVote: { year: 0, rollCall: 0 }, // MISSING — needs manual lookup
+    senateVote: { session: 2, rollCall: 214 },
+    date: "2026-06-10",
+    yesEffect: "Voted to pass the Secure America Act", // draft — edit
+    noEffect: "Voted against the Secure America Act", // draft — edit
+  },
 ];
